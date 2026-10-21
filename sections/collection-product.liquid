@@ -1,0 +1,270 @@
+{{ 'collection-product.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="collection-product-{{ section.id }}"
+  class="collection-products-section"
+  style="
+    background-color: {{ section.settings.bg_color | default: 'transparent' }};
+    padding-top: {{ section.settings.padding_top | default: 20 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="cp-container">
+    <div class="cp-grid">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- assign card_product = block.settings.product -%}
+          {%- assign card_title = block.settings.title -%}
+          {%- assign card_price = block.settings.price_text -%}
+          {%- assign card_image = block.settings.image -%}
+          {%- assign card_url = block.settings.url -%}
+
+          {%- if card_product != blank -%}
+            {%- if card_title == blank -%}
+              {%- assign card_title = card_product.title -%}
+            {%- endif -%}
+            {%- if card_image == blank -%}
+              {%- assign card_image = card_product.featured_image -%}
+            {%- endif -%}
+            {%- if card_url == blank -%}
+              {%- assign card_url = card_product.url -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if card_url == blank and card_title != blank -%}
+            {%- assign title_handle = card_title | handleize -%}
+            {%- assign card_url = '/products/' | append: title_handle -%}
+          {%- endif -%}
+
+          <div class="cp-card" {{ block.shopify_attributes }}>
+            <div class="cp-card__box" style="{% if block.settings.card_bg != blank and block.settings.card_bg != 'rgba(0,0,0,0)' %}background-color: {{ block.settings.card_bg }};{% endif %}">
+              <!-- Cart / Basket Quick Action Button -->
+              {%- if card_product != blank -%}
+                <form method="post" action="/cart/add" class="cp-card__cart-form">
+                  <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="cp-card__cart-btn" aria-label="Add {{ card_title }} to cart" title="Add to cart">
+                    <svg class="cp-card__cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                  </button>
+                </form>
+              {%- else -%}
+                <a href="{{ card_url | default: '#' }}" class="cp-card__cart-btn" aria-label="Add to cart" title="Add to cart">
+                  <svg class="cp-card__cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                  </svg>
+                </a>
+              {%- endif -%}
+
+              <!-- Product Image -->
+              <a href="{{ card_url | default: '#' }}" class="cp-card__img-link">
+                {%- if card_image != blank -%}
+                  <img
+                    src="{{ card_image | image_url: width: 600 }}"
+                    alt="{{ card_title | escape }}"
+                    class="cp-card__img"
+                    loading="lazy"
+                    width="600"
+                    height="auto"
+                  >
+                {%- else -%}
+                  <div class="cp-dummy-img">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {%- endif -%}
+              </a>
+            </div>
+
+            <!-- Card Info -->
+            <div class="cp-card__info">
+              <h3 class="cp-card__title">
+                <a href="{{ card_url | default: '#' }}">{{ card_title | default: 'Tape Product' }}</a>
+              </h3>
+              <p class="cp-card__price">
+                {%- if card_price != blank -%}
+                  {{ card_price }}
+                {%- elsif card_product != blank -%}
+                  Starting at <span class="cp-card__price-val">{{ card_product.price | money }} a roll</span>
+                {%- else -%}
+                  Starting at <span class="cp-card__price-val">$5.68 a roll</span>
+                {%- endif -%}
+              </p>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback if automated collection is selected or default collection -->
+        {%- assign collection_source = section.settings.collection | default: collection -%}
+        {%- if collection_source != blank and collection_source.products.size > 0 -%}
+          {%- for card_product in collection_source.products limit: section.settings.products_to_show -%}
+            <div class="cp-card">
+              <div class="cp-card__box">
+                <form method="post" action="/cart/add" class="cp-card__cart-form">
+                  <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="cp-card__cart-btn" aria-label="Add {{ card_product.title }} to cart" title="Add to cart">
+                    <svg class="cp-card__cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                  </button>
+                </form>
+
+                <a href="{{ card_product.url }}" class="cp-card__img-link">
+                  {%- if card_product.featured_image != blank -%}
+                    <img
+                      src="{{ card_product.featured_image | image_url: width: 600 }}"
+                      alt="{{ card_product.title | escape }}"
+                      class="cp-card__img"
+                      loading="lazy"
+                      width="600"
+                      height="auto"
+                    >
+                  {%- else -%}
+                    <div class="cp-dummy-img">
+                      {{ 'product-1' | placeholder_svg_tag }}
+                    </div>
+                  {%- endif -%}
+                </a>
+              </div>
+
+              <div class="cp-card__info">
+                <h3 class="cp-card__title">
+                  <a href="{{ card_product.url }}">{{ card_product.title }}</a>
+                </h3>
+                <p class="cp-card__price">
+                  Starting at <span class="cp-card__price-val">{{ card_product.price | money }} a roll</span>
+                </p>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Products",
+  "tag": "section",
+  "class": "section-collection-product",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F8F3ED"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection (Optional Fallback)",
+      "info": "Used if no custom blocks are added below"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show (Fallback)",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Polypropylene Tape"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Price Text",
+          "default": "Starting at $5.68 a roll"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        },
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card Background",
+          "default": "rgba(0,0,0,0)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Products",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Polypropylene Tape",
+            "price_text": "Starting at $5.68 a roll"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Paper Tape",
+            "price_text": "Starting at $9.10 a roll"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "title": "Hi-Tack Freezer Tape",
+            "price_text": "Starting at $10.18 a roll"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

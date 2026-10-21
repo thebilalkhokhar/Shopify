@@ -1,0 +1,129 @@
+/* Home Content Section CSS */
+.home-content-section {
+  background-color: var(--hc-bg, #171008);
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.home-content__wrapper {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0px 60px 80px 60px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+/* Centered Bordered Card */
+.home-content__card {
+  width: 100%;
+  max-width: var(--hc-max-width, 1100px);
+  background-color: var(--hc-card-bg, transparent);
+  border: 1px solid var(--hc-border, rgba(255, 255, 255, 0.32));
+  border-radius: 22px;
+  padding: 46px 54px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Content Groups */
+.home-content__group {
+  margin-bottom: 34px;
+}
+
+.home-content__group:last-child {
+  margin-bottom: 0;
+}
+
+/* Headings */
+.home-content__heading {
+  font-family: var(--custom-font-family, serif);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--hc-heading-color, #ffffff);
+  margin: 0 0 20px 0;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+}
+
+/* Body Text / Paragraphs */
+.home-content__text {
+  color: var(--hc-text-color, #D4CECE);
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 15px;
+  line-height: 1.68;
+  font-weight: 400;
+}
+
+.home-content__text p {
+  margin: 0 0 18px 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.home-content__text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tablet Breakpoints */
+@media (max-width: 992px) {
+  .home-content__wrapper {
+    padding: 30px 40px 60px 40px;
+  }
+
+  .home-content__card {
+    padding: 36px 36px;
+    border-radius: 20px;
+  }
+
+  .home-content__heading {
+    font-size: 23px;
+    margin-bottom: 16px;
+  }
+
+  .home-content__text {
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+
+  .home-content__text p {
+    margin-bottom: 15px;
+  }
+}
+
+/* Mobile Breakpoints (Exact 16px section side padding matching FAQs/Testimonials) */
+@media (max-width: 600px) {
+  .home-content__wrapper {
+    padding: 20px 16px 50px 16px !important;
+  }
+
+  .home-content__card {
+    padding: 28px 20px;
+    border-radius: 16px;
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .home-content__group {
+    margin-bottom: 28px;
+  }
+
+  .home-content__heading {
+    font-size: 20px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .home-content__text {
+    font-size: 14px;
+    line-height: 1.62;
+  }
+
+  .home-content__text p {
+    margin-bottom: 14px;
+  }
+}

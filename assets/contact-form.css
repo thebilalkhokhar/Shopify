@@ -1,0 +1,811 @@
+/* Contact Form Page Styles matching TapeFox exact visual branding */
+
+/* Ensure body background on contact page stays #171008 */
+body.template-page {
+  background-color: #171008;
+}
+
+/* Outer Section: bg #171008 with 20px padding */
+.contact-form-section {
+  width: 100%;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+  background-color: var(--cf-page-bg, #171008);
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  color: #171008;
+}
+
+.contact-form-outer-wrap {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Inner Card Frame: 100% width, dot pattern, rounded border, 60px padding on desktop */
+.contact-form-card-frame {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--cf-card-bg, #F9F6F0);
+  background-image: radial-gradient(var(--cf-dot, rgba(0, 0, 0, 0.12)) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  /* Top 180px for absolute floating header, left/right/bottom 60px padding */
+  padding: 180px 60px 60px 60px;
+  overflow: visible;
+}
+
+/* 2-Column Grid Layout inside Card (Full Width 100%, Wide Gap) */
+.contact-form-grid {
+  display: grid;
+  grid-template-columns: 450px 800px;
+  justify-content: space-between;
+  gap: 100px;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   LEFT COLUMN STYLES
+   ========================================================= */
+.contact-left-col {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.contact-header-text {
+  margin-bottom: 28px;
+}
+
+.contact-main-heading {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #171008;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.contact-main-subtext {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #554F47;
+  max-width: 440px;
+  margin: 0;
+}
+
+/* 2 Contact Cards Row */
+.contact-info-cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.contact-info-card {
+  background-color: transparent;
+  border: 1.6px solid #171008;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 110px;
+  box-sizing: border-box;
+}
+
+.contact-card-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #554F47;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.contact-card-val {
+  font-size: 15px;
+  font-weight: 500;
+  color: #171008;
+  text-decoration: none;
+  margin-bottom: 8px;
+  word-break: break-all;
+  display: inline-block;
+  transition: color 0.15s ease;
+}
+
+.contact-card-val:hover {
+  color: #EA5B1B;
+}
+
+.contact-card-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 14.5px;
+}
+
+.contact-action-link {
+  font-weight: 500;
+  color: #171008;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+}
+
+.contact-action-link:hover {
+  color: #EA5B1B;
+}
+
+.contact-action-sep {
+  color: #7A7267;
+  font-size: 13px;
+}
+
+.contact-wa-link {
+  color: #171008;
+}
+
+.contact-wa-icon {
+  display: inline-block;
+  color: #25D366;
+}
+
+.contact-wa-custom-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.contact-card-note {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: #7A7267;
+}
+
+/* Status Pills (Operating hours & Closed weekends) */
+.contact-status-pills-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 35px;
+  width: 100%;
+}
+
+.contact-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  border: 1.5px solid #171008;
+  border-radius: 999px;
+  padding: 6px 16px;
+  width: 50%;
+}
+
+.contact-status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.contact-status-dot--green {
+  background-color: #2EAA55;
+  box-shadow: 0 0 0 2px rgba(46, 170, 85, 0.2);
+}
+
+.contact-status-dot--red {
+  background-color: #D94832;
+  box-shadow: 0 0 0 2px rgba(217, 72, 50, 0.2);
+}
+
+.contact-status-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #171008;
+}
+
+/* Fox Mascot + Cloud Speech Bubble */
+.contact-mascot-wrapper {
+  position: relative;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 20px;
+}
+
+.contact-bubble-text {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #171008;
+  white-space: nowrap;
+}
+
+/* Comic thought bubble trailing circles */
+.contact-bubble-tail {
+  position: absolute;
+  bottom: -16px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-end;
+}
+
+.contact-bubble-dot {
+  background: #FFFFFF;
+  border: 1.8px solid #171008;
+  border-radius: 50%;
+  display: block;
+}
+
+.contact-bubble-dot.dot-1 {
+  width: 9px;
+  height: 9px;
+}
+
+.contact-bubble-dot.dot-2 {
+  width: 6px;
+  height: 6px;
+  margin-right: 4px;
+}
+
+.contact-bubble-dot.dot-3 {
+  width: 4px;
+  height: 4px;
+  margin-right: 7px;
+}
+
+.contact-mascot-image-box {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-mascot-img {
+  width: 250px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* =========================================================
+   RIGHT COLUMN STYLES
+   ========================================================= */
+.contact-right-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 770px;
+  padding-right: 100px;
+}
+
+/* Lane Selection Header */
+.contact-lane-header {
+  margin-bottom: 18px;
+}
+
+.contact-lane-badge-wrap {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.contact-lane-badge {
+  display: inline-block;
+  background-color: #F8B825;
+  color: #171008;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 6px 16px 5px;
+  border-radius: 999px;
+  border: 1.8px solid #171008;
+  transform: rotate(-3deg);
+  letter-spacing: -0.2px;
+}
+
+.contact-lane-heading {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 46px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+/* 3 Lanes Row */
+.contact-lane-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.contact-lane-card {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.contact-lane-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-lane-card-inner {
+  width: 100%;
+  border: 1.8px solid #171008;
+  border-radius: 16px;
+  padding: 16px 14px 18px 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+
+/* Active Lane Yellow Styling - Only the currently checked card becomes yellow */
+.contact-lane-card:has(.contact-lane-radio:checked) .contact-lane-card-inner {
+  background-color: #F8B825;
+}
+
+.contact-lane-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #171008;
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+
+.contact-lane-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 11px;
+  line-height: 1.35;
+  color: #171008;
+  opacity: 0.9;
+}
+
+/* Main Form Card Wrapper */
+.contact-form-card {
+  border: 1.8px solid #171008;
+  border-radius: 20px;
+  padding: 26px 23px;
+  box-sizing: border-box;
+}
+
+.contact-form-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.contact-form-subheading {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.contact-form-badge {
+  display: inline-block;
+  background-color: transparent;
+  border: 1.5px solid #171008;
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #171008;
+  white-space: nowrap;
+}
+
+/* Form Elements */
+.contact-form-element {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form-feedback {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.contact-form-feedback--success {
+  background-color: #e6f4ea;
+  color: #137333;
+  border: 1.5px solid #34a853;
+}
+
+.contact-form-feedback--error {
+  background-color: #fce8e6;
+  color: #c5221f;
+  border: 1.5px solid #ea4335;
+}
+
+.contact-form-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.contact-form-row--two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.contact-form-row--three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* What's Happened Pills (Existing Order) */
+.contact-form-happened-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.contact-happened-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.contact-happened-pill {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+}
+
+.contact-happened-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-happened-btn {
+  display: inline-block;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1.2px solid #171008;
+  background-color: transparent;
+  color: #171008;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 10.5px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.contact-happened-pill:hover .contact-happened-btn {
+  background-color: rgba(248, 184, 37, 0.2);
+}
+
+.contact-happened-pill:has(.contact-happened-radio:checked) .contact-happened-btn {
+  background-color: #F8B825;
+  border-color: #171008;
+  font-weight: 600;
+}
+
+.contact-fields-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.contact-form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.contact-form-label {
+  display: block;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #554F47;
+  text-transform: uppercase;
+}
+
+.contact-form-input {
+  width: 100%;
+  height: 44px;
+  border: 1.1px solid #171008;
+  border-radius: 22px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  color: #171008;
+  background-color: transparent;
+  outline: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.contact-form-input::placeholder {
+  color: #9A9188;
+  font-style: italic;
+  font-size: 12.5px;
+}
+
+/* Custom Select dropdown */
+.contact-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.contact-form-select {
+  width: 100%;
+  height: 44px;
+  border: 1.1px solid #171008;
+  border-radius: 22px;
+  padding: 0 38px 0 16px;
+  box-sizing: border-box;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  color: #171008;
+  background-color: transparent;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.contact-select-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #171008;
+}
+
+/* Artwork Dashed Box */
+.contact-artwork-upload-zone {
+  position: relative;
+  width: 100%;
+  border: 1.1px dashed #171008;
+  background-color: transparent;
+  border-radius: 16px;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  text-align: center;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  margin-bottom: 20px;
+}
+
+.contact-artwork-file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.contact-artwork-inner-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.contact-artwork-action-text {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #171008;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-artwork-helper-text {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 11.5px;
+  color: #554F47;
+}
+
+/* Textarea */
+.contact-form-textarea {
+  width: 100%;
+  min-height: 90px;
+  border: 1.1px solid #171008;
+  background-color: transparent;
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  color: #171008;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+
+/* Bottom Row (Submit Button & Real Address Disclaimer) */
+.contact-form-bottom-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.contact-submit-btn {
+  background-color: #ff6600;
+  color: #171008;
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  padding: 12px 70px;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 16px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 3px 0 #171008;
+}
+
+.contact-submit-btn:hover {
+  background-color: #ff751a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #171008;
+}
+
+.contact-submit-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #171008;
+}
+
+.contact-submit-arrow {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 700;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.contact-submit-btn:hover .contact-submit-arrow {
+  transform: translateX(3px);
+}
+
+.contact-submit-disclaimer {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #7A7267;
+  max-width: 320px;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN (Tablets & Mobile)
+   ========================================================= */
+
+@media screen and (max-width: 1080px) {
+  .contact-form-card-frame {
+    padding: 160px 40px 40px 40px;
+  }
+
+  .contact-form-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .contact-left-col {
+    max-width: 600px;
+  }
+
+  .contact-mascot-wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+/* sm se neeche (<= 768px): padding 20px e rahe jo globally is page pe 20px chal rahi */
+@media screen and (max-width: 768px) {
+  .contact-form-section {
+    padding: 20px;
+  }
+
+  .contact-form-card-frame {
+    padding: 140px 20px 30px 20px;
+    border-radius: 16px;
+  }
+
+  .contact-main-heading {
+    font-size: 38px;
+  }
+
+  .contact-lane-heading {
+    font-size: 34px;
+  }
+
+  .contact-info-cards-row {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-lane-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .contact-form-row--two-col {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .contact-form-row--three-col {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .contact-form-card {
+    padding: 20px 16px;
+  }
+
+  .contact-form-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-form-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-speech-bubble {
+    margin-left: 20px;
+  }
+}

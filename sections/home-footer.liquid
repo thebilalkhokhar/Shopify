@@ -1,0 +1,758 @@
+{{ 'footer.css' | asset_url | stylesheet_tag }}
+
+<footer
+  id="tapefox-footer-{{ section.id }}"
+  class="tapefox-footer-section tapefox-dark-section"
+  style="
+    --footer-bg: {{ section.settings.bg_color | default: '#171008' }};
+    --footer-card-bg: {{ section.settings.card_bg | default: '#171008' }};
+    --footer-border: {{ section.settings.border_color | default: '#ffffff' }};
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="footer-frame">
+    <!-- Floating / Absolute Elements Hook (Can sit above/overlap footer top border without clipping) -->
+    <div class="footer-floating-elements" aria-hidden="true">
+      {% for block in section.blocks %}
+        {% if block.type == 'floating_element' and block.settings.image != blank %}
+          <div
+            class="footer-floating-item"
+            style="
+              top: {{ block.settings.top_offset | default: -50 }}px;
+              {% if block.settings.position_side == 'right' %}
+                right: {{ block.settings.side_offset | default: 40 }}px;
+              {% else %}
+                left: {{ block.settings.side_offset | default: 40 }}px;
+              {% endif %}
+              width: {{ block.settings.image_width | default: 120 }}px;
+              z-index: {{ block.settings.z_index | default: 15 }};
+            "
+            {{ block.shopify_attributes }}
+          >
+            <img
+              src="{{ block.settings.image | image_url: width: 400 }}"
+              alt="{{ block.settings.alt_text | default: 'Floating Graphic' }}"
+              width="{{ block.settings.image_width | default: 120 }}"
+              height="auto"
+              loading="lazy"
+              style="width: 100%; height: auto; display: block;"
+            >
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Main Grid: Brand/Newsletter + 3 Navigation Columns -->
+    <div class="footer-main-grid">
+      <!-- Col 1: Brand Info & Newsletter -->
+      <div class="footer-brand-col">
+        <a href="{{ routes.root_url }}" class="footer-logo-wrap" aria-label="TapeFox Homepage">
+          {% if section.settings.logo != blank %}
+            <img
+              src="{{ section.settings.logo | image_url: width: 280 }}"
+              alt="{{ shop.name | default: 'TapeFox' }}"
+              class="footer-logo-img"
+              width="140"
+              height="auto"
+              loading="lazy"
+              onerror="this.onerror=null; this.src='{{ 'headerLogo.svg' | file_url }}';"
+            >
+          {% elsif 'footer_logo.webp' != blank %}
+            <img
+              src="{{ 'footer_logo.webp' | file_url }}"
+              alt="TapeFox"
+              class="footer-logo-img"
+              width="140"
+              height="auto"
+              loading="lazy"
+              onerror="this.onerror=null; this.src='{{ 'headerLogo.svg' | file_url }}';"
+            >
+          {% else %}
+            <!-- TapeFox Wordmark with Origami Fox Mark -->
+            <div class="footer-logo-mark">
+              <svg viewBox="0 0 100 85" width="28" height="24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 83 L15 35 L2 5 L35 15 L50 42 L65 15 L98 5 L85 35 Z" fill="#E85D18"/>
+                <path d="M50 42 L35 15 L50 8 L65 15 Z" fill="#ffffff"/>
+              </svg>
+              <span class="footer-logo-text">TapeFox</span>
+            </div>
+          {% endif %}
+        </a>
+
+        <p class="footer-brand-desc">
+          {% if section.settings.description != blank %}
+            {{ section.settings.description }}
+          {% else %}
+            Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the
+            continental US.
+          {% endif %}
+        </p>
+
+        <!-- Newsletter Subscription -->
+        <div class="footer-newsletter-wrap">
+          <h4 class="footer-newsletter-title">
+            {% if section.settings.newsletter_heading != blank %}
+              {{ section.settings.newsletter_heading }}
+            {% else %}
+              Price breaks and new materials. Monthly, not weekly.
+            {% endif %}
+          </h4>
+
+          {% form 'customer', class: 'footer-newsletter-form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input
+              type="email"
+              name="contact[email]"
+              class="footer-newsletter-input"
+              value="{{ form.email }}"
+              placeholder="{{ section.settings.newsletter_placeholder | default: 'Your@company.com' }}"
+              aria-label="Email address"
+              required
+            >
+            <button type="submit" class="footer-newsletter-btn">
+              {{ section.settings.newsletter_btn_text | default: 'Join' }}
+            </button>
+          {% endform %}
+        </div>
+
+        <!-- Social Links -->
+        <div class="footer-social-row">
+          {% if section.settings.social_facebook != blank %}
+            <a
+              href="{{ section.settings.social_facebook }}"
+              class="footer-social-icon"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+          {% else %}
+            <a href="#" class="footer-social-icon" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+          {% endif %}
+
+          {% if section.settings.social_instagram != blank %}
+            <a
+              href="{{ section.settings.social_instagram }}"
+              class="footer-social-icon"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="15"
+                height="15"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+          {% else %}
+            <a href="#" class="footer-social-icon" aria-label="Instagram">
+              <svg
+                viewBox="0 0 24 24"
+                width="15"
+                height="15"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+          {% endif %}
+
+          {% if section.settings.social_pinterest != blank %}
+            <a
+              href="{{ section.settings.social_pinterest }}"
+              class="footer-social-icon"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Pinterest"
+            >
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M12 0a12 12 0 0 0-4.37 23.18c-.06-.98-.12-2.48.02-3.55l.84-3.56s-.21-.42-.21-1.05c0-1 .57-1.74 1.28-1.74.6 0 .9.45.9 1 0 .61-.39 1.52-.59 2.37-.17.71.36 1.29 1.06 1.29 1.27 0 2.25-1.34 2.25-3.28 0-1.72-1.23-2.91-3-2.91-2.04 0-3.24 1.53-3.24 3.12 0 .62.24 1.28.53 1.64.06.07.07.14.05.21l-.2 1.01c-.04.14-.13.17-.3.1-1.1-.51-1.79-2.12-1.79-3.41 0-2.78 2.02-5.33 5.82-5.33 3.06 0 5.43 2.18 5.43 5.09 0 3.04-1.92 5.48-4.58 5.48-.89 0-1.73-.47-2.02-1.02l-.55 2.1c-.2.77-.74 1.74-1.1 2.33A12 12 0 1 0 12 0z"/>
+              </svg>
+            </a>
+          {% else %}
+            <a href="#" class="footer-social-icon" aria-label="Pinterest">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M12 0a12 12 0 0 0-4.37 23.18c-.06-.98-.12-2.48.02-3.55l.84-3.56s-.21-.42-.21-1.05c0-1 .57-1.74 1.28-1.74.6 0 .9.45.9 1 0 .61-.39 1.52-.59 2.37-.17.71.36 1.29 1.06 1.29 1.27 0 2.25-1.34 2.25-3.28 0-1.72-1.23-2.91-3-2.91-2.04 0-3.24 1.53-3.24 3.12 0 .62.24 1.28.53 1.64.06.07.07.14.05.21l-.2 1.01c-.04.14-.13.17-.3.1-1.1-.51-1.79-2.12-1.79-3.41 0-2.78 2.02-5.33 5.82-5.33 3.06 0 5.43 2.18 5.43 5.09 0 3.04-1.92 5.48-4.58 5.48-.89 0-1.73-.47-2.02-1.02l-.55 2.1c-.2.77-.74 1.74-1.1 2.33A12 12 0 1 0 12 0z"/>
+              </svg>
+            </a>
+          {% endif %}
+
+          {% if section.settings.social_linkedin != blank %}
+            <a
+              href="{{ section.settings.social_linkedin }}"
+              class="footer-social-icon"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
+          {% else %}
+            <a href="#" class="footer-social-icon" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Menus Wrap (Supports 3 columns on tablet/desktop, 2 on mobile) -->
+      <div class="footer-menus-wrap">
+        <!-- Col 2: Tapes Menu -->
+        <div class="footer-menu-col">
+          <span class="footer-tape-badge">
+            {% if section.settings.menu_1_title != blank %}
+              {{ section.settings.menu_1_title }}
+            {% else %}
+              Tapes
+            {% endif %}
+          </span>
+          <ul class="footer-menu-list">
+            {% if section.settings.menu_1 != blank and section.settings.menu_1.links.size > 0 %}
+              {% for link in section.settings.menu_1.links %}
+                <li>
+                  <a href="{{ link.url }}" class="footer-menu-link">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/products/polypropylene-tape" class="footer-menu-link">Polypropylene</a></li>
+              <li><a href="/products/paper-tape" class="footer-menu-link">Paper / water-activated</a></li>
+              <li><a href="/products/pvc-tape" class="footer-menu-link">PVC</a></li>
+              <li><a href="/products/hi-tack-freezer-tape" class="footer-menu-link">Hi-Tack Freezer</a></li>
+              <li><a href="/products/flatback-tape" class="footer-menu-link">Flatback</a></li>
+              <li><a href="/products/dispensers" class="footer-menu-link">Dispensers</a></li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <!-- Col 3: Company Menu -->
+        <div class="footer-menu-col">
+          <span class="footer-tape-badge">
+            {% if section.settings.menu_2_title != blank %}
+              {{ section.settings.menu_2_title }}
+            {% else %}
+              Company
+            {% endif %}
+          </span>
+          <ul class="footer-menu-list">
+            {% if section.settings.menu_2 != blank and section.settings.menu_2.links.size > 0 %}
+              {% for link in section.settings.menu_2.links %}
+                <li>
+                  <a href="{{ link.url }}" class="footer-menu-link">
+                    {{ link.title }}
+                    {% if link.title contains 'sample' or link.title contains 'Sample' %}
+                      <span class="footer-new-badge">New</span>
+                    {% endif %}
+                  </a>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/collections" class="footer-menu-link">Printed Tapes</a></li>
+              <li>
+                <a href="{{ section.settings.sample_link | default: '/pages/order-sample' }}" class="footer-menu-link">
+                  Order sample
+                  <span class="footer-new-badge">New</span>
+                </a>
+              </li>
+              <li><a href="{{ section.settings.compare_link | default: '/pages/compare' }}" class="footer-menu-link">Compare</a></li>
+              <li><a href="{{ section.settings.about_link | default: '/pages/about' }}" class="footer-menu-link">About</a></li>
+              <li><a href="{{ section.settings.contact_link | default: '/pages/contact' }}" class="footer-menu-link">Contact</a></li>
+              <li><a href="/blogs/news" class="footer-menu-link">Blogs</a></li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <!-- Col 4: Help Menu -->
+        <div class="footer-menu-col">
+          <span class="footer-tape-badge">
+            {% if section.settings.menu_3_title != blank %}
+              {{ section.settings.menu_3_title }}
+            {% else %}
+              Help
+            {% endif %}
+          </span>
+          <ul class="footer-menu-list">
+            {% if section.settings.menu_3 != blank and section.settings.menu_3.links.size > 0 %}
+              {% for link in section.settings.menu_3.links %}
+                <li>
+                  <a href="{{ link.url }}" class="footer-menu-link">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li><a href="#" class="footer-menu-link">Track my order</a></li>
+              <li><a href="#" class="footer-menu-link">Shipping &amp; delivery</a></li>
+              <li><a href="#" class="footer-menu-link">Returns &amp; damages</a></li>
+              <li><a href="#" class="footer-menu-link">Turnaround times</a></li>
+              <li><a href="/pages/faqs" class="footer-menu-link">FAQ</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Contact & Info Bar (4 bordered boxes) -->
+    <div class="footer-info-bar">
+      <!-- Item 1: Phone -->
+      <div class="footer-info-item">
+        <span class="footer-info-label">
+          {% if section.settings.info_1_label != blank %}
+            {{ section.settings.info_1_label }}
+          {% else %}
+            Talk to a person
+          {% endif %}
+        </span>
+        <a
+          href="tel:{{ section.settings.info_1_val | default: '+1 (800) 555-0199' | remove: ' ' | remove: '(' | remove: ')' | remove: '-' }}"
+          class="footer-info-value"
+        >
+          {% if section.settings.info_1_val != blank %}
+            {{ section.settings.info_1_val }}
+          {% else %}
+            +1 (800) 555-0199
+          {% endif %}
+        </a>
+      </div>
+
+      <!-- Item 2: Email -->
+      <div class="footer-info-item">
+        <span class="footer-info-label">
+          {% if section.settings.info_2_label != blank %}
+            {{ section.settings.info_2_label }}
+          {% else %}
+            Email
+          {% endif %}
+        </span>
+        <a href="mailto:{{ section.settings.info_2_val | default: 'hello@tapefox.com' }}" class="footer-info-value">
+          {% if section.settings.info_2_val != blank %}
+            {{ section.settings.info_2_val }}
+          {% else %}
+            hello@tapefox.com
+          {% endif %}
+        </a>
+      </div>
+
+      <!-- Item 3: Hours -->
+      <div class="footer-info-item">
+        <span class="footer-info-label">
+          {% if section.settings.info_3_label != blank %}
+            {{ section.settings.info_3_label }}
+          {% else %}
+            Hours
+          {% endif %}
+        </span>
+        <span class="footer-info-value">
+          {% if section.settings.info_3_val != blank %}
+            {{ section.settings.info_3_val }}
+          {% else %}
+            Mon–Fri, 8am–6pm EST
+          {% endif %}
+        </span>
+      </div>
+
+      <!-- Item 4: Location -->
+      <div class="footer-info-item">
+        <span class="footer-info-label">
+          {% if section.settings.info_4_label != blank %}
+            {{ section.settings.info_4_label }}
+          {% else %}
+            Where we print
+          {% endif %}
+        </span>
+        <span class="footer-info-value">
+          {% if section.settings.info_4_val != blank %}
+            {{ section.settings.info_4_val }}
+          {% else %}
+            1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471
+          {% endif %}
+        </span>
+      </div>
+    </div>
+
+    <!-- Row 3: Copyright & Legal Links -->
+    <div class="footer-bottom-row">
+      <div class="footer-copyright">
+        &copy; {{ 'now' | date: '%Y' }}
+        {{ section.settings.copyright_text | default: 'Tapefox. All rights reserved.' }}
+      </div>
+
+      <div class="footer-legal-links">
+        <a href="{{ section.settings.legal_1_link | default: '/pages/privacy-policy' }}">
+          {{- section.settings.legal_1_text | default: 'Privacy' -}}
+        </a>
+        <span class="footer-dot">&middot;</span>
+        <a href="{{ section.settings.legal_2_link | default: '/pages/terms-of-service' }}">
+          {{- section.settings.legal_2_text | default: 'Terms' -}}
+        </a>
+        <span class="footer-dot">&middot;</span>
+        <a href="{{ section.settings.legal_3_link | default: '/pages/shipping-policy' }}">
+          {{- section.settings.legal_3_text | default: 'Shipping' -}}
+        </a>
+        <span class="footer-dot">&middot;</span>
+        <a href="{{ section.settings.legal_4_link | default: '/pages/refund-policy' }}">
+          {{- section.settings.legal_4_text | default: 'Returns & damages' -}}
+        </a>
+        <span class="footer-dot">&middot;</span>
+        <a href="{{ section.settings.legal_5_link | default: '/pages/accessibility' }}">
+          {{- section.settings.legal_5_text | default: 'Accessibility' -}}
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Home Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Outer Border Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Brand & Newsletter"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Brand Description",
+      "default": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter Heading",
+      "default": "Price breaks and new materials. Monthly, not weekly."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Input Placeholder",
+      "default": "Your@company.com"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_btn_text",
+      "label": "Button Text",
+      "default": "Join"
+    },
+    {
+      "type": "header",
+      "content": "Social Media Links"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "social_pinterest",
+      "label": "Pinterest URL"
+    },
+    {
+      "type": "url",
+      "id": "social_linkedin",
+      "label": "LinkedIn URL"
+    },
+    {
+      "type": "header",
+      "content": "Navigation Menus"
+    },
+    {
+      "type": "text",
+      "id": "menu_1_title",
+      "label": "Column 1 Title",
+      "default": "Tapes"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "Column 1 Menu (Leave empty for defaults)"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_title",
+      "label": "Column 2 Title",
+      "default": "Company"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Column 2 Menu (Leave empty for defaults)"
+    },
+    {
+      "type": "url",
+      "id": "compare_link",
+      "label": "Compare Page Link",
+      "info": "Defaults to /pages/compare"
+    },
+    {
+      "type": "url",
+      "id": "about_link",
+      "label": "About Page Link",
+      "info": "Defaults to /pages/about"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Contact Page Link",
+      "info": "Defaults to /pages/contact"
+    },
+    {
+      "type": "text",
+      "id": "menu_3_title",
+      "label": "Column 3 Title",
+      "default": "Help"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_3",
+      "label": "Column 3 Menu (Leave empty for defaults)"
+    },
+    {
+      "type": "header",
+      "content": "Info Bar (Bottom 4 Columns)"
+    },
+    {
+      "type": "text",
+      "id": "info_1_label",
+      "label": "Box 1 Label",
+      "default": "Talk to a person"
+    },
+    {
+      "type": "text",
+      "id": "info_1_val",
+      "label": "Box 1 Value",
+      "default": "+1 (800) 555-0199"
+    },
+    {
+      "type": "text",
+      "id": "info_2_label",
+      "label": "Box 2 Label",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "info_2_val",
+      "label": "Box 2 Value",
+      "default": "hello@tapefox.com"
+    },
+    {
+      "type": "text",
+      "id": "info_3_label",
+      "label": "Box 3 Label",
+      "default": "Hours"
+    },
+    {
+      "type": "text",
+      "id": "info_3_val",
+      "label": "Box 3 Value",
+      "default": "Mon–Fri, 8am–6pm EST"
+    },
+    {
+      "type": "text",
+      "id": "info_4_label",
+      "label": "Box 4 Label",
+      "default": "Where we print"
+    },
+    {
+      "type": "text",
+      "id": "info_4_val",
+      "label": "Box 4 Value",
+      "default": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471"
+    },
+    {
+      "type": "header",
+      "content": "Legal & Copyright"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "Tapefox. All rights reserved."
+    },
+    {
+      "type": "text",
+      "id": "legal_1_text",
+      "label": "Link 1 Text",
+      "default": "Privacy"
+    },
+    {
+      "type": "url",
+      "id": "legal_1_link",
+      "label": "Link 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "legal_2_text",
+      "label": "Link 2 Text",
+      "default": "Terms"
+    },
+    {
+      "type": "url",
+      "id": "legal_2_link",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "legal_3_text",
+      "label": "Link 3 Text",
+      "default": "Shipping"
+    },
+    {
+      "type": "url",
+      "id": "legal_3_link",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "legal_4_text",
+      "label": "Link 4 Text",
+      "default": "Returns & damages"
+    },
+    {
+      "type": "url",
+      "id": "legal_4_link",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "legal_5_text",
+      "label": "Link 5 Text",
+      "default": "Accessibility"
+    },
+    {
+      "type": "url",
+      "id": "legal_5_link",
+      "label": "Link 5 URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "floating_element",
+      "name": "Floating Graphic",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Graphic Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Footer Tape Graphic"
+        },
+        {
+          "type": "select",
+          "id": "position_side",
+          "label": "Horizontal Anchor",
+          "options": [
+            { "value": "left", "label": "From Left" },
+            { "value": "right", "label": "From Right" }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "range",
+          "id": "side_offset",
+          "label": "Horizontal Offset (px)",
+          "min": 0,
+          "max": 500,
+          "step": 10,
+          "default": 60
+        },
+        {
+          "type": "range",
+          "id": "top_offset",
+          "label": "Vertical Top Offset (px)",
+          "info": "Negative values float the element above the footer border",
+          "min": -150,
+          "max": 100,
+          "step": 5,
+          "default": -50
+        },
+        {
+          "type": "range",
+          "id": "image_width",
+          "label": "Image Width (px)",
+          "min": 40,
+          "max": 300,
+          "step": 10,
+          "default": 120
+        },
+        {
+          "type": "range",
+          "id": "z_index",
+          "label": "Z-Index Layer",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "default": 15
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Footer"
+    }
+  ]
+}
+{% endschema %}

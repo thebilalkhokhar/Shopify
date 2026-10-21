@@ -1,0 +1,423 @@
+{{ 'blog-grid.css' | asset_url | stylesheet_tag }}
+
+{%- assign selected_blog = section.settings.blog | default: blog -%}
+{%- if selected_blog == blank or selected_blog.articles.size == 0 -%}
+  {%- assign selected_blog = blogs['news'] -%}
+{%- endif -%}
+
+{%- comment -%}
+  Check whether the top article is already rendered in the banner.
+  If the blog has articles, banner shows selected_blog.articles.first (or featured_article).
+  Grid shows the remaining articles starting from offset: 1.
+{%- endcomment -%}
+{%- assign real_articles_count = selected_blog.articles.size -%}
+{%- if real_articles_count > 1 -%}
+  {%- assign grid_offset = 1 -%}
+  {%- assign grid_articles_count = real_articles_count | minus: 1 -%}
+{%- elsif real_articles_count == 1 -%}
+  {%- assign grid_offset = 1 -%}
+  {%- assign grid_articles_count = 0 -%}
+{%- else -%}
+  {%- assign grid_offset = 0 -%}
+  {%- assign grid_articles_count = 0 -%}
+{%- endif -%}
+
+<section
+  id="blog-grid-{{ section.id }}"
+  class="blog-grid-section"
+  style="
+    --bg-card-color: {{ section.settings.card_bg | default: '#EA5B1B' }};
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="blog-grid-container">
+    
+    <!-- Category Filter Tabs -->
+    <div class="blog-grid-filters">
+      <button type="button" class="bg-filter-pill is-active" data-filter="all">
+        <span class="bg-filter-text">ALL</span>
+        <span class="bg-filter-count" id="bg-filter-all-count">
+          {%- if grid_articles_count > 0 -%}
+            {{ grid_articles_count }}
+          {%- else -%}
+            {{ section.blocks.size }}
+          {%- endif -%}
+        </span>
+      </button>
+
+      {%- if selected_blog.all_tags.size > 0 -%}
+        {%- for tag in selected_blog.all_tags -%}
+          <button type="button" class="bg-filter-pill" data-filter="{{ tag | handleize }}">
+            <span class="bg-filter-text">{{ tag }}</span>
+          </button>
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign categories = "" -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.category != blank -%}
+            {%- unless categories contains block.settings.category -%}
+              {%- assign categories = categories | append: block.settings.category | append: "," -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- assign category_array = categories | split: "," -%}
+        {%- for cat in category_array -%}
+          {%- if cat != blank -%}
+            <button type="button" class="bg-filter-pill" data-filter="{{ cat | handleize }}">
+              <span class="bg-filter-text">{{ cat }}</span>
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <!-- 3-Column Blog Cards Grid -->
+    <div class="blog-grid-cards">
+      
+      <!-- 1. Real Shopify Articles (New articles appear here in sequence, after the top featured banner post) -->
+      {% if grid_articles_count > 0 %}
+        {% for article in selected_blog.articles offset: grid_offset %}
+          {% assign first_tag = article.tags | first | default: 'General' %}
+          {% assign cat_handle = first_tag | handleize %}
+          
+          <article
+            class="blog-grid-card"
+            data-category="{{ cat_handle }}"
+          >
+            <!-- Card Image Container with Category Badge -->
+            <div class="bg-card-image-wrap">
+              {% if first_tag != blank %}
+                <span class="bg-card-badge">{{ first_tag }}</span>
+              {% endif %}
+
+              <a href="{{ article.url }}" class="bg-card-img-link" aria-label="{{ article.title }}">
+                {% if article.image != blank %}
+                  <img
+                    src="{{ article.image | image_url: width: 800 }}"
+                    alt="{{ article.image.alt | default: article.title }}"
+                    class="bg-card-img"
+                    width="440"
+                    height="300"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="bg-card-placeholder">
+                    <span>📰 {{ article.title | truncate: 25 }}</span>
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+
+            <!-- Card Content: Title, Description, Date -->
+            <div class="bg-card-content">
+              <h3 class="bg-card-title">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h3>
+
+              <p class="bg-card-desc">
+                {% if article.excerpt != blank %}
+                  {{ article.excerpt | strip_html | truncatewords: 28 }}
+                {% else %}
+                  {{ article.content | strip_html | truncatewords: 28 }}
+                {% endif %}
+              </p>
+
+              <div class="bg-card-date">
+                {{ article.published_at | date: "%B %d, %Y" }}
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+
+        {%- comment -%}If merchant has only 1 or 2 older articles, pad with customizer blocks so the grid remains rich and full{%- endcomment -%}
+        {% if grid_articles_count < 3 and section.blocks.size > 0 %}
+          {% for block in section.blocks limit: 6 %}
+            {% assign cat_handle = block.settings.category | default: 'all' | handleize %}
+            {% assign post_slug = block.settings.title | default: 'blog-post' | handleize %}
+            {% capture fallback_article_url %}/blogs/news/{{ post_slug }}{% endcapture %}
+            {% assign final_post_link = block.settings.article_link | default: fallback_article_url %}
+
+            <article
+              class="blog-grid-card"
+              data-category="{{ cat_handle }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="bg-card-image-wrap">
+                {% if block.settings.category != blank %}
+                  <span class="bg-card-badge">{{ block.settings.category }}</span>
+                {% endif %}
+
+                <a href="{{ final_post_link }}" class="bg-card-img-link" aria-label="{{ block.settings.title }}">
+                  {% if block.settings.image != blank %}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 800 }}"
+                      alt="{{ block.settings.image.alt | default: block.settings.title }}"
+                      class="bg-card-img"
+                      width="440"
+                      height="300"
+                      loading="lazy"
+                    >
+                  {% elsif request.design_mode %}
+                    <div class="bg-card-placeholder">
+                      <span>🖼️ Upload Post Image</span>
+                    </div>
+                  {% endif %}
+                </a>
+              </div>
+
+              <div class="bg-card-content">
+                {% if block.settings.title != blank %}
+                  <h3 class="bg-card-title">
+                    <a href="{{ final_post_link }}">{{ block.settings.title }}</a>
+                  </h3>
+                {% endif %}
+
+                {% if block.settings.description != blank %}
+                  <p class="bg-card-desc">{{ block.settings.description }}</p>
+                {% endif %}
+
+                {% if block.settings.date != blank %}
+                  <div class="bg-card-date">{{ block.settings.date }}</div>
+                {% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        {% endif %}
+
+      <!-- 2. Fallback Theme Customizer Blocks (If no real articles yet) -->
+      {% else %}
+        {% for block in section.blocks %}
+          {% assign cat_handle = block.settings.category | default: 'all' | handleize %}
+          {% assign post_slug = block.settings.title | default: 'blog-post' | handleize %}
+          {% capture fallback_article_url %}/blogs/news/{{ post_slug }}{% endcapture %}
+          {% assign final_post_link = block.settings.article_link | default: fallback_article_url %}
+
+          <article
+            class="blog-grid-card"
+            data-category="{{ cat_handle }}"
+            {{ block.shopify_attributes }}
+          >
+            <!-- Card Image Container with Category Badge -->
+            <div class="bg-card-image-wrap">
+              {% if block.settings.category != blank %}
+                <span class="bg-card-badge">{{ block.settings.category }}</span>
+              {% endif %}
+
+              <a href="{{ final_post_link }}" class="bg-card-img-link" aria-label="{{ block.settings.title }}">
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    alt="{{ block.settings.image.alt | default: block.settings.title }}"
+                    class="bg-card-img"
+                    width="440"
+                    height="300"
+                    loading="lazy"
+                  >
+                {% elsif request.design_mode %}
+                  <div class="bg-card-placeholder">
+                    <span>🖼️ Upload Post Image</span>
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+
+            <!-- Card Content: Title, Description, Date -->
+            <div class="bg-card-content">
+              {% if block.settings.title != blank %}
+                <h3 class="bg-card-title">
+                  <a href="{{ final_post_link }}">{{ block.settings.title }}</a>
+                </h3>
+              {% endif %}
+
+              {% if block.settings.description != blank %}
+                <p class="bg-card-desc">{{ block.settings.description }}</p>
+              {% endif %}
+
+              {% if block.settings.date != blank %}
+                <div class="bg-card-date">{{ block.settings.date }}</div>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+
+    </div>
+
+    <!-- Bottom "Load more" Button -->
+    <div class="blog-grid-load-more-wrap">
+      <button type="button" class="blog-grid-load-more-btn" id="bg-load-more-btn">
+        {{ section.settings.load_more_text | default: 'Load more' }}
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    var section = document.getElementById('blog-grid-{{ section.id }}');
+    if (!section) return;
+
+    var filterBtns = section.querySelectorAll('.bg-filter-pill');
+    var cards = Array.from(section.querySelectorAll('.blog-grid-card'));
+    var loadMoreBtn = section.querySelector('#bg-load-more-btn');
+    var allCount = section.querySelector('#bg-filter-all-count');
+
+    var ITEMS_PER_PAGE = 3;
+    var currentVisibleCount = ITEMS_PER_PAGE;
+    var currentFilter = 'all';
+
+    if (allCount) {
+      allCount.textContent = cards.length;
+    }
+
+    function updateCardVisibility() {
+      // 1. Filter matching cards
+      var matchingCards = cards.filter(function(card) {
+        if (currentFilter === 'all') return true;
+        return card.getAttribute('data-category') === currentFilter;
+      });
+
+      // 2. Hide all cards first
+      cards.forEach(function(card) {
+        card.style.display = 'none';
+      });
+
+      // 3. Show matching cards up to currentVisibleCount
+      matchingCards.slice(0, currentVisibleCount).forEach(function(card) {
+        card.style.display = '';
+      });
+
+      // 4. Update or hide Load More button
+      if (loadMoreBtn) {
+        if (currentVisibleCount >= matchingCards.length) {
+          loadMoreBtn.style.display = 'none';
+        } else {
+          loadMoreBtn.style.display = '';
+        }
+      }
+    }
+
+    // Initial render
+    updateCardVisibility();
+
+    // Click "Load more"
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', function() {
+        currentVisibleCount += ITEMS_PER_PAGE;
+        updateCardVisibility();
+      });
+    }
+
+    // Click Category Filters
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(function(b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+
+        currentFilter = this.getAttribute('data-filter');
+        currentVisibleCount = ITEMS_PER_PAGE; // Reset to 3 on filter change
+        updateCardVisibility();
+      });
+    });
+
+    // Save clicked blog card data to sessionStorage so detail page displays it dynamically
+    cards.forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        var link = card.querySelector('a');
+        var titleEl = card.querySelector('.bg-card-title');
+        var descEl = card.querySelector('.bg-card-desc');
+        var dateEl = card.querySelector('.bg-card-date');
+        var badgeEl = card.querySelector('.bg-card-badge');
+        var imgEl = card.querySelector('.bg-card-img');
+
+        var postData = {
+          title: titleEl ? titleEl.textContent.trim() : '',
+          description: descEl ? descEl.textContent.trim() : '',
+          date: dateEl ? dateEl.textContent.trim() : '',
+          category: badgeEl ? badgeEl.textContent.trim() : 'Sticky Business',
+          image: imgEl ? imgEl.getAttribute('src') : '',
+          url: link ? link.getAttribute('href') : ''
+        };
+
+        try {
+          sessionStorage.setItem('tf_active_blog', JSON.stringify(postData));
+        } catch (err) {}
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Blog Grid",
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Select Blog",
+      "info": "Choose blog from Shopify Admin (Online Store > Blog posts)"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#EA5B1B"
+    },
+    {
+      "type": "text",
+      "id": "load_more_text",
+      "label": "Load More Button Text",
+      "default": "Load more"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "blog_post",
+      "name": "Blog Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Post Image"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category Name",
+          "default": "Branding"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Post Title",
+          "default": "Custom Tape: Small Roll, Big Main-Character Energy"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Post Description",
+          "default": "Tape may be a small part of your packaging, but it is often the first branded thing people touch."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Post Date",
+          "default": "July 30, 2026"
+        },
+        {
+          "type": "url",
+          "id": "article_link",
+          "label": "Article Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Grid"
+    }
+  ]
+}
+{% endschema %}

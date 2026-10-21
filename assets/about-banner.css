@@ -1,0 +1,279 @@
+/* About Banner Section CSS */
+
+/* Entire About Page Background */
+body.template-page {
+  background-color: #171008;
+}
+
+.about-banner-section {
+  width: 100%;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+  background-color: var(--ab-page-bg, #171008);
+}
+
+@media screen and (max-width: 992px) {
+  .about-banner-section {
+    padding: 12px 12px 0 12px;
+  }
+}
+
+.about-banner-outer-wrap {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Rounded Dotted Card Frame - Header sits directly on top */
+.about-banner-card {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--ab-card-bg, #F9F6F0);
+  background-image: radial-gradient(var(--ab-dot-color, rgba(0, 0, 0, 0.12)) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  padding: 190px 40px 60px 40px;
+  overflow: visible;
+}
+
+@media screen and (max-width: 992px) {
+  .about-banner-card {
+    padding: 150px 20px 40px 20px;
+    border-radius: 18px;
+  }
+}
+
+/* =========================================================
+   Corner Packing Tape Strips
+   ========================================================= */
+.ab-corner-tape {
+  position: absolute;
+  width: 130px;
+  height: 46px;
+  background-color: rgba(214, 194, 163, 0.85);
+  border: 1px solid rgba(180, 160, 130, 0.5);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  z-index: 6;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+}
+
+.ab-corner-tape--bottom-left {
+  bottom: -16px;
+  left: 20px;
+  transform: rotate(-38deg);
+  border-radius: 2px;
+}
+
+.ab-corner-tape--bottom-right {
+  bottom: -16px;
+  right: 20px;
+  transform: rotate(38deg);
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 768px) {
+  .ab-corner-tape {
+    width: 90px;
+    height: 34px;
+  }
+}
+
+/* =========================================================
+   Top Content (Title & Description)
+   ========================================================= */
+.about-banner-top {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto 50px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-banner-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 54px;
+  line-height: 1.1;
+  color: #171008;
+  margin: 0 0 18px 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.about-banner-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #4a453f;
+  max-width: 660px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1200px) {
+  .about-banner-title {
+    font-size: 46px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-banner-title {
+    font-size: 34px;
+  }
+
+  .about-banner-desc {
+    font-size: 13.5px;
+  }
+}
+
+/* =========================================================
+   Left Rotating Badge (Continuous Rotating Ring + Static Fox)
+   ========================================================= */
+.about-banner-badge-left {
+  position: absolute;
+  left: 4%;
+  top: 155px;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Ring that rotates infinitely */
+.ab-rotating-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: ab-spin-ring 14s linear infinite;
+  z-index: 1;
+}
+
+@keyframes ab-spin-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Inner Fox icon stays stable in center */
+.ab-inner-fox {
+  position: relative;
+  width: 70px;
+  height: auto;
+  object-fit: contain;
+  z-index: 2;
+  display: block;
+}
+
+@media screen and (max-width: 1100px) {
+  .about-banner-badge-left {
+    position: static;
+    margin: 0 auto 20px auto;
+    width: 110px;
+    height: 110px;
+  }
+
+  .ab-inner-fox {
+    width: 55px;
+  }
+}
+
+/* =========================================================
+   Right "Keep it Cool!" Sticker Badge
+   ========================================================= */
+.about-banner-badge-right {
+  position: absolute;
+  right: 5%;
+  top: 220px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ab-keep-cool-img {
+  width: auto;
+  max-width: 130px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transform: rotate(-4deg);
+  transition: transform 0.3s ease;
+}
+
+.ab-keep-cool-img:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+@media screen and (max-width: 1100px) {
+  .about-banner-badge-right {
+    top: 50px;
+    right: 3%;
+  }
+
+  .ab-keep-cool-img {
+    max-width: 100px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-banner-badge-right {
+    position: static;
+    margin: 15px auto;
+  }
+}
+
+/* =========================================================
+   Main Bottom Collage Image (Puri Image)
+   ========================================================= */
+.about-banner-main-image-wrap {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+}
+
+.about-banner-main-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.about-banner-placeholder {
+  width: 100%;
+  min-height: 380px;
+  border: 2px dashed rgba(23, 16, 8, 0.25);
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #171008;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 40px 20px;
+  text-align: center;
+  gap: 12px;
+}

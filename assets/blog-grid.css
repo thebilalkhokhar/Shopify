@@ -1,0 +1,307 @@
+/* TapeFox Blog Grid Section CSS */
+
+.blog-grid-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40px 0 100px 0;
+  position: relative;
+  overflow: visible;
+  background-color: transparent;
+}
+
+.blog-grid-container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* =========================================================================
+   1. Filter Pills Row (ALL, Branding, How to, Materials)
+   ========================================================================= */
+
+.blog-grid-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.bg-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  padding: 9px 24px;
+  font-family: var(--custom-font-family, serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #171008;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+
+.bg-filter-pill:hover {
+  background-color: rgba(23, 16, 8, 0.06);
+}
+
+.bg-filter-pill.is-active {
+  background-color: #171008;
+  color: #ffffff;
+  border-color: #171008;
+}
+
+/* Count badge inside ALL pill */
+.bg-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F8B825;
+  color: #171008;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+}
+
+/* =========================================================================
+   2. 3-Column Blog Cards Grid
+   ========================================================================= */
+
+.blog-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 60px;
+}
+
+/* Individual Card (Orange Card Frame) */
+.blog-grid-card {
+  background-color: var(--bg-card-color, #EA5B1B);
+  border-radius: 24px;
+  padding: 16px 16px 28px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: none !important;
+  transition: transform 0.25s ease;
+}
+
+.blog-grid-card:hover {
+  transform: translateY(-4px);
+  box-shadow: none !important;
+}
+
+/* Card Image Wrapper with Rounded Corners & Aspect Ratio */
+.bg-card-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  background-color: #e5ded5;
+  box-shadow: none !important;
+}
+
+.bg-card-img-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.bg-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.blog-grid-card:hover .bg-card-img {
+  transform: scale(1.04);
+}
+
+.bg-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #554F47;
+}
+
+/* Category Badge inside image top-left */
+.bg-card-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  background-color: #171008;
+  color: #F8B825;
+  font-family: var(--custom-font-family, serif);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 16px;
+  border-radius: 999px;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+/* Card Text Content (Under image) */
+.bg-card-content {
+  padding: 22px 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.bg-card-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  margin: 0 0 12px 0;
+}
+
+.bg-card-title a {
+  color: #171008;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.bg-card-title a:hover {
+  opacity: 0.85;
+}
+
+.bg-card-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #171008;
+  opacity: 0.95;
+  margin: 0 0 20px 0;
+  flex: 1 1 auto;
+}
+
+.bg-card-date {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  color: #171008;
+  opacity: 0.85;
+  margin-top: auto;
+}
+
+/* =========================================================================
+   3. Bottom "Load more" Pill Button
+   ========================================================================= */
+
+.blog-grid-load-more-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.blog-grid-load-more-btn {
+  background-color: #FF5A00;
+  color: #ffffff;
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  padding: 10px 38px;
+  font-family: var(--custom-font-family, serif);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 2px 3px 0 0 #171008;
+  transition: all 0.15s ease;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+  display: inline-block;
+}
+
+.blog-grid-load-more-btn:hover {
+  background-color: #e54f00;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 2px 4px 0 0 #171008;
+}
+
+.blog-grid-load-more-btn:active {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 0 #171008;
+}
+
+/* =========================================================================
+   Responsive Breakpoints
+   ========================================================================= */
+
+@media screen and (max-width: 1200px) {
+  .blog-grid-cards {
+    gap: 20px;
+  }
+
+  .bg-card-title {
+    font-size: 19px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .blog-grid-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  .blog-grid-section {
+    padding: 30px 0 70px 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .blog-grid-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .blog-grid-card {
+    border-radius: 20px;
+    padding: 14px 14px 22px 14px;
+  }
+
+  .bg-card-title {
+    font-size: 19px;
+  }
+
+  .bg-card-desc {
+    font-size: 12.5px;
+  }
+
+  .blog-grid-filters {
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .bg-filter-pill {
+    padding: 7px 18px;
+    font-size: 13.5px;
+  }
+
+  .blog-grid-load-more-btn {
+    padding: 10px 32px;
+    font-size: 14px;
+  }
+}

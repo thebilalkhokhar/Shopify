@@ -1,0 +1,265 @@
+{{ 'about-made.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="about-made-{{ section.id }}"
+  class="about-made-section"
+  style="
+    --am-bg: {{ section.settings.bg_color | default: '#171008' }};
+    --am-card-bg: {{ section.settings.card_bg | default: 'rgba(255, 255, 255, 0.03)' }};
+    --am-card-border: {{ section.settings.card_border | default: 'rgba(255, 255, 255, 0.16)' }};
+    --am-max-width: {{ section.settings.max_width | default: 1400 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="about-made-container">
+    
+    <!-- 1. Header (Sticker Badge + Title) -->
+    <div class="about-made-header">
+      {% if section.settings.badge_text != blank %}
+        <div class="am-badge">{{ section.settings.badge_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="am-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </div>
+
+    <!-- 2. Process Cards Grid (5 Blocks) -->
+    <div class="about-made-grid">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <div class="am-card" {{ block.shopify_attributes }}>
+            <div class="am-card__top">
+              {% if block.settings.step_number != blank %}
+                <span class="am-step-number">{{ block.settings.step_number }}</span>
+              {% endif %}
+
+              {% if block.settings.title != blank %}
+                <h3 class="am-step-title">{{ block.settings.title }}</h3>
+              {% endif %}
+
+              {% if block.settings.description != blank %}
+                <div class="am-step-desc">
+                  {{ block.settings.description }}
+                </div>
+              {% endif %}
+            </div>
+
+            {% if block.settings.pill_text != blank %}
+              <div class="am-card__bottom">
+                <span class="am-step-pill">{{ block.settings.pill_text }}</span>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <!-- Default 5 Cards matching exact reference design -->
+        <div class="am-card">
+          <div class="am-card__top">
+            <span class="am-step-number">01</span>
+            <h3 class="am-step-title">Your file</h3>
+            <div class="am-step-desc">
+              A print-ready PDF, or a logo and a sentence about what you want. Our studio redraws anything that will not hold up at speed.
+            </div>
+          </div>
+          <div class="am-card__bottom">
+            <span class="am-step-pill">Free, always</span>
+          </div>
+        </div>
+
+        <div class="am-card">
+          <div class="am-card__top">
+            <span class="am-step-number">02</span>
+            <h3 class="am-step-title">The plate</h3>
+            <div class="am-step-desc">
+              Your artwork is etched into a physical printing plate one per ink colour. This is the setup charge, and it is why colour two costs more than colour one.
+            </div>
+          </div>
+          <div class="am-card__bottom">
+            <span class="am-step-pill">One-off</span>
+          </div>
+        </div>
+
+        <div class="am-card">
+          <div class="am-card__top">
+            <span class="am-step-number">03</span>
+            <h3 class="am-step-title">The proof</h3>
+            <div class="am-step-desc">
+              A digital proof showing the mark at actual size, where it lands across the seam, and how the colour sits on that material.
+            </div>
+          </div>
+          <div class="am-card__bottom">
+            <span class="am-step-pill">2-3 days</span>
+          </div>
+        </div>
+
+        <div class="am-card">
+          <div class="am-card__top">
+            <span class="am-step-number">04</span>
+            <h3 class="am-step-title">On press</h3>
+            <div class="am-step-desc">
+              The plate meets the roll. Ink is laid, cured and checked against your proof at the start of the run and again at the end.
+            </div>
+          </div>
+          <div class="am-card__bottom">
+            <span class="am-step-pill">Once approved</span>
+          </div>
+        </div>
+
+        <div class="am-card">
+          <div class="am-card__top">
+            <span class="am-step-number">05</span>
+            <h3 class="am-step-title">Slit and boxed</h3>
+            <div class="am-step-desc">
+              The master roll is cut to your width and length, wound onto cores, counted into cases and palletised.
+            </div>
+          </div>
+          <div class="am-card__bottom">
+            <span class="am-step-pill">Ships free</span>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Made",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "rgba(255, 255, 255, 0.03)"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card Border Color",
+      "default": "rgba(255, 255, 255, 0.16)"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Container Max Width",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Header & Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "On the floor"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How a roll gets made."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Process Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Your file"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Step Description",
+          "default": "<p>A print-ready PDF, or a logo and a sentence about what you want. Our studio redraws anything that will not hold up at speed.</p>"
+        },
+        {
+          "type": "text",
+          "id": "pill_text",
+          "label": "Bottom Pill Tag",
+          "default": "Free, always"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Made",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Your file",
+            "description": "<p>A print-ready PDF, or a logo and a sentence about what you want. Our studio redraws anything that will not hold up at speed.</p>",
+            "pill_text": "Free, always"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "The plate",
+            "description": "<p>Your artwork is etched into a physical printing plate one per ink colour. This is the setup charge, and it is why colour two costs more than colour one.</p>",
+            "pill_text": "One-off"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "The proof",
+            "description": "<p>A digital proof showing the mark at actual size, where it lands across the seam, and how the colour sits on that material.</p>",
+            "pill_text": "2-3 days"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "title": "On press",
+            "description": "<p>The plate meets the roll. Ink is laid, cured and checked against your proof at the start of the run and again at the end.</p>",
+            "pill_text": "Once approved"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "05",
+            "title": "Slit and boxed",
+            "description": "<p>The master roll is cut to your width and length, wound onto cores, counted into cases and palletised.</p>",
+            "pill_text": "Ships free"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

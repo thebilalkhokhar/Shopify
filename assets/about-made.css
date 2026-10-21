@@ -1,0 +1,208 @@
+/* TapeFox About Made Section CSS */
+
+.about-made-section {
+  width: 100%;
+  position: relative;
+  background-color: var(--am-bg, #171008);
+  padding: 80px 60px 100px 60px;
+  box-sizing: border-box;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 992px) {
+  .about-made-section {
+    padding: 60px 40px 70px 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-made-section {
+    padding: 50px 20px 60px 20px;
+  }
+}
+
+.about-made-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   1. Header Area (Sticker Badge + Heading)
+   ========================================================= */
+.about-made-header {
+  position: relative;
+  margin-bottom: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Yellow Sticker Badge ("On the floor") with tilt and white outline shadow */
+.am-badge {
+  display: inline-block;
+  background-color: #F8B825;
+  color: #171008;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  padding: 6px 18px;
+  border-radius: 999px;
+  border: 2px solid #171008;
+  box-shadow: 2.5px 3.5px 0px #ffffff;
+  transform: rotate(-6deg);
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+  transition: transform 0.25s ease;
+}
+
+.am-badge:hover {
+  transform: rotate(-2deg) scale(1.04);
+}
+
+/* Main Heading ("How a roll gets made.") */
+.am-heading {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 54px;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+@media screen and (max-width: 992px) {
+  .am-heading {
+    font-size: 42px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .am-heading {
+    font-size: 32px;
+  }
+  .am-badge {
+    font-size: 13px;
+    padding: 5px 16px;
+  }
+}
+
+/* =========================================================
+   2. 5 Steps Cards Grid
+   ========================================================= */
+.about-made-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1200px) {
+  .about-made-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about-made-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* Card Styling */
+.am-card {
+  background-color: var(--am-card-bg, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--am-card-border, rgba(255, 255, 255, 0.16));
+  border-radius: 20px;
+  padding: 26px 22px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 310px;
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.am-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.am-card__top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Step Number Badge ("01", "02", etc.) */
+.am-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #171008;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 18px;
+  font-weight: 700;
+  width: 46px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1.8px solid #171008;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+/* Step Title ("Your file", "The plate", etc.) */
+.am-step-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 14px 0;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+
+/* Step Description */
+.am-step-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #d1cbc4;
+  margin: 0;
+}
+
+.am-step-desc p {
+  margin: 0 0 8px 0;
+}
+
+.am-step-desc p:last-child {
+  margin-bottom: 0;
+}
+
+/* Step Bottom Pill Tag ("Free, always", "One-off", "2-3 days", etc.) */
+.am-card__bottom {
+  margin-top: 26px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.am-step-pill {
+  display: inline-block;
+  background-color: #ffffff;
+  color: #E85D18;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 5px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #171008;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}

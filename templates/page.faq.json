@@ -1,0 +1,235 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "faq_banner": {
+      "type": "faq-banner",
+      "settings": {
+        "card_bg": "#ea5b1b",
+        "card_border": "#171008",
+        "fox_image": "shopify://shop_images/faqsMoscout.png",
+        "fox_width": 360,
+        "badge_text": "FAQ'S",
+        "heading": "Ask us anything!",
+        "subheading": "<p>Everything we get asked on the phone, written down. If your question is not here, the last section tells you exactly who to send it to and how long they will take.</p>",
+        "search_placeholder": "Search try 'Minimum' , 'Plate' , 'Freezer'"
+      }
+    },
+    "faqs_browser": {
+      "type": "faqs-browser",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "What is your minimum order?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good.",
+            "is_open": true
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "How much does it cost?",
+            "answer": "Price depends on material and quantity. All prices are listed upfront on each product page with zero plate or setup fees.",
+            "is_open": false
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "How do I place an order?",
+            "answer": "Choose your material, specify roll width and length, upload your artwork, and checkout. We send a digital proof before printing.",
+            "is_open": false
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "I need to change or cancel my order",
+            "answer": "You can change or cancel your order anytime before your digital proof is approved for press.",
+            "is_open": false
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "Can I get samples before I order?",
+            "answer": "Yes! Order our sample pack with short rolls of all 5 materials delivered free.",
+            "is_open": false
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "What file formats do you accept?",
+            "answer": "We accept AI, PDF, EPS, SVG, and high-resolution PNG or TIFF files (300 DPI minimum).",
+            "is_open": true
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "I need help with my design",
+            "answer": "Design support is 100% free. Send us your logo or idea and our design team will create print-ready artwork.",
+            "is_open": false
+          }
+        },
+        "faq_8": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "Will I get a proof before production?",
+            "answer": "Always. We never print anything until you explicitly review and approve your PDF proof.",
+            "is_open": false
+          }
+        },
+        "faq_9": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "How many colours can I print?",
+            "answer": "We print up to 3 spot Pantone colours on all custom tape materials.",
+            "is_open": false
+          }
+        },
+        "faq_10": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "What is the plate charge?",
+            "answer": "Zero. Tapefox never charges plate fees or cylinder setup fees.",
+            "is_open": false
+          }
+        },
+        "faq_11": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Materials & products",
+            "question": "What is the difference between Paper and Poly tape?",
+            "answer": "Paper tape is water-activated, biodegradable, and creates a tamper-evident seal. Poly is self-adhesive pressure tape ideal for quick general carton sealing.",
+            "is_open": false
+          }
+        },
+        "faq_12": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Delivery",
+            "question": "How fast is delivery?",
+            "answer": "Standard production is 12-14 business days after proof approval with free shipping across the continental US.",
+            "is_open": false
+          }
+        },
+        "faq_13": {
+          "type": "faq_item",
+          "settings": {
+            "category": "Reorders",
+            "question": "How do I reorder an existing design?",
+            "answer": "Simply log into your customer account or email us your previous order number for 1-click reordering.",
+            "is_open": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10",
+        "faq_11",
+        "faq_12",
+        "faq_13"
+      ],
+      "settings": {
+        "sidebar_title": "Browse by what you need.",
+        "brand_logo": "shopify://shop_images/Sticker_Logo.webp"
+      }
+    },
+    "faqs_footer_support": {
+      "type": "faqs-footer-support",
+      "settings": {
+        "card_bg": "#ea5b1b",
+        "badge_text": "Still deciding?",
+        "heading": "Not in there? Ask a person.",
+        "subheading": "Ten rolls and three cards, free, next working day. Or price a run right now it takes a minute and you don't need an account.",
+        "mascot_image": "shopify://shop_images/footerBrowserFox.webp",
+        "mascot_width": 220,
+        "card_1_label": "Email",
+        "card_1_email": "hello@tapefox.com",
+        "card_1_note": "One working day, usually less",
+        "card_2_label": "Chat with us",
+        "call_label": "Call us",
+        "call_url": "tel:+18005550199",
+        "whatsapp_label": "Whatsapp",
+        "whatsapp_url": "https://wa.me/18005550199",
+        "card_2_note": "Fastest for anything already on the press"
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "faq_banner",
+    "faqs_browser",
+    "faqs_footer_support",
+    "home_footer"
+  ]
+}

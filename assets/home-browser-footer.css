@@ -1,0 +1,381 @@
+/* TapeFox Home Browser Footer CSS */
+
+.home-browser-footer-section {
+  background-color: transparent !important;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* padding: 70px var(--footer-px, 24px) 0 var(--footer-px, 24px); */
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+  margin-bottom: -75px;
+}
+
+/* Orange Main Card - Standalone Card, Absolutely NO White Border */
+.hbf-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: var(--hbf-card-bg, #EA5B1B);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  border-radius: 24px;
+  border: 2px solid var(--hbf-card-border, #171008);
+  padding: 0px 56px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 290px;
+}
+
+/* 1. Left Text Column */
+.hbf-text-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 430px;
+  flex: 0 0 36%;
+  position: relative;
+  z-index: 3;
+}
+
+/* Yellow Sticker Badge ("Still deciding?") */
+.hbf-badge {
+  background-color: #F8B825;
+  color: #171008;
+  font-family: var(--custom-font-family, serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 5px 18px;
+  border-radius: 999px;
+  border: 1.8px solid #171008;
+  display: inline-block;
+  transform: rotate(-4deg);
+  margin-bottom: 14px;
+  box-shadow: 2px 3px 0 0 #171008;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+/* Main Display Heading ("Don't guess. Hold it first") */
+.hbf-heading {
+  font-family: var(--custom-font-family, serif);
+  font-size: 46px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.12;
+  letter-spacing: -0.5px;
+  margin: 0 0 14px 0;
+}
+
+/* Subheading / Description */
+.hbf-subheading {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  max-width: 400px;
+}
+
+/* 2. Middle Visual Illustrations Wrapper */
+.hbf-visuals-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between !important;
+  gap: 20px;
+  flex: 1 1 auto;
+  position: relative;
+  overflow: visible;
+  min-height: 200px;
+}
+
+/* Mascot Fox Wrapper */
+.hbf-mascot-col {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+  margin-top: -40px;
+  margin-bottom: -22px;
+  filter: drop-shadow(0 10px 16px rgba(23, 16, 8, 0.3));
+}
+
+.hbf-mascot-img {
+  width: auto;
+  max-width: var(--hbf-mascot-w, 220px);
+  height: auto;
+  max-height: 290px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Box With Tape Rolls Wrapper */
+.hbf-box-col {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  z-index: 4;
+  /* margin-top: -46px; */
+  margin-bottom: 0px;
+  filter: drop-shadow(0 12px 18px rgba(23, 16, 8, 0.28));
+}
+
+.hbf-box-img {
+  width: 100%;
+  /* max-width: var(--hbf-box-w, 280px); */
+  height: auto;
+  /* max-height: 290px; */
+  object-fit: contain;
+  display: block;
+}
+
+/* Placeholder for customizer when images are not yet picked */
+.hbf-slot-hint {
+  border: 1.5px dashed rgba(23, 16, 8, 0.35);
+  border-radius: 12px;
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #171008;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 3. Right Action Buttons Column */
+.hbf-actions-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 14px;
+  flex: 0 0 auto;
+  min-width: 210px;
+  position: relative;
+  z-index: 6;
+}
+
+/* General Button Styles */
+.hbf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--custom-font-family, serif);
+  font-size: 15.5px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 13px 32px;
+  border-radius: 999px;
+  border: 1.8px solid #171008;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+  width: 100%;
+  min-width: 210px;
+  text-align: center;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+}
+
+/* Primary Button (Yellow: "Browse all Products") */
+.hbf-btn--primary {
+  background-color: #F8B825;
+  color: #171008;
+  box-shadow: 2px 3px 0 0 #171008;
+}
+
+.hbf-btn--primary:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 4px 0 0 #171008;
+}
+
+.hbf-btn--primary:active {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 0 #171008;
+}
+
+/* Secondary Button (White: "Get Sample") */
+.hbf-btn--secondary {
+  background-color: #FFFFFF;
+  color: #171008;
+  box-shadow: 2px 3px 0 0 #171008;
+}
+
+.hbf-btn--secondary:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 4px 0 0 #171008;
+}
+
+.hbf-btn--secondary:active {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 0 #171008;
+}
+
+/* ========================================================
+   Responsive Breakpoints
+   ======================================================== */
+
+@media (max-width: 1280px) {
+  .home-browser-footer-section {
+    padding-top: 60px;
+    padding-bottom: 0;
+    margin-bottom: -85px;
+  }
+
+  .hbf-card {
+    padding: 36px 40px;
+    gap: 20px;
+  }
+
+  .hbf-heading {
+    font-size: 40px;
+  }
+
+  .hbf-mascot-img {
+    max-width: 180px;
+  }
+
+  .hbf-box-img {
+    max-width: 230px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .home-browser-footer-section {
+    padding: 50px 20px 0 20px;
+    margin-bottom: -75px;
+  }
+
+  .hbf-card {
+    padding: 34px 34px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .hbf-text-col {
+    flex: 1 1 50%;
+    max-width: 100%;
+  }
+
+  .hbf-actions-col {
+    flex: 0 0 auto;
+    align-items: flex-end;
+  }
+
+  .hbf-visuals-wrap {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 14px;
+  }
+
+  .hbf-mascot-col,
+  .hbf-box-col {
+    margin-top: 0;
+    margin-bottom: -15px;
+  }
+}
+
+@media (max-width: 820px) {
+  .home-browser-footer-section {
+    padding: 40px 16px 0 16px;
+    margin-bottom: -60px;
+  }
+
+  .hbf-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 24px 34px 24px;
+    gap: 24px;
+  }
+
+  .hbf-text-col {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .hbf-heading {
+    font-size: 34px;
+  }
+
+  .hbf-visuals-wrap {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .hbf-mascot-img {
+    max-width: 150px;
+  }
+
+  .hbf-box-img {
+    max-width: 190px;
+  }
+
+  .hbf-actions-col {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .hbf-btn {
+    max-width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-browser-footer-section {
+    padding: 30px 12px 0 12px !important;
+    margin-bottom: -45px;
+  }
+
+  .hbf-card {
+    padding: 24px 18px 28px 18px;
+    border-radius: 16px;
+    gap: 20px;
+  }
+
+  .hbf-badge {
+    font-size: 12px;
+    padding: 3px 14px;
+    margin-bottom: 10px;
+  }
+
+  .hbf-heading {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .hbf-subheading {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .hbf-visuals-wrap {
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  .hbf-actions-col {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hbf-btn {
+    padding: 12px 20px;
+    font-size: 14.5px;
+  }
+}

@@ -1,0 +1,269 @@
+/* TapeFox 404 Page Styling */
+
+.page-404-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 180px 20px 80px 20px;
+  position: relative;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 220px);
+}
+
+.page-404-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Tape Strips Aesthetic */
+.page-404-tape {
+  position: absolute;
+  width: 110px;
+  height: 42px;
+  background-color: rgba(214, 194, 163, 0.72);
+  border: 1px solid rgba(180, 160, 130, 0.4);
+  box-shadow: none !important;
+  z-index: 6;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+}
+
+.page-404-tape-top-left {
+  top: -14px;
+  left: 20px;
+  transform: rotate(-38deg);
+  border-radius: 2px;
+}
+
+.page-404-tape-bottom-right {
+  bottom: -14px;
+  right: 20px;
+  transform: rotate(-34deg);
+  border-radius: 2px;
+}
+
+/* Main 404 Hero Card (Brand Orange with Rounded Corners) */
+.page-404-card {
+  width: 100%;
+  background-color: var(--p404-card-bg, #EA5B1B);
+  border: 1.8px solid var(--p404-card-border, #171008);
+  border-radius: 28px;
+  padding: 60px 50px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+/* Left Content Column */
+.page-404-content {
+  flex: 1 1 55%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 3;
+}
+
+.page-404-badge-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.page-404-badge {
+  display: inline-block;
+  background-color: #171008;
+  color: #FFFFFF;
+  border-radius: 999px;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 5px 14px;
+}
+
+.page-404-sparkles {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.page-404-number {
+  font-family: var(--custom-font-family, serif);
+  font-size: clamp(80px, 12vw, 130px);
+  font-weight: 900;
+  line-height: 0.9;
+  color: #171008;
+  letter-spacing: -2px;
+  margin: 0 0 12px 0;
+  user-select: none;
+}
+
+.page-404-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: clamp(26px, 4vw, 38px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #171008;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.page-404-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #171008;
+  opacity: 0.92;
+  margin: 0 0 32px 0;
+  max-width: 480px;
+}
+
+/* Action Buttons (TapeFox signature offset shadow buttons) */
+.page-404-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-404-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #FF5A00;
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-family: var(--custom-font-family, serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #171008;
+  text-decoration: none;
+  box-shadow: 2px 3px 0 0 #171008;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.page-404-btn-primary:hover {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 0 #171008;
+  background-color: #ff6815;
+}
+
+.page-404-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: #171008;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-404-btn-secondary:hover {
+  background-color: rgba(23, 16, 8, 0.08);
+}
+
+/* Right Illustration Column (Fox Mascot) */
+.page-404-illustration {
+  flex: 1 1 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.page-404-fox-img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(23, 16, 8, 0.2));
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+.page-404-fox-img:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.page-404-fox-fallback {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(23, 16, 8, 0.3);
+  gap: 8px;
+}
+
+.page-404-fox-icon {
+  font-size: 64px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .page-404-card {
+    flex-direction: column-reverse;
+    padding: 44px 28px;
+    text-align: center;
+  }
+
+  .page-404-content {
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .page-404-actions {
+    justify-content: center;
+  }
+
+  .page-404-fox-img {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-404-section {
+    padding: 20px 10px 50px 10px;
+  }
+
+  .page-404-card {
+    padding: 36px 20px;
+    border-radius: 20px;
+  }
+
+  .page-404-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .page-404-btn-primary,
+  .page-404-btn-secondary {
+    width: 100%;
+  }
+}

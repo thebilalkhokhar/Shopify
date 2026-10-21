@@ -1,0 +1,292 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "about_banner": {
+      "type": "about-banner",
+      "settings": {
+        "page_bg": "#171008",
+        "card_bg": "#f9f6f0",
+        "dot_color": "#0000001f",
+        "title": "IT'S TAPEFOX",
+        "description": "Thanks so much for taking the time to visit our website and explore our Tapes. I take it you've landed on this page because you wanted to find out a bit more about our story (or just clicked the wrong button!), well here it is either way...",
+        "main_image": "shopify://shop_images/aboutMain.webp",
+        "ring_image": "shopify://shop_images/ringLogo.webp",
+        "fox_inner_image": "shopify://shop_images/innerRingLogo.webp",
+        "keep_cool_image": "shopify://shop_images/aboutCool.webp",
+        "show_tape_corners": true,
+        "container_max_width": 1400
+      }
+    },
+    "about_history": {
+      "type": "about-history",
+      "settings": {
+        "bg_color": "#171008",
+        "tape_bg": "#ea5b1b",
+        "badge_text": "About us",
+        "heading": "Tape fox history",
+        "star_icon": "shopify://shop_images/Stars.webp",
+        "center_image": "shopify://shop_images/aboutHistory.webp",
+        "fox_icon": "shopify://shop_images/foxMarquee.svg",
+        "phrase_1": "Free Shipping",
+        "phrase_2": "Free Design Support",
+        "phrase_3": "Proof before Print",
+        "text_left": "<p>Tapefox started with a simple thought: why should packaging stop at the box?</p><p>Most tape does one job seal it up and disappear. We thought it could do more. It could carry your colors, show off your personality, and make every delivery feel a little more considered before it is even opened.</p>",
+        "text_right": "<p>So we set out to turn a practical packing essential into a branding tool people actually notice. No boring boxes, no forgettable first impressions—just custom printed tape that works hard, looks good, and gives your brand one more way to stand out.</p><p>Because the smallest details often make the biggest impression.</p>"
+      }
+    },
+    "about_made": {
+      "type": "about-made",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Your file",
+            "description": "<p>A print-ready PDF, or a logo and a sentence about what you want. Our studio redraws anything that will not hold up at speed.</p>",
+            "pill_text": "Free, always"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "The plate",
+            "description": "<p>Your artwork is etched into a physical printing plate one per ink colour. This is the setup charge, and it is why colour two costs more than colour one.</p>",
+            "pill_text": "One-off"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "The proof",
+            "description": "<p>A digital proof showing the mark at actual size, where it lands across the seam, and how the colour sits on that material.</p>",
+            "pill_text": "2-3 days"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "title": "On press",
+            "description": "<p>The plate meets the roll. Ink is laid, cured and checked against your proof at the start of the run and again at the end.</p>",
+            "pill_text": "Once approved"
+          }
+        },
+        "step_5": {
+          "type": "step",
+          "settings": {
+            "step_number": "05",
+            "title": "Slit and boxed",
+            "description": "<p>The master roll is cut to your width and length, wound onto cores, counted into cases and palletised.</p>",
+            "pill_text": "Ships free"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "step_5"
+      ],
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#ffffff08",
+        "card_border": "#ffffff29",
+        "max_width": 1400,
+        "badge_text": "On the floor",
+        "heading": "How a roll gets made."
+      }
+    },
+    "home_testimonial": {
+      "type": "home-testimonial",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Boxes look like packages now",
+            "text": "We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed that for less than we spend on bubble wrap.",
+            "author": "Dana Whitfield · Subscription coffee"
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "title": "The proof caught our own typo",
+            "text": "Our artwork, our mistake, flagged before anything ran. That one email saved sixty-four cases of a misspelled URL.",
+            "author": "Marcus Lee · Hardware brand"
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Paper tape ended our claims problem",
+            "text": "Water-activated made tampering obvious, so disputed deliveries stopped being our word against theirs",
+            "author": "Priya Raman · 3PL warehouse"
+          }
+        },
+        "testimonial_4": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Clean peel, zero residue on retail boxes",
+            "text": "Switched from generic clear packing tape to custom branded PVC. Our boxes now look like bespoke luxury retail packaging.",
+            "author": "Elena Rostova · Boutique Ceramics"
+          }
+        },
+        "testimonial_5": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Unmatched quality on kraft tape",
+            "text": "The custom print on the water-activated tape is razor-sharp. Our unboxing experience leveled up instantly.",
+            "author": "Sophie Zhang · Artisan Goods"
+          }
+        },
+        "testimonial_6": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Fast turnaround saved our launch",
+            "text": "Needed 50 rolls for our product debut in 10 days. Tapefox delivered ahead of schedule with flawless printing.",
+            "author": "David Miller · Studio Kin"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3",
+        "testimonial_4",
+        "testimonial_5",
+        "testimonial_6"
+      ],
+      "settings": {
+        "badge_text": "Received",
+        "heading": "What buyers said.",
+        "logo_image": "shopify://shop_images/Sticker_Logo.webp"
+      }
+    },
+    "about_brandmark": {
+      "type": "about-brandmark",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#faf7f0",
+        "dot_color": "#d4cbbe",
+        "badge_text": "Mark of quality",
+        "heading": "The brand mark",
+        "mascot_1": "shopify://shop_images/aboutOrder.webp",
+        "mascot_2": "shopify://shop_images/aboutProof.webp",
+        "mascot_3": "shopify://shop_images/aboutDelivery.webp"
+      }
+    },
+    "about_blog": {
+      "type": "about-blog",
+      "blocks": {
+        "post_1": {
+          "type": "post",
+          "settings": {
+            "article": "",
+            "image": "shopify://shop_images/blog1.png",
+            "title": "Your Box Is Talking. What's It Saying?",
+            "excerpt": "Before your customer sees what is inside, they see the box. Custom printed tape turns that first moment into part of your brand—adding colour, personality, and a little \"we actually thought about this\" energy to every delivery.",
+            "date": "August 28, 2026",
+            "article_link": ""
+          }
+        },
+        "post_2": {
+          "type": "post",
+          "settings": {
+            "article": "",
+            "image": "shopify://shop_images/blog3.png",
+            "title": "How to Make Packaging Look Less Meh",
+            "excerpt": "Great packaging does not have to mean custom boxes, complicated inserts, or a budget that makes you nervous. A few smart details can turn a plain parcel into something people are genuinely excited to open. Start with colour, add a little personality, and use custom printed tape to make every box feel considered from the second it lands at someone's door.",
+            "date": "August 14, 2026",
+            "article_link": ""
+          }
+        },
+        "post_3": {
+          "type": "post",
+          "settings": {
+            "article": "",
+            "image": "shopify://shop_images/blog2.png",
+            "title": "Custom Tape: Small Roll, Big Main-Character Energy",
+            "excerpt": "Tape may be a small part of your packaging, but it is often the first branded thing people touch. It seals the box, carries your look, and helps turn an ordinary shipment into an unboxing experience people remember.",
+            "date": "July 30, 2026",
+            "article_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3"
+      ],
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#ea5b1b",
+        "max_width": 1560,
+        "badge_text": "Our blog",
+        "heading": "Sticky Business",
+        "subheading": "Packaging tips, branding ideas, tape talk, and other things we probably care about more than we should."
+      }
+    },
+    "footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "about_banner",
+    "about_history",
+    "about_made",
+    "home_testimonial",
+    "about_brandmark",
+    "about_blog",
+    "footer"
+  ]
+}

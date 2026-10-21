@@ -1,0 +1,380 @@
+{{ 'product-faqs.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="order-faqs-{{ section.id }}"
+  class="product-faqs-section order-faqs-section"
+  style="
+    background-color: transparent;
+    padding: 0 !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    position: relative;
+    left: 0;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="pf-container" style="max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important;">
+    <div class="pf-card-frame" style="background-color: {{ section.settings.frame_bg | default: '#171008' }}; width: 100% !important; max-width: 100% !important; border-radius: 0 !important; margin: 0 !important;">
+      
+      <div class="pf-layout">
+        
+        <!-- LEFT COLUMN: Badge, Heading, Subtext, Still Got Questions Pill & Support Btn -->
+        <div class="pf-left-col">
+          <div class="pf-left-top">
+            
+            {%- if section.settings.badge_text != blank -%}
+              <div class="pf-badge-wrap">
+                <span class="pf-badge">{{ section.settings.badge_text }}</span>
+              </div>
+            {%- endif -%}
+
+            <div class="pf-heading-row">
+              {%- if section.settings.heading != blank -%}
+                <h2 class="pf-heading">{{ section.settings.heading }}</h2>
+              {%- endif -%}
+
+              <!-- Sparkle Star Icon -->
+              <div class="pf-sparkles" aria-hidden="true">
+                <svg class="pf-sparkle-star" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+                </svg>
+                <svg class="pf-sparkle-star" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+                </svg>
+              </div>
+            </div>
+
+            {%- if section.settings.subtext != blank -%}
+              <p class="pf-subtext">{{ section.settings.subtext }}</p>
+            {%- endif -%}
+
+          </div>
+
+          <!-- Left Bottom Buttons -->
+          <div class="pf-left-bottom">
+            {%- if section.settings.pill_text != blank -%}
+              <span class="pf-question-pill">{{ section.settings.pill_text }}</span>
+            {%- endif -%}
+
+            {%- if section.settings.btn_text != blank -%}
+              <a href="{{ section.settings.btn_link | default: '/pages/contact' }}" class="pf-support-btn">
+                <span>{{ section.settings.btn_text }}</span>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Accordion FAQ Items (Exact Capsule Styling) -->
+        <div class="pf-right-col" id="orderFaqsAccordion-{{ section.id }}">
+          {%- if section.blocks.size > 0 -%}
+            {%- for block in section.blocks -%}
+              <div class="pf-faq-item {% if forloop.first %}is-open{% endif %}" {{ block.shopify_attributes }}>
+                <button
+                  type="button"
+                  class="pf-faq-header"
+                  aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                >
+                  <span class="pf-faq-title">{{ block.settings.question }}</span>
+                  <span class="pf-faq-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                      <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                      <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  class="pf-faq-content"
+                  style="{% if forloop.first %}max-height: 500px;{% endif %}"
+                >
+                  <div class="pf-faq-body">
+                    {{ block.settings.answer | newline_to_br }}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <!-- Fallback Default Items Matching Screenshot Exactly -->
+            <div class="pf-faq-item is-open">
+              <button type="button" class="pf-faq-header" aria-expanded="true">
+                <span class="pf-faq-title">Can you help with my tape design?</span>
+                <span class="pf-faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                    <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </span>
+              </button>
+              <div class="pf-faq-content" style="max-height: 500px;">
+                <div class="pf-faq-body">
+                  Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good.
+                </div>
+              </div>
+            </div>
+
+            <div class="pf-faq-item">
+              <button type="button" class="pf-faq-header" aria-expanded="false">
+                <span class="pf-faq-title">Are there any plate or setup fees?</span>
+                <span class="pf-faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                    <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </span>
+              </button>
+              <div class="pf-faq-content">
+                <div class="pf-faq-body">
+                  No plate or setup fees at all. The price per case you see on the ladder is exactly what you pay.
+                </div>
+              </div>
+            </div>
+
+            <div class="pf-faq-item">
+              <button type="button" class="pf-faq-header" aria-expanded="false">
+                <span class="pf-faq-title">How long will my custom tape take?</span>
+                <span class="pf-faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                    <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </span>
+              </button>
+              <div class="pf-faq-content">
+                <div class="pf-faq-body">
+                  Standard turnaround is 10–14 working days from proof approval to dispatch, shipped free across the continental US.
+                </div>
+              </div>
+            </div>
+
+            <div class="pf-faq-item">
+              <button type="button" class="pf-faq-header" aria-expanded="false">
+                <span class="pf-faq-title">What do I need to get started?</span>
+                <span class="pf-faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                    <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </span>
+              </button>
+              <div class="pf-faq-content">
+                <div class="pf-faq-body">
+                  Just your logo or artwork file (vector AI, EPS, PDF, or high-res PNG). Pick your quantity and we take care of the rest.
+                </div>
+              </div>
+            </div>
+
+            <div class="pf-faq-item">
+              <button type="button" class="pf-faq-header" aria-expanded="false">
+                <span class="pf-faq-title">Can I change my design later?</span>
+                <span class="pf-faq-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                    <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </span>
+              </button>
+              <div class="pf-faq-content">
+                <div class="pf-faq-body">
+                  Yes, anytime before you approve the digital press proof. Once you confirm the proof, printing begins immediately.
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    function initOrderFaqs() {
+      const container = document.getElementById('orderFaqsAccordion-{{ section.id }}');
+      if (!container) return;
+
+      const items = container.querySelectorAll('.pf-faq-item');
+      items.forEach(function(item) {
+        const header = item.querySelector('.pf-faq-header');
+        const content = item.querySelector('.pf-faq-content');
+
+        if (!header || !content) return;
+
+        header.addEventListener('click', function() {
+          const isOpen = item.classList.contains('is-open');
+
+          // Close other items
+          items.forEach(function(otherItem) {
+            if (otherItem !== item) {
+              otherItem.classList.remove('is-open');
+              const otherHeader = otherItem.querySelector('.pf-faq-header');
+              const otherContent = otherItem.querySelector('.pf-faq-content');
+              if (otherHeader) otherHeader.setAttribute('aria-expanded', 'false');
+              if (otherContent) otherContent.style.maxHeight = null;
+            }
+          });
+
+          // Toggle current
+          if (isOpen) {
+            item.classList.remove('is-open');
+            header.setAttribute('aria-expanded', 'false');
+            content.style.maxHeight = null;
+          } else {
+            item.classList.add('is-open');
+            header.setAttribute('aria-expanded', 'true');
+            content.style.maxHeight = content.scrollHeight + 40 + 'px';
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initOrderFaqs);
+    } else {
+      initOrderFaqs();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Order FAQs",
+  "settings": [
+    {
+      "type": "color",
+      "id": "page_bg",
+      "label": "Page Background Color",
+      "default": "#FBF8F3"
+    },
+    {
+      "type": "color",
+      "id": "frame_bg",
+      "label": "Frame Card Background",
+      "default": "#171008"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Left Column Content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Questions"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Before you order"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad."
+    },
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Still Got Questions Pill Text",
+      "default": "STILL GOT QUESTIONS?"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Support Button Text",
+      "default": "Support"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Support Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Can you help with my tape design?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Order FAQs",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are there any plate or setup fees?",
+            "answer": "No plate or setup fees at all. The price per case you see on the ladder is exactly what you pay."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will my custom tape take?",
+            "answer": "Standard turnaround is 10–14 working days from proof approval to dispatch, shipped free across the continental US."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What do I need to get started?",
+            "answer": "Just your logo or artwork file (vector AI, EPS, PDF, or high-res PNG). Pick your quantity and we take care of the rest."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I change my design later?",
+            "answer": "Yes, anytime before you approve the digital press proof. Once you confirm the proof, printing begins immediately."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

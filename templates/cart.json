@@ -1,0 +1,114 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_cart": {
+      "type": "main-cart",
+      "settings": {}
+    },
+    "cart_artwork": {
+      "type": "cart-artwork",
+      "blocks": {
+        "step_1": {
+          "type": "step_card",
+          "settings": {
+            "title": "Order",
+            "description": "Choose the tape, the dimensions and the ink colours, then upload artwork. Price is on the page as you build it.",
+            "time_badge": "5 min",
+            "image": "shopify://shop_images/order.webp",
+            "bg_color": "#fdb927",
+            "title_color": "#171008",
+            "desc_color": "#362415"
+          }
+        },
+        "step_2": {
+          "type": "step_card",
+          "settings": {
+            "title": "Approve the proof",
+            "description": "We send an electronic proof. Nothing goes on press until you approve it and if the artwork needs work, our team fixes it first.",
+            "time_badge": "2-3 business days",
+            "image": "shopify://shop_images/approve.webp",
+            "bg_color": "#de5f48",
+            "title_color": "#ffffff",
+            "desc_color": "#ffffff"
+          }
+        },
+        "step_3": {
+          "type": "step_card",
+          "settings": {
+            "title": "Delivery",
+            "description": "Your tape prints and ships, tracked from our floor to your dock. Free shipping across the continental US.",
+            "time_badge": "Within 12-14 business days",
+            "image": "shopify://shop_images/delivery.webp",
+            "bg_color": "#2d76f6",
+            "title_color": "#ffffff",
+            "desc_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "badge_text": "The Route",
+        "heading": "Artwork in. Tape out."
+      }
+    },
+    "footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "main_cart",
+    "cart_artwork",
+    "footer"
+  ]
+}

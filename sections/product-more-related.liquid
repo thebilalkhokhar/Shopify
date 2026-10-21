@@ -1,0 +1,180 @@
+{{ 'product-more-related.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="product-more-related-{{ section.id }}"
+  class="product-more-related-section"
+  style="
+    background-color: {{ section.settings.outer_bg | default: '#171008' }};
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="pmr-container">
+    
+    <!-- Cream Card with Dot Grid -->
+    <div class="pmr-card">
+      
+      <!-- Header: Badge & Heading -->
+      <div class="pmr-header">
+        {%- if section.settings.badge_text != blank -%}
+          <div class="pmr-badge-wrap">
+            <span class="pmr-badge">{{ section.settings.badge_text }}</span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pmr-heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+
+      <!-- 3 Columns Products Grid -->
+      <div class="pmr-grid">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign linked_product = block.settings.product -%}
+            {%- assign item_title = block.settings.title | default: linked_product.title -%}
+            {%- assign item_url = block.settings.url -%}
+            {%- if item_url == blank and linked_product != blank -%}
+              {%- assign item_url = linked_product.url -%}
+            {%- elsif item_url == blank and item_title != blank -%}
+              {%- assign item_url = '/products/' | append: item_title | handleize -%}
+            {%- endif -%}
+
+            {%- assign item_img = block.settings.image | default: linked_product.featured_image -%}
+
+            <a href="{{ item_url | default: '#' }}" class="pmr-item" {{ block.shopify_attributes }}>
+              <div class="pmr-image-box">
+                {%- if item_img != blank -%}
+                  {{ item_img | image_url: width: 600 | image_tag: class: 'pmr-image', loading: 'lazy', alt: item_title }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'pmr-image' }}
+                {%- endif -%}
+              </div>
+              <div class="pmr-info">
+                {%- if item_title != blank -%}
+                  <h3 class="pmr-title">{{ item_title }}</h3>
+                {%- endif -%}
+                {%- if block.settings.price_text != blank -%}
+                  <p class="pmr-price">{{ block.settings.price_text }}</p>
+                {%- elsif linked_product != blank -%}
+                  <p class="pmr-price">Starting at <strong>{{ linked_product.price | money }}</strong></p>
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default Fallback using store products or placeholders -->
+          {%- assign sample_products = collections.all.products -%}
+          {%- for prod in sample_products limit: 3 -%}
+            <a href="{{ prod.url }}" class="pmr-item">
+              <div class="pmr-image-box">
+                {%- if prod.featured_image != blank -%}
+                  {{ prod.featured_image | image_url: width: 600 | image_tag: class: 'pmr-image', loading: 'lazy', alt: prod.title }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'pmr-image' }}
+                {%- endif -%}
+              </div>
+              <div class="pmr-info">
+                <h3 class="pmr-title">{{ prod.title }}</h3>
+                <p class="pmr-price">Starting at <strong>{{ prod.price | money }}</strong></p>
+              </div>
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product More Related",
+  "settings": [
+    {
+      "type": "color",
+      "id": "outer_bg",
+      "label": "Outer Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Goes with"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "People also needed these."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "related_product",
+      "name": "Related Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Product Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Product Title",
+          "default": "PVC Tape"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Custom Price Text",
+          "default": "Starting at $7.84 a roll"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Custom Product Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product More Related",
+      "blocks": [
+        {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/pvc.webp",
+            "title": "PVC Tape",
+            "price_text": "Starting at $7.84 a roll"
+          }
+        },
+        {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/flattape.webp",
+            "title": "Flatback Tape",
+            "price_text": "Starting at $7.12 a roll"
+          }
+        },
+        {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/dispensers.webp",
+            "title": "Dispensers",
+            "price_text": "From $34 per unit"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,210 @@
+{{ 'home-browser-footer.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="home-browser-footer-{{ section.id }}"
+  class="home-browser-footer-section tapefox-dark-section"
+  style="
+    --hbf-section-bg: {{ section.settings.bg_color | default: '#171008' }};
+    --hbf-card-bg: {{ section.settings.card_bg | default: '#EA5B1B' }};
+    --hbf-card-border: {{ section.settings.card_border | default: '#171008' }};
+    --hbf-mascot-w: {{ section.settings.mascot_width | default: 220 }}px;
+    --hbf-box-w: {{ section.settings.box_width | default: 280 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="hbf-card">
+    <!-- 1. Left Text Column -->
+    <div class="hbf-text-col">
+      {% if section.settings.badge_text != blank %}
+        <div class="hbf-badge">{{ section.settings.badge_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="hbf-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <p class="hbf-subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    <!-- 2. Middle Visuals (Mascot & Cardboard Box with Tapes) -->
+    <div class="hbf-visuals-wrap">
+      {% if section.settings.mascot_image != blank %}
+        <div class="hbf-mascot-col">
+          <img
+            src="{{ section.settings.mascot_image | image_url: width: 600 }}"
+            alt="{{ section.settings.mascot_image.alt | default: 'TapeFox Mascot' }}"
+            class="hbf-mascot-img"
+            width="{{ section.settings.mascot_width | default: 220 }}"
+            height="auto"
+            loading="lazy"
+          >
+        </div>
+      {% elsif request.design_mode %}
+        <div class="hbf-mascot-col">
+          <div class="hbf-slot-hint">🦊 Upload Mascot Image</div>
+        </div>
+      {% endif %}
+
+      {% if section.settings.box_image != blank %}
+        <div class="hbf-box-col">
+          <img
+            src="{{ section.settings.box_image | image_url: width: 700 }}"
+            alt="{{ section.settings.box_image.alt | default: 'Box With Tape Rolls' }}"
+            class="hbf-box-img"
+            width="{{ section.settings.box_width | default: 280 }}"
+            height="auto"
+            loading="lazy"
+          >
+        </div>
+      {% elsif request.design_mode %}
+        <div class="hbf-box-col">
+          <div class="hbf-slot-hint">📦 Upload Box Image</div>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- 3. Right Action Buttons -->
+    <div class="hbf-actions-col">
+      {% if section.settings.btn_1_text != blank %}
+        <a
+          href="{{ section.settings.btn_1_url | default: '/collections/all' }}"
+          class="hbf-btn hbf-btn--primary"
+        >
+          {{ section.settings.btn_1_text }}
+        </a>
+      {% endif %}
+
+      {% if section.settings.btn_2_text != blank %}
+        <a
+          href="{{ section.settings.btn_2_url | default: '/pages/sample' }}"
+          class="hbf-btn hbf-btn--secondary"
+        >
+          {{ section.settings.btn_2_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Browser Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Banner Background Color",
+      "default": "#EA5B1B"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Banner Border Color",
+      "default": "#171008"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Sticker Badge Text",
+      "default": "Still deciding?"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Don't guess. Hold it first"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading / Description",
+      "default": "Ten rolls and three cards, free, next working day. Or price a run right now it takes a minute and you don't need an account."
+    },
+    {
+      "type": "header",
+      "content": "Visual Illustrations"
+    },
+    {
+      "type": "image_picker",
+      "id": "mascot_image",
+      "label": "Fox Mascot Image"
+    },
+    {
+      "type": "range",
+      "id": "mascot_width",
+      "min": 120,
+      "max": 350,
+      "step": 10,
+      "unit": "px",
+      "label": "Mascot Image Width",
+      "default": 220
+    },
+    {
+      "type": "image_picker",
+      "id": "box_image",
+      "label": "Box With Tapes Image"
+    },
+    {
+      "type": "range",
+      "id": "box_width",
+      "min": 160,
+      "max": 450,
+      "step": 10,
+      "unit": "px",
+      "label": "Box Image Width",
+      "default": 280
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_1_text",
+      "label": "Primary Button Text",
+      "default": "Browse all Products"
+    },
+    {
+      "type": "url",
+      "id": "btn_1_url",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "btn_2_text",
+      "label": "Secondary Button Text",
+      "default": "Get Sample"
+    },
+    {
+      "type": "url",
+      "id": "btn_2_url",
+      "label": "Secondary Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Browser Footer"
+    }
+  ]
+}
+{% endschema %}

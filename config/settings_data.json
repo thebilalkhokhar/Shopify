@@ -1,0 +1,122 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "favicon": "shopify://shop_images/innerRingLogo.webp",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/headerLogo.svg",
+          "menu": "",
+          "mm_heading": "Printed Tapes",
+          "mm_link": "shopify://collections",
+          "mm_subheading": "Every roll printed to your artwork, up to 3 inks",
+          "mm_fox_mascot": "shopify://shop_images/headerMascout.svg",
+          "mm_item1_title": "Polypropylene Tape",
+          "mm_item1_image": "shopify://shop_images/printedPoly.webp",
+          "mm_item1_url": "",
+          "mm_item2_title": "Paper Tape",
+          "mm_item2_image": "shopify://shop_images/printedPaper.webp",
+          "mm_item2_url": "",
+          "mm_item3_title": "Hi-Tack Freezer Tape",
+          "mm_item3_image": "shopify://shop_images/printedHiTack.webp",
+          "mm_item3_url": "",
+          "mm_item4_title": "PVC Tape",
+          "mm_item4_image": "shopify://shop_images/printedPVC.webp",
+          "mm_item4_url": "",
+          "mm_item5_title": "Flatback Tape",
+          "mm_item5_image": "shopify://shop_images/printedFlatTape.webp",
+          "mm_item5_url": "",
+          "mm_item6_title": "Dispensers",
+          "mm_item6_image": "shopify://shop_images/printedDispenser.webp",
+          "mm_item6_url": "",
+          "compare_link": "",
+          "sample_link": "",
+          "about_link": "",
+          "contact_link": "",
+          "cmp1_image": "shopify://shop_images/ComparePolypropyleneTape.webp",
+          "cmp1_title": "Polypropylene Tape",
+          "cmp1_price": "Starting at $5.68/ a roll",
+          "cmp1_seal": "30-50+ lbs by mil",
+          "cmp1_goes": "Normal Tape gun",
+          "cmp1_best": "Everyday volume",
+          "cmp1_btn": "Buy now",
+          "cmp1_url": "",
+          "cmp2_image": "shopify://shop_images/ComparePaperTape.webp",
+          "cmp2_title": "Paper Tape",
+          "cmp2_price": "Starting at $9.10/ a roll",
+          "cmp2_seal": "30 lbs /30+ HD",
+          "cmp2_goes": "Need a dispenser",
+          "cmp2_best": "Premium unboxing",
+          "cmp2_btn": "Buy now",
+          "cmp2_url": "",
+          "cmp3_image": "shopify://shop_images/ComparePVCTape.webp",
+          "cmp3_title": "PVC Tape",
+          "cmp3_price": "Starting at $7.84/ a roll",
+          "cmp3_seal": "Heaviest Loads",
+          "cmp3_goes": "Normal Tape gun",
+          "cmp3_best": "Heavy + high value",
+          "cmp3_btn": "Buy now",
+          "cmp3_url": "",
+          "cmp4_image": "shopify://shop_images/CompareHiTackFreezerTape.webp",
+          "cmp4_title": "Hi-Tack Freezer Tape",
+          "cmp4_price": "Starting at $10.18/ a roll",
+          "cmp4_seal": "Cold Chain loads",
+          "cmp4_goes": "Normal Tape gun",
+          "cmp4_best": "Chilled and frozen",
+          "cmp4_btn": "Buy now",
+          "cmp4_url": "",
+          "cmp5_image": "shopify://shop_images/CompareFlatbackTape.webp",
+          "cmp5_title": "Flatback Tape",
+          "cmp5_price": "Starting at $7.12/ a roll",
+          "cmp5_seal": "Bundling only",
+          "cmp5_goes": "Teras by hand",
+          "cmp5_best": "Splicing + tabbing",
+          "cmp5_btn": "Buy now",
+          "cmp5_url": "",
+          "cmp_bottom_title": "Full Comparison",
+          "cmp_bottom_sub": "Every spec, side by side",
+          "cmp_bottom_btn": "See the table",
+          "search_placeholder": "Search tapes, specs, help",
+          "search_popular_label": "POPULAR SEARCHES",
+          "search_popular_tags": "Paper tapes,Free Sample,Lead time"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+          "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+          "newsletter_placeholder": "Your@company.com",
+          "newsletter_btn_text": "Join",
+          "menu_1_title": "Tapes",
+          "menu_2_title": "Company",
+          "menu_3_title": "Help",
+          "info_1_label": "Talk to a person",
+          "info_1_val": "+1 (800) 555-0199",
+          "info_2_label": "Email",
+          "info_2_val": "hello@tapefox.com",
+          "info_3_label": "Hours",
+          "info_3_val": "Mon–Fri, 8am–6pm EST",
+          "info_4_label": "Where we print",
+          "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+          "copyright_text": "Tapefox. All rights reserved.",
+          "legal_1_text": "Privacy",
+          "legal_2_text": "Terms",
+          "legal_3_text": "Shipping",
+          "legal_4_text": "Returns & damages",
+          "legal_5_text": "Accessibility"
+        }
+      }
+    },
+    "content_for_index": []
+  }
+}

@@ -1,0 +1,194 @@
+{{ 'home-top-products.css' | asset_url | stylesheet_tag }}
+
+<div class="home-top-products-section tapefox-dark-section" {{ section.shopify_attributes }}>
+  <div class="htp-board">
+    
+    <!-- Corner Tapes -->
+    <div class="htp-tape htp-tape--top-left">
+      {% if section.settings.tape_tl != blank %}
+        <img src="{{ section.settings.tape_tl | image_url: width: 100 }}" alt="Tape" width="100" height="auto">
+      {% else %}
+        <div class="htp-dummy-tape"></div>
+      {% endif %}
+    </div>
+    <div class="htp-tape htp-tape--top-right">
+      {% if section.settings.tape_tr != blank %}
+        <img src="{{ section.settings.tape_tr | image_url: width: 100 }}" alt="Tape" width="100" height="auto">
+      {% else %}
+        <div class="htp-dummy-tape"></div>
+      {% endif %}
+    </div>
+    <div class="htp-tape htp-tape--bottom-left">
+      {% if section.settings.tape_bl != blank %}
+        <img src="{{ section.settings.tape_bl | image_url: width: 100 }}" alt="Tape" width="100" height="auto">
+      {% else %}
+        <div class="htp-dummy-tape"></div>
+      {% endif %}
+    </div>
+    <div class="htp-tape htp-tape--bottom-right">
+      {% if section.settings.tape_br != blank %}
+        <img src="{{ section.settings.tape_br | image_url: width: 100 }}" alt="Tape" width="100" height="auto">
+      {% else %}
+        <div class="htp-dummy-tape"></div>
+      {% endif %}
+    </div>
+
+    <!-- Header Content -->
+    <div class="htp-header">
+      {% if section.settings.top_badge != blank %}
+        <div class="htp-badge">{{ section.settings.top_badge }}</div>
+      {% endif %}
+      
+      {% if section.settings.heading != blank %}
+        <h2 class="htp-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      
+      {% if section.settings.subheading != blank %}
+        <p class="htp-subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Products Grid -->
+    <div class="htp-grid">
+      {% for block in section.blocks %}
+        {% assign product_url = block.settings.url %}
+        {% if product_url == blank and block.settings.title != blank %}
+          {% assign title_handle = block.settings.title | handleize %}
+          {% assign product_url = '/products/' | append: title_handle %}
+        {% endif %}
+
+        <div class="htp-card" {{ block.shopify_attributes }}>
+          <a href="{{ product_url | default: '#' }}" class="htp-card__image-link">
+            <div class="htp-card__image-wrap" style="background-color: {{ block.settings.bg_color }};">
+              {% if block.settings.card_badge != blank %}
+                <div class="htp-card__badge">{{ block.settings.card_badge }}</div>
+              {% endif %}
+              
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" width="400" height="auto">
+              {% else %}
+                <div class="htp-dummy-img"></div>
+              {% endif %}
+            </div>
+          </a>
+          
+          <div class="htp-card__info">
+            <h3 class="htp-card__title">
+              <a href="{{ product_url | default: '#' }}" style="color: inherit; text-decoration: none;">
+                {{ block.settings.title }}
+              </a>
+            </h3>
+            <p class="htp-card__price">{{ block.settings.price_text }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Home Top Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "top_badge",
+      "label": "Top Badge Text",
+      "default": "Top Picks"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pick a roll. Cause a scene."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Bold tape for boxes, gifts, projects, and anything else crying out for a little more personality. Pick your favorite or don't. We're not here to limit you."
+    },
+    {
+      "type": "header",
+      "content": "Corner Tapes Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "tape_tl",
+      "label": "Top Left Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "tape_tr",
+      "label": "Top Right Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "tape_bl",
+      "label": "Bottom Left Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "tape_br",
+      "label": "Bottom Right Tape"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Paper Tape"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Price Text",
+          "default": "Starting at $9.10 a roll"
+        },
+        {
+          "type": "text",
+          "id": "card_badge",
+          "label": "Card Badge (e.g. Most Ordered)"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Image Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Product Link (Optional)",
+          "info": "Leave blank to auto link to /products/product-name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Top Products",
+      "blocks": [
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

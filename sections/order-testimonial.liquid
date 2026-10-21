@@ -1,0 +1,355 @@
+{{ 'products-testimonial.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="products-testimonial-section order-testimonial-section"
+  style="
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    padding: 0 !important;
+    position: relative;
+    left: 0;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="products-testimonial__card" style="width: 100% !important; max-width: 100% !important; margin: 0 !important;">
+
+    <!-- Header Row -->
+    <div class="products-testimonial__header">
+      <div class="products-testimonial__header-left">
+        {% if section.settings.badge_text != blank %}
+          <div class="products-testimonial__badge">{{ section.settings.badge_text }}</div>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="products-testimonial__title">{{ section.settings.heading }}</h2>
+        {% endif %}
+      </div>
+
+      <div class="products-testimonial__header-right">
+        {% if section.settings.logo_image != blank %}
+          <img
+            src="{{ section.settings.logo_image | image_url: width: 180 }}"
+            alt="TapeFox"
+            width="120"
+            height="auto"
+            loading="lazy"
+            class="products-testimonial__brand-logo"
+          >
+        {% else %}
+          <!-- Tapefox Brand Mark SVG -->
+          <div class="products-testimonial__brand-mark">
+            <svg viewBox="0 0 100 65" width="85" height="55" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 8l-8 14h16l-8-14z" fill="#E85D18"/>
+              <path d="M42 22l8 12 8-12-8-3-8 3z" fill="#E85D18"/>
+              <path d="M38 12l4 10-6 4 2-14z" fill="#E85D18"/>
+              <path d="M62 12l-4 10 6 4-2-14z" fill="#E85D18"/>
+              <text x="50" y="55" text-anchor="middle" font-family="'Bringbold Nineties', serif" font-size="16" font-weight="700" fill="#E85D18">TapeFox</text>
+            </svg>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Slider Area -->
+    <div class="products-testimonial__slider-wrap">
+      <div class="products-testimonial__slider-track" id="orderTestimonialTrack-{{ section.id }}">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <div class="products-testimonial__slide" {{ block.shopify_attributes }}>
+              <div class="products-testimonial__item-card">
+                
+                <!-- 5 Stars -->
+                <div class="products-testimonial__stars" aria-label="5 out of 5 stars">
+                  {% for star in (1..5) %}
+                    <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/>
+                    </svg>
+                  {% endfor %}
+                </div>
+
+                <!-- Quote Title -->
+                {% if block.settings.title != blank %}
+                  <h3 class="products-testimonial__item-title">{{ block.settings.title }}</h3>
+                {% endif %}
+
+                <!-- Review Body -->
+                {% if block.settings.text != blank %}
+                  <p class="products-testimonial__item-text">{{ block.settings.text }}</p>
+                {% endif %}
+
+                <!-- Dotted Divider -->
+                <div class="products-testimonial__divider"></div>
+
+                <!-- Reviewer Info -->
+                <div class="products-testimonial__author">
+                  {{ block.settings.author_name }}{% if block.settings.author_name != blank and block.settings.author_handle != blank %} · {% endif %}{{ block.settings.author_handle }}
+                </div>
+
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <!-- 5 Default Reviews from Screenshot when no custom blocks added yet in Theme Editor -->
+          <div class="products-testimonial__slide">
+            <div class="products-testimonial__item-card">
+              <div class="products-testimonial__stars">
+                {% for star in (1..5) %}
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                {% endfor %}
+              </div>
+              <h3 class="products-testimonial__item-title">Boxes look like packages now</h3>
+              <p class="products-testimonial__item-text">We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed that for less than we spend on bubble wrap.</p>
+              <div class="products-testimonial__divider"></div>
+              <div class="products-testimonial__author">Dana Whitfield · Subscription coffee</div>
+            </div>
+          </div>
+
+          <div class="products-testimonial__slide">
+            <div class="products-testimonial__item-card">
+              <div class="products-testimonial__stars">
+                {% for star in (1..5) %}
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                {% endfor %}
+              </div>
+              <h3 class="products-testimonial__item-title">The proof caught our own typo</h3>
+              <p class="products-testimonial__item-text">Our artwork, our mistake, flagged before anything ran. That one email saved sixty-four cases of a misspelled URL.</p>
+              <div class="products-testimonial__divider"></div>
+              <div class="products-testimonial__author">Marcus Lee · Hardware brand</div>
+            </div>
+          </div>
+
+          <div class="products-testimonial__slide">
+            <div class="products-testimonial__item-card">
+              <div class="products-testimonial__stars">
+                {% for star in (1..5) %}
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                {% endfor %}
+              </div>
+              <h3 class="products-testimonial__item-title">Paper tape ended our claims problem</h3>
+              <p class="products-testimonial__item-text">Water-activated made tampering obvious, so disputed deliveries stopped being our word against theirs.</p>
+              <div class="products-testimonial__divider"></div>
+              <div class="products-testimonial__author">Priya Raman · 3PL warehouse</div>
+            </div>
+          </div>
+
+          <div class="products-testimonial__slide">
+            <div class="products-testimonial__item-card">
+              <div class="products-testimonial__stars">
+                {% for star in (1..5) %}
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                {% endfor %}
+              </div>
+              <h3 class="products-testimonial__item-title">Clean peel, zero residue on retail boxes</h3>
+              <p class="products-testimonial__item-text">Switched from generic clear packing tape to custom branded PVC. Our boxes now look like bespoke luxury retail packaging.</p>
+              <div class="products-testimonial__divider"></div>
+              <div class="products-testimonial__author">Elena Rostova · Boutique Ceramics</div>
+            </div>
+          </div>
+
+          <div class="products-testimonial__slide">
+            <div class="products-testimonial__item-card">
+              <div class="products-testimonial__stars">
+                {% for star in (1..5) %}
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                {% endfor %}
+              </div>
+              <h3 class="products-testimonial__item-title">Unmatched print fidelity</h3>
+              <p class="products-testimonial__item-text">The custom ink formulation rendered our intricate brand lines razor sharp. Our customers notice the details.</p>
+              <div class="products-testimonial__divider"></div>
+              <div class="products-testimonial__author">Sophie Zhang · Design Goods</div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Controls Row (Progress Bar & Arrow Navigation) -->
+    <div class="products-testimonial__controls">
+      <!-- Progress Bar Track -->
+      <div class="products-testimonial__progress-wrap">
+        <div class="products-testimonial__progress-bar" id="orderTestimonialProgress-{{ section.id }}"></div>
+      </div>
+
+      <!-- Arrow Buttons -->
+      <div class="products-testimonial__nav-btns">
+        <button
+          type="button"
+          class="products-testimonial__nav-btn prev"
+          id="orderTestimonialPrev-{{ section.id }}"
+          aria-label="Previous testimonials"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="products-testimonial__nav-btn next"
+          id="orderTestimonialNext-{{ section.id }}"
+          aria-label="Next testimonials"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('orderTestimonialTrack-{{ section.id }}');
+    const prevBtn = document.getElementById('orderTestimonialPrev-{{ section.id }}');
+    const nextBtn = document.getElementById('orderTestimonialNext-{{ section.id }}');
+    const progress = document.getElementById('orderTestimonialProgress-{{ section.id }}');
+
+    if (!track) return;
+
+    function getScrollStep() {
+      const slide = track.querySelector('.products-testimonial__slide');
+      return slide ? slide.offsetWidth + 20 : 380;
+    }
+
+    function updateProgress() {
+      if (!progress) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (maxScroll <= 0) {
+        progress.style.width = '100%';
+        return;
+      }
+      const scrollPercent = (track.scrollLeft / maxScroll) * 100;
+      const barWidth = Math.max(20, Math.min(100, 20 + (scrollPercent * 0.8)));
+      progress.style.width = barWidth + '%';
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        track.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+      });
+    }
+
+    track.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Order Testimonial",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Received"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What buyers said."
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "TapeFox Brand Logo (Optional)",
+      "info": "Leave blank to use default TapeFox brand mark SVG"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Customer Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review Title / Quote",
+          "default": "Boxes look like packages now"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review Text",
+          "default": "We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed that for less than we spend on bubble wrap."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Dana Whitfield"
+        },
+        {
+          "type": "text",
+          "id": "author_handle",
+          "label": "Author Business / Role",
+          "default": "Subscription coffee"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Order Testimonial",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "title": "Boxes look like packages now",
+            "text": "We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed that for less than we spend on bubble wrap.",
+            "author_name": "Dana Whitfield",
+            "author_handle": "Subscription coffee"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "The proof caught our own typo",
+            "text": "Our artwork, our mistake, flagged before anything ran. That one email saved sixty-four cases of a misspelled URL.",
+            "author_name": "Marcus Lee",
+            "author_handle": "Hardware brand"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Paper tape ended our claims problem",
+            "text": "Water-activated made tampering obvious, so disputed deliveries stopped being our word against theirs.",
+            "author_name": "Priya Raman",
+            "author_handle": "3PL warehouse"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Clean peel, zero residue on retail boxes",
+            "text": "Switched from generic clear packing tape to custom branded PVC. Our boxes now look like bespoke luxury retail packaging.",
+            "author_name": "Elena Rostova",
+            "author_handle": "Boutique Ceramics"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Unmatched print fidelity",
+            "text": "The custom ink formulation rendered our intricate brand lines razor sharp. Our customers notice the details.",
+            "author_name": "Sophie Zhang",
+            "author_handle": "Design Goods"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

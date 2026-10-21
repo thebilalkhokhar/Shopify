@@ -1,0 +1,135 @@
+/* Collection Banner Styles */
+.collection-banner-section {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-top: var(--cb-pt, 230px) !important;
+}
+
+@media screen and (max-width: 1450px) {
+  .collection-banner-section {
+    --cb-pt: 150px !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .collection-banner-section {
+    --cb-pt: 150px !important;
+  }
+}
+
+.cb-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.cb-content {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cb-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 50px;
+  line-height: 1.15;
+  color: #171008;
+  margin: 0 0 16px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+@media screen and (max-width: 1650px) {
+  .cb-title {
+    font-size: 45px;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .cb-title {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  .cb-title {
+    font-size: 38px;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .cb-title {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .cb-title {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cb-title {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .cb-title {
+    font-size: 25px;
+  }
+}
+
+.cb-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #55524E;
+  margin: 0;
+  max-width: 620px;
+}
+
+@media screen and (max-width: 1550px) {
+  .cb-description {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .cb-description {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cb-description {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .cb-description {
+    font-size: 12px;
+  }
+}
+
+.cb-description p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .cb-title {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+
+  .cb-description {
+    font-size: 14px;
+  }
+}

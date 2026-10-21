@@ -1,0 +1,306 @@
+{{ 'product-order.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="product-order-{{ section.id }}"
+  class="product-order-section"
+  style="
+    background-color: {{ section.settings.page_bg | default: '#FBF8F3' }};
+    padding-top: {{ section.settings.padding_top | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="po-container">
+    <div
+      class="po-card-frame"
+      style="
+        background-color: {{ section.settings.frame_bg | default: '#171008' }};
+      "
+    >
+      <!-- Main Section Heading -->
+      {%- if section.settings.heading != blank -%}
+        <h2
+          class="po-heading"
+          style="color: {{ section.settings.heading_color | default: '#FAF6EF' }};"
+        >
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+
+      <!-- 3 Steps Grid -->
+      <div class="po-grid">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="po-step-card" {{ block.shopify_attributes }}>
+              
+              <!-- Top Row: Number Badge & Icon -->
+              <div class="po-step-top">
+                <span class="po-num-badge">
+                  {{ block.settings.step_number | default: forloop.index | prepend: '0' | slice: -2, 2 }}
+                </span>
+                
+                <div class="po-step-icon" aria-hidden="true">
+                  {%- if block.settings.custom_icon != blank -%}
+                    <img
+                      src="{{ block.settings.custom_icon | image_url: width: 80 }}"
+                      alt="{{ block.settings.title | escape }}"
+                      width="26"
+                      height="26"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    {%- case block.settings.icon_type -%}
+                      {%- when 'cart' -%}
+                        <!-- Shopping Basket Icon (Step 1) -->
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                          <line x1="3" y1="6" x2="21" y2="6"/>
+                          <path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                      {%- when 'cloud_upload' -%}
+                        <!-- Cloud Upload / Arrow Icon (Step 2) -->
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M16 16l-4-4-4 4"/>
+                          <path d="M12 12v9"/>
+                          <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                          <path d="M16 16l-4-4-4 4"/>
+                        </svg>
+                      {%- when 'badge_check' -%}
+                        <!-- Rosette / Scalloped seal with checkmark (Step 3) -->
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z"/>
+                          <path d="m9 12 2 2 4-4"/>
+                        </svg>
+                      {%- else -%}
+                        <!-- Default check / star -->
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    {%- endcase -%}
+                  {%- endif -%}
+                </div>
+              </div>
+
+              <!-- Content: Title & Description -->
+              <div class="po-step-content">
+                <h3 class="po-step-title">{{ block.settings.title }}</h3>
+                <p class="po-step-text">{{ block.settings.text }}</p>
+              </div>
+
+              <!-- Footer: Status Pill -->
+              {%- if block.settings.pill_text != blank -%}
+                <div class="po-step-footer">
+                  <span class="po-status-pill">{{ block.settings.pill_text }}</span>
+                </div>
+              {%- endif -%}
+
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default fallback blocks matching reference image -->
+          
+          <!-- Card 1 -->
+          <div class="po-step-card">
+            <div class="po-step-top">
+              <span class="po-num-badge">01</span>
+              <div class="po-step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+              </div>
+            </div>
+            <div class="po-step-content">
+              <h3 class="po-step-title">Order it</h3>
+              <p class="po-step-text">Your spec is locked in and the case price is fixed at what you saw.</p>
+            </div>
+            <div class="po-step-footer">
+              <span class="po-status-pill">Today</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="po-step-card">
+            <div class="po-step-top">
+              <span class="po-num-badge">02</span>
+              <div class="po-step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 16l-4-4-4 4"/>
+                  <path d="M12 12v9"/>
+                  <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+                </svg>
+              </div>
+            </div>
+            <div class="po-step-content">
+              <h3 class="po-step-title">Artwork</h3>
+              <p class="po-step-text">Upload now, mail it over after, or send a logo and let us draw it.</p>
+            </div>
+            <div class="po-step-footer">
+              <span class="po-status-pill">Whenever suits</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="po-step-card">
+            <div class="po-step-top">
+              <span class="po-num-badge">03</span>
+              <div class="po-step-icon" aria-hidden="true">
+                <!-- Rosette / Scalloped seal with checkmark -->
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </div>
+            </div>
+            <div class="po-step-content">
+              <h3 class="po-step-title">Proof, then print</h3>
+              <p class="po-step-text">We send it back for approval. Nothing goes on the press until you say yes.</p>
+            </div>
+            <div class="po-step-footer">
+              <span class="po-status-pill">2-3 working days</span>
+            </div>
+          </div>
+
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Order Steps",
+  "settings": [
+    {
+      "type": "color",
+      "id": "page_bg",
+      "label": "Page Background Color",
+      "default": "#FBF8F3"
+    },
+    {
+      "type": "color",
+      "id": "frame_bg",
+      "label": "Card Frame Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What happens after you order"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#FAF6EF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 160,
+      "step": 10,
+      "default": 60,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step Number",
+          "default": "01"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            { "value": "cart", "label": "Shopping Basket" },
+            { "value": "cloud_upload", "label": "Cloud Upload" },
+            { "value": "badge_check", "label": "Verified Badge" }
+          ],
+          "default": "cart"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Order it"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Your spec is locked in and the case price is fixed at what you saw."
+        },
+        {
+          "type": "text",
+          "id": "pill_text",
+          "label": "Pill Badge Text",
+          "default": "Today"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Order Steps",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "icon_type": "cart",
+            "title": "Order it",
+            "text": "Your spec is locked in and the case price is fixed at what you saw.",
+            "pill_text": "Today"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "icon_type": "cloud_upload",
+            "title": "Artwork",
+            "text": "Upload now, mail it over after, or send a logo and let us draw it.",
+            "pill_text": "Whenever suits"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "icon_type": "badge_check",
+            "title": "Proof, then print",
+            "text": "We send it back for approval. Nothing goes on the press until you say yes.",
+            "pill_text": "2-3 working days"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

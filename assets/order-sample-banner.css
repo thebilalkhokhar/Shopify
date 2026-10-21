@@ -1,0 +1,560 @@
+/* ==========================================================================
+   ORDER SAMPLE BANNER SECTION CSS
+   Reference exact match to the provided screenshot:
+   - Outer container on soft cream/sand page background (#FAF6F0 / #FBF8F3)
+   - Left Card:
+     * Golden orange / yellow background (#FEC33F or custom #F7A828 / #FAA72B)
+     * Rounded corner radius 28px
+     * Dark black border 1.8px (#171008)
+     * "Order Sample" pill badge at top left (Black fill, golden text, rounded-full)
+     * Central sample box illustration (with tapes fanning out)
+     * Below Card: Description section ("Custom Polypropylene Tape", narrative paragraph, orange 4-point star sparkles checklist)
+   - Right Card:
+     * Clean white/cream frame with rounded corners 28px
+     * Dark black border 1.8px (#171008)
+     * Big serif headline "Hold it first."
+     * Subtitle "Starting at $99.00 a box"
+     * Intro paragraph: "A printed roll and a blank roll of every material, in a box, on us..."
+     * Subheading "What is in the box?"
+     * 5 Bullet items with orange checkmark badges
+     * Dotted divider
+     * "BOXES" selector: [- 2 +] stepper button plus circle pills (2, 3, 4, 5, 10)
+     * Dotted divider
+     * Total price block: "Total" on left, "$464.63" and "$11.62 a roll" on right
+     * Specs pill summary bar: [Boxes: 2 | Printed roll: Yes | Shipping: 1-2 Days]
+     * Big Golden Yellow "Add to Cart" Pill Button with black border and offset 3D shadow
+   - Fully responsive on desktop, tablet, and mobile
+   ========================================================================== */
+
+.order-sample-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 130px 24px 80px 24px;
+  background-color: transparent;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #171008;
+}
+
+.osb-container {
+  max-width: 1650px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Two Column Layout */
+.osb-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 36px;
+  align-items: start;
+}
+
+/* ==========================================================================
+   LEFT COLUMN
+   ========================================================================== */
+.osb-left-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Golden Box Banner Card */
+.osb-banner-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.15 / 1;
+  background-color: var(--osb-banner-bg, #FAA72B);
+  border: 1.8px solid #171008;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* Top Left Pill Badge */
+.osb-badge-pill {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background-color: #171008;
+  color: #FEC33F;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 999px;
+  letter-spacing: 0.2px;
+  z-index: 2;
+}
+
+/* Main Sample Box Image */
+.osb-main-image-wrap {
+  width: 86%;
+  height: 86%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.osb-main-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.16));
+}
+
+.osb-banner-card:hover .osb-main-image {
+  transform: scale(1.02);
+}
+
+/* Placeholder Art when image is not uploaded */
+.osb-dummy-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #171008;
+  opacity: 0.8;
+}
+
+/* Description Section Below Banner */
+.osb-desc-section {
+  margin-top: 32px;
+  padding: 0 4px;
+}
+
+.osb-desc-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0 0 14px 0;
+}
+
+.osb-desc-subtitle {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0 0 8px 0;
+}
+
+.osb-desc-paragraph {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #574F46;
+  margin: 0 0 20px 0;
+}
+
+/* Sparkle Bullet List */
+.osb-sparkle-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.osb-sparkle-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #2F2922;
+}
+
+.osb-sparkle-icon {
+  color: #EA5B1B;
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN (Hold it first Form Card)
+   ========================================================================== */
+.osb-right-col {
+  width: 100%;
+}
+
+.osb-config-card {
+  background-color: transparent;
+  border: 1.8px solid #171008;
+  border-radius: 28px;
+  padding: 44px 40px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Headline & Pricing */
+.osb-headline {
+  font-family: var(--custom-font-family, "Bringbold Nineties", Georgia, serif);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #171008;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.5px;
+}
+
+.osb-sub-price {
+  font-size: 15px;
+  color: #574F46;
+  margin: 0 0 18px 0;
+}
+
+.osb-sub-price strong {
+  color: #171008;
+  font-weight: 700;
+}
+
+.osb-lead-text {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #574F46;
+  margin: 0 0 22px 0;
+}
+
+/* "What is in the box?" Section */
+.osb-box-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #171008;
+  margin: 0 0 16px 0;
+}
+
+.osb-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.osb-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #4A423A;
+}
+
+/* Orange Scalloped Rosette Checkmark Badge matching reference image */
+.osb-check-badge {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.osb-check-badge svg,
+.osb-check-badge .osb-check-img {
+  width: 22px;
+  height: 22px;
+  display: block;
+  object-fit: contain;
+}
+
+/* Dotted Divider */
+.osb-divider {
+  width: 100%;
+  border: none;
+  border-top: 1.5px dotted #D1C9BE;
+  margin: 24px 0 20px 0;
+}
+
+/* Boxes Label & Selector */
+.osb-field-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #171008;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.osb-boxes-selector-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Stepper [- 2 +] */
+.osb-stepper {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1.5px solid #171008;
+  border-radius: 999px;
+  padding: 3px 6px;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+.osb-step-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #171008;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.15s ease;
+}
+
+.osb-step-btn:hover {
+  background-color: #F0ECE4;
+}
+
+.osb-step-input {
+  width: 32px;
+  text-align: center;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #171008;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* Quick Select Circular Number Pills (2, 3, 4, 5, 10) */
+.osb-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.osb-num-pill {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #171008;
+  background-color: transparent;
+  color: #171008;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.osb-num-pill:hover {
+  background-color: #F2EDE4;
+}
+
+.osb-num-pill.is-active {
+  background-color: #171008;
+  color: #FFFFFF;
+}
+
+/* Total Price Row */
+.osb-total-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 22px;
+}
+
+.osb-total-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #171008;
+  padding-top: 4px;
+}
+
+.osb-total-price-block {
+  text-align: right;
+}
+
+.osb-total-price {
+  font-size: 34px;
+  font-weight: 800;
+  color: #171008;
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.osb-per-roll-price {
+  font-size: 12px;
+  color: #66635F;
+  margin-top: 4px;
+}
+
+/* Black Summary Strip */
+.osb-summary-strip {
+  background-color: #171008;
+  border-radius: 12px;
+  padding: 12px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+  align-items: center;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.osb-summary-col {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.osb-summary-col--right {
+  justify-content: flex-end;
+}
+
+.osb-summary-label {
+  font-size: 11px;
+  color: #A8A29A;
+}
+
+.osb-summary-val {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Big Gold Add to Cart Button (Capsule / Pill with 3D shadow) */
+.osb-add-to-cart-btn {
+  width: 100%;
+  background-color: #FEC33F;
+  border: 2px solid #171008;
+  border-radius: 999px;
+  padding: 15px 24px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: #171008;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-shadow: 2.5px 3.5px 0px #171008;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.2px;
+}
+
+.osb-add-to-cart-btn:hover {
+  background-color: #f5b931;
+  transform: translate(-1px, -1px);
+  box-shadow: 3.5px 4.5px 0px #171008;
+}
+
+.osb-add-to-cart-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0.5px 0.5px 0px #171008;
+}
+
+.osb-add-to-cart-btn.is-loading {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media screen and (max-width: 1024px) {
+  .order-sample-section {
+    padding: 110px 20px 60px 20px;
+  }
+
+  .osb-layout {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+
+  .osb-config-card {
+    padding: 34px 28px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .order-sample-section {
+    padding: 100px 16px 50px 16px;
+  }
+
+  .osb-banner-card {
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .osb-badge-pill {
+    top: 16px;
+    left: 16px;
+    font-size: 11.5px;
+    padding: 6px 14px;
+  }
+
+  .osb-config-card {
+    border-radius: 20px;
+    padding: 26px 18px;
+  }
+
+  .osb-headline {
+    font-size: 30px;
+  }
+
+  .osb-boxes-selector-row {
+    gap: 8px;
+  }
+
+  .osb-pills-row {
+    gap: 6px;
+  }
+
+  .osb-num-pill {
+    width: 32px;
+    height: 32px;
+    font-size: 12.5px;
+  }
+
+  .osb-summary-strip {
+    padding: 10px 14px;
+    font-size: 11px;
+    grid-template-columns: 1fr 1fr 1.2fr;
+  }
+
+  .osb-summary-label {
+    font-size: 10px;
+  }
+
+  .osb-summary-val {
+    font-size: 12px;
+  }
+
+  .osb-total-price {
+    font-size: 28px;
+  }
+
+  .osb-add-to-cart-btn {
+    font-size: 18px;
+    padding: 13px 20px;
+  }
+}

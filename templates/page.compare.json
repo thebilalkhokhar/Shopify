@@ -1,0 +1,102 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "compare_table": {
+      "type": "compare-table",
+      "settings": {
+        "page_bg": "#F6F3EE",
+        "badge_text": "All five, every row",
+        "heading": "The whole comparison",
+        "item1_name": "PAPER",
+        "item1_sub": "WATER-ACTIVATED",
+        "item1_price": "$9.10",
+        "item1_price_sub": "AT 64 CASES",
+        "item1_min": "$718.75",
+        "item1_min_sub": "40 ROLLS",
+        "item1_url": "/collections",
+        "item2_name": "POLYPROPYLENE",
+        "item2_sub": "PRESSURE-SENSITIVE",
+        "item2_price": "$5.68",
+        "item2_price_sub": "AT 64 CASES",
+        "item2_min": "$464.63",
+        "item2_min_sub": "40 ROLLS",
+        "item2_url": "/collections",
+        "item3_name": "PVC",
+        "item3_sub": "PRESSURE-SENSITIVE",
+        "item3_price": "$7.84",
+        "item3_price_sub": "AT 64 CASES",
+        "item3_min": "$625.13",
+        "item3_min_sub": "40 ROLLS",
+        "item3_url": "/collections",
+        "item4_name": "HI-TACK FREEZER",
+        "item4_sub": "HI-TACK COATED",
+        "item4_price": "$10.18",
+        "item4_price_sub": "AT 64 CASES",
+        "item4_min": "$799.00",
+        "item4_min_sub": "40 ROLLS",
+        "item4_url": "/collections",
+        "item5_name": "FLATBACK",
+        "item5_sub": "NON-STRETCH",
+        "item5_price": "$7.12",
+        "item5_price_sub": "AT 64 CASES",
+        "item5_min": "$571.63",
+        "item5_min_sub": "40 ROLLS",
+        "item5_url": "/collections"
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "compare_table",
+    "home_footer"
+  ]
+}

@@ -1,0 +1,236 @@
+/* ==========================================================================
+   PRODUCT ORDER SECTION CSS (What happens after you order)
+   Exact replica of reference design:
+   - Outer container on page background (#FBF8F3)
+   - Dark brown / black card (#171008) with rounded corners & border
+   - Elegant serif heading centered
+   - 3 White/cream cards with step badges (01, 02, 03), orange stroke icons,
+     titles, descriptions, and pill badges
+   - Fully responsive on tablet and mobile
+   ========================================================================== */
+
+.product-order-section {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.po-container {
+  max-width: 1700px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Outer Dark Frame Card */
+.po-card-frame {
+  background-color: #171008;
+  border-radius: 28px;
+  padding: 56px 160px 64px;
+  box-sizing: border-box;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Section Heading */
+.po-heading {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 38px;
+  font-weight: 700;
+  color: #FAF6EF;
+  text-align: center;
+  margin: 0 0 46px 0;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+
+/* 3-Cards Grid */
+.po-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Step Card Item */
+.po-step-card {
+  background-color: #FAF6EF;
+  border-radius: 20px;
+  padding: 30px 26px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  box-sizing: border-box;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.po-step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Top Row: Number Badge (left) & Icon (right) */
+.po-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+/* Number Badge: 01, 02, 03 */
+.po-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #171008;
+  color: #F8B825;
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  line-height: 1;
+  letter-spacing: 0.3px;
+}
+
+/* Right Icon (Orange linear stroke) */
+.po-step-icon {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #EA5B1B;
+  flex-shrink: 0;
+}
+
+.po-step-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: #EA5B1B;
+  stroke-width: 1.7;
+  fill: none;
+}
+
+.po-step-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* Step Card Content */
+.po-step-content {
+  margin-bottom: 24px;
+}
+
+.po-step-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+.po-step-text {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #55504A;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Bottom Row: Pill Tag (Today, Whenever suits, 2-3 working days) */
+.po-step-footer {
+  margin-top: auto;
+}
+
+.po-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #171008;
+  color: #EA5B1B;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 20px;
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media screen and (max-width: 1200px) {
+  .po-container {
+    padding: 0 24px;
+  }
+
+  .po-card-frame {
+    padding: 44px 32px 52px;
+    border-radius: 24px;
+  }
+
+  .po-heading {
+    font-size: 32px;
+    margin-bottom: 36px;
+  }
+
+  .po-grid {
+    gap: 18px;
+  }
+
+  .po-step-card {
+    padding: 24px 20px 26px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .po-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .po-card-frame {
+    padding: 38px 22px 42px;
+    border-radius: 20px;
+  }
+
+  .po-heading {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
+
+  .po-step-card {
+    min-height: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .po-container {
+    padding: 0 16px;
+  }
+
+  .po-card-frame {
+    padding: 30px 16px 34px;
+    border-radius: 18px;
+  }
+
+  .po-heading {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  .po-step-title {
+    font-size: 18px;
+  }
+
+  .po-step-text {
+    font-size: 13px;
+  }
+}

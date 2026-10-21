@@ -1,0 +1,201 @@
+/* Cart Artwork Section (Light Cream Theme #FBF8F3) */
+.cart-artwork-section {
+  background-color: #FBF8F3;
+  padding: 60px 20px 80px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cart-artwork__container {
+  max-width: 1360px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Header Area: Left aligned or clean centered matching reference */
+.cart-artwork__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 36px;
+}
+
+/* "The Route" Pill Badge */
+.cart-artwork__badge {
+  background-color: #F8B825;
+  color: #171008;
+  padding: 6px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 15px;
+  border: 1.8px solid #171008;
+  display: inline-block;
+  transform: rotate(-4deg);
+  margin-bottom: 12px;
+  box-shadow: 2.5px 3px 0 0 #171008;
+  letter-spacing: -0.2px;
+}
+
+/* Title: "Artwork in. Tape out." */
+.cart-artwork__title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 46px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  text-align: left;
+}
+
+/* 3-Column Grid */
+.cart-artwork__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Individual Step Card */
+.cart-artwork__card {
+  background-color: var(--card-bg, #FDB927);
+  border-radius: 24px;
+  border: 2px solid #171008;
+  box-shadow: 4px 4px 0 0 #171008;
+  min-height: 330px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px 20px 26px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-artwork__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 6px 0 0 #171008;
+}
+
+/* Card Top Text */
+.cart-artwork__card-content {
+  position: relative;
+  z-index: 2;
+  max-width: 82%;
+}
+
+.cart-artwork__card-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--card-title-color, #171008);
+  margin: 0 0 10px 0;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.cart-artwork__card-desc {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--card-desc-color, #362415);
+  margin: 0;
+}
+
+/* Bottom Left Time Pill Badge */
+.cart-artwork__card-pill {
+  position: absolute;
+  bottom: 20px;
+  left: 22px;
+  z-index: 4;
+  background-color: #171008;
+  color: #FEC33F;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.2px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+/* Bottom-Right Illustration Media */
+.cart-artwork__card-media {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 85%;
+  height: 85%;
+  max-height: 290px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cart-artwork__card-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: bottom right;
+  display: block;
+}
+
+/* Placeholder box */
+.cart-artwork__card-placeholder {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Tablet & Mobile Responsive */
+@media screen and (max-width: 1024px) {
+  .cart-artwork__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cart-artwork-section {
+    padding: 40px 14px 60px 14px;
+  }
+
+  .cart-artwork__title {
+    font-size: 34px;
+  }
+
+  .cart-artwork__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .cart-artwork__card {
+    min-height: 280px;
+    padding: 22px 20px;
+  }
+
+  .cart-artwork__card-title {
+    font-size: 28px;
+  }
+
+  .cart-artwork__card-media {
+    max-height: 220px;
+  }
+}

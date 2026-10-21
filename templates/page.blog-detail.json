@@ -1,0 +1,119 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "blog-detail",
+      "blocks": {
+        "topic_1": {
+          "type": "topic",
+          "settings": {
+            "heading": "Pick the one thing people touch",
+            "content": "<p>Every parcel has a hierarchy of attention and it is not the one you would guess. The customer sees the outside of the box first: about two metres away for roughly a second. Then their hands go to the seal. That is the moment of highest attention in the entire unboxing, and almost nobody designs for it.</p><p>So if you are only going to brand one thing, brand the seal. A printed carton is the expensive answer to a question that a printed tape answers for a fraction of it, and the tape is the part their fingers are on.</p>"
+          }
+        },
+        "topic_2": {
+          "type": "topic",
+          "settings": {
+            "heading": "Two colours beats six",
+            "content": "<p>Every first-time packaging designer tries far too much: a 4-colour illustration, a gradient, a tagline, a website, a QR code and a social handle, all fighting on a two-inch strip that goes past at speed.</p><p>Restraint reads as confidence and it also reads from further away. In a warehouse floor or a doorstep, a mark you can identify at three metres is doing more for you than a beautiful scene you have to hold still to see.</p><ul><li>One mark, big, repeated. Not a scene.</li><li>Two spot colours is the sweet spot. Three is the ceiling and rarely the answer.</li><li>Skip the QR code unless something is genuinely behind it.</li><li>Leave the tagline off. It never survives the roll.</li></ul>",
+            "inline_image": "shopify://shop_images/banner2.webp"
+          }
+        },
+        "topic_3": {
+          "type": "topic",
+          "settings": {
+            "heading": "Match the material to the promise",
+            "content": "<p>Material is a message before anyone reads a word. Kraft paper says considered and recyclable. Glossy white plastic says volume and speed. Neither is better; they are just different claims, and the wrong one undercuts everything else you have written.</p><p>If your brand is built on being low-waste, plastic tape on a recycled carton is a contradiction your customer will notice before you do. If you ship four hundred boxes a week, water-activated paper is a real change to how your bench works, and pretending otherwise makes for an unhappy Monday.</p>"
+          }
+        },
+        "table_1": {
+          "type": "comparison_table",
+          "settings": {
+            "col1_header": "If you want to say",
+            "col2_header": "Reach for",
+            "col3_header": "Watch out for",
+            "row1_col1": "We care about the planet, genuinely",
+            "row1_col2": "Kraft paper tape (water-activated)",
+            "row1_col3": "Dispenser needed — do not buy before you have one",
+            "row2_col1": "Crisp, precise, modern design",
+            "row2_col2": "Polypropylene with a clear or white base",
+            "row2_col3": "High-volume stretch noise unless low-noise grade",
+            "row3_col1": "Heavy duty, premium, quiet seal",
+            "row3_col2": "PVC tape (smooth, silent release)",
+            "row3_col3": "Cold temperatures reduce adhesion slightly"
+          }
+        },
+        "topic_4": {
+          "type": "topic",
+          "settings": {
+            "heading": "Design for the repeat, not the panel",
+            "content": "<p>This is the one thing that catches almost every first design, and it is specific to tape. A box is a panel: your artwork sits on it once, framed, with edges. Tape is a continuous repeat. Your mark runs down the roll over and over, and it gets cut at an arbitrary point that nobody controls.</p><p>So the join matters more than the composition. A design that looks balanced in isolation can produce an ugly collision every time it repeats, and a logo that sits too close to the edge gets sliced in half on half the boxes you seal.</p><ul><li>Lay your mark out at least three times and look at the joins, not the artwork.</li><li>Keep anything you care about away from the trim edges.</li><li>Assume the cut lands in the worst possible place, because eventually it will.</li><li>Ask for the template. Every product page has one; of every roll fries left, the hit people find out too late.</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "topic_1",
+        "topic_2",
+        "topic_3",
+        "table_1",
+        "topic_4"
+      ],
+      "settings": {
+        "bg_color": "#FAF7F0",
+        "category": "Sticky Business",
+        "badge_label": "Share in",
+        "date": "August 14, 2026",
+        "title": "How to make packaging look less meh",
+        "subtitle": "Your packaging has one job before anything else: make people want to look twice. It does not need to be loud, expensive, or covered in glitter. It just to feel elevated. Here is how to get there without regretting your bill.",
+        "featured_image": "shopify://shop_images/blogFeature.webp",
+        "toc_title": "In this post",
+        "intro_content": "<p>Most packaging is not ugly. It is undecided. Someone pressed a box because it fit, picked tape because it was in the cupboard, and put a sticker on because they were stickers floating around. Nothing in it is wrong, exactly. It just does not read as thought-out.</p><p>That is the actual gap between packaging that looks cheap and packaging that looks considered... not budget, decidedness. The good news is that decidedness is far cheaper than it looks, and you can usually buy it with one component rather than all of them.</p>",
+        "outro_note": "Written from what we can see through the studio, not from a keyword tool. If something here is wrong for your setup, say so — we would rather fix the advice than defend it.",
+        "show_author": true,
+        "author_name": "Armida"
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "menu_1_title": "Tapes",
+        "menu_2_title": "Company",
+        "menu_3_title": "Help",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_2_text": "Terms",
+        "legal_3_text": "Shipping",
+        "legal_4_text": "Returns & damages",
+        "legal_5_text": "Accessibility"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "home_footer"
+  ]
+}

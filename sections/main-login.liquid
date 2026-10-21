@@ -1,0 +1,269 @@
+{{ 'auth-login.css' | asset_url | stylesheet_tag }}
+
+<div class="tf-auth-page" id="TapeFoxAuthRoot">
+
+  <!-- Top Center Logo -->
+  <header class="tf-auth-header">
+    <a href="{{ routes.root_url }}" class="tf-auth-logo-link" aria-label="TapeFox Home">
+      <img
+        src="{{ 'headerLogo.svg' | file_url }}"
+        alt="{{ shop.name }}"
+        class="tf-auth-logo-img"
+        width="135"
+        height="32"
+      >
+    </a>
+  </header>
+
+  <!-- Main Authentication Container -->
+  <div class="tf-auth-main">
+
+    <!-- Sparkle Stars -->
+    <div class="tf-auth-sparkles" aria-hidden="true">
+      <span class="tf-sparkle-star large">✦</span>
+      <span class="tf-sparkle-star small">✦</span>
+    </div>
+
+    <!-- =======================================================================
+         SCREEN 1: EMAIL ENTRY ("No password. Just a code.")
+         ======================================================================= -->
+    <div id="tfAuthStepEmail" class="tf-auth-step">
+      <!-- Badge -->
+      <div class="tf-auth-badge">Your Account</div>
+
+      <!-- Heading -->
+      <h1 class="tf-auth-heading">No password. Just a code.</h1>
+
+      <!-- Description -->
+      <p class="tf-auth-subheading">
+        Type the email you order with. A six-digit code lands in about a minute, and it works once.
+      </p>
+
+      <!-- Form -->
+      <form id="tfEmailForm" class="tf-auth-form" onsubmit="TapeFoxAuth.handleSendCode(event)" novalidate>
+        <div class="tf-auth-email-wrap" id="tfEmailInputWrap">
+          <input
+            type="email"
+            id="tfAuthEmailInput"
+            name="customer_email"
+            class="tf-auth-input"
+            placeholder="Email"
+            autocomplete="email"
+            required
+          >
+          <div class="tf-auth-error" id="tfEmailError">Please enter a valid email address.</div>
+        </div>
+
+        <div class="tf-auth-actions-row">
+          <button type="submit" class="tf-auth-btn" id="tfSendCodeBtn">
+            Send the code
+          </button>
+          <span class="tf-auth-side-link">
+            Checked out as a guest? <a href="/pages/contact">Find an order</a>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <!-- =======================================================================
+         SCREEN 2: OTP VERIFICATION ("Six digits. Ten minutes.")
+         ======================================================================= -->
+    <div id="tfAuthStepOtp" class="tf-auth-step" style="display: none;">
+      <!-- Badge -->
+      <div class="tf-auth-badge">Check your email</div>
+
+      <!-- Heading with orange highlight -->
+      <h1 class="tf-auth-heading">
+        Six digits. <span class="tf-highlight-orange">Ten minutes.</span>
+      </h1>
+
+      <!-- Description showing entered email masked -->
+      <p class="tf-auth-subheading">
+        We sent a 6-digit verification code to<br>
+        <span class="tf-auth-email-target" id="tfMaskedEmailDisplay">j••••@company.com</span>
+      </p>
+
+      <!-- OTP Form -->
+      <form id="tfOtpForm" class="tf-auth-form" onsubmit="TapeFoxAuth.handleVerifyOtp(event)" novalidate>
+        <div class="tf-auth-otp-row" id="tfOtpRow">
+          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="0" autofocus>
+          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="1">
+          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="2">
+          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="3">
+          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="4">
+          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="5">
+        </div>
+
+        <div class="tf-auth-error" id="tfOtpError" style="margin-bottom: 16px; text-align: center;">Please enter all 6 digits.</div>
+
+        <div class="tf-auth-actions-row">
+          <button type="submit" class="tf-auth-btn" id="tfSignInBtn">
+            Sign in
+          </button>
+          <span class="tf-auth-side-link">
+            Nothing yet? <button type="button" class="tf-auth-action-link" onclick="TapeFoxAuth.resendCode()" style="background:none;border:none;padding:0;font:inherit;">Send it again</button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Bottom Notice -->
+  <div class="tf-auth-footer-notice" style="text-align:center !important; width:100% !important; margin:0 auto !important; display:block !important;">
+    Code not arriving? Check spam, or call (800) 555-0199, Mon–Fri, 8am–6pm CT.
+  </div>
+
+</div>
+
+<script>
+  window.TapeFoxAuth = {
+    userEmail: '',
+
+    maskEmail: function(email) {
+      if (!email || email.indexOf('@') === -1) return 'your email';
+      var parts = email.split('@');
+      var name = parts[0];
+      var domain = parts[1];
+      var firstChar = name.charAt(0);
+      return firstChar + '••••@' + domain;
+    },
+
+    handleSendCode: function(e) {
+      e.preventDefault();
+      var input = document.getElementById('tfAuthEmailInput');
+      var wrap = document.getElementById('tfEmailInputWrap');
+      var emailVal = (input ? input.value : '').trim();
+
+      var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+      if (!isValid) {
+        if (wrap) wrap.classList.add('has-error');
+        return false;
+      }
+
+      if (wrap) wrap.classList.remove('has-error');
+      this.userEmail = emailVal;
+
+      var btn = document.getElementById('tfSendCodeBtn');
+      if (btn) {
+        btn.textContent = 'Sending code...';
+        btn.disabled = true;
+      }
+
+      // Transition smoothly to OTP Screen
+      setTimeout(function() {
+        if (btn) {
+          btn.textContent = 'Send the code';
+          btn.disabled = false;
+        }
+
+        var stepEmail = document.getElementById('tfAuthStepEmail');
+        var stepOtp = document.getElementById('tfAuthStepOtp');
+        var emailDisplay = document.getElementById('tfMaskedEmailDisplay');
+
+        if (emailDisplay) {
+          emailDisplay.textContent = TapeFoxAuth.maskEmail(TapeFoxAuth.userEmail);
+        }
+
+        if (stepEmail) stepEmail.style.display = 'none';
+        if (stepOtp) stepOtp.style.display = 'block';
+
+        // Focus first OTP box
+        var firstBox = document.querySelector('.tf-otp-box[data-index="0"]');
+        if (firstBox) firstBox.focus();
+      }, 700);
+
+      return false;
+    },
+
+    handleVerifyOtp: function(e) {
+      e.preventDefault();
+      var boxes = document.querySelectorAll('.tf-otp-box');
+      var code = '';
+      boxes.forEach(function(b) { code += b.value.trim(); });
+
+      var err = document.getElementById('tfOtpError');
+      if (code.length < 6) {
+        if (err) {
+          err.textContent = 'Please enter all 6 digits of your verification code.';
+          err.style.display = 'block';
+        }
+        return false;
+      }
+
+      if (err) err.style.display = 'none';
+
+      var btn = document.getElementById('tfSignInBtn');
+      if (btn) {
+        btn.textContent = 'Signing in...';
+        btn.disabled = true;
+      }
+
+      setTimeout(function() {
+        alert('Signed in successfully as ' + TapeFoxAuth.userEmail + '!');
+        window.location.href = '/';
+      }, 1000);
+
+      return false;
+    },
+
+    resendCode: function() {
+      alert('A fresh 6-digit code has been sent to ' + (this.userEmail || 'your email') + '!');
+      var boxes = document.querySelectorAll('.tf-otp-box');
+      boxes.forEach(function(b) { b.value = ''; });
+      var firstBox = document.querySelector('.tf-otp-box[data-index="0"]');
+      if (firstBox) firstBox.focus();
+    }
+  };
+
+  // Setup OTP inputs auto-advance and backspace handling
+  document.addEventListener('DOMContentLoaded', function() {
+    var boxes = document.querySelectorAll('.tf-otp-box');
+    boxes.forEach(function(box, idx) {
+      box.addEventListener('input', function(e) {
+        var val = e.target.value.replace(/\D/g, '');
+        e.target.value = val ? val.charAt(val.length - 1) : '';
+        if (e.target.value && idx < boxes.length - 1) {
+          boxes[idx + 1].focus();
+        }
+      });
+
+      box.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+          boxes[idx - 1].focus();
+        }
+      });
+
+      // Support pasting 6-digit code
+      box.addEventListener('paste', function(e) {
+        e.preventDefault();
+        var pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
+        var digits = pasteData.replace(/\D/g, '').split('').slice(0, 6);
+        digits.forEach(function(d, dIdx) {
+          if (boxes[dIdx]) boxes[dIdx].value = d;
+        });
+        if (digits.length > 0) {
+          var targetIdx = Math.min(digits.length, boxes.length - 1);
+          boxes[targetIdx].focus();
+        }
+      });
+    });
+
+    var emailInput = document.getElementById('tfAuthEmailInput');
+    if (emailInput) {
+      emailInput.addEventListener('input', function() {
+        var wrap = document.getElementById('tfEmailInputWrap');
+        if (wrap) wrap.classList.remove('has-error');
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Customer Login & OTP",
+  "tag": "section",
+  "class": "section-auth-login",
+  "settings": []
+}
+{% endschema %}

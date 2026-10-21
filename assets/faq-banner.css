@@ -1,0 +1,344 @@
+/* FAQ Banner CSS */
+
+.faq-banner-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  position: relative;
+  overflow: visible;
+  background-color: transparent;
+}
+
+/* Orange Main Card Frame */
+.faq-banner-card {
+  width: 100%;
+  max-width: 100%;
+  min-height: 480px;
+  background-color: var(--faq-banner-bg, #fc6a02);
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.12) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 24px 24px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+  padding: 200px 40px 50px 40px;
+  /* Top padding accommodates the absolute header */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fox with Boxes (Bottom-Left) */
+.faq-banner-fox {
+  position: absolute;
+  left: 5%;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  line-height: 0;
+}
+
+.faq-banner-fox__img {
+  width: auto;
+  max-width: var(--faq-fox-width, 360px);
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 12px 20px rgba(23, 16, 8, 0.25));
+}
+
+.faq-banner-fox__placeholder {
+  border: 2px dashed rgba(23, 16, 8, 0.4);
+  border-radius: 16px;
+  padding: 24px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #171008;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+/* Center Content: Badge, Heading, Subheading, Search Bar */
+.faq-banner-content {
+  max-width: 680px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 4;
+  margin: 0 auto;
+}
+
+/* Yellow Sticker Badge ("FAQ'S") */
+.faq-banner-badge {
+  background-color: #f8b825;
+  color: #171008;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 5px 22px;
+  border-radius: 999px;
+  border: 2px solid #171008;
+  display: inline-block;
+  transform: rotate(-3deg);
+  margin-bottom: 16px;
+  box-shadow: 2px 3.5px 0 0 #171008;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+/* Main Display Title ("Ask us anything!") */
+.faq-banner-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 58px;
+  font-weight: 700;
+  color: #171008;
+  line-height: 1.08;
+  letter-spacing: -0.5px;
+  margin: 0 0 16px 0;
+}
+
+/* Description / Subtitle */
+.faq-banner-desc {
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #171008;
+  margin: 0 0 32px 0;
+  max-width: 530px;
+}
+
+.faq-banner-desc p {
+  margin: 0;
+}
+
+/* Search Bar Pill Form */
+.faq-banner-search-wrap {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+
+.faq-banner-search-form {
+  width: 100%;
+  position: relative;
+}
+
+.faq-banner-search-inner {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 2px solid #171008;
+  border-radius: 999px;
+  padding: 14px 28px;
+  box-shadow: 3px 4px 0 0 #171008;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.faq-banner-search-inner:focus-within {
+  box-shadow: 4px 5px 0 0 #171008;
+  transform: translate(-1px, -1px);
+}
+
+.faq-banner-search__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #171008;
+  margin-right: 14px;
+  flex-shrink: 0;
+}
+
+.faq-banner-search__input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: #171008;
+  padding: 0;
+}
+
+.faq-banner-search__input::placeholder {
+  color: #7a7267;
+  font-size: 14.5px;
+}
+
+/* ========================================================
+   Responsive Breakpoints
+   ======================================================== */
+
+@media (max-width: 1550px) {
+  .faq-banner-fox__img {
+    max-width: 310px;
+    max-height: 330px;
+  }
+}
+@media (max-width: 1450px) {
+  .faq-banner-fox__img {
+    max-width: 310px;
+    max-height: 310px;
+  }
+}
+@media (max-width: 1350px) {
+  .faq-banner-fox__img {
+    max-width: 310px;
+    max-height: 295px;
+  }
+}
+@media (max-width: 1320px) {
+  .faq-banner-card {
+    min-height: 440px;
+    padding: 120px 30px 40px 30px;
+  }
+
+  .faq-banner-fox {
+    left: 3%;
+  }
+
+  .faq-banner-fox__img {
+    max-width: 310px;
+    max-height: 260px;
+  }
+
+  .footer-banner-search-wrap {
+    max-width: 520px;
+  }
+
+  .faqs-browser__top-row {
+    display: none;
+  }
+  .faq-banner-title {
+    font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 1180px) {
+  .faq-banner-search-wrap {
+    max-width: 450px;
+  }
+}
+@media (max-width: 1100px) {
+  .faq-banner-card {
+    min-height: 420px;
+    padding: 110px 24px 40px 24px;
+  }
+
+  .faq-banner-fox {
+    left: 2%;
+  }
+
+  .faq-banner-fox__img {
+    max-width: 250px;
+    max-height: 300px;
+  }
+
+  .faq-banner-title {
+    font-size: 44px;
+  }
+
+  .faq-banner-desc {
+    font-size: 14px;
+    max-width: 460px;
+  }
+}
+
+@media screen and (min-width: 861px) and (max-width: 1123px) {
+  .faq-banner-fox {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .faq-banner-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 110px 20px 40px;
+    min-height: auto;
+    border-radius: 20px;
+  }
+
+  .faq-banner-fox {
+    position: relative;
+    left: auto;
+    bottom: 0;
+    margin-top: 24px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .faq-banner-fox__img {
+    max-width: 200px;
+    max-height: 250px;
+    margin: 0 auto;
+  }
+
+  .faq-banner-title {
+    font-size: 38px;
+  }
+
+  .faq-banner-desc {
+    font-size: 13.5px;
+    margin-bottom: 24px;
+  }
+
+  .faq-banner-search-inner {
+    padding: 12px 20px;
+  }
+
+  .faq-banner-search__input {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .faq-banner-card {
+    padding: 100px 16px 40px;
+    border-radius: 16px;
+  }
+
+  .faq-banner-badge {
+    font-size: 13px;
+    padding: 4px 18px;
+    margin-bottom: 12px;
+  }
+
+  .faq-banner-title {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .faq-banner-desc {
+    font-size: 13px;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+
+  .faq-banner-search-inner {
+    padding: 11px 18px;
+    box-shadow: 2px 3px 0 0 #171008;
+  }
+
+  .faq-banner-fox__img {
+    max-width: 190px;
+    max-height: 220px;
+  }
+}

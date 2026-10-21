@@ -1,0 +1,258 @@
+{{ 'home-faqs.css' | asset_url | stylesheet_tag }}
+
+<div class="home-faqs-section tapefox-dark-section" {{ section.shopify_attributes }}>
+  <div class="home-faqs__card">
+    <div class="home-faqs__grid">
+      
+      <!-- Left Column: Header, Description, Fox Graphic, Buttons -->
+      <div class="home-faqs__left">
+        
+        <!-- Header Info -->
+        <div class="home-faqs__header">
+          {% if section.settings.badge_text != blank %}
+            <div class="home-faqs__badge">{{ section.settings.badge_text }}</div>
+          {% endif %}
+
+          <div class="home-faqs__title-row">
+            {% if section.settings.heading != blank %}
+              <h2 class="home-faqs__title">{{ section.settings.heading }}</h2>
+            {% endif %}
+
+            <!-- Orange Sparkle Stars -->
+            <span class="home-faqs__sparkles" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="#E85D18" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5L12 0z"/>
+              </svg>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#E85D18" xmlns="http://www.w3.org/2000/svg" style="margin-left: 2px; margin-bottom: 8px;">
+                <path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5L12 0z"/>
+              </svg>
+            </span>
+          </div>
+
+          {% if section.settings.description != blank %}
+            <p class="home-faqs__desc">{{ section.settings.description }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Bottom Row: Buttons on left, Fox Graphic to the right of buttons -->
+        <div class="home-faqs__bottom-row">
+          <!-- Action Buttons -->
+          <div class="home-faqs__actions">
+            {% if section.settings.btn1_text != blank %}
+              <a href="{{ section.settings.btn1_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--outline">
+                {{ section.settings.btn1_text }}
+              </a>
+            {% endif %}
+
+            {% if section.settings.btn2_text != blank %}
+              <a href="{{ section.settings.btn2_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--primary">
+                {{ section.settings.btn2_text }}
+              </a>
+            {% endif %}
+          </div>
+
+          <!-- Fox Character Graphic -->
+          <div class="home-faqs__character-wrap">
+            {% if section.settings.fox_image != blank %}
+              <img
+                src="{{ section.settings.fox_image | image_url: width: 600 }}"
+                alt="TapeFox Support"
+                width="{{ section.settings.fox_image.width | default: 400 }}"
+                height="{{ section.settings.fox_image.height | default: 450 }}"
+                loading="lazy"
+                class="home-faqs__character-img"
+              >
+            {% else %}
+              <!-- Fox on tape boxes placeholder -->
+              <div class="home-faqs__character-placeholder">
+                <span>Upload Fox Graphic</span>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Accordion FAQ List -->
+      <div class="home-faqs__right">
+        <div class="home-faqs__accordion">
+          {% for block in section.blocks %}
+            {% assign is_first = forloop.first %}
+            <div
+              class="home-faqs__item {% if is_first %}is-open{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <button
+                type="button"
+                class="home-faqs__question"
+                aria-expanded="{% if is_first %}true{% else %}false{% endif %}"
+              >
+                <span class="home-faqs__question-text">{{ block.settings.question }}</span>
+                <span class="home-faqs__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <line class="home-faqs__icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                    <line class="home-faqs__icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </span>
+              </button>
+              
+              <div class="home-faqs__answer-wrap">
+                <div class="home-faqs__answer">
+                  <p>{{ block.settings.answer }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('[data-section-id="{{ section.id }}"]') || document.currentScript?.closest('.home-faqs-section') || document;
+    const items = section.querySelectorAll('.home-faqs__item');
+
+    items.forEach(function(item) {
+      const btn = item.querySelector('.home-faqs__question');
+
+      btn.addEventListener('click', function() {
+        const isOpen = item.classList.contains('is-open');
+
+        // Close other items for accordion behavior
+        items.forEach(function(otherItem) {
+          if (otherItem !== item && otherItem.classList.contains('is-open')) {
+            otherItem.classList.remove('is-open');
+            otherItem.querySelector('.home-faqs__question')?.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle current item smoothly via CSS classes
+        if (isOpen) {
+          item.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Home FAQs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Questions"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Before you order"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad."
+    },
+    {
+      "type": "image_picker",
+      "id": "fox_image",
+      "label": "Fox Character Graphic"
+    },
+    {
+      "type": "text",
+      "id": "btn1_text",
+      "label": "Button 1 Text",
+      "default": "STILL GOT QUESTIONS?"
+    },
+    {
+      "type": "url",
+      "id": "btn1_url",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "btn2_text",
+      "label": "Button 2 Text",
+      "default": "Support"
+    },
+    {
+      "type": "url",
+      "id": "btn2_url",
+      "label": "Button 2 Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Can you help with my tape design?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home FAQs",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are there any plate or setup fees?",
+            "answer": "No hidden fees. What you see on the product page is what you pay."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will my custom tape take?",
+            "answer": "Standard turnaround is 12-14 business days from artwork approval."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What do I need to get started?",
+            "answer": "Just your logo file (vector PDF, AI, or high-res PNG) and your preferred tape specifications."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I change my design later?",
+            "answer": "Yes, you can update your design anytime before the proof is approved for printing."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

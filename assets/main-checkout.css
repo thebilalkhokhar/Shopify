@@ -1,0 +1,929 @@
+/* ==========================================================================
+   TAPEFOX CUSTOM CHECKOUT PAGE CSS
+   Matches provided UI design accurately:
+   - Soft warm neutral background (#F5EFE6 / #F9F6F0)
+   - Minimalist Clean Header: Logo left, Cart icon with badge right
+   - 2-Column Responsive Layout:
+     - Left column (~60%):
+       * Box 1: Contact (with Sign in link, Email, Newsletter checkbox)
+       * Box 2: 1 Contact and delivery (Country select, First/Last name, Company, Phone with prefix, Address, Apt, City, State/Zip)
+       * Box 3: 2 Shipping Method (Radio options with badge/pill, standard active yellow, note text, Add delivery notes)
+       * Box 4: 3 Payments (Card icons: MC, Visa, GPay, ApplePay, PayPal; Card details with lock/CVV help; Cash app pay option)
+       * Box 5: Checkbox agreement "I understand nothing prints until I approve a proof"
+       * Big Yellow/Gold "Complete Purchase" CTA Button with black border & subtle 3D shadow
+       * Terms & refund policy disclaimer
+     - Right column (~40%):
+       * Dark card (#191510)
+       * Product order items with images, title, spec breakdown, line total
+       * Discount code input + Apply button
+       * Subtotal breakdown: Tape, Shipping (Free), Sales tax, Tape, Total ($4,156.13 / $11.62 a roll in bold yellow)
+       * "What happens next" steps 1, 2, 3 with yellow numbered badges
+   ========================================================================== */
+
+:root {
+  --tf-chk-bg: #F8F4EE;
+  --tf-chk-card-bg: #F8F4EE;
+  --tf-chk-dark: #17120E;
+  --tf-chk-dark-card: #181410;
+  --tf-chk-border: #231E18;
+  --tf-chk-border-subtle: #D8D2C7;
+  --tf-chk-input-bg: #F8F4EE;
+  --tf-chk-yellow: #FEC33F;
+  --tf-chk-yellow-dark: #F5B324;
+  --tf-chk-red: #D93829;
+  --tf-chk-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --tf-chk-serif: var(--custom-font-family, "Bringbold Nineties", Georgia, serif);
+}
+
+.tf-checkout-body-override {
+  background-color: var(--tf-chk-bg) !important;
+  margin: 0;
+  padding: 0;
+}
+
+.tf-checkout-page {
+  background-color: var(--tf-chk-bg);
+  min-height: 100vh;
+  font-family: var(--tf-chk-font);
+  color: var(--tf-chk-dark);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Minimalist Checkout Header - Full Width Border Across Entire Screen */
+.tf-checkout-header {
+  border-bottom: 1.5px solid #474747;
+  background-color: var(--tf-chk-bg);
+  padding: 24px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tf-checkout-header-inner {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.tf-checkout-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.tf-checkout-logo img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.tf-checkout-logo-fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.tf-checkout-logo-text {
+  font-family: "Inter", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  color: #ff6b00;
+  letter-spacing: -0.3px;
+}
+
+.tf-checkout-header-cart {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #171008;
+}
+
+.tf-checkout-header-cart svg {
+  width: 26px;
+  height: 26px;
+  stroke: #171008;
+}
+
+.tf-checkout-cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -9px;
+  background-color: #ff6b00;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Checkout Container - Enhanced Width & 150px gap */
+.tf-checkout-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 40px 30px 80px 30px;
+  box-sizing: border-box;
+}
+
+.tf-checkout-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.28fr) minmax(360px, 440px);
+  gap: 150px;
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   LEFT COLUMN - FORM CARDS
+   -------------------------------------------------------------------------- */
+.tf-checkout-form-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tf-chk-card {
+  background-color: var(--tf-chk-card-bg);
+  border: 1.5px solid var(--tf-chk-border);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.tf-chk-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tf-chk-card-title {
+  font-family: var(--tf-chk-serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--tf-chk-dark);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.2px;
+}
+
+/* Step Circle: SVG circle with mathematically centered BOLD YELLOW NUMBER '1', '2', '3' */
+.tf-chk-step-svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.tf-chk-signin-link {
+  font-size: 13px;
+  color: var(--tf-chk-dark);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Forms & Fields */
+.tf-chk-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.tf-chk-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+.tf-chk-field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.tf-chk-label-small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #5C554D;
+  margin-bottom: 2px;
+}
+
+.tf-chk-input {
+  width: 100%;
+  height: 44px;
+  border: 1.2px solid var(--tf-chk-border);
+  border-radius: 8px;
+  background-color: transparent;
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: var(--tf-chk-dark);
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tf-chk-input:focus {
+  border-color: #000;
+  box-shadow: 0 0 0 1px #000;
+}
+
+.tf-chk-input::placeholder {
+  color: #8C867E;
+}
+
+/* Select */
+.tf-chk-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.tf-chk-select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 32px;
+}
+
+.tf-chk-select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #4A443D;
+  display: flex;
+}
+
+/* Phone input with country prefix pill */
+.tf-chk-phone-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tf-chk-phone-country-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.2px solid var(--tf-chk-border);
+  border-radius: 8px;
+  height: 42px;
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: var(--tf-chk-dark);
+  background: transparent;
+}
+
+/* Error States */
+.tf-chk-field-wrap.has-error .tf-chk-input,
+.tf-chk-input.tf-input-error {
+  border-color: var(--tf-chk-red) !important;
+  background-color: #FFF8F7;
+}
+
+.tf-chk-error-msg {
+  color: var(--tf-chk-red);
+  font-size: 11px;
+  margin-top: 3px;
+  display: none;
+}
+
+.tf-chk-field-wrap.has-error .tf-chk-error-msg,
+.tf-error-visible {
+  display: block !important;
+}
+
+/* Checkbox Styles with YELLOW TICK & BLACK BACKGROUND */
+.tf-chk-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--tf-chk-dark);
+  user-select: none;
+}
+
+.tf-chk-checkbox-custom {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--tf-chk-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.tf-chk-checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.tf-chk-checkbox-label input[type="checkbox"]:checked+.tf-chk-checkbox-custom {
+  background-color: #171008;
+  border-color: #171008;
+}
+
+.tf-chk-checkbox-label input[type="checkbox"]:checked+.tf-chk-checkbox-custom::after {
+  content: "";
+  display: block;
+  width: 11px;
+  height: 11px;
+  background-color: #FEC33F;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+/* Shipping Method Section */
+.tf-chk-shipping-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tf-chk-shipping-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.2px solid var(--tf-chk-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: transparent;
+}
+
+.tf-chk-shipping-option.is-selected {
+  background-color: var(--tf-chk-yellow);
+  border-color: var(--tf-chk-border);
+}
+
+.tf-chk-shipping-radio-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tf-chk-radio-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--tf-chk-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.tf-chk-shipping-option.is-selected .tf-chk-radio-circle {
+  background: #171008;
+  border-color: #171008;
+}
+
+.tf-chk-shipping-option.is-selected .tf-chk-radio-circle::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FEC33F;
+}
+
+.tf-chk-shipping-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tf-chk-shipping-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tf-chk-dark);
+}
+
+.tf-chk-shipping-est {
+  font-size: 10px;
+  color: #555;
+}
+
+.tf-chk-shipping-price {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--tf-chk-dark);
+}
+
+.tf-chk-shipping-disclaimer {
+  font-size: 10px;
+  color: #7A746D;
+  line-height: 1.35;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Payment Icons in header */
+.tf-chk-payment-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tf-chk-pay-method-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--tf-chk-dark);
+}
+
+/* Card Inputs: Exact 75% / 25% column layout matching image */
+.tf-chk-card-row-top {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 12px;
+  align-items: start;
+}
+
+.tf-chk-card-row-bottom {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 12px;
+  align-items: start;
+}
+
+.tf-chk-input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.tf-chk-input-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #A39D95;
+  pointer-events: none;
+}
+
+.tf-chk-cvv-info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #A39D95;
+  color: #fff;
+  font-size: 9px;
+  font-weight: bold;
+  margin-left: 3px;
+  vertical-align: middle;
+}
+
+.tf-chk-divider-or {
+  text-align: center;
+  position: relative;
+  margin: 16px 0 14px 0;
+  font-size: 11px;
+  color: #8C867E;
+}
+
+.tf-chk-divider-or::before,
+.tf-chk-divider-or::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 44%;
+  height: 1px;
+  background-color: var(--tf-chk-border-subtle);
+}
+
+.tf-chk-divider-or::before {
+  left: 0;
+}
+
+.tf-chk-divider-or::after {
+  right: 0;
+}
+
+/* Cash app pay button pill */
+.tf-chk-cashapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.2px solid var(--tf-chk-border);
+  border-radius: 8px;
+  padding: 11px 16px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.15s ease;
+}
+
+.tf-chk-cashapp-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tf-chk-dark);
+}
+
+.tf-cashapp-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background-color: #00D632;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.tf-chk-cashapp-circle {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1.5px solid var(--tf-chk-border);
+  background: transparent;
+}
+
+/* Proof approval agreement card */
+.tf-chk-proof-agreement {
+  background-color: var(--tf-chk-card-bg);
+  border: 1.5px solid var(--tf-chk-border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+.tf-chk-proof-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--tf-chk-dark);
+}
+
+.tf-chk-proof-desc {
+  font-size: 11.5px;
+  color: #726C63;
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+/* Big Gold Complete Purchase Button */
+.tf-chk-submit-btn {
+  width: 100%;
+  background-color: var(--tf-chk-yellow);
+  color: #171008;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 16px;
+  border: 1.8px solid var(--tf-chk-border);
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #171008;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.tf-chk-submit-btn:hover {
+  background-color: var(--tf-chk-yellow-dark);
+}
+
+.tf-chk-submit-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #171008;
+}
+
+.tf-chk-terms-text {
+  text-align: center;
+  font-size: 11px;
+  color: #6A645D;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+.tf-chk-terms-text a {
+  color: #171008;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   RIGHT COLUMN - DARK ORDER SUMMARY CARD
+   -------------------------------------------------------------------------- */
+.tf-chk-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+.tf-chk-summary-card {
+  background-color: var(--tf-chk-dark-card);
+  color: #fff;
+  border-radius: 18px;
+  padding: 26px 24px;
+  box-sizing: border-box;
+  border: 1px solid #2B251E;
+}
+
+/* Order Item Rows */
+.tf-chk-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tf-chk-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.tf-chk-item-thumb {
+  width: 58px;
+  height: 58px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.tf-chk-item-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.tf-chk-item-info {
+  flex: 1;
+}
+
+.tf-chk-item-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.tf-chk-item-specs {
+  font-size: 11px;
+  color: #A6A097;
+  line-height: 1.35;
+}
+
+.tf-chk-item-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Promo discount row */
+.tf-chk-discount-wrap {
+  display: flex;
+  gap: 8px;
+  padding: 18px 0;
+  border-bottom: 1px solid #2B251E;
+}
+
+.tf-chk-discount-input {
+  flex: 1;
+  background-color: #211C16;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12.5px;
+  padding: 0 14px;
+  height: 38px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.tf-chk-discount-input::placeholder {
+  color: #8C867E;
+}
+
+.tf-chk-discount-input:focus {
+  border-color: #FEC33F;
+}
+
+.tf-chk-discount-btn {
+  background-color: #211C16;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 0 18px;
+  height: 38px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tf-chk-discount-btn:hover {
+  background-color: #2D261E;
+  border-color: #554A3E;
+}
+
+/* Calculation Breakdown */
+.tf-chk-calc-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 0;
+  border-bottom: 1px solid #2B251E;
+}
+
+.tf-chk-calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12.5px;
+}
+
+.tf-chk-calc-label {
+  color: #D3CDC4;
+}
+
+.tf-chk-calc-val {
+  color: #fff;
+  font-weight: 500;
+}
+
+.tf-chk-calc-val.tf-val-green {
+  color: #48C774;
+  font-weight: 600;
+}
+
+.tf-chk-calc-val.tf-val-muted {
+  color: #8C867E;
+  font-size: 11.5px;
+}
+
+/* Total Row */
+.tf-chk-total-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 0;
+  border-bottom: 1px solid #2B251E;
+}
+
+.tf-chk-total-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  padding-top: 4px;
+}
+
+.tf-chk-total-val-wrap {
+  text-align: right;
+}
+
+.tf-chk-total-num {
+  font-family: var(--tf-chk-serif);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--tf-chk-yellow);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.tf-chk-total-per-roll {
+  font-size: 11.5px;
+  color: #D3CDC4;
+  margin-top: 4px;
+}
+
+/* What happens next: Exact style with YELLOW TEXT (NO yellow background) */
+.tf-chk-steps-box {
+  padding-top: 18px;
+}
+
+.tf-chk-steps-heading {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.tf-chk-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tf-chk-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 11px;
+  color: #BFB8AD;
+  line-height: 1.35;
+}
+
+/* YELLOW NUMBER WITH TRANSPARENT BG */
+.tf-chk-step-badge {
+  background: transparent !important;
+  color: #FEC33F !important;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  width: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   -------------------------------------------------------------------------- */
+@media (max-width: 1300px) {
+  .tf-checkout-grid {
+    gap: 100px;
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+@media (max-width: 1100px) {
+  .tf-checkout-grid {
+    gap: 25px;
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .tf-checkout-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .tf-chk-sidebar {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .tf-checkout-header-inner {
+    padding: 0 10px;
+  }
+
+  .tf-checkout-container {
+    padding: 20px 0px 40px 0px;
+  }
+
+  .tf-chk-row-2,
+  .tf-chk-card-row-top,
+  .tf-chk-card-row-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .tf-chk-card {
+    padding: 16px 14px;
+  }
+
+  .tf-chk-summary-card {
+    padding: 20px 16px;
+  }
+
+  .tf-chk-total-num {
+    font-size: 26px;
+  }
+}

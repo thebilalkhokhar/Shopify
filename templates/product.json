@@ -1,0 +1,468 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "product_banner": {
+      "type": "product-banner",
+      "settings": {
+        "bg_color": "#FBF8F3",
+        "badge_text": "Tamper-evident + recyclabl",
+        "default_title": "Polypropylene Tape",
+        "starting_price": "$5.68 a roll",
+        "short_desc": "The default for corrugated cartons. Glossy, hot-melt, and cheap enough to brand every box that leaves the building.",
+        "desc_heading": "Description",
+        "desc_subtitle": "Custom Polypropylene Tape",
+        "feature_1": "High-grade Kraft paper for ultimate strength and security",
+        "feature_2": "Water-activated adhesive forms a tamper-evident seal",
+        "feature_3": "Available in non-reinforced or reinforced paper options",
+        "feature_4": "Print up to three colors to showcase your brand",
+        "feature_5": "Eco-friendly and recyclable",
+        "padding_top": 140,
+        "padding_bottom": 80
+      }
+    },
+    "product_order": {
+      "type": "product-order",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "icon_type": "cart",
+            "title": "Order it",
+            "text": "Your spec is locked in and the case price is fixed at what you saw.",
+            "pill_text": "Today"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "icon_type": "cloud_upload",
+            "title": "Artwork",
+            "text": "Upload now, mail it over after, or send a logo and let us draw it.",
+            "pill_text": "Whenever suits"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "icon_type": "badge_check",
+            "title": "Proof, then print",
+            "text": "We send it back for approval. Nothing goes on the press until you say yes.",
+            "pill_text": "2-3 working days"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "page_bg": "#FBF8F3",
+        "frame_bg": "#171008",
+        "heading": "What happens after you order",
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    },
+    "product_price_breakdown": {
+      "type": "product-price-breakdown",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "cases": "5",
+            "rolls": "40",
+            "per_case": "$82.93",
+            "tape": "$414.63",
+            "total": "$464.63",
+            "per_roll": "$11.62"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "cases": "10",
+            "rolls": "80",
+            "per_case": "$71.72",
+            "tape": "$717.22",
+            "total": "$767.22",
+            "per_roll": "$9.59"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "cases": "25",
+            "rolls": "200",
+            "per_case": "$57.06",
+            "tape": "$1476.62",
+            "total": "$1476.62",
+            "per_roll": "$7.38"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "cases": "50",
+            "rolls": "400",
+            "per_case": "$51.07",
+            "tape": "$2,553.47",
+            "total": "$2,603.47",
+            "per_roll": "$6.51"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "cases": "64",
+            "rolls": "512",
+            "per_case": "$44.66",
+            "tape": "$2,858.55",
+            "total": "$2,908.55",
+            "per_roll": "$5.68"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5"
+      ],
+      "settings": {
+        "bg_color": "#FBF8F3",
+        "badge_text": "Price breaks",
+        "heading": "The whole ladder, nothing hidden.",
+        "col_1_label": "CASES",
+        "col_2_label": "ROLLS",
+        "col_3_label": "PER CASE",
+        "col_4_label": "TAPE",
+        "col_5_label": "TOTAL",
+        "col_6_label": "PER ROLL",
+        "padding_top": 40,
+        "padding_bottom": 80
+      }
+    },
+    "product_head_compare": {
+      "type": "product-head-compare",
+      "blocks": {
+        "row_1": {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "SEALS UP TO",
+            "poly_val": "1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)",
+            "paper_val": "240 grade (30 lbs) · 260 HD (30+ lbs)",
+            "pvc_val": "50+ lbs, heaviest loads"
+          }
+        },
+        "row_2": {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "STICKS TO",
+            "poly_val": "Cardboard",
+            "paper_val": "Cardboard",
+            "pvc_val": "Cardboard, plastic, glass, metal"
+          }
+        },
+        "row_3": {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "GOES ON",
+            "poly_val": "Tape gun or machine",
+            "paper_val": "Water dispenser",
+            "pvc_val": "Tape gun"
+          }
+        },
+        "row_4": {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "PRINT DETAIL",
+            "poly_val": "Sharp",
+            "paper_val": "Sharp",
+            "pvc_val": "Limited detail"
+          }
+        },
+        "row_5": {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "TAMPER EVIDENT",
+            "poly_val": "NO",
+            "paper_val": "YES",
+            "pvc_val": "NO"
+          }
+        },
+        "row_6": {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "RECYCLABLE",
+            "poly_val": "NO",
+            "paper_val": "YES",
+            "pvc_val": "NO"
+          }
+        },
+        "row_7": {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "BELOW FREEZING",
+            "poly_val": "NO",
+            "paper_val": "NO",
+            "pvc_val": "NO"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "row_7"
+      ],
+      "settings": {
+        "bg_color": "#FBF8F3",
+        "badge_text": "Head to head",
+        "heading": "Polypropylene, or one of\nthe other two?",
+        "col_1_title": "POLYPROPYLENE",
+        "col_2_title": "PAPER",
+        "col_3_title": "PVC",
+        "btn_text": "Compare all five →",
+        "btn_link": "",
+        "bottom_note": "Still not sure? The free sample box has both of these in it, printed and blank.",
+        "padding_top": 40,
+        "padding_bottom": 80
+      }
+    },
+    "product_testimonials": {
+      "type": "products-testimonial",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Boxes look like packages now",
+            "text": "We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed that for less than we spend on bubble wrap.",
+            "author": "Dana Whitfield · Subscription coffee"
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "title": "The proof caught our own typo",
+            "text": "Our artwork, our mistake, flagged before anything ran. That one email saved sixty-four cases of a misspelled URL.",
+            "author": "Marcus Lee · Hardware brand"
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Paper tape ended our claims problem",
+            "text": "Water-activated made tampering obvious, so disputed deliveries stopped being our word against theirs",
+            "author": "Priya Raman · 3PL warehouse"
+          }
+        },
+        "testimonial_4": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Clean peel, zero residue on retail boxes",
+            "text": "Switched from generic clear packing tape to custom branded PVC. Our boxes now look like bespoke luxury retail packaging.",
+            "author": "Elena Rostova · Boutique Ceramics"
+          }
+        },
+        "testimonial_5": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Unmatched quality on kraft tape",
+            "text": "The custom print on the water-activated tape is razor-sharp. Our unboxing experience leveled up instantly.",
+            "author": "Sophie Zhang · Artisan Goods"
+          }
+        },
+        "testimonial_6": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Fast turnaround saved our launch",
+            "text": "Needed 50 rolls for our product debut in 10 days. Tapefox delivered ahead of schedule with flawless printing.",
+            "author": "David Miller · Studio Kin"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3",
+        "testimonial_4",
+        "testimonial_5",
+        "testimonial_6"
+      ],
+      "settings": {
+        "badge_text": "Received",
+        "heading": "What buyers said.",
+        "logo_image": "shopify://shop_images/Sticker_Logo.webp"
+      }
+    },
+    "product_faqs": {
+      "type": "product-faqs",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are there any plate or setup fees?",
+            "answer": "No plate or setup fees at all. The price per case you see on the ladder is exactly what you pay."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will my custom tape take?",
+            "answer": "Standard turnaround is 10–14 working days from proof approval to dispatch, shipped free across the continental US."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What do I need to get started?",
+            "answer": "Just your logo or artwork file (vector AI, EPS, PDF, or high-res PNG). Pick your quantity and we take care of the rest."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I change my design later?",
+            "answer": "Yes, anytime before you approve the digital press proof. Once you confirm the proof, printing begins immediately."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "page_bg": "#FBF8F3",
+        "frame_bg": "#171008",
+        "badge_text": "Questions",
+        "heading": "Before you order",
+        "subtext": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad.",
+        "pill_text": "STILL GOT QUESTIONS?",
+        "btn_text": "Support",
+        "btn_link": "",
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
+    "product_more_related": {
+      "type": "product-more-related",
+      "blocks": {
+        "item_1": {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/pvc.webp",
+            "title": "PVC Tape",
+            "price_text": "Starting at $7.84 a roll",
+            "url": ""
+          }
+        },
+        "item_2": {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/flattape.webp",
+            "title": "Flatback Tape",
+            "price_text": "Starting at $7.12 a roll",
+            "url": ""
+          }
+        },
+        "item_3": {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/dispensers.webp",
+            "title": "Dispensers",
+            "price_text": "From $34 per unit",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3"
+      ],
+      "settings": {
+        "outer_bg": "#171008",
+        "badge_text": "Goes with",
+        "heading": "People also needed these."
+      }
+    },
+    "footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "product_banner",
+    "product_order",
+    "product_price_breakdown",
+    "product_head_compare",
+    "product_testimonials",
+    "product_faqs",
+    "product_more_related",
+    "footer"
+  ]
+}

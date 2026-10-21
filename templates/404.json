@@ -1,0 +1,66 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_404": {
+      "type": "main-404",
+      "settings": {
+        "card_bg": "#ea5b1b",
+        "card_border": "#171008",
+        "fox_image": "shopify://shop_images/faqsMoscout.png",
+        "fox_width": 340,
+        "badge_text": "Lost in transit",
+        "error_code": "404",
+        "heading": "Looks like this roll got tangled up.",
+        "subheading": "<p>The page you're looking for doesn't exist, was moved, or got sealed into the wrong carton. Let's get you back on track!</p>",
+        "primary_btn_text": "Back to Home",
+        "primary_btn_link": "/"
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "menu_1_title": "Tapes",
+        "menu_2_title": "Company",
+        "menu_3_title": "Help",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility"
+      }
+    }
+  },
+  "order": [
+    "main_404",
+    "home_footer"
+  ]
+}

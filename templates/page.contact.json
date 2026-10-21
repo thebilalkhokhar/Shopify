@@ -1,0 +1,177 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "contact_form": {
+      "type": "contact-form",
+      "settings": {
+        "page_bg": "#171008",
+        "card_bg": "#F9F6F0",
+        "dot_color": "#0000001f",
+        "heading": "How can we help?",
+        "subheading": "Whether you're exploring Tape Fox packaging for your business or need help with a new or existing order, we're here to answer all your questions.",
+        "card_email_label": "Email",
+        "card_email_val": "hello@tapefox.com",
+        "card_email_note": "One working day, usually less",
+        "card_chat_label": "Chat with us",
+        "call_label": "Call us",
+        "call_url": "tel:+18005550199",
+        "whatsapp_label": "Whatsapp",
+        "whatsapp_url": "https://wa.me/18005550199",
+        "card_chat_note": "Fastest for anything already on the press",
+        "status_open_text": "Mon–Fri, 8am–6pm ET",
+        "status_closed_text": "Closed weekends",
+        "bubble_text": "Hey! Need a hand?",
+        "mascot_image": "shopify://shop_images/footerBrowserFox.webp",
+        "mascot_width": 240,
+        "lane_badge_text": "Pick a lane",
+        "lane_heading": "Let's talk.",
+        "lane1_title": "New Order",
+        "lane1_desc": "Pricing, an odd width, pallet quantities, or you want to know what your logo will look like on the roll",
+        "lane2_title": "An Existing order",
+        "lane2_desc": "A proof that us not right, a delivery that went wrong, damaged rolls, or a reorder on the same plate",
+        "lane3_title": "General Support",
+        "lane3_desc": "Artwork advice, dispensers, how any of this works, press enquiries, or a job application.",
+        "form_heading": "What are you looking to print?",
+        "form_badge_text": "Same day, most days",
+        "btn_text": "Send it",
+        "disclaimer_text": "Comes from a real address you can reply to. No ticket numbers, no do-not-reply."
+      }
+    },
+    "contact_map": {
+      "type": "contact-map",
+      "settings": {
+        "bg_color": "#171008",
+        "badge_text": "Find us",
+        "heading": "Find us on the map",
+        "description": "Everything is printed, slit and boxed in one building. Come and see the press if you are passing call first, the dock is not always staffed.",
+        "bldg_label": "BLDG 3",
+        "address_label": "ADDRESS",
+        "title": "Tapefox Printing",
+        "address_line1": "1631 Cottonwood School Rd,",
+        "address_line2": "Building 3 Rosenberg, TX 77471",
+        "hours_label": "ADDRESS",
+        "hours_text": "Mon–Fri · 8:00 – 18:00 CT",
+        "phone_label": "PHONE",
+        "phone_number": "+1 (800) 555-0199",
+        "btn_label": "Get directions",
+        "directions_url": "https://www.google.com/maps/search/?api=1&query=1631+Cottonwood+School+Rd+Building+3+Rosenberg+TX+77471"
+      }
+    },
+    "contact_faqs": {
+      "type": "contact-faqs",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are there any plate or setup fees?",
+            "answer": "No hidden fees. What you see on the product page is what you pay."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will my custom tape take?",
+            "answer": "Standard turnaround is 12-14 business days from artwork approval."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What do I need to get started?",
+            "answer": "Just your logo file (vector PDF, AI, or high-res PNG) and your preferred tape specifications."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I change my design later?",
+            "answer": "Yes, you can update your design anytime before the proof is approved for printing."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "card_bg": "#FAF7F0",
+        "card_border": "#171008",
+        "badge_text": "Questions",
+        "heading": "Before you order",
+        "description": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad.",
+        "btn1_text": "STILL GOT QUESTIONS?",
+        "btn1_url": "/pages/faqs",
+        "btn2_text": "Support",
+        "btn2_url": "/pages/contact",
+        "mascot_image": "shopify://shop_images/faqsMoscout.png",
+        "mascot_width": 280
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "contact_form",
+    "contact_map",
+    "contact_faqs",
+    "home_footer"
+  ]
+}

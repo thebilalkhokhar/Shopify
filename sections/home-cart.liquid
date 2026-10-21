@@ -1,0 +1,222 @@
+{{ 'home-cart.css' | asset_url | stylesheet_tag }}
+
+<div class="home-cart-section tapefox-dark-section" {{ section.shopify_attributes }}>
+  <div class="home-cart__outer">
+    <div class="home-cart__grid">
+      <!-- Left Media Card (Complete image containing clip, sticker, and box) -->
+      <div class="home-cart__media-wrap">
+        {% if section.settings.box_image != blank %}
+          <img
+            class="home-cart__img"
+            src="{{ section.settings.box_image | image_url: width: 900 }}"
+            width="900"
+            height="auto"
+            alt="{{ section.settings.heading | default: 'Tapes Sample Box' }}"
+          >
+        {% else %}
+          <div class="home-cart__placeholder-img">Upload Complete Image Here (with clip, sticker, and box)</div>
+        {% endif %}
+      </div>
+
+      <!-- Right Content Details -->
+      <div class="home-cart__content">
+        <!-- Badge -->
+        {% if section.settings.badge_text != blank %}
+          <div class="home-cart__badge">{{ section.settings.badge_text }}</div>
+        {% endif %}
+
+        <!-- Header Row (Heading + Price) -->
+        <div class="home-cart__header-row">
+          {% if section.settings.heading != blank %}
+            <h2 class="home-cart__title">{{ section.settings.heading }}</h2>
+          {% endif %}
+
+          {% if section.settings.price != blank %}
+            <div class="home-cart__price-wrap">
+              <span class="home-cart__price">{{ section.settings.price }}</span>
+              {% if section.settings.price_subtext != blank %}
+                <span class="home-cart__price-label">{{ section.settings.price_subtext | newline_to_br }}</span>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Description -->
+        {% if section.settings.description != blank %}
+          <p class="home-cart__desc">{{ section.settings.description }}</p>
+        {% endif %}
+
+        <!-- Features Heading -->
+        {% if section.settings.features_heading != blank %}
+          <h3 class="home-cart__features-heading">{{ section.settings.features_heading }}</h3>
+        {% endif %}
+
+        <!-- Features Checklist -->
+        <ul class="home-cart__features">
+          {% for block in section.blocks %}
+            <li class="home-cart__feature-item" {{ block.shopify_attributes }}>
+              <span class="home-cart__feature-icon">
+                {% if block.settings.custom_icon != blank %}
+                  <img
+                    src="{{ block.settings.custom_icon | image_url: width: 64 }}"
+                    alt=""
+                    width="34"
+                    height="34"
+                    loading="lazy"
+                  >
+                {% elsif section.settings.feature_icon != blank %}
+                  <img
+                    src="{{ section.settings.feature_icon | image_url: width: 64 }}"
+                    alt=""
+                    width="34"
+                    height="34"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <!-- 12-point orange star badge with white checkmark -->
+                  <svg viewBox="0 0 24 24" width="34" height="34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1.5l2.2 2.3 3.1-.7 1.4 2.8 3.1 1-.2 3.2 2.1 2.4-2.1 2.4.2 3.2-3.1 1-1.4 2.8-3.1-.7L12 22.5l-2.2-2.3-3.1.7-1.4-2.8-3.1-1 .2-3.2-2.1-2.4 2.1-2.4-.2-3.2 3.1-1 1.4-2.8 3.1.7L12 1.5z" fill="#E85D18"/>
+                    <path d="M7.5 12l3 3 6-6" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% endif %}
+              </span>
+              <span class="home-cart__feature-text">{{ block.settings.text }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <!-- Add to Cart Button -->
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_url | default: '/cart' }}" class="home-cart__btn">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Home Cart",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "box_image",
+      "label": "Left Yellow Card Image (Box of Tapes)"
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_icon",
+      "label": "Checklist Icon (Orange Star Checkmark)"
+    },
+    {
+      "type": "textarea",
+      "id": "sticker_text",
+      "label": "Top-Right Sticker Text",
+      "default": "keep it\nCool!"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Before you commit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Hold it first."
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "default": "$2.04"
+    },
+    {
+      "type": "textarea",
+      "id": "price_subtext",
+      "label": "Price Subtext",
+      "default": "Prices per roll\nas low as"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "A printed roll and a blank roll of every material, in a box, on us. Feel the difference between paper and poly before you order sixty-four cases of the wrong one."
+    },
+    {
+      "type": "text",
+      "id": "features_heading",
+      "label": "Features Heading",
+      "default": "What is in the box?"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Box Feature Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon (Optional override)"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Feature Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Cart",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "text": "One short roll of every material poly, paper, PVC, freezer and flatback printed with our own mark, so you can judge ink on each surface."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "The same five materials unprinted. Feel the base before the ink goes on, and hear the difference coming off the roll."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "All nine inks laid down on white tape and on kraft tape. The same colour reads differently on each."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Already sealed with water-activated paper tape. Try to open it: that is what tamper-evident actually looks like."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Case breaks at 5, 10, 25, 50 and 64, plus the plate charge, so you can work your number out at your desk."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

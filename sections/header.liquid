@@ -1,0 +1,1075 @@
+{{ 'header.css' | asset_url | stylesheet_tag }}
+
+<header class="tapefox-header" {{ section.shopify_attributes }}>
+  <div class="header-container">
+    <div class="header__left">
+      <!-- Hamburger for mobile -->
+      <button class="mobile-menu-toggle mobile-only">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+      </button>
+
+      <a href="{{ routes.root_url }}" class="header__logo">
+        {% if section.settings.logo != blank %}
+          <img
+            src="{{ section.settings.logo | image_url: width: 200 }}"
+            width="200"
+            height="auto"
+            alt="{{ shop.name }}"
+          >
+        {% else %}
+          <span class="logo-text">TapeFox</span>
+        {% endif %}
+      </a>
+    </div>
+
+    <div class="header__menu desktop-only">
+      {% if section.settings.menu != blank and section.settings.menu.links.size > 0 %}
+        {% for link in section.settings.menu.links %}
+          {% assign link_title_downcase = link.title | downcase %}
+          {% if link_title_downcase contains 'printed tape' %}
+            <div class="header__menu-item has-megamenu">
+              <a href="{{ link.url }}" class="header__menu-link megamenu-trigger" style="display: flex; align-items: center; gap: 4px;">
+                {{ link.title }}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </a>
+            </div>
+          {% elsif link_title_downcase contains 'compare' %}
+            <div class="header__menu-item has-compare-menu">
+              <a href="{{ link.url }}" class="header__menu-link compare-trigger">
+                {{ link.title }}
+              </a>
+            </div>
+          {% elsif link.links != blank %}
+            <div class="header__menu-item has-dropdown">
+              <a href="{{ link.url }}" class="header__menu-link" style="display: flex; align-items: center; gap: 4px;">
+                {{ link.title }}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </a>
+              <div class="header__dropdown">
+                {% for child_link in link.links %}
+                  <a href="{{ child_link.url }}" class="header__dropdown-link">{{ child_link.title }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <a href="{{ link.url }}" class="header__menu-link">{{ link.title }}</a>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <!-- Default fallback menu matching the reference design -->
+        <div class="header__menu-item has-megamenu">
+          <a href="{{ section.settings.mm_link | default: '/collections' }}" class="header__menu-link megamenu-trigger" style="display: flex; align-items: center; gap: 4px;">
+            Printed Tapes
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </a>
+        </div>
+        <a href="{{ section.settings.sample_link | default: '/pages/order-sample' }}" class="header__menu-link">Order sample</a>
+        <div class="header__menu-item has-compare-menu">
+          <a href="{{ section.settings.compare_link | default: '/pages/compare' }}" class="header__menu-link compare-trigger">
+            Compare
+          </a>
+        </div>
+        <a href="{{ section.settings.about_link | default: '/pages/about' }}" class="header__menu-link">About</a>
+        <a href="{{ section.settings.contact_link | default: '/pages/contact' }}" class="header__menu-link">Contact</a>
+      {% endif %}
+    </div>
+
+    <div class="header__icons">
+      <!-- Peeking Fox Mascot that slides up smoothly on header hover before search icon -->
+      <div class="header__peeking-mascot" aria-hidden="true">
+        {% if section.settings.secondary_logo != blank %}
+          <img
+            src="{{ section.settings.secondary_logo | image_url: width: 90 }}"
+            width="58"
+            height="auto"
+            alt="Fox Mascot"
+          >
+        {% elsif section.settings.mm_fox_mascot != blank %}
+          <img
+            src="{{ section.settings.mm_fox_mascot | image_url: width: 90 }}"
+            width="58"
+            height="auto"
+            alt="Fox Mascot"
+          >
+        {% else %}
+          <img
+            src="{{ 'footerBrowserFox.webp' | file_img_url: 'master' }}"
+            width="58"
+            height="auto"
+            alt="Fox Mascot"
+            onerror="this.style.display='none'"
+          >
+        {% endif %}
+      </div>
+
+      <button type="button" class="header-icon header-search-toggle" id="HeaderSearchToggle" aria-expanded="false" aria-label="Search" aria-controls="HeaderSearchMenu">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+      </button>
+      <a href="/pages/login" class="header-icon header-account" aria-label="Account">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+      <a href="{{ routes.cart_url }}" class="header-icon header-cart">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        {% if cart.item_count > 0 %}
+          <span class="cart-count">{{ cart.item_count }}</span>
+        {% else %}
+          <span class="cart-count">0</span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+
+  {% render 'header-megamenu', section: section %}
+  {% render 'header-compare-menu', section: section %}
+  {% render 'header-search-menu', section: section %}
+</header>
+
+<!-- Mobile Navigation Drawer Overlay & Backdrop -->
+<div class="tapefox-mobile-backdrop" id="MobileMenuBackdrop" aria-hidden="true"></div>
+
+<!-- Mobile Navigation Drawer (Slides from Left) -->
+<nav class="tapefox-mobile-drawer" id="MobileMenuDrawer" aria-hidden="true" role="dialog" aria-label="Mobile Navigation">
+  <div class="mobile-drawer__header">
+    <a href="{{ routes.root_url }}" class="mobile-drawer__logo">
+      {% if section.settings.logo != blank %}
+        <img
+          src="{{ section.settings.logo | image_url: width: 140 }}"
+          width="140"
+          height="auto"
+          alt="{{ shop.name }}"
+        >
+      {% else %}
+        <span class="logo-text">TapeFox</span>
+      {% endif %}
+    </a>
+    <button type="button" class="mobile-drawer__close" id="MobileMenuClose" aria-label="Close menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mobile-drawer__body">
+    <!-- Printed Tapes Heading -->
+    <h2 class="mobile-drawer__section-title">
+      <a href="{{ section.settings.mm_link | default: '/collections' }}">Printed Tapes</a>
+    </h2>
+
+    {% assign m_item1_img = 'polypropylene.webp' | file_img_url: 'master' %}
+    {% assign m_item2_img = 'paper.webp' | file_img_url: 'master' %}
+    {% assign m_item3_img = 'hitack.webp' | file_img_url: 'master' %}
+    {% assign m_item4_img = 'pvc.webp' | file_img_url: 'master' %}
+    {% assign m_item5_img = 'flattape.webp' | file_img_url: 'master' %}
+    {% assign m_item6_img = 'dispensers.webp' | file_img_url: 'master' %}
+
+    {% if section.settings.mm_item1_image != blank %}{% assign m_item1_img = section.settings.mm_item1_image | image_url: width: 200 %}{% endif %}
+    {% if section.settings.mm_item2_image != blank %}{% assign m_item2_img = section.settings.mm_item2_image | image_url: width: 200 %}{% endif %}
+    {% if section.settings.mm_item3_image != blank %}{% assign m_item3_img = section.settings.mm_item3_image | image_url: width: 200 %}{% endif %}
+    {% if section.settings.mm_item4_image != blank %}{% assign m_item4_img = section.settings.mm_item4_image | image_url: width: 200 %}{% endif %}
+    {% if section.settings.mm_item5_image != blank %}{% assign m_item5_img = section.settings.mm_item5_image | image_url: width: 200 %}{% endif %}
+    {% if section.settings.mm_item6_image != blank %}{% assign m_item6_img = section.settings.mm_item6_image | image_url: width: 200 %}{% endif %}
+
+    <!-- 6 Tape Product Cards matching screenshot -->
+    <div class="mobile-drawer__cards">
+      <!-- Polypropylene Tape -->
+      <a href="{{ section.settings.mm_item1_url | default: '/products/polypropylene-tape' }}" class="mobile-tape-card">
+        <div class="mobile-tape-card__img">
+          <img src="{{ m_item1_img }}" alt="{{ section.settings.mm_item1_title | default: 'Polypropylene Tape' }}" loading="lazy" width="80" height="50">
+        </div>
+        <div class="mobile-tape-card__content">
+          <span class="mobile-tape-card__title">{{ section.settings.mm_item1_title | default: 'Polypropylene Tape' }}</span>
+          <span class="mobile-tape-card__price">Starting at <strong>$5.68 a roll</strong></span>
+        </div>
+        <div class="mobile-tape-card__arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Paper Tape -->
+      <a href="{{ section.settings.mm_item2_url | default: '/products/paper-tape' }}" class="mobile-tape-card">
+        <div class="mobile-tape-card__img">
+          <img src="{{ m_item2_img }}" alt="{{ section.settings.mm_item2_title | default: 'Paper Tape' }}" loading="lazy" width="80" height="50">
+        </div>
+        <div class="mobile-tape-card__content">
+          <span class="mobile-tape-card__title">{{ section.settings.mm_item2_title | default: 'Paper Tape' }}</span>
+          <span class="mobile-tape-card__price">Starting at <strong>$9.10 a roll</strong></span>
+        </div>
+        <div class="mobile-tape-card__arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- PVC Tape -->
+      <a href="{{ section.settings.mm_item4_url | default: '/products/pvc-tape' }}" class="mobile-tape-card">
+        <div class="mobile-tape-card__img">
+          <img src="{{ m_item4_img }}" alt="{{ section.settings.mm_item4_title | default: 'PVC Tape' }}" loading="lazy" width="80" height="50">
+        </div>
+        <div class="mobile-tape-card__content">
+          <span class="mobile-tape-card__title">{{ section.settings.mm_item4_title | default: 'PVC Tape' }}</span>
+          <span class="mobile-tape-card__price">Starting at <strong>$7.84 a roll</strong></span>
+        </div>
+        <div class="mobile-tape-card__arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Hi-Tack Freezer Tape -->
+      <a href="{{ section.settings.mm_item3_url | default: '/products/hi-tack-freezer-tape' }}" class="mobile-tape-card">
+        <div class="mobile-tape-card__img">
+          <img src="{{ m_item3_img }}" alt="{{ section.settings.mm_item3_title | default: 'Hi-Tack Freezer Tape' }}" loading="lazy" width="80" height="50">
+        </div>
+        <div class="mobile-tape-card__content">
+          <span class="mobile-tape-card__title">{{ section.settings.mm_item3_title | default: 'Hi-Tack Freezer Tape' }}</span>
+          <span class="mobile-tape-card__price">Starting at <strong>$10.18 a roll</strong></span>
+        </div>
+        <div class="mobile-tape-card__arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Flatback Tape -->
+      <a href="{{ section.settings.mm_item5_url | default: '/products/flatback-tape' }}" class="mobile-tape-card">
+        <div class="mobile-tape-card__img">
+          <img src="{{ m_item5_img }}" alt="{{ section.settings.mm_item5_title | default: 'Flatback Tape' }}" loading="lazy" width="80" height="50">
+        </div>
+        <div class="mobile-tape-card__content">
+          <span class="mobile-tape-card__title">{{ section.settings.mm_item5_title | default: 'Flatback Tape' }}</span>
+          <span class="mobile-tape-card__price">Starting at <strong>$7.12 a roll</strong></span>
+        </div>
+        <div class="mobile-tape-card__arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Dispensers -->
+      <a href="{{ section.settings.mm_item6_url | default: '/products/dispensers' }}" class="mobile-tape-card">
+        <div class="mobile-tape-card__img">
+          <img src="{{ m_item6_img }}" alt="{{ section.settings.mm_item6_title | default: 'Dispensers' }}" loading="lazy" width="80" height="50">
+        </div>
+        <div class="mobile-tape-card__content">
+          <span class="mobile-tape-card__title">{{ section.settings.mm_item6_title | default: 'Dispensers' }}</span>
+          <span class="mobile-tape-card__price">From <strong>$34 per unit</strong></span>
+        </div>
+        <div class="mobile-tape-card__arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </a>
+    </div>
+
+    <!-- Main Links Section (Compare, About, Contact) in Bringbold Nineties serif style -->
+    <div class="mobile-drawer__links">
+      <a href="{{ section.settings.compare_link | default: '/pages/compare' }}" class="mobile-drawer__serif-link">Compare</a>
+      <a href="{{ section.settings.about_link | default: '/pages/about' }}" class="mobile-drawer__serif-link">About</a>
+      <a href="{{ section.settings.contact_link | default: '/pages/contact' }}" class="mobile-drawer__serif-link">Contact</a>
+    </div>
+  </div>
+
+  <!-- Bottom CTA Pills: Get Sample & Cart -->
+  <div class="mobile-drawer__footer">
+    <a href="{{ section.settings.sample_link | default: '/pages/order-sample' }}" class="mobile-drawer__btn-sample">
+      Get Sample
+    </a>
+    <a href="{{ routes.cart_url }}" class="mobile-drawer__btn-cart">
+      <span>Cart</span>
+      <span class="mobile-drawer__cart-badge">{% if cart.item_count > 0 %}{{ cart.item_count }}{% else %}0{% endif %}</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+  (function () {
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+    const drawer = document.getElementById('MobileMenuDrawer');
+    const backdrop = document.getElementById('MobileMenuBackdrop');
+    const closeBtn = document.getElementById('MobileMenuClose');
+
+    function openDrawer() {
+      if (!drawer || !backdrop) return;
+      drawer.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      document.body.classList.add('mobile-nav-locked');
+      drawer.setAttribute('aria-hidden', 'false');
+      backdrop.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDrawer() {
+      if (!drawer || !backdrop) return;
+      drawer.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      document.body.classList.remove('mobile-nav-locked');
+      drawer.setAttribute('aria-hidden', 'true');
+      backdrop.setAttribute('aria-hidden', 'true');
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openDrawer();
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        closeDrawer();
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', closeDrawer);
+    }
+
+    // Toggle accordion subnavs inside drawer
+    const subnavToggles = document.querySelectorAll('.mobile-subnav-toggle');
+    subnavToggles.forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const parent = btn.closest('.has-subnav');
+        if (!parent) return;
+        const isOpen = parent.classList.contains('is-expanded');
+        parent.classList.toggle('is-expanded', !isOpen);
+        btn.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+
+    // Close drawer on Escape key
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (drawer && drawer.classList.contains('is-open')) {
+          closeDrawer();
+        }
+        const megamenu = document.querySelector('.header-megamenu');
+        if (megamenu) {
+          megamenu.classList.remove('is-active');
+        }
+        const compareMenu = document.querySelector('.header-compare-menu');
+        if (compareMenu) {
+          compareMenu.classList.remove('is-active');
+        }
+        closeSearchDropdown();
+      }
+    });
+
+    // Search Dropdown Logic
+    const searchToggle = document.getElementById('HeaderSearchToggle');
+    const searchMenu = document.getElementById('HeaderSearchMenu');
+    const searchInput = document.getElementById('HeaderSearchInput');
+    const searchClear = document.getElementById('HeaderSearchClear');
+    const searchResults = document.getElementById('HeaderSearchResults');
+
+    function openSearchDropdown() {
+      if (!searchMenu) return;
+      // Close other menus
+      document.querySelectorAll('.header-megamenu, .header-compare-menu').forEach(el => {
+        el.classList.remove('is-active');
+      });
+      searchMenu.classList.add('is-active');
+      searchMenu.setAttribute('aria-hidden', 'false');
+      if (searchToggle) {
+        searchToggle.classList.add('is-active');
+        searchToggle.setAttribute('aria-expanded', 'true');
+      }
+      setTimeout(() => {
+        if (searchInput) searchInput.focus();
+      }, 50);
+    }
+
+    function closeSearchDropdown() {
+      if (!searchMenu) return;
+      searchMenu.classList.remove('is-active');
+      searchMenu.setAttribute('aria-hidden', 'true');
+      if (searchToggle) {
+        searchToggle.classList.remove('is-active');
+        searchToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    if (searchToggle && searchMenu) {
+      searchToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (searchMenu.classList.contains('is-active')) {
+          closeSearchDropdown();
+        } else {
+          openSearchDropdown();
+        }
+      });
+
+      // Prevent closing when clicking inside search dropdown
+      searchMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+
+      // Close when clicking anywhere outside header
+      document.addEventListener('click', function(e) {
+        if (searchMenu.classList.contains('is-active')) {
+          if (!searchMenu.contains(e.target) && !searchToggle.contains(e.target)) {
+            closeSearchDropdown();
+          }
+        }
+      });
+    }
+
+    // Predictive Search via Shopify Predictive Search API
+    if (searchInput) {
+      let debounceTimer = null;
+
+      if (searchClear) {
+        searchClear.addEventListener('click', function() {
+          searchInput.value = '';
+          searchClear.style.display = 'none';
+          if (searchResults) {
+            searchResults.innerHTML = '';
+            searchResults.style.display = 'none';
+          }
+          searchInput.focus();
+        });
+      }
+
+      searchInput.addEventListener('input', function() {
+        const query = this.value.trim();
+        if (searchClear) {
+          searchClear.style.display = query.length > 0 ? 'flex' : 'none';
+        }
+
+        if (debounceTimer) clearTimeout(debounceTimer);
+
+        if (!query) {
+          if (searchResults) {
+            searchResults.innerHTML = '';
+            searchResults.style.display = 'none';
+          }
+          return;
+        }
+
+        debounceTimer = setTimeout(() => {
+          fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=6`)
+            .then(res => res.json())
+            .then(data => {
+              const products = data?.resources?.results?.products;
+              if (!searchResults) return;
+
+              if (products && products.length > 0) {
+                let html = '<div class="header-search__results-grid">';
+                products.forEach(p => {
+                  const imgHtml = p.featured_image?.url
+                    ? `<img src="${p.featured_image.url}" alt="${p.title}" class="header-search__result-thumb">`
+                    : `<div class="header-search__result-thumb" style="background:#e8dfd5;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;">No pic</div>`;
+
+                  html += `
+                    <a href="${p.url}" class="header-search__result-item">
+                      ${imgHtml}
+                      <div class="header-search__result-info">
+                        <div class="header-search__result-title">${p.title}</div>
+                        <div class="header-search__result-price">${p.price || ''}</div>
+                      </div>
+                    </a>
+                  `;
+                });
+                html += '</div>';
+                searchResults.innerHTML = html;
+                searchResults.style.display = 'block';
+              } else {
+                searchResults.innerHTML = '<div class="header-search__results-empty">No products found for "' + query + '"</div>';
+                searchResults.style.display = 'block';
+              }
+            })
+            .catch(() => {
+              if (searchResults) searchResults.style.display = 'none';
+            });
+        }, 220);
+      });
+    }
+
+    // Helper for pairing menu triggers with dropdown panels
+    function setupDropdown(triggerSelector, dropdownSelector) {
+      const trigger = document.querySelector(triggerSelector);
+      const dropdown = document.querySelector(dropdownSelector);
+      if (!trigger || !dropdown) return;
+
+      let timeoutId = null;
+
+      function show() {
+        if (timeoutId) clearTimeout(timeoutId);
+        // Hide other dropdowns when one opens
+        document.querySelectorAll('.header-megamenu, .header-compare-menu, .header-search-menu').forEach(el => {
+          if (el !== dropdown) el.classList.remove('is-active');
+        });
+        if (searchToggle) {
+          searchToggle.classList.remove('is-active');
+          searchToggle.setAttribute('aria-expanded', 'false');
+        }
+        dropdown.classList.add('is-active');
+      }
+
+      function hide() {
+        timeoutId = setTimeout(function () {
+          dropdown.classList.remove('is-active');
+        }, 140);
+      }
+
+      trigger.addEventListener('mouseenter', show);
+      trigger.addEventListener('mouseleave', hide);
+      dropdown.addEventListener('mouseenter', show);
+      dropdown.addEventListener('mouseleave', hide);
+
+      trigger.addEventListener('focusin', show);
+      dropdown.addEventListener('focusin', show);
+      dropdown.addEventListener('focusout', function (e) {
+        if (!dropdown.contains(e.relatedTarget) && !trigger.contains(e.relatedTarget)) {
+          hide();
+        }
+      });
+    }
+
+    // Initialize Printed Tapes & Compare dropdowns
+    setupDropdown('.has-megamenu', '.header-megamenu:not(.header-compare-menu)');
+    setupDropdown('.has-compare-menu', '.header-compare-menu');
+
+    // Dynamic Cart Count updater via Shopify /cart.js
+    window.updateHeaderCartCount = function(count) {
+      if (typeof count === 'number') {
+        document.querySelectorAll('.cart-count, .mobile-drawer__cart-badge').forEach(badge => {
+          badge.textContent = count;
+        });
+        return;
+      }
+      fetch('/cart.js')
+        .then(res => res.json())
+        .then(cart => {
+          document.querySelectorAll('.cart-count, .mobile-drawer__cart-badge').forEach(badge => {
+            badge.textContent = cart.item_count || 0;
+          });
+        })
+        .catch(err => console.debug('Cart count sync:', err));
+    };
+
+    // Auto sync on load and listen for cart changes
+    window.updateHeaderCartCount();
+    window.addEventListener('cart:updated', () => window.updateHeaderCartCount());
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu"
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_logo",
+      "label": "Secondary Fox Icon (Right Side)"
+    },
+    {
+      "type": "header",
+      "content": "Mega Menu - Printed Tapes"
+    },
+    {
+      "type": "text",
+      "id": "mm_heading",
+      "label": "Mega Menu Title",
+      "default": "Printed Tapes"
+    },
+    {
+      "type": "url",
+      "id": "mm_link",
+      "label": "Mega Menu Link URL",
+      "default": "/collections"
+    },
+    {
+      "type": "text",
+      "id": "mm_subheading",
+      "label": "Mega Menu Subtitle",
+      "default": "Every roll printed to your artwork, up to 3 inks"
+    },
+    {
+      "type": "image_picker",
+      "id": "mm_fox_mascot",
+      "label": "Fox Mascot Image (Top Right of Dropdown)"
+    },
+    {
+      "type": "header",
+      "content": "Tape Card 1"
+    },
+    {
+      "type": "text",
+      "id": "mm_item1_title",
+      "label": "Title",
+      "default": "Polypropylene Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "mm_item1_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "mm_item1_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tape Card 2"
+    },
+    {
+      "type": "text",
+      "id": "mm_item2_title",
+      "label": "Title",
+      "default": "Paper Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "mm_item2_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "mm_item2_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tape Card 3"
+    },
+    {
+      "type": "text",
+      "id": "mm_item3_title",
+      "label": "Title",
+      "default": "Hi-Tack Freezer Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "mm_item3_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "mm_item3_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tape Card 4"
+    },
+    {
+      "type": "text",
+      "id": "mm_item4_title",
+      "label": "Title",
+      "default": "PVC Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "mm_item4_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "mm_item4_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tape Card 5"
+    },
+    {
+      "type": "text",
+      "id": "mm_item5_title",
+      "label": "Title",
+      "default": "Flatback Tape"
+    },
+    {
+      "type": "image_picker",
+      "id": "mm_item5_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "mm_item5_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Tape Card 6"
+    },
+    {
+      "type": "text",
+      "id": "mm_item6_title",
+      "label": "Title",
+      "default": "Dispensers"
+    },
+    {
+      "type": "image_picker",
+      "id": "mm_item6_image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "mm_item6_url",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Compare Dropdown"
+    },
+    {
+      "type": "url",
+      "id": "compare_link",
+      "label": "Compare Page Link",
+      "info": "Defaults to /pages/compare"
+    },
+    {
+      "type": "url",
+      "id": "sample_link",
+      "label": "Order Sample Link",
+      "info": "Defaults to /pages/order-sample"
+    },
+    {
+      "type": "url",
+      "id": "about_link",
+      "label": "About Page Link",
+      "info": "Defaults to /pages/about"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Contact Page Link",
+      "info": "Defaults to /pages/contact"
+    },
+    {
+      "type": "header",
+      "content": "Compare Card 1 (Yellow)"
+    },
+    {
+      "type": "image_picker",
+      "id": "cmp1_image",
+      "label": "Card 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "cmp1_title",
+      "label": "Card 1 Title",
+      "default": "Polypropylene Tape"
+    },
+    {
+      "type": "text",
+      "id": "cmp1_price",
+      "label": "Card 1 Price",
+      "default": "Starting at $5.68/ a roll"
+    },
+    {
+      "type": "text",
+      "id": "cmp1_seal",
+      "label": "Card 1 Seal Upto",
+      "default": "30-50+ lbs by mil"
+    },
+    {
+      "type": "text",
+      "id": "cmp1_goes",
+      "label": "Card 1 Goes On",
+      "default": "Normal Tape gun"
+    },
+    {
+      "type": "text",
+      "id": "cmp1_best",
+      "label": "Card 1 Best For",
+      "default": "Everyday volume"
+    },
+    {
+      "type": "text",
+      "id": "cmp1_btn",
+      "label": "Card 1 Button Text",
+      "default": "Buy now"
+    },
+    {
+      "type": "url",
+      "id": "cmp1_url",
+      "label": "Card 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Compare Card 2 (Paper)"
+    },
+    {
+      "type": "image_picker",
+      "id": "cmp2_image",
+      "label": "Card 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "cmp2_title",
+      "label": "Card 2 Title",
+      "default": "Paper Tape"
+    },
+    {
+      "type": "text",
+      "id": "cmp2_price",
+      "label": "Card 2 Price",
+      "default": "Starting at $9.10/ a roll"
+    },
+    {
+      "type": "text",
+      "id": "cmp2_seal",
+      "label": "Card 2 Seal Upto",
+      "default": "30 lbs /30+ HD"
+    },
+    {
+      "type": "text",
+      "id": "cmp2_goes",
+      "label": "Card 2 Goes On",
+      "default": "Need a dispenser"
+    },
+    {
+      "type": "text",
+      "id": "cmp2_best",
+      "label": "Card 2 Best For",
+      "default": "Premium unboxing"
+    },
+    {
+      "type": "text",
+      "id": "cmp2_btn",
+      "label": "Card 2 Button Text",
+      "default": "Buy now"
+    },
+    {
+      "type": "url",
+      "id": "cmp2_url",
+      "label": "Card 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Compare Card 3 (PVC)"
+    },
+    {
+      "type": "image_picker",
+      "id": "cmp3_image",
+      "label": "Card 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "cmp3_title",
+      "label": "Card 3 Title",
+      "default": "PVC Tape"
+    },
+    {
+      "type": "text",
+      "id": "cmp3_price",
+      "label": "Card 3 Price",
+      "default": "Starting at $7.84/ a roll"
+    },
+    {
+      "type": "text",
+      "id": "cmp3_seal",
+      "label": "Card 3 Seal Upto",
+      "default": "Heaviest Loads"
+    },
+    {
+      "type": "text",
+      "id": "cmp3_goes",
+      "label": "Card 3 Goes On",
+      "default": "Normal Tape gun"
+    },
+    {
+      "type": "text",
+      "id": "cmp3_best",
+      "label": "Card 3 Best For",
+      "default": "Heavy + high value"
+    },
+    {
+      "type": "text",
+      "id": "cmp3_btn",
+      "label": "Card 3 Button Text",
+      "default": "Buy now"
+    },
+    {
+      "type": "url",
+      "id": "cmp3_url",
+      "label": "Card 3 Link"
+    },
+    {
+      "type": "header",
+      "content": "Compare Card 4 (Freezer)"
+    },
+    {
+      "type": "image_picker",
+      "id": "cmp4_image",
+      "label": "Card 4 Image"
+    },
+    {
+      "type": "text",
+      "id": "cmp4_title",
+      "label": "Card 4 Title",
+      "default": "Hi-Tack Freezer Tape"
+    },
+    {
+      "type": "text",
+      "id": "cmp4_price",
+      "label": "Card 4 Price",
+      "default": "Starting at $10.18/ a roll"
+    },
+    {
+      "type": "text",
+      "id": "cmp4_seal",
+      "label": "Card 4 Seal Upto",
+      "default": "Cold Chain loads"
+    },
+    {
+      "type": "text",
+      "id": "cmp4_goes",
+      "label": "Card 4 Goes On",
+      "default": "Normal Tape gun"
+    },
+    {
+      "type": "text",
+      "id": "cmp4_best",
+      "label": "Card 4 Best For",
+      "default": "Chilled and frozen"
+    },
+    {
+      "type": "text",
+      "id": "cmp4_btn",
+      "label": "Card 4 Button Text",
+      "default": "Buy now"
+    },
+    {
+      "type": "url",
+      "id": "cmp4_url",
+      "label": "Card 4 Link"
+    },
+    {
+      "type": "header",
+      "content": "Compare Card 5 (Flatback)"
+    },
+    {
+      "type": "image_picker",
+      "id": "cmp5_image",
+      "label": "Card 5 Image"
+    },
+    {
+      "type": "text",
+      "id": "cmp5_title",
+      "label": "Card 5 Title",
+      "default": "Flatback Tape"
+    },
+    {
+      "type": "text",
+      "id": "cmp5_price",
+      "label": "Card 5 Price",
+      "default": "Starting at $7.12/ a roll"
+    },
+    {
+      "type": "text",
+      "id": "cmp5_seal",
+      "label": "Card 5 Seal Upto",
+      "default": "Bundling only"
+    },
+    {
+      "type": "text",
+      "id": "cmp5_goes",
+      "label": "Card 5 Goes On",
+      "default": "Teras by hand"
+    },
+    {
+      "type": "text",
+      "id": "cmp5_best",
+      "label": "Card 5 Best For",
+      "default": "Splicing + tabbing"
+    },
+    {
+      "type": "text",
+      "id": "cmp5_btn",
+      "label": "Card 5 Button Text",
+      "default": "Buy now"
+    },
+    {
+      "type": "url",
+      "id": "cmp5_url",
+      "label": "Card 5 Link"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Comparison Banner"
+    },
+    {
+      "type": "text",
+      "id": "cmp_bottom_title",
+      "label": "Banner Title",
+      "default": "Full Comparison"
+    },
+    {
+      "type": "text",
+      "id": "cmp_bottom_sub",
+      "label": "Banner Subtitle",
+      "default": "Every spec, side by side"
+    },
+    {
+      "type": "text",
+      "id": "cmp_bottom_btn",
+      "label": "Banner Button Text",
+      "default": "See the table"
+    },
+    {
+      "type": "url",
+      "id": "cmp_bottom_link",
+      "label": "Banner Button Link (Default /pages/compare)"
+    },
+    {
+      "type": "header",
+      "content": "Search Dropdown"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Placeholder Text",
+      "default": "Search tapes, specs, help"
+    },
+    {
+      "type": "text",
+      "id": "search_popular_label",
+      "label": "Popular Searches Label",
+      "default": "POPULAR SEARCHES"
+    },
+    {
+      "type": "text",
+      "id": "search_popular_tags",
+      "label": "Popular Searches (Comma separated)",
+      "default": "Paper tapes,Free Sample,Lead time"
+    }
+  ]
+}
+{% endschema %}

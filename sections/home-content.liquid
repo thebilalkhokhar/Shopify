@@ -1,0 +1,134 @@
+{{ 'home-content.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="home-content-{{ section.id }}"
+  class="home-content-section tapefox-dark-section"
+  style="
+    --hc-bg: {{ section.settings.bg_color | default: '#171008' }};
+    --hc-border: {{ section.settings.border_color | default: 'rgba(255, 255, 255, 0.32)' }};
+    --hc-heading-color: {{ section.settings.heading_color | default: '#ffffff' }};
+    --hc-text-color: {{ section.settings.text_color | default: '#D4CECE' }};
+    --hc-max-width: {{ section.settings.max_width | default: 1100 }}px;
+    padding-top: {{ section.settings.padding_top | default: 40 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="home-content__wrapper">
+    <div class="home-content__card">
+      {% for block in section.blocks %}
+        <div class="home-content__group" {{ block.shopify_attributes }}>
+          {% if block.settings.heading != blank %}
+            <h2 class="home-content__heading">{{ block.settings.heading }}</h2>
+          {% endif %}
+
+          {% if block.settings.text != blank %}
+            <div class="home-content__text">
+              {{ block.settings.text }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Content",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card Border Color",
+      "default": "rgba(255, 255, 255, 0.32)"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#D4CECE"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Card Max Width (px)",
+      "min": 800,
+      "max": 1400,
+      "step": 20,
+      "default": 1100
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 10,
+      "max": 140,
+      "step": 5,
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content_group",
+      "name": "Content Group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Why TapeFox Is a Trusted Custom Packaging Partner"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Content Text",
+          "default": "<p>Finding the right packaging supplier shouldn't mean juggling multiple vendors, inconsistent quality, and endless back-and-forth. TapeFox makes custom packaging simpler. We help businesses create packaging that protects their products, strengthens their brand, and makes every order feel more intentional.</p><p>From custom food packaging and paper products to branded packaging essentials, TapeFox brings quality materials, thoughtful customization, and dependable service together in one place.</p><p>Whether you're launching a new product, refreshing your existing packaging, or scaling your business, we make it easier to get packaging that fits your brand and your requirements. Our team works closely with you from the initial idea through production, helping you make the right choices for materials, finishes, sizes, and branding.</p><p>Our goal is simple: make packaging that works hard for your product and looks good doing it.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Content",
+      "blocks": [
+        {
+          "type": "content_group",
+          "settings": {
+            "heading": "Why TapeFox Is a Trusted Custom Packaging Partner",
+            "text": "<p>Finding the right packaging supplier shouldn't mean juggling multiple vendors, inconsistent quality, and endless back-and-forth. TapeFox makes custom packaging simpler. We help businesses create packaging that protects their products, strengthens their brand, and makes every order feel more intentional.</p><p>From custom food packaging and paper products to branded packaging essentials, TapeFox brings quality materials, thoughtful customization, and dependable service together in one place.</p><p>Whether you're launching a new product, refreshing your existing packaging, or scaling your business, we make it easier to get packaging that fits your brand and your requirements. Our team works closely with you from the initial idea through production, helping you make the right choices for materials, finishes, sizes, and branding.</p><p>Our goal is simple: make packaging that works hard for your product and looks good doing it.</p>"
+          }
+        },
+        {
+          "type": "content_group",
+          "settings": {
+            "heading": "TapeFox Packaging Solutions, All in One Place",
+            "text": "<p>Managing packaging through different suppliers can quickly become complicated. Different specifications, different timelines, and different points of contact make even a simple packaging order harder than it needs to be.</p><p>TapeFox brings your packaging needs together under one roof. Whether you need branded food paper, custom packaging, labels, or other packaging essentials, we help you create a consistent look across every customer touchpoint.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

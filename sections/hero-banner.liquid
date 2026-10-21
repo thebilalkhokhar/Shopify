@@ -1,0 +1,323 @@
+{{ 'hero-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="hero-banner-overlay" {{ section.shopify_attributes }}>
+  <!-- Background Images Slider -->
+  <div class="hero-banner__bg">
+    {% assign slide_count = 0 %}
+
+    {% if section.settings.slider_image_1 != blank %}
+      {% assign slide_count = slide_count | plus: 1 %}
+      <div class="hero-banner__slide {% if slide_count == 1 %}active{% endif %}">
+        <picture>
+          {% if section.settings.slider_image_1_tablet != blank %}
+            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.slider_image_1_tablet | image_url: width: 1200 }}">
+          {% elsif section.settings.tablet_image != blank %}
+            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+          {% endif %}
+          {% if section.settings.slider_image_1_mobile != blank %}
+            <source media="(max-width: 600px)" srcset="{{ section.settings.slider_image_1_mobile | image_url: width: 800 }}">
+          {% elsif section.settings.mobile_image != blank %}
+            <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
+          {% endif %}
+          <img
+            src="{{ section.settings.slider_image_1 | image_url: width: 1920 }}"
+            width="1920"
+            height="auto"
+            alt="Banner Background 1"
+            class="bg-img"
+          >
+        </picture>
+      </div>
+    {% endif %}
+
+    {% if section.settings.slider_image_2 != blank %}
+      {% assign slide_count = slide_count | plus: 1 %}
+      <div class="hero-banner__slide {% if slide_count == 1 %}active{% endif %}">
+        <picture>
+          {% if section.settings.slider_image_2_tablet != blank %}
+            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.slider_image_2_tablet | image_url: width: 1200 }}">
+          {% elsif section.settings.tablet_image != blank %}
+            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+          {% endif %}
+          {% if section.settings.slider_image_2_mobile != blank %}
+            <source media="(max-width: 600px)" srcset="{{ section.settings.slider_image_2_mobile | image_url: width: 800 }}">
+          {% elsif section.settings.mobile_image != blank %}
+            <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
+          {% endif %}
+          <img
+            src="{{ section.settings.slider_image_2 | image_url: width: 1920 }}"
+            width="1920"
+            height="auto"
+            alt="Banner Background 2"
+            class="bg-img"
+          >
+        </picture>
+      </div>
+    {% endif %}
+
+    {% if section.settings.slider_image_3 != blank %}
+      {% assign slide_count = slide_count | plus: 1 %}
+      <div class="hero-banner__slide {% if slide_count == 1 %}active{% endif %}">
+        <picture>
+          {% if section.settings.slider_image_3_tablet != blank %}
+            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.slider_image_3_tablet | image_url: width: 1200 }}">
+          {% elsif section.settings.tablet_image != blank %}
+            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+          {% endif %}
+          {% if section.settings.slider_image_3_mobile != blank %}
+            <source media="(max-width: 600px)" srcset="{{ section.settings.slider_image_3_mobile | image_url: width: 800 }}">
+          {% elsif section.settings.mobile_image != blank %}
+            <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
+          {% endif %}
+          <img
+            src="{{ section.settings.slider_image_3 | image_url: width: 1920 }}"
+            width="1920"
+            height="auto"
+            alt="Banner Background 3"
+            class="bg-img"
+          >
+        </picture>
+      </div>
+    {% endif %}
+
+    {% if slide_count == 0 %}
+      <!-- Fallback if no slider images are added -->
+      <div class="hero-banner__slide active">
+        {% if section.settings.desktop_image != blank %}
+          <picture>
+            {% if section.settings.tablet_image != blank %}
+              <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+            {% endif %}
+            {% if section.settings.mobile_image != blank %}
+              <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
+            {% endif %}
+            <img
+              src="{{ section.settings.desktop_image | image_url: width: 1920 }}"
+              width="1920"
+              height="auto"
+              alt="Banner Background"
+              class="bg-img"
+            >
+          </picture>
+        {% else %}
+          <div class="placeholder-bg">Upload Slider Image 1</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Text Overlay -->
+  <div class="hero-banner__overlay-content">
+    <div class="hero-banner__container hero-banner__flex">
+      <div class="hero-banner__text-box">
+        <h1 class="hero-banner__heading">{{ section.settings.heading }}</h1>
+        <p class="hero-banner__subheading">{{ section.settings.subheading }}</p>
+
+        <div class="hero-banner__buttons">
+          {% if section.settings.button_1_label != blank %}
+            <a href="{{ section.settings.button_1_link }}" class="btn btn--primary">
+              {{- section.settings.button_1_label -}}
+            </a>
+          {% endif %}
+          {% if section.settings.button_2_label != blank %}
+            <a href="{{ section.settings.button_2_link }}" class="btn btn--secondary">
+              {{- section.settings.button_2_label -}}
+            </a>
+          {% endif %}
+        </div>
+
+        {% if section.settings.price_text != blank %}
+          <p class="hero-banner__price">{{ section.settings.price_text }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Additional Thumbnails if needed -->
+      <div class="hero-banner__thumbnails desktop-only">
+        {% for i in (1..3) %}
+          {% capture thumb_setting %}thumbnail_image_{{ i }}{% endcapture %}
+          {% assign thumb = section.settings[thumb_setting] %}
+          {% if thumb != blank %}
+            <img
+              src="{{ thumb | image_url: width: 100 }}"
+              width="100"
+              height="auto"
+              alt="Thumbnail {{ i }}"
+              class="hero-banner__thumb"
+            >
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-banner__footer">
+    <div class="hero-banner__container">
+      <span class="hero-banner__footer-left">{{ section.settings.bottom_left_text }}</span>
+      <span class="hero-banner__footer-right">{{ section.settings.bottom_right_text }}</span>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Banner (Overlay)",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "tablet_image",
+      "label": "Tablet Background Image (Fallback)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Background Image (Fallback)"
+    },
+    {
+      "type": "header",
+      "content": "Slider Images (Desktop / Tablet / Mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_1",
+      "label": "Slider Image 1 (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_1_tablet",
+      "label": "Slider Image 1 (Tablet)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_1_mobile",
+      "label": "Slider Image 1 (Mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_2",
+      "label": "Slider Image 2 (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_2_tablet",
+      "label": "Slider Image 2 (Tablet)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_2_mobile",
+      "label": "Slider Image 2 (Mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_3",
+      "label": "Slider Image 3 (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_3_tablet",
+      "label": "Slider Image 3 (Tablet)"
+    },
+    {
+      "type": "image_picker",
+      "id": "slider_image_3_mobile",
+      "label": "Slider Image 3 (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Designed to be seen"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium printed tape for packaging, projects, and ideas that deserve more than the ordinary."
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Button 1 Label",
+      "default": "Browse all Products"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Button 2 Label",
+      "default": "Get Sample"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Price Text",
+      "default": "Starting from $5.68 a roll"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumbnail_image_1",
+      "label": "Thumbnail 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumbnail_image_2",
+      "label": "Thumbnail 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumbnail_image_3",
+      "label": "Thumbnail 3"
+    },
+    {
+      "type": "text",
+      "id": "bottom_left_text",
+      "label": "Bottom Left Text",
+      "default": "BASED IN CALIFORNIA"
+    },
+    {
+      "type": "text",
+      "id": "bottom_right_text",
+      "label": "Bottom Right Text",
+      "default": "EST 2024"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner (Overlay)"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const slides = document.querySelectorAll('.hero-banner__slide');
+    if (slides.length <= 1) return; // No need to slide if only 1 image
+
+    let currentSlide = 0;
+
+    // Auto-slide every 4 seconds
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 4000);
+  });
+</script>

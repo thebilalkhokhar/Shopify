@@ -1,0 +1,863 @@
+{{ 'blog-detail.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Dynamic Resolution:
+  1. If accessed on an article page (article template), we can read directly from `article`.
+  2. If customizer settings are filled, they act as primary or fallback.
+  3. If URL contains a slug, format it as clean title if article object is empty.
+{%- endcomment -%}
+
+{%- assign current_article = article -%}
+{%- assign raw_slug = '' -%}
+
+{%- if current_article != blank -%}
+  {%- assign raw_slug = current_article.handle -%}
+{%- elsif request.path contains '/blogs/' -%}
+  {%- assign raw_slug = request.path | split: '?' | first | split: '/' | last -%}
+{%- endif -%}
+
+{%- assign news_blog = blogs.news | default: blog -%}
+{%- if current_article == blank and raw_slug != blank and raw_slug != 'news' -%}
+  {%- if news_blog.articles.size > 0 -%}
+    {%- for a in news_blog.articles -%}
+      {%- assign a_clean_handle = a.handle | split: '/' | last -%}
+      {%- if a_clean_handle == raw_slug or a.handle == raw_slug or raw_slug contains a_clean_handle -%}
+        {%- assign current_article = a -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign slug_words = raw_slug | split: '-' -%}
+{%- capture capitalized_slug -%}
+  {%- for word in slug_words -%}
+    {{ word | capitalize }}{% unless forloop.last %} {% endunless %}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- assign article_title = current_article.title -%}
+{%- if article_title == blank and raw_slug != blank and raw_slug != 'news' -%}
+  {%- assign article_title = capitalized_slug -%}
+{%- endif -%}
+{%- if article_title == blank -%}
+  {%- assign article_title = section.settings.title | default: 'How to make packaging look less meh' -%}
+{%- endif -%}
+
+{%- assign article_category = current_article.tags.first
+  | default: section.settings.category
+  | default: 'Sticky Business'
+-%}
+{%- assign article_date = current_article.published_at | date: '%B %d, %Y' | default: section.settings.date -%}
+{%- if article_date == blank -%}
+  {%- assign article_date = 'August 14, 2026' -%}
+{%- endif -%}
+
+{%- assign article_lead = current_article.excerpt | default: section.settings.subtitle -%}
+{%- if article_lead == blank -%}
+  {%- if current_article.content != blank -%}
+    {%- assign article_lead = current_article.content | strip_html | truncatewords: 35 -%}
+  {%- else -%}
+    {%- assign article_lead = 'Your packaging has one job before anything else: make people want to look twice. It does not need to be loud, expensive, or covered in glitter. It just to feel elevated. Here is how to get there without regretting your bill.' -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign hero_image = current_article.image | default: section.settings.featured_image -%}
+
+<section
+  id="blog-detail-{{ section.id }}"
+  class="blog-detail-section"
+  style="--bd-bg: {{ section.settings.bg_color | default: '#FAF7F0' }};"
+  {{ section.shopify_attributes }}
+>
+  <div class="blog-detail-container">
+    <!-- 1. Breadcrumb navigation -->
+    <nav class="bd-breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="bd-sep">/</span>
+      <a href="/blogs/news" class="bd-category-link">{{ article_category | default: 'Blogs' }}</a>
+      <span class="bd-sep">/</span>
+      <span class="bd-current">{{ article_title | truncate: 45 }}</span>
+    </nav>
+
+    <!-- 2. Meta Row (Badge + Date + Social Share Icons) -->
+    <div class="bd-meta-row">
+      <div class="bd-meta-left">
+        {% if section.settings.badge_label != blank %}
+          <span class="bd-badge-pill">{{ section.settings.badge_label }}</span>
+        {% endif %}
+        <span class="bd-date">{{ article_date }}</span>
+      </div>
+
+      <!-- Social Media Share Icons -->
+      <div class="bd-share-row">
+        <!-- Facebook -->
+        <a
+          href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url | url_encode }}"
+          target="_blank"
+          rel="noopener"
+          class="bd-share-btn"
+          aria-label="Share on Facebook"
+        >
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+
+        <!-- Instagram / Threads -->
+        <a
+          href="https://www.instagram.com"
+          target="_blank"
+          rel="noopener"
+          class="bd-share-btn"
+          aria-label="Visit Instagram"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+
+        <!-- Pinterest -->
+        <a
+          href="https://pinterest.com/pin/create/button/?url={{ canonical_url | url_encode }}"
+          target="_blank"
+          rel="noopener"
+          class="bd-share-btn"
+          aria-label="Share on Pinterest"
+        >
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M12 0a12 12 0 00-4.37 23.18c-.03-.96-.06-2.45.05-3.51.1-.96.65-5.63.65-5.63s-.17-.33-.17-.82c0-.77.45-1.34 1.01-1.34.48 0 .7.36.7.79 0 .48-.3 1.2-.46 1.86-.13.56.28 1.02.83 1.02 1 0 1.77-1.05 1.77-2.58 0-1.35-.97-2.29-2.35-2.29-1.6 0-2.54 1.2-2.54 2.45 0 .48.19.1.4.12.04.05.05.1.03.18-.04.16-.13.54-.15.61-.03.1-.1.14-.18.1-1.12-.52-1.82-2.15-1.82-3.46 0-2.82 2.05-5.41 5.91-5.41 3.1 0 5.51 2.21 5.51 5.17 0 3.08-1.94 5.56-4.64 5.56-.91 0-1.76-.47-2.05-1.03l-.56 2.13c-.2.78-.75 1.76-1.12 2.36A12 12 0 1012 0z"/>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a
+          href="https://www.linkedin.com/sharing/share-offsite/?url={{ canonical_url | url_encode }}"
+          target="_blank"
+          rel="noopener"
+          class="bd-share-btn"
+          aria-label="Share on LinkedIn"
+        >
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 2a2 2 0 100 4 2 2 0 000-4z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Main Header (Title + Lead Subtitle) -->
+    <div class="bd-header-block">
+      <h1 class="bd-main-title">{{ article_title }}</h1>
+      {% if article_lead != blank %}
+        <div class="bd-subtitle-lead">
+          {{ article_lead }}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- 4. Featured Hero Image Banner -->
+    <div class="bd-featured-media-wrap">
+      {% if hero_image != blank %}
+        <img
+          src="{{ hero_image | image_url: width: 1800 }}"
+          alt="{{ hero_image.alt | default: article_title }}"
+          class="bd-featured-hero-img"
+          width="1160"
+          height="540"
+          loading="eager"
+        >
+      {% elsif request.design_mode %}
+        <div style="background: #E5E1D8; padding: 120px; text-align: center; border-radius: 24px; font-weight: 600;">
+          🖼️ Upload Featured Hero Image in Settings
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- 5. Two Column Grid: Left Sticky TOC Navigation & Right Content Blocks -->
+    <div class="bd-layout-grid">
+      <!-- Sticky Left Sidebar -->
+      <aside class="bd-sticky-sidebar">
+        <div class="bd-toc-box">
+          <div class="bd-toc-title">{{ section.settings.toc_title | default: 'In this post' }}</div>
+
+          <nav class="bd-toc-nav" id="bd-toc-nav-{{ section.id }}">
+            {% for block in section.blocks %}
+              {% if block.type == 'topic' and block.settings.heading != blank %}
+                {% assign anchor_id = block.settings.heading | handleize %}
+                <a
+                  href="#{{ anchor_id }}"
+                  class="bd-toc-link {% if forloop.first %}is-active{% endif %}"
+                  data-target="{{ anchor_id }}"
+                >
+                  {{ block.settings.heading }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Right Column: Articles Topics & Content -->
+      <main class="bd-content-col">
+        <!-- Introductory Paragraph (Above first topic, only for default customizer post) -->
+        {% unless current_article != blank and current_article.content != blank %}
+          {% if section.settings.intro_content != blank %}
+            <div class="bd-intro-block">
+              {{ section.settings.intro_content }}
+            </div>
+          {% endif %}
+        {% endunless %}
+
+        {% if current_article != blank and current_article.content != blank %}
+          <!-- Real Shopify Article Content from Portal -->
+          <article class="bd-topic-block" id="article-content" data-toc-id="article-content">
+            <div class="bd-topic-body">
+              {{ current_article.content }}
+            </div>
+          </article>
+        {% else %}
+          <!-- Blocks Loop: Topics, Tables, Inline Images -->
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'topic' %}
+                {% assign anchor_id = block.settings.heading | handleize %}
+                <article
+                  id="{{ anchor_id }}"
+                  class="bd-topic-block"
+                  data-toc-id="{{ anchor_id }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {% if block.settings.heading != blank %}
+                    <h2 class="bd-topic-heading">{{ block.settings.heading }}</h2>
+                  {% endif %}
+
+                  {% if block.settings.content != blank %}
+                    <div class="bd-topic-body">
+                      {{ block.settings.content }}
+                    </div>
+                  {% endif %}
+
+                  <!-- Optional Inline Image for this topic -->
+                  {% if block.settings.inline_image != blank %}
+                    <div class="bd-topic-image-wrap">
+                      <img
+                        src="{{ block.settings.inline_image | image_url: width: 1400 }}"
+                        alt="{{ block.settings.inline_image.alt | default: block.settings.heading }}"
+                        class="bd-topic-img"
+                        width="800"
+                        height="auto"
+                        loading="lazy"
+                      >
+                    </div>
+                  {% endif %}
+                </article>
+
+              {% when 'comparison_table' %}
+                <div class="bd-table-card" {{ block.shopify_attributes }}>
+                  <div class="bd-table-scroll">
+                    <table class="bd-article-table" role="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">{{ block.settings.col1_header | default: 'If you want to say' }}</th>
+                          <th scope="col">{{ block.settings.col2_header | default: 'Reach for' }}</th>
+                          <th scope="col">{{ block.settings.col3_header | default: 'Watch out for' }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% if block.settings.row1_col1 != blank
+                          or block.settings.row1_col2 != blank
+                          or block.settings.row1_col3 != blank
+                        %}
+                          <tr>
+                            <td>{{ block.settings.row1_col1 }}</td>
+                            <td>{{ block.settings.row1_col2 }}</td>
+                            <td>{{ block.settings.row1_col3 }}</td>
+                          </tr>
+                        {% endif %}
+                        {% if block.settings.row2_col1 != blank
+                          or block.settings.row2_col2 != blank
+                          or block.settings.row2_col3 != blank
+                        %}
+                          <tr>
+                            <td>{{ block.settings.row2_col1 }}</td>
+                            <td>{{ block.settings.row2_col2 }}</td>
+                            <td>{{ block.settings.row2_col3 }}</td>
+                          </tr>
+                        {% endif %}
+                        {% if block.settings.row3_col1 != blank
+                          or block.settings.row3_col2 != blank
+                          or block.settings.row3_col3 != blank
+                        %}
+                          <tr>
+                            <td>{{ block.settings.row3_col1 }}</td>
+                            <td>{{ block.settings.row3_col2 }}</td>
+                            <td>{{ block.settings.row3_col3 }}</td>
+                          </tr>
+                        {% endif %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            {% endcase %}
+          {% endfor %}
+        {% endif %}
+
+        <!-- Bottom Outro Disclaimer / Note -->
+        {% if section.settings.outro_note != blank %}
+          <div class="bd-outro-wrap">
+            <div class="bd-outro-text">
+              {{ section.settings.outro_note }}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- 6. Blog Author Section (Common at the end of every blog detail) -->
+        {% if section.settings.show_author != false %}
+          {%- assign resolved_author_name = section.settings.author_name | default: current_article.author | default: 'Emily Chris Kieran' -%}
+          {%- assign resolved_author_label = section.settings.author_label | default: 'AUTHOR' -%}
+
+          <div class="bd-author-card">
+            <div class="bd-author-avatar-wrap">
+              {% if section.settings.author_image != blank %}
+                <img
+                  src="{{ section.settings.author_image | image_url: width: 140 }}"
+                  alt="{{ resolved_author_name }}"
+                  class="bd-author-avatar-img"
+                  width="54"
+                  height="54"
+                  loading="lazy"
+                >
+              {% elsif current_article.user.image != blank %}
+                <img
+                  src="{{ current_article.user.image | image_url: width: 140 }}"
+                  alt="{{ resolved_author_name }}"
+                  class="bd-author-avatar-img"
+                  width="54"
+                  height="54"
+                  loading="lazy"
+                >
+              {% else %}
+                <!-- Default avatar icon -->
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="#7A746E">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+              {% endif %}
+            </div>
+            <div class="bd-author-info">
+              <span class="bd-author-role">{{ resolved_author_label }}</span>
+              <span class="bd-author-name">{{ resolved_author_name }}</span>
+            </div>
+          </div>
+        {% endif %}
+      </main>
+    </div>
+  </div>
+</section>
+
+<!-- ScrollSpy Vanilla JS for Left Sticky Tabs -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var section = document.getElementById('blog-detail-{{ section.id }}');
+    if (!section) return;
+
+    var navEl = section.querySelector('.bd-toc-nav');
+    var realContent = section.querySelector('#article-content .bd-topic-body');
+
+    // 1. If real article content exists, look for h2 / h3 headings
+    if (realContent && navEl) {
+      var headings = realContent.querySelectorAll('h2, h3');
+      if (headings.length > 0) {
+        navEl.innerHTML = '';
+        headings.forEach(function (h, idx) {
+          var anchorId = h.id || 'article-heading-' + idx;
+          h.id = anchorId;
+          h.classList.add('bd-topic-heading');
+          h.style.scrollMarginTop = '120px';
+
+          var a = document.createElement('a');
+          a.href = '#' + anchorId;
+          a.className = 'bd-toc-link' + (idx === 0 ? ' is-active' : '');
+          a.setAttribute('data-target', anchorId);
+          a.textContent = h.textContent.trim();
+          navEl.appendChild(a);
+        });
+      } else {
+        var tocBox = section.querySelector('.bd-toc-box');
+        if (tocBox) tocBox.style.display = 'none';
+      }
+    }
+
+    function initTocScrollSpy() {
+      var navLinks = section.querySelectorAll('.bd-toc-link');
+      if (!navLinks.length) return;
+
+      var targets = [];
+      navLinks.forEach(function (link) {
+        var targetId = link.getAttribute('data-target');
+        var targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targets.push({ id: targetId, el: targetEl, link: link });
+        }
+      });
+
+      // Smooth scroll on click
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          var targetId = this.getAttribute('data-target');
+          var targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            var yOffset = -110;
+            var yPos = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: yPos, behavior: 'smooth' });
+
+            navLinks.forEach(function (l) {
+              l.classList.remove('is-active');
+            });
+            this.classList.add('is-active');
+          }
+        });
+      });
+
+      // ScrollSpy logic
+      function onScrollSpy() {
+        if (!targets.length) return;
+        var scrollPosition = window.pageYOffset + 140;
+        var currentTarget = null;
+
+        for (var i = 0; i < targets.length; i++) {
+          var item = targets[i];
+          var top = item.el.getBoundingClientRect().top + window.pageYOffset;
+          if (scrollPosition >= top) {
+            currentTarget = item;
+          }
+        }
+
+        // If above first heading, default to first
+        if (!currentTarget && targets.length > 0) {
+          currentTarget = targets[0];
+        }
+
+        if (currentTarget) {
+          navLinks.forEach(function (link) {
+            if (link.getAttribute('data-target') === currentTarget.id) {
+              link.classList.add('is-active');
+            } else {
+              link.classList.remove('is-active');
+            }
+          });
+        }
+      }
+
+      window.addEventListener('scroll', onScrollSpy, { passive: true });
+      window.addEventListener('resize', onScrollSpy, { passive: true });
+      onScrollSpy();
+    }
+
+    initTocScrollSpy();
+  });
+
+  (function () {
+    var path = window.location.pathname;
+    var blogDetail = document.getElementById('blog-detail-{{ section.id }}');
+    var p404Section = document.querySelector('.page-404-section');
+
+    if (path.indexOf('/blogs/news/') !== -1 && path !== '/blogs/news' && path !== '/blogs/news/') {
+      if (blogDetail) {
+        blogDetail.style.display = 'block';
+      }
+      if (p404Section) {
+        p404Section.style.display = 'none';
+        p404Section.remove();
+      }
+
+      // Check if clicked blog post data exists in sessionStorage
+      var cachedPost = null;
+      try {
+        var raw = sessionStorage.getItem('tf_active_blog');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          // Only use cachedPost if it belongs to current URL, or if URL contains its slug
+          var urlSlug = path.split('/blogs/news/')[1].split('?')[0].split('/')[0].toLowerCase();
+          var cardSlug = parsed.url
+            ? parsed.url.split('/blogs/news/')[1].split('?')[0].split('/')[0].toLowerCase()
+            : '';
+          if (
+            !cardSlug ||
+            cardSlug === urlSlug ||
+            (parsed.title &&
+              urlSlug.indexOf(
+                parsed.title
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]+/g, '-')
+                  .slice(0, 10)
+              ) !== -1)
+          ) {
+            cachedPost = parsed;
+          }
+        }
+      } catch (e) {}
+
+      // Elements
+      var titleEl = document.querySelector('.bd-main-title');
+      var breadcrumbCurrentEl = document.querySelector('.bd-breadcrumbs .bd-current');
+      var breadcrumbCatEl = document.querySelector('.bd-breadcrumbs .bd-category-link');
+      var leadEl = document.querySelector('.bd-subtitle-lead');
+      var dateEl = document.querySelector('.bd-date');
+      var heroImgEl = document.querySelector('.bd-featured-hero-img');
+
+      if (cachedPost && cachedPost.title) {
+        if (titleEl) titleEl.textContent = cachedPost.title;
+        if (breadcrumbCurrentEl) breadcrumbCurrentEl.textContent = cachedPost.title;
+        if (breadcrumbCatEl && cachedPost.category) breadcrumbCatEl.textContent = cachedPost.category;
+        if (leadEl && cachedPost.description) leadEl.innerHTML = cachedPost.description;
+        if (dateEl && cachedPost.date) dateEl.textContent = cachedPost.date;
+        if (heroImgEl && cachedPost.image) {
+          heroImgEl.src = cachedPost.image;
+          heroImgEl.alt = cachedPost.title;
+        }
+        document.title = cachedPost.title + ' · TapeFox';
+
+        // If cached post has description and static topics are still showing, update content area
+        var realTopicBody = document.querySelector('#article-content .bd-topic-body');
+        var staticTopics = document.querySelectorAll(
+          '.bd-content-col .bd-topic-block:not(#article-content), .bd-content-col .bd-table-card, .bd-content-col .bd-intro-block'
+        );
+        if (!realTopicBody && cachedPost.description) {
+          staticTopics.forEach(function (el) {
+            el.style.display = 'none';
+          });
+          var contentCol = document.querySelector('.bd-content-col');
+          if (contentCol) {
+            var dynamicArt = document.getElementById('dynamic-injected-article');
+            if (!dynamicArt) {
+              dynamicArt = document.createElement('article');
+              dynamicArt.id = 'dynamic-injected-article';
+              dynamicArt.className = 'bd-topic-block';
+              dynamicArt.innerHTML =
+                '<div class="bd-topic-body">' + (cachedPost.content || cachedPost.description) + '</div>';
+              var authorCard = contentCol.querySelector('.bd-author-card');
+              if (authorCard) {
+                contentCol.insertBefore(dynamicArt, authorCard);
+              } else {
+                contentCol.appendChild(dynamicArt);
+              }
+            } else {
+              dynamicArt.innerHTML =
+                '<div class="bd-topic-body">' + (cachedPost.content || cachedPost.description) + '</div>';
+            }
+          }
+        }
+      } else {
+        // Fallback: Extract slug from URL if user accessed via direct link
+        var rawSlug = path.split('/blogs/news/')[1].split('?')[0].split('/')[0];
+        if (rawSlug && rawSlug !== 'how-to-make-packaging-look-less-meh') {
+          var words = rawSlug.split('-');
+          var capTitle = words
+            .map(function (w) {
+              return w.charAt(0).toUpperCase() + w.slice(1);
+            })
+            .join(' ');
+          if (titleEl) titleEl.textContent = capTitle;
+          if (breadcrumbCurrentEl) breadcrumbCurrentEl.textContent = capTitle;
+          document.title = capTitle + ' · TapeFox';
+        }
+      }
+    }
+
+    if (blogDetail) {
+      blogDetail.style.display = 'block';
+    }
+    if (p404Section && path.indexOf('/blogs/news/') !== -1 && path !== '/blogs/news' && path !== '/blogs/news/') {
+      p404Section.style.display = 'none';
+      p404Section.remove();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Blog Detail Content",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF7F0"
+    },
+    {
+      "type": "header",
+      "content": "Article Header Details"
+    },
+    {
+      "type": "text",
+      "id": "category",
+      "label": "Category / Breadcrumb",
+      "default": "Sticky Business"
+    },
+    {
+      "type": "text",
+      "id": "blog_url",
+      "label": "Blog Page URL",
+      "default": "/blogs/news"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Badge Text",
+      "default": "Share in"
+    },
+    {
+      "type": "text",
+      "id": "date",
+      "label": "Publish Date",
+      "default": "August 14, 2026"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Blog Title",
+      "default": "How to make packaging look less meh"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Lead Subtitle",
+      "default": "Your packaging has one job before anything else: make people want to look twice. It does not need to be loud, expensive, or covered in glitter. It just to feel elevated. Here is how to get there without regretting your bill."
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Featured Hero Image"
+    },
+    {
+      "type": "header",
+      "content": "Table of Contents Sidebar"
+    },
+    {
+      "type": "text",
+      "id": "toc_title",
+      "label": "Table of Contents Title",
+      "default": "In this post"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_content",
+      "label": "Intro Paragraph (Above Topics)",
+      "default": "<p>Most packaging is not ugly. It is undecided. Someone pressed a box because it fit, picked tape because it was in the cupboard, and put a sticker on because they were stickers floating around. Nothing in it is wrong, exactly. It just does not read as thought-out.</p><p>That is the actual gap between packaging that looks cheap and packaging that looks considered... not budget, decidedness. The good news is that decidedness is far cheaper than it looks, and you can usually buy it with one component rather than all of them.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "outro_note",
+      "label": "Bottom Note / Disclaimer",
+      "default": "Written from what we can see through the studio, not from a keyword tool. If something here is wrong for your setup, say so — we would rather fix the advice than defend it."
+    },
+    {
+      "type": "header",
+      "content": "Common Blog Author Details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author Card",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image",
+      "label": "Author Avatar Image"
+    },
+    {
+      "type": "text",
+      "id": "author_label",
+      "label": "Author Tag / Label",
+      "default": "AUTHOR"
+    },
+    {
+      "type": "text",
+      "id": "author_name",
+      "label": "Author Name",
+      "default": "Emily Chris Kieran"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "topic",
+      "name": "Topic Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Topic Heading",
+          "default": "Pick the one thing people touch"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Topic Content",
+          "default": "<p>Every parcel has a hierarchy of attention and it is not the one you would guess. The customer sees the outside of the box first: about two metres away for roughly a second. Then their hands go to the seal. That is the moment of highest attention in the entire unboxing, and almost nobody designs for it.</p><p>So if you are only going to brand one thing, brand the seal. A printed carton is the expensive answer to a question that a printed tape answers for a fraction of it, and the tape is the part their fingers are on.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "inline_image",
+          "label": "Inline Graphic / Image (Optional)"
+        }
+      ]
+    },
+    {
+      "type": "comparison_table",
+      "name": "Comparison Table",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "col1_header",
+          "label": "Column 1 Header",
+          "default": "If you want to say"
+        },
+        {
+          "type": "text",
+          "id": "col2_header",
+          "label": "Column 2 Header",
+          "default": "Reach for"
+        },
+        {
+          "type": "text",
+          "id": "col3_header",
+          "label": "Column 3 Header",
+          "default": "Watch out for"
+        },
+        {
+          "type": "header",
+          "content": "Row 1"
+        },
+        {
+          "type": "textarea",
+          "id": "row1_col1",
+          "label": "Row 1 Column 1",
+          "default": "We care about the planet, genuinely"
+        },
+        {
+          "type": "textarea",
+          "id": "row1_col2",
+          "label": "Row 1 Column 2",
+          "default": "Kraft paper tape (water-activated)"
+        },
+        {
+          "type": "textarea",
+          "id": "row1_col3",
+          "label": "Row 1 Column 3",
+          "default": "Dispenser needed — do not buy before you have one"
+        },
+        {
+          "type": "header",
+          "content": "Row 2"
+        },
+        {
+          "type": "textarea",
+          "id": "row2_col1",
+          "label": "Row 2 Column 1",
+          "default": "Crisp, precise, modern design"
+        },
+        {
+          "type": "textarea",
+          "id": "row2_col2",
+          "label": "Row 2 Column 2",
+          "default": "Polypropylene with a clear or white base"
+        },
+        {
+          "type": "textarea",
+          "id": "row2_col3",
+          "label": "Row 2 Column 3",
+          "default": "High-volume stretch noise unless low-noise grade"
+        },
+        {
+          "type": "header",
+          "content": "Row 3"
+        },
+        {
+          "type": "textarea",
+          "id": "row3_col1",
+          "label": "Row 3 Column 1",
+          "default": "Heavy duty, premium, quiet seal"
+        },
+        {
+          "type": "textarea",
+          "id": "row3_col2",
+          "label": "Row 3 Column 2",
+          "default": "PVC tape (smooth, silent release)"
+        },
+        {
+          "type": "textarea",
+          "id": "row3_col3",
+          "label": "Row 3 Column 3",
+          "default": "Cold temperatures reduce adhesion slightly"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Detail Content",
+      "blocks": [
+        {
+          "type": "topic",
+          "settings": {
+            "heading": "Pick the one thing people touch",
+            "content": "<p>Every parcel has a hierarchy of attention and it is not the one you would guess. The customer sees the outside of the box first: about two metres away for roughly a second. Then their hands go to the seal. That is the moment of highest attention in the entire unboxing, and almost nobody designs for it.</p><p>So if you are only going to brand one thing, brand the seal. A printed carton is the expensive answer to a question that a printed tape answers for a fraction of it, and the tape is the part their fingers are on.</p>"
+          }
+        },
+        {
+          "type": "topic",
+          "settings": {
+            "heading": "Two colours beats six",
+            "content": "<p>Every first-time packaging designer tries far too much: a 4-colour illustration, a gradient, a tagline, a website, a QR code and a social handle, all fighting on a two-inch strip that goes past at speed.</p><p>Restraint reads as confidence and it also reads from further away. In a warehouse floor or a doorstep, a mark you can identify at three metres is doing more for you than a beautiful scene you have to hold still to see.</p><ul><li>One mark, big, repeated. Not a scene.</li><li>Two spot colours is the sweet spot. Three is the ceiling and rarely the answer.</li><li>Skip the QR code unless something is genuinely behind it.</li><li>Leave the tagline off. It never survives the roll.</li></ul>"
+          }
+        },
+        {
+          "type": "topic",
+          "settings": {
+            "heading": "Match the material to the promise",
+            "content": "<p>Material is a message before anyone reads a word. Kraft paper says considered and recyclable. Glossy white plastic says volume and speed. Neither is better; they are just different claims, and the wrong one undercuts everything else you have written.</p><p>If your brand is built on being low-waste, plastic tape on a recycled carton is a contradiction your customer will notice before you do. If you ship four hundred boxes a week, water-activated paper is a real change to how your bench works, and pretending otherwise makes for an unhappy Monday.</p>"
+          }
+        },
+        {
+          "type": "comparison_table",
+          "settings": {
+            "col1_header": "If you want to say",
+            "col2_header": "Reach for",
+            "col3_header": "Watch out for",
+            "row1_col1": "We care about the planet, genuinely",
+            "row1_col2": "Kraft paper tape (water-activated)",
+            "row1_col3": "Dispenser needed — do not buy before you have one",
+            "row2_col1": "Crisp, precise, modern design",
+            "row2_col2": "Polypropylene with a clear or white base",
+            "row2_col3": "High-volume stretch noise unless low-noise grade",
+            "row3_col1": "Heavy duty, premium, quiet seal",
+            "row3_col2": "PVC tape (smooth, silent release)",
+            "row3_col3": "Cold temperatures reduce adhesion slightly"
+          }
+        },
+        {
+          "type": "topic",
+          "settings": {
+            "heading": "Design for the repeat, not the panel",
+            "content": "<p>This is the one thing that catches almost every first design, and it is specific to tape. A box is a panel: your artwork sits on it once, framed, with edges. Tape is a continuous repeat. Your mark runs down the roll over and over, and it gets cut at an arbitrary point that nobody controls.</p><p>So the join matters more than the composition. A design that looks balanced in isolation can produce an ugly collision every time it repeats, and a logo that sits too close to the edge gets sliced in half on half the boxes you seal.</p><ul><li>Lay your mark out at least three times and look at the joins, not the artwork.</li><li>Keep anything you care about away from the trim edges.</li><li>Assume the cut lands in the worst possible place, because eventually it will.</li><li>Ask for the template. Every product page has one; of every roll fries left, the hit people find out too late.</li></ul>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

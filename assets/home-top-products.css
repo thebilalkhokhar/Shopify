@@ -1,0 +1,230 @@
+/* Home Top Products Section CSS */
+.home-top-products-section {
+  padding: 60px 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.htp-board {
+  background-color: #F8F5EF;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 100%;
+  padding: 40px 7% !important;
+  position: relative;
+}
+
+/* Corner Tapes */
+.htp-tape {
+  position: absolute;
+  width: 120px;
+  z-index: 5;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: auto;
+}
+
+.htp-tape img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.08));
+}
+
+.htp-tape--top-left {
+  top: -12px;
+  left: 20px;
+  transform: rotate(-38deg);
+}
+
+.htp-tape--top-left:hover {
+  transform: rotate(-42deg) scale(1.04);
+}
+
+.htp-tape--top-right {
+  top: -12px;
+  right: 20px;
+  transform: rotate(38deg);
+}
+
+.htp-tape--top-right:hover {
+  transform: rotate(42deg) scale(1.04);
+}
+
+.htp-tape--bottom-left {
+  bottom: -12px;
+  left: 20px;
+  transform: rotate(38deg);
+}
+
+.htp-tape--bottom-left:hover {
+  transform: rotate(42deg) scale(1.04);
+}
+
+.htp-tape--bottom-right {
+  bottom: -12px;
+  right: 20px;
+  transform: rotate(-38deg);
+}
+
+.htp-tape--bottom-right:hover {
+  transform: rotate(-42deg) scale(1.04);
+}
+
+.htp-dummy-tape {
+  width: 120px;
+  height: 38px;
+  background: #CCAE79;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+/* Header Content */
+.htp-header {
+  text-align: center;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.htp-badge {
+  background-color: #F8B825;
+  color: #171008;
+  padding: 5px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-family: var(--custom-font-family, serif);
+  font-size: 15px;
+  border: 2px solid #171008;
+  display: inline-block;
+  transform: rotate(-5deg);
+  margin-bottom: 6px;
+  /* Retro 3D hard black bottom-shadow */
+  box-shadow: 0 4px 0 #171008;
+  letter-spacing: -0.2px;
+}
+
+.htp-heading {
+  font-family: var(--custom-font-family, serif);
+  font-size: 42px;
+  color: #171008;
+  margin: 0 0 15px 0;
+  letter-spacing: -0.5px;
+}
+
+.htp-subheading {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #555;
+  max-width: 700px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Grid */
+.htp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 30px;
+  column-gap: 10px;
+}
+
+.htp-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.htp-card__image-wrap {
+  border-radius: 12px;
+  border: 1.5px solid #171008;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.htp-card__image-wrap img {
+  width: 90%;
+  height: auto;
+  object-fit: contain;
+}
+
+.htp-dummy-img {
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+}
+
+.htp-card__badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: #2D3E4E;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.htp-card__info {
+  padding-left: 5px;
+}
+
+.htp-card__title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 26px;
+  color: #171008;
+  margin: 0 0 5px 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.htp-card__price {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #333;
+  margin: 0;
+}
+
+.htp-card__price b,
+.htp-card__price strong {
+  font-weight: 700;
+  color: #171008;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 992px) {
+  .htp-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .htp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .htp-board {
+    padding: 40px 20px;
+  }
+
+  .htp-heading {
+    font-size: 32px;
+  }
+
+  .htp-tape {
+    width: 80px;
+  }
+}

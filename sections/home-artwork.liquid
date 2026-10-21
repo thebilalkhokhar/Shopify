@@ -1,0 +1,180 @@
+{{ 'home-artwork.css' | asset_url | stylesheet_tag }}
+
+<div class="home-artwork-section tapefox-dark-section" {{ section.shopify_attributes }}>
+  <div class="home-artwork__container">
+    
+    <!-- Header -->
+    <div class="home-artwork__header">
+      {% if section.settings.badge_text != blank %}
+        <div class="home-artwork__badge">{{ section.settings.badge_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="home-artwork__title">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </div>
+
+    <!-- 3-Column Cards Grid -->
+    <div class="home-artwork__grid">
+      {% for block in section.blocks %}
+        <div
+          class="home-artwork__card"
+          style="
+            --card-bg: {{ block.settings.bg_color | default: '#FDB927' }};
+            --card-title-color: {{ block.settings.title_color | default: '#171008' }};
+            --card-desc-color: {{ block.settings.desc_color | default: '#362415' }};
+          "
+          {{ block.shopify_attributes }}
+        >
+          <!-- Top Text Content -->
+          <div class="home-artwork__card-content">
+            {% if block.settings.title != blank %}
+              <h3 class="home-artwork__card-title">{{ block.settings.title }}</h3>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <p class="home-artwork__card-desc">{{ block.settings.description }}</p>
+            {% endif %}
+          </div>
+
+          <!-- Bottom Time Pill -->
+          {% if block.settings.time_badge != blank %}
+            <div class="home-artwork__card-pill">
+              {{ block.settings.time_badge }}
+            </div>
+          {% endif %}
+
+          <!-- Bottom-Right Illustration Image -->
+          {% if block.settings.image != blank %}
+            <div class="home-artwork__card-media">
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                alt="{{ block.settings.title | default: 'Artwork Step' | escape }}"
+                width="{{ block.settings.image.width | default: 800 }}"
+                height="{{ block.settings.image.height | default: 500 }}"
+                loading="lazy"
+                class="home-artwork__card-img"
+              >
+            </div>
+          {% else %}
+            <!-- Placeholder if no image uploaded yet -->
+            <div class="home-artwork__card-placeholder">
+              <span>Fox Illustration</span>
+            </div>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Home Artwork",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Top Badge Text",
+      "default": "The Route"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Artwork in. Tape out."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step_card",
+      "name": "Step Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Order"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Card Description",
+          "default": "Choose the tape, the dimensions and the ink colours, then upload artwork. Price is on the page as you build it."
+        },
+        {
+          "type": "text",
+          "id": "time_badge",
+          "label": "Bottom Time Badge",
+          "default": "5 min"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Character Illustration"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Card Background Color",
+          "default": "#FDB927"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color",
+          "default": "#171008"
+        },
+        {
+          "type": "color",
+          "id": "desc_color",
+          "label": "Description Color",
+          "default": "#362415"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Artwork",
+      "blocks": [
+        {
+          "type": "step_card",
+          "settings": {
+            "title": "Order",
+            "description": "Choose the tape, the dimensions and the ink colours, then upload artwork. Price is on the page as you build it.",
+            "time_badge": "5 min",
+            "bg_color": "#FDB927",
+            "title_color": "#171008",
+            "desc_color": "#362415"
+          }
+        },
+        {
+          "type": "step_card",
+          "settings": {
+            "title": "Approve the proof",
+            "description": "We send an electronic proof. Nothing goes on press until you approve it and if the artwork needs work, our team fixes it first.",
+            "time_badge": "2-3 business days",
+            "bg_color": "#DE5F48",
+            "title_color": "#ffffff",
+            "desc_color": "#ffffff"
+          }
+        },
+        {
+          "type": "step_card",
+          "settings": {
+            "title": "Delivery",
+            "description": "Your tape prints and ships, tracked from our floor to your dock. Free shipping across the continental US.",
+            "time_badge": "Within 12-14 business days",
+            "bg_color": "#2D76F6",
+            "title_color": "#ffffff",
+            "desc_color": "#ffffff"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

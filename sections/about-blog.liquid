@@ -1,0 +1,332 @@
+{{ 'about-blog.css' | asset_url | stylesheet_tag }}
+
+{%- assign selected_blog = section.settings.blog | default: blog -%}
+{%- if selected_blog == blank or selected_blog.articles.size == 0 -%}
+  {%- assign selected_blog = blogs['news'] -%}
+{%- endif -%}
+
+{%- assign dynamic_articles_count = selected_blog.articles.size -%}
+
+<section
+  id="about-blog-{{ section.id }}"
+  class="about-blog-section"
+  style="
+    --abl-bg: {{ section.settings.bg_color | default: '#171008' }};
+    --abl-card-bg: {{ section.settings.card_bg | default: '#EA5B1B' }};
+    --abl-max-width: {{ section.settings.max_width | default: 1560 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="about-blog-container">
+    
+    <!-- 1. Header (Sticker Badge + Title + Subtitle) -->
+    <div class="about-blog-header">
+      {% if section.settings.badge_text != blank %}
+        <div class="abl-badge">{{ section.settings.badge_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="abl-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="abl-subheading">
+          {{ section.settings.subheading }}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- 2. Blog Posts Grid (3 Orange Cards) -->
+    <div class="about-blog-grid">
+      {% if dynamic_articles_count > 0 %}
+        {%- comment -%} Dynamically render the latest 3 Shopify blog articles {%- endcomment -%}
+        {% for article in selected_blog.articles limit: 3 %}
+          <a
+            href="{{ article.url }}"
+            class="abl-card abl-card--{{ forloop.index }}{% if forloop.index == 2 %} abl-card--featured{% endif %}"
+          >
+            <div class="abl-card__top">
+              <div class="abl-card-image-wrap">
+                {% if article.image != blank %}
+                  <img
+                    src="{{ article.image | image_url: width: 800 }}"
+                    alt="{{ article.image.alt | default: article.title | escape }}"
+                    class="abl-card-img"
+                    width="440"
+                    height="300"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="abl-card-placeholder">
+                    <span>📰 {{ article.title | truncate: 25 }}</span>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="abl-card-body">
+                <h3 class="abl-card-title">{{ article.title }}</h3>
+                <div class="abl-card-desc">
+                  {% if article.excerpt != blank %}
+                    {{ article.excerpt | strip_html | truncatewords: 28 }}
+                  {% else %}
+                    {{ article.content | strip_html | truncatewords: 28 }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            <div class="abl-card-date">
+              {{ article.published_at | date: '%B %d, %Y' }}
+            </div>
+          </a>
+        {% endfor %}
+
+      {% elsif section.blocks.size > 0 %}
+        {%- comment -%} Fallback to customizer blocks if no articles exist {%- endcomment -%}
+        {% for block in section.blocks limit: 3 %}
+          {%- assign card_link = block.settings.article_link | default: block.settings.article.url | default: '#' -%}
+          <a href="{{ card_link }}" class="abl-card abl-card--{{ forloop.index }}{% if forloop.index == 2 %} abl-card--featured{% endif %}" {{ block.shopify_attributes }}>
+            <div class="abl-card__top">
+              <div class="abl-card-image-wrap">
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    alt="{{ block.settings.title | escape }}"
+                    class="abl-card-img"
+                    width="440"
+                    height="300"
+                    loading="lazy"
+                  >
+                {% elsif block.settings.article.image != blank %}
+                  <img
+                    src="{{ block.settings.article.image | image_url: width: 800 }}"
+                    alt="{{ block.settings.article.title | escape }}"
+                    class="abl-card-img"
+                    width="440"
+                    height="300"
+                    loading="lazy"
+                  >
+                {% elsif request.design_mode %}
+                  <div class="abl-card-placeholder">
+                    <span>🖼️ Upload Card Image</span>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="abl-card-body">
+                {% if block.settings.title != blank %}
+                  <h3 class="abl-card-title">{{ block.settings.title }}</h3>
+                {% elsif block.settings.article != blank %}
+                  <h3 class="abl-card-title">{{ block.settings.article.title }}</h3>
+                {% endif %}
+
+                {% if block.settings.excerpt != blank %}
+                  <div class="abl-card-desc">
+                    {{ block.settings.excerpt }}
+                  </div>
+                {% elsif block.settings.article != blank %}
+                  <div class="abl-card-desc">
+                    {{ block.settings.article.excerpt_or_content | strip_html | truncatewords: 28 }}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if block.settings.date != blank %}
+              <div class="abl-card-date">{{ block.settings.date }}</div>
+            {% elsif block.settings.article != blank %}
+              <div class="abl-card-date">{{ block.settings.article.published_at | date: '%B %d, %Y' }}</div>
+            {% endif %}
+          </a>
+        {% endfor %}
+      {% else %}
+        <!-- Default Fallback Cards Matching Exact Screenshot -->
+        <a href="/blogs/news" class="abl-card abl-card--1">
+          <div class="abl-card__top">
+            <div class="abl-card-image-wrap">
+              {% if request.design_mode %}
+                <div class="abl-card-placeholder">
+                  <span>🖼️ Upload Box Image</span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="abl-card-body">
+              <h3 class="abl-card-title">Your Box Is Talking. What's It Saying?</h3>
+              <div class="abl-card-desc">
+                Before your customer sees what is inside, they see the box. Custom printed tape turns that first moment into part of your brand—adding colour, personality, and a little "we actually thought about this" energy to every delivery.
+              </div>
+            </div>
+          </div>
+          <div class="abl-card-date">August 28, 2026</div>
+        </a>
+
+        <a href="/blogs/news" class="abl-card abl-card--2 abl-card--featured">
+          <div class="abl-card__top">
+            <div class="abl-card-image-wrap">
+              {% if request.design_mode %}
+                <div class="abl-card-placeholder">
+                  <span>🖼️ Upload Packaging Image</span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="abl-card-body">
+              <h3 class="abl-card-title">How to Make Packaging Look Less Meh</h3>
+              <div class="abl-card-desc">
+                Great packaging does not have to mean custom boxes, complicated inserts, or a budget that makes you nervous. A few smart details can turn a plain parcel into something people are genuinely excited to open. Start with colour, add a little personality, and use custom printed tape to make every box feel considered from the second it lands at someone's door.
+              </div>
+            </div>
+          </div>
+          <div class="abl-card-date">August 14, 2026</div>
+        </a>
+
+        <a href="/blogs/news" class="abl-card abl-card--3">
+          <div class="abl-card__top">
+            <div class="abl-card-image-wrap">
+              {% if request.design_mode %}
+                <div class="abl-card-placeholder">
+                  <span>🖼️ Upload Purple Tape Image</span>
+                </div>
+              {% endif %}
+            </div>
+            <div class="abl-card-body">
+              <h3 class="abl-card-title">Custom Tape: Small Roll, Big Main-Character Energy</h3>
+              <div class="abl-card-desc">
+                Tape may be a small part of your packaging, but it is often the first branded thing people touch. It seals the box, carries your look, and helps turn an ordinary shipment into an unboxing experience people remember.
+              </div>
+            </div>
+          </div>
+          <div class="abl-card-date">July 30, 2026</div>
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Blog",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#EA5B1B"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Container Max Width",
+      "default": 1560
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Source Blog",
+      "info": "Leave blank to automatically use the 'News' / primary blog."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Our blog"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sticky Business"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Packaging tips, branding ideas, tape talk, and other things we probably care about more than we should."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Blog Post Card",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Select Shopify Article (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image (Overrides Article Image)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Title (Overrides Article Title)"
+        },
+        {
+          "type": "textarea",
+          "id": "excerpt",
+          "label": "Custom Description (Overrides Article Excerpt)"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date Text",
+          "default": "August 28, 2026"
+        },
+        {
+          "type": "url",
+          "id": "article_link",
+          "label": "Custom Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Blog",
+      "blocks": [
+        {
+          "type": "post",
+          "settings": {
+            "title": "Your Box Is Talking. What's It Saying?",
+            "excerpt": "Before your customer sees what is inside, they see the box. Custom printed tape turns that first moment into part of your brand—adding colour, personality, and a little \"we actually thought about this\" energy to every delivery.",
+            "date": "August 28, 2026"
+          }
+        },
+        {
+          "type": "post",
+          "settings": {
+            "title": "How to Make Packaging Look Less Meh",
+            "excerpt": "Great packaging does not have to mean custom boxes, complicated inserts, or a budget that makes you nervous. A few smart details can turn a plain parcel into something people are genuinely excited to open. Start with colour, add a little personality, and use custom printed tape to make every box feel considered from the second it lands at someone's door.",
+            "date": "August 14, 2026"
+          }
+        },
+        {
+          "type": "post",
+          "settings": {
+            "title": "Custom Tape: Small Roll, Big Main-Character Energy",
+            "excerpt": "Tape may be a small part of your packaging, but it is often the first branded thing people touch. It seals the box, carries your look, and helps turn an ordinary shipment into an unboxing experience people remember.",
+            "date": "July 30, 2026"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

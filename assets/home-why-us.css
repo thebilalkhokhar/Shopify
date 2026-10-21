@@ -1,0 +1,429 @@
+/* Home Why Us Section CSS */
+.home-why-us-section {
+  position: relative;
+  background-color: #171008;
+  color: #ffffff;
+  padding: 30px 0 110px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Header */
+.hwu-header {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hwu-badge {
+  background-color: #F8B825;
+  color: #171008;
+  padding: 4px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-family: var(--custom-font-family, serif);
+  font-size: 15px;
+  border: 2px solid #171008;
+  display: inline-block;
+  transform: rotate(-6deg);
+  margin-bottom: 6px;
+  /* 3D Sticker offset shadow: 2px solid white layer underneath */
+  box-shadow: 0 3px 0 #ffffff;
+  letter-spacing: -0.2px;
+}
+
+.hwu-heading {
+  font-family: var(--custom-font-family, serif);
+  font-size: 48px;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.5px;
+  font-weight: 700;
+}
+
+/* Stage */
+.hwu-stage {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Background Tapes Container */
+.hwu-tapes-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Individual Tapes */
+.hwu-tape-row {
+  position: absolute;
+  left: -30%;
+  width: 160%;
+  height: 60px;
+  background: #E85D18;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* 
+  Tape spread:
+  Meeting at center (50% 50%) and fanning outwards
+*/
+.hwu-tape--top {
+  top: 50%;
+  transform: translateY(-50%) rotate(-12deg);
+}
+
+.hwu-tape--middle {
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+}
+
+.hwu-tape--bottom {
+  top: 50%;
+  transform: translateY(-50%) rotate(12deg);
+}
+
+/* Marquee Tracks */
+.hwu-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+.hwu-marquee--left {
+  animation: hwuScrollLeft 32s linear infinite;
+}
+
+.hwu-marquee--right {
+  animation: hwuScrollRight 32s linear infinite;
+}
+
+@keyframes hwuScrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes hwuScrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.hwu-tape-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 12px;
+}
+
+.hwu-tape-text {
+  font-family: var(--custom-font-family, serif);
+  font-size: 21px;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.hwu-fox-svg {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Circles Cluster (Anchor container centered on stage) */
+.hwu-circles-cluster {
+  position: relative;
+  z-index: 5;
+  width: 720px;
+  height: 490px;
+  pointer-events: auto;
+}
+
+/* Base circle shape - No hover effects */
+.hwu-circle {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: none;
+  /* Hover zoom completely removed */
+}
+
+/* 
+  1. Main Center Large Orange Circle:
+  Diameter: 420px
+*/
+.hwu-circle--main {
+  width: 420px;
+  height: 420px;
+  background-color: #E85D18;
+  left: 60px;
+  top: 35px;
+  z-index: 2;
+  color: #ffffff;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.hwu-circle-main-inner {
+  text-align: left;
+  transform: none;
+  /* Perfectly horizontal */
+  margin-left: 20px;
+  /* Shift text slightly left into the visible area */
+  margin-top: -10px;
+  pointer-events: none;
+  transform: rotate(7deg);
+}
+
+.hwu-circle--main .hwu-circle-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 44px;
+  line-height: 1.1;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.hwu-circle--main .hwu-circle-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  line-height: 1.35;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* 
+  2. Top-Right Big Yellow Circle:
+  Diameter: 220px
+  Border: Orange (#E85D18), slight counter-tilt
+*/
+.hwu-circle--yellow-tr {
+  width: 220px;
+  height: 220px;
+  background-color: #F8B825;
+  border: 2px solid #E85D18;
+  left: 420px;
+  top: 90px;
+  z-index: 4;
+  padding: 24px;
+  color: #E85D18;
+  transform: rotate(20deg);
+  box-sizing: border-box;
+}
+
+.hwu-circle--yellow-tr .hwu-circle-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.2px;
+}
+
+.hwu-circle--yellow-tr .hwu-circle-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  line-height: 1.3;
+  color: #E85D18;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* 
+  3. Bottom-Left Medium Yellow Circle:
+  Diameter: 190px
+  Border: Orange (#E85D18), slight counter-tilt (-12deg)
+*/
+.hwu-circle--yellow-bl {
+  width: 190px;
+  height: 190px;
+  background-color: #F8B825;
+  border: 2px solid #E85D18;
+  left: -20px;
+  top: 265px;
+  z-index: 5;
+  padding: 20px;
+  color: #E85D18;
+  transform: rotate(-12deg);
+  box-sizing: border-box;
+}
+
+.hwu-circle--yellow-bl .hwu-circle-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 27px;
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+/* 
+  4. Top-Left Small Orange Circle:
+  Diameter: 84px
+  Border: Yellow (#F8B825), tilt (-15deg)
+*/
+.hwu-circle--small-tl {
+  width: 84px;
+  height: 84px;
+  background-color: #E85D18;
+  border: 1.5px solid #F8B825;
+  left: 75px;
+  top: 60px;
+  z-index: 5;
+  padding: 8px;
+  color: #F8B825;
+  transform: rotate(-15deg);
+  box-sizing: border-box;
+}
+
+.hwu-circle--small-tl .hwu-circle-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 13px;
+  line-height: 1.1;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* 
+  5. Bottom-Right Small Orange Circle:
+  Diameter: 110px
+  Border: Yellow (#F8B825), tilt (+8deg)
+*/
+.hwu-circle--small-br {
+  width: 110px;
+  height: 110px;
+  background-color: #E85D18;
+  border: 1.5px solid #F8B825;
+  left: 375px;
+  top: 350px;
+  z-index: 5;
+  padding: 12px;
+  color: #F8B825;
+  transform: rotate(8deg);
+  box-sizing: border-box;
+}
+
+.hwu-circle--small-br .hwu-circle-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+/* Responsive Scaling */
+@media (max-width: 1200px) {
+  .hwu-circles-cluster {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 992px) {
+  .hwu-heading {
+    font-size: 38px;
+  }
+
+  .hwu-stage {
+    height: 460px;
+  }
+
+  .hwu-circles-cluster {
+    transform: scale(0.8);
+  }
+
+  .hwu-tape-row {
+    height: 52px;
+  }
+
+  .hwu-tape-text {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-why-us-section {
+    padding: 60px 0 80px;
+  }
+
+  .hwu-heading {
+    font-size: 30px;
+    padding: 0 15px;
+  }
+
+  .hwu-stage {
+    height: 400px;
+  }
+
+  .hwu-circles-cluster {
+    transform: scale(0.65);
+  }
+
+  .hwu-tape-row {
+    height: 46px;
+  }
+
+  .hwu-tape-text {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hwu-stage {
+    height: 360px;
+  }
+
+  .hwu-circles-cluster {
+    transform: scale(0.52);
+  }
+
+  .hwu-tape-row {
+    height: 40px;
+  }
+
+  .hwu-tape-text {
+    font-size: 13px;
+  }
+}

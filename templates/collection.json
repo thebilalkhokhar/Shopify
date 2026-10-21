@@ -1,0 +1,98 @@
+{
+  "sections": {
+    "banner": {
+      "type": "collection-banner",
+      "settings": {
+        "bg_color": "#F8F3ED",
+        "heading": "Our Products",
+        "subheading": "<p>Premium printed tape for packaging, projects, and ideas that deserve more than the ordinary.</p>",
+        "padding_top": 230,
+        "padding_bottom": 30
+      }
+    },
+    "product_grid": {
+      "type": "collection-product",
+      "blocks": {
+        "card_1": {
+          "type": "product_card",
+          "settings": {
+            "title": "Polypropylene Tape",
+            "price_text": "Starting at $5.68 a roll"
+          }
+        },
+        "card_2": {
+          "type": "product_card",
+          "settings": {
+            "title": "Paper Tape",
+            "price_text": "Starting at $9.10 a roll"
+          }
+        },
+        "card_3": {
+          "type": "product_card",
+          "settings": {
+            "title": "Hi-Tack Freezer Tape",
+            "price_text": "Starting at $10.18 a roll"
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3"
+      ],
+      "settings": {
+        "bg_color": "#F8F3ED",
+        "products_to_show": 3,
+        "padding_top": 10,
+        "padding_bottom": 80
+      }
+    },
+    "footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product_grid",
+    "footer"
+  ]
+}

@@ -1,0 +1,388 @@
+/* Contact FAQs Section CSS matching Tapefox visual style and sitting right above the footer top border */
+
+.contact-faqs-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background-color: transparent !important;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
+  margin-bottom: -65px;
+}
+
+.cfaqs-outer-wrap {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Rounded Card matching reference image: Off-white cream bg, radial dot grid, rounded corners, NO box-shadow */
+.cfaqs-card {
+  width: 100%;
+  background-color: var(--cfaqs-bg, #FAF7F0);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+  border-radius: 28px;
+  border: 1.8px solid var(--cfaqs-border, #171008);
+  box-sizing: border-box;
+  position: relative;
+  padding: 30px 48px 50px 48px;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   Top Circular Tape / Perforation Dots
+   ========================================================= */
+.cfaqs-tape-perforations {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 34px;
+  overflow: hidden;
+  user-select: none;
+}
+
+.cfaqs-perf-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #171008;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   2-Column Grid Layout: Left Content & Right FAQs
+   ========================================================= */
+.cfaqs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 670px;
+  gap: 60px;
+  align-items: start;
+  width: 100%;
+}
+
+/* =========================================================
+   LEFT COLUMN
+   ========================================================= */
+.cfaqs-left-col {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 480px;
+  justify-content: space-between;
+}
+
+.cfaqs-header-info {
+  margin-bottom: 24px;
+}
+
+/* Yellow Badge ("Questions") */
+.cfaqs-badge-wrap {
+  margin-bottom: 12px;
+}
+
+.cfaqs-badge {
+  display: inline-block;
+  background-color: #F8B825;
+  color: #171008;
+  padding: 5px 20px 4px;
+  border-radius: 999px;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  border: 1.8px solid #171008;
+  transform: rotate(-4deg);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+/* Title & Sparkles */
+.cfaqs-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cfaqs-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 48px;
+  font-weight: 700;
+  color: #171008;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.cfaqs-sparkles {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.cfaqs-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #554F47;
+  max-width: 440px;
+  margin: 0;
+}
+
+/* Bottom Area of Left Column */
+.cfaqs-bottom-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 70px;
+  position: relative;
+  width: 100%;
+  margin-top: 30px;
+}
+
+/* Action Buttons */
+.cfaqs-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 10px;
+}
+
+.cfaqs-btn {
+  border-radius: 999px;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+/* Still Got Questions Button (Pill outline) */
+.cfaqs-btn--outline {
+  border: 1.8px solid #171008;
+  color: #171008;
+  background-color: transparent;
+  padding: 10px 22px;
+  font-size: 13.5px;
+  letter-spacing: -0.2px;
+}
+
+.cfaqs-btn--outline:hover {
+  background-color: rgba(23, 16, 8, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Support Button (Orange filled pill) */
+.cfaqs-btn--primary {
+  border: 1.8px solid #171008;
+  background-color: #EA5B1B;
+  color: #FFFFFF;
+  padding: 10px 26px;
+  font-size: 14px;
+}
+
+.cfaqs-btn--primary:hover {
+  background-color: #D34B0D;
+  transform: translateY(-1px);
+}
+
+/* Mascot on Boxes */
+.cfaqs-mascot-box {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: -15px;
+  margin-right: 20px;
+}
+
+.cfaqs-mascot-img {
+  width: 280px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* =========================================================
+   RIGHT COLUMN: ACCORDIONS
+   ========================================================= */
+.cfaqs-right-col {
+  width: 100%;
+}
+
+.cfaqs-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Pill accordion item */
+.cfaqs-item {
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  background-color: transparent;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: border-radius 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease;
+}
+
+.cfaqs-item.is-open {
+  border-radius: 20px;
+  background-color: rgba(23, 16, 8, 0.02);
+}
+
+.cfaqs-question-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.cfaqs-question-text {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #171008;
+  line-height: 1.3;
+}
+
+/* Toggle icon circle (+ and -) */
+.cfaqs-toggle-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #EA5B1B;
+  border: 1.5px solid #171008;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cfaqs-toggle-icon svg {
+  stroke: #171008;
+}
+
+.cfaqs-icon-v {
+  transform-origin: 12px 12px;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.cfaqs-item.is-open .cfaqs-icon-v {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+/* Answer accordion dropdown */
+.cfaqs-answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cfaqs-item.is-open .cfaqs-answer-wrap {
+  grid-template-rows: 1fr;
+}
+
+.cfaqs-answer-content {
+  overflow: hidden;
+  padding: 0 22px;
+  opacity: 0;
+  transition: opacity 0.25s ease, padding 0.3s ease;
+}
+
+.cfaqs-item.is-open .cfaqs-answer-content {
+  opacity: 1;
+  padding: 0 22px 18px 22px;
+}
+
+.cfaqs-answer-content p {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #554F47;
+  margin: 0;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN (Tablets & Mobile)
+   ========================================================= */
+
+@media screen and (max-width: 1080px) {
+  .contact-faqs-section {
+    margin-bottom: -50px;
+  }
+
+  .cfaqs-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cfaqs-card {
+    padding: 24px 24px 40px 24px;
+  }
+
+  .cfaqs-left-col {
+    min-height: auto;
+  }
+
+  .cfaqs-bottom-area {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .cfaqs-mascot-box {
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .contact-faqs-section {
+    margin-bottom: -40px;
+  }
+
+  .cfaqs-card {
+    padding: 20px 16px 34px 16px;
+    border-radius: 20px;
+  }
+
+  .cfaqs-title {
+    font-size: 34px;
+  }
+
+  .cfaqs-perf-dot {
+    width: 17px;
+    height: 17px;
+  }
+
+  .cfaqs-question-text {
+    font-size: 14.5px;
+  }
+
+  .cfaqs-mascot-img {
+    width: 220px;
+  }
+}

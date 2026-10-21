@@ -1,0 +1,1388 @@
+{{ 'product-banner.css' | asset_url | stylesheet_tag }}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign featured_media = product.featured_media | default: product.featured_image -%}
+{%- assign current_handle = product.handle | default: '' -%}
+{%- if current_handle == blank and request.path contains '/products/' -%}
+  {%- assign path_parts = request.path | split: '/products/' -%}
+  {%- assign current_handle = path_parts[1] | split: '?' | first | split: '/' | first -%}
+{%- endif -%}
+
+{%- assign display_title = product.title -%}
+{%- if display_title == blank -%}
+  {%- case current_handle -%}
+    {%- when 'paper-tape' -%}
+      {%- assign display_title = 'Paper Tape' -%}
+      {%- assign starting_price_val = '$9.10 a roll' -%}
+    {%- when 'pvc-tape' -%}
+      {%- assign display_title = 'PVC Tape' -%}
+      {%- assign starting_price_val = '$7.84 a roll' -%}
+    {%- when 'hi-tack-freezer-tape' -%}
+      {%- assign display_title = 'Hi-Tack Freezer Tape' -%}
+      {%- assign starting_price_val = '$10.18 a roll' -%}
+    {%- when 'flatback-tape' -%}
+      {%- assign display_title = 'Flatback Tape' -%}
+      {%- assign starting_price_val = '$7.12 a roll' -%}
+    {%- when 'dispensers' -%}
+      {%- assign display_title = 'Dispensers' -%}
+      {%- assign starting_price_val = '$34 per unit' -%}
+    {%- else -%}
+      {%- assign display_title = section.settings.default_title | default: 'Polypropylene Tape' -%}
+      {%- assign starting_price_val = section.settings.starting_price | default: '$5.68 a roll' -%}
+  {%- endcase -%}
+{%- endif -%}
+{%- assign current_title_lower = display_title | downcase -%}
+
+<section
+  id="product-banner-{{ section.id }}"
+  class="product-banner-section"
+  style="
+    background-color: {{ section.settings.bg_color | default: '#FBF8F3' }};
+    padding-top: {{ section.settings.padding_top | default: 140 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="pb-container">
+    <div class="pb-layout">
+      <!-- ================= LEFT COLUMN: IMAGES & DESCRIPTION ================= -->
+      <div class="pb-left-col">
+        <!-- Main Image Card -->
+        <div class="pb-main-image-card" style="background-color: {{ section.settings.card_bg | default: '#F8B825' }};">
+          <!-- Top Left Badge -->
+          {%- assign badge_text = section.settings.badge_text -%}
+          {%- if badge_text != blank -%}
+            <div class="pb-tag-badge">{{ badge_text }}</div>
+          {%- endif -%}
+
+          <div class="pb-main-image-wrap" id="pbMainImageWrap">
+            {%- if section.settings.thumb_1 != blank -%}
+              <img
+                id="pbMainImage"
+                src="{{ section.settings.thumb_1 | image_url: width: 1200 }}"
+                alt="{{ section.settings.thumb_1.alt | default: display_title | escape }}"
+                class="pb-main-img"
+                loading="eager"
+                width="800"
+                height="650"
+              >
+            {%- elsif featured_media != blank -%}
+              <img
+                id="pbMainImage"
+                src="{{ featured_media | image_url: width: 1200 }}"
+                alt="{{ featured_media.alt | default: product.title | escape }}"
+                class="pb-main-img"
+                loading="eager"
+                width="800"
+                height="650"
+              >
+            {%- else -%}
+              {%- assign fallback_img_name = 'polypropylene.webp' -%}
+              {%- assign cdn_img_file = 'Polypropylene_Tape.webp' -%}
+              {%- if current_title_lower contains 'paper' or current_handle contains 'paper' -%}
+                {%- assign fallback_img_name = 'paper.webp' -%}
+                {%- assign cdn_img_file = 'Paper_Tape.webp' -%}
+              {%- elsif current_title_lower contains 'pvc' or current_handle contains 'pvc' -%}
+                {%- assign fallback_img_name = 'pvc.webp' -%}
+                {%- assign cdn_img_file = 'PVC_Tape.webp' -%}
+              {%- elsif current_title_lower contains 'freezer'
+                or current_title_lower contains 'hi-tack'
+                or current_handle contains 'freezer'
+              -%}
+                {%- assign fallback_img_name = 'hitack.webp' -%}
+                {%- assign cdn_img_file = 'Hi-Tack_Freezer_Tape.webp' -%}
+              {%- elsif current_title_lower contains 'flat' or current_handle contains 'flat' -%}
+                {%- assign fallback_img_name = 'flattape.webp' -%}
+                {%- assign cdn_img_file = 'Flatback_Tape.webp' -%}
+              {%- elsif current_title_lower contains 'dispenser' or current_handle contains 'dispenser' -%}
+                {%- assign fallback_img_name = 'dispensers.webp' -%}
+                {%- assign cdn_img_file = 'Dispensers_83aabc72-858a-41ea-81f1-0a251ab9a8bc.webp' -%}
+              {%- endif -%}
+              <img
+                id="pbMainImage"
+                src="/cdn/shop/files/{{ cdn_img_file }}"
+                alt="{{ display_title | default: 'Tape Product' }}"
+                class="pb-main-img"
+                loading="eager"
+                width="800"
+                height="650"
+                onerror="this.src='{{ fallback_img_name | file_img_url: 'master' }}'"
+              >
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- Thumbnails Row (Dynamic: Only shows existing images) -->
+        <div class="pb-thumbnails-row">
+          {%- if section.settings.thumb_1 != blank
+            or section.settings.thumb_2 != blank
+            or section.settings.thumb_3 != blank
+            or section.settings.thumb_4 != blank
+            or section.settings.thumb_5 != blank
+            or section.settings.thumb_6 != blank
+          -%}
+            {%- for i in (1..6) -%}
+              {%- assign thumb_key = 'thumb_' | append: i -%}
+              {%- assign custom_thumb = section.settings[thumb_key] -%}
+              {%- if custom_thumb != blank -%}
+                <button
+                  type="button"
+                  class="pb-thumb-item {% if forloop.first %}is-active{% endif %}"
+                  data-full-img="{{ custom_thumb | image_url: width: 1200 }}"
+                  aria-label="Thumbnail {{ i }}"
+                >
+                  <img
+                    src="{{ custom_thumb | image_url: width: 150, height: 150, crop: 'center' }}"
+                    alt="Thumbnail {{ i }}"
+                    width="54"
+                    height="54"
+                    loading="lazy"
+                  >
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- elsif product.media.size > 0 -%}
+            {%- for media in product.media limit: 6 -%}
+              <button
+                type="button"
+                class="pb-thumb-item {% if forloop.first %}is-active{% endif %}"
+                data-full-img="{{ media | image_url: width: 1200 }}"
+                aria-label="Thumbnail {{ forloop.index }}"
+              >
+                <img
+                  src="{{ media | image_url: width: 150, height: 150, crop: 'center' }}"
+                  alt="{{ media.alt | default: product.title | escape }}"
+                  width="54"
+                  height="54"
+                  loading="lazy"
+                >
+              </button>
+            {%- endfor -%}
+          {%- else -%}
+            <button
+              type="button"
+              class="pb-thumb-item is-active"
+              data-full-img="/cdn/shop/files/{{ cdn_img_file }}"
+              aria-label="Thumbnail 1"
+            >
+              <img
+                src="/cdn/shop/files/{{ cdn_img_file }}"
+                alt="Product thumbnail"
+                width="54"
+                height="54"
+                loading="lazy"
+                onerror="this.src='{{ fallback_img_name | file_img_url: 'master' }}'"
+              >
+            </button>
+          {%- endif -%}
+        </div>
+
+        <!-- Description Block (Desktop only; matches reference) -->
+        <div class="pb-description-block">
+          <h2 class="pb-desc-heading">{{ section.settings.desc_heading | default: 'Description' }}</h2>
+          <div class="pb-desc-title">
+            {{ section.settings.desc_subtitle | default: product.title | default: 'Custom Polypropylene Tape' }}
+          </div>
+
+          <div class="pb-desc-text">
+            {%- if product.description != blank -%}
+              {{ product.description }}
+            {%- else -%}
+              <p>
+                Custom printed paper tape is an ideal tool for any e-commerce seller, shipping house, or retail brand
+                looking to make their products stand out in transit. Custom printed Kraft paper tape is eco-friendly,
+                strong, and water-activated, creating a secure seal to protect your goods during shipping while
+                promoting your brand.
+              </p>
+            {%- endif -%}
+          </div>
+
+          <!-- Feature bullet list with custom orange star icons -->
+          <ul class="pb-desc-features">
+            <li>
+              <span class="pb-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="#EA5B1B">
+                  <path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z"/>
+                </svg>
+              </span>
+              <span>
+                {{-
+                  section.settings.feature_1
+                  | default: 'High-grade Kraft paper for ultimate strength and security'
+                -}}
+              </span>
+            </li>
+            <li>
+              <span class="pb-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="#EA5B1B">
+                  <path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z"/>
+                </svg>
+              </span>
+              <span>
+                {{- section.settings.feature_2 | default: 'Water-activated adhesive forms a tamper-evident seal' -}}
+              </span>
+            </li>
+            <li>
+              <span class="pb-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="#EA5B1B">
+                  <path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z"/>
+                </svg>
+              </span>
+              <span>
+                {{- section.settings.feature_3 | default: 'Available in non-reinforced or reinforced paper options' -}}
+              </span>
+            </li>
+            <li>
+              <span class="pb-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="#EA5B1B">
+                  <path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z"/>
+                </svg>
+              </span>
+              <span>{{ section.settings.feature_4 | default: 'Print up to three colors to showcase your brand' }}</span>
+            </li>
+            <li>
+              <span class="pb-feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="#EA5B1B">
+                  <path d="M8 0L9.8 6.2L16 8L9.8 9.8L8 16L6.2 9.8L0 8L6.2 6.2L8 0Z"/>
+                </svg>
+              </span>
+              <span>{{ section.settings.feature_5 | default: 'Eco-friendly and recyclable' }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ================= RIGHT COLUMN: CONFIGURATOR CARD ================= -->
+      <div class="pb-right-col">
+        <div class="pb-config-card">
+          <!-- Product Title & Starting Price Subtitle -->
+          <h1 class="pb-product-title">{{ display_title }}</h1>
+
+          <div class="pb-price-subhead">
+            Starting at
+            <span class="pb-price-highlight">
+              {{- starting_price_val | default: section.settings.starting_price | default: '$5.68 a roll' -}}
+            </span>
+          </div>
+
+          <div class="pb-product-brief">
+            {{
+              section.settings.short_desc
+              | default: 'The default for corrugated cartons. Glossy, hot-melt, and cheap enough to brand every box that leaves the building.'
+            }}
+          </div>
+
+          <!-- Product Form for Add To Cart -->
+          <form method="post" action="/cart/add" id="pbProductForm" class="pb-form">
+            <input type="hidden" name="id" id="pbVariantId" value="{{ current_variant.id | default: '' }}">
+            <input type="hidden" name="quantity" id="pbHiddenQuantity" value="5">
+
+            <!-- Hidden Custom Line Item Properties captured from configurator -->
+            <input type="hidden" name="edit_key" id="pbEditKey" value="">
+            <input type="hidden" name="properties[Material]" id="prop_material" value="Polypropylene">
+            <input type="hidden" name="properties[Width]" id="prop_width" value="3 inch">
+            <input type="hidden" name="properties[Length]" id="prop_length" value="375 feet">
+            <input type="hidden" name="properties[Tape Color]" id="prop_tape_color" value="Tan/Kraft">
+            <input type="hidden" name="properties[Inks]" id="prop_inks" value="One ink">
+            <input type="hidden" name="properties[Ink Color]" id="prop_ink_color" value="Blue">
+            <input type="hidden" name="properties[Coverage]" id="prop_coverage" value="Standard">
+            <input type="hidden" name="properties[Printed Before]" id="prop_printed_before" value="No - New design">
+            <input type="hidden" name="properties[Cases]" id="prop_cases" value="5">
+            <input type="hidden" name="properties[Artwork Option]" id="prop_artwork" value="Upload now">
+
+            <!-- CONFIGURATOR GROUPS -->
+
+            <!-- 1. MATERIAL -->
+            {%- assign current_handle = product.handle | default: '' -%}
+            {%- assign current_title_lower = product.title | default: 'Polypropylene' | downcase -%}
+            <div class="pb-option-group">
+              <label class="pb-group-label">MATERIAL</label>
+              <div class="pb-pill-grid pb-pill-grid--wrap">
+                <button
+                  type="button"
+                  class="pb-pill-btn {% if current_title_lower contains 'polypropylene' or current_handle contains 'polypropylene' or current_handle == blank %}is-active{% endif %}"
+                  data-group="material"
+                  data-val="Polypropylene"
+                  data-url="/products/polypropylene-tape"
+                >
+                  Polypropylene
+                </button>
+                <button
+                  type="button"
+                  class="pb-pill-btn {% if current_title_lower contains 'paper' or current_handle contains 'paper' %}is-active{% endif %}"
+                  data-group="material"
+                  data-val="Paper"
+                  data-url="/products/paper-tape"
+                >
+                  Paper
+                </button>
+                <button
+                  type="button"
+                  class="pb-pill-btn {% if current_title_lower contains 'pvc' or current_handle contains 'pvc' %}is-active{% endif %}"
+                  data-group="material"
+                  data-val="PVC"
+                  data-url="/products/pvc-tape"
+                >
+                  PVC
+                </button>
+                <button
+                  type="button"
+                  class="pb-pill-btn {% if current_title_lower contains 'freezer' or current_title_lower contains 'hi-tack' or current_handle contains 'freezer' %}is-active{% endif %}"
+                  data-group="material"
+                  data-val="Hi-Track Freezer"
+                  data-url="/products/hi-tack-freezer-tape"
+                >
+                  Hi-Track Freezer
+                </button>
+                <button
+                  type="button"
+                  class="pb-pill-btn {% if current_title_lower contains 'flat' or current_handle contains 'flat' %}is-active{% endif %}"
+                  data-group="material"
+                  data-val="Flat back"
+                  data-url="/products/flatback-tape"
+                >
+                  Flat back
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. WIDTH -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">WIDTH</label>
+              <div class="pb-pill-grid">
+                <button type="button" class="pb-pill-btn" data-group="width" data-val="2 inch">2 inch</button>
+                <button type="button" class="pb-pill-btn" data-group="width" data-val="3 inch">3 inch</button>
+              </div>
+            </div>
+
+            <!-- 3. LENGTH -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">LENGTH</label>
+              <div class="pb-pill-grid">
+                <button type="button" class="pb-pill-btn" data-group="length" data-val="375 feet">375 feet</button>
+                <button type="button" class="pb-pill-btn" data-group="length" data-val="450 feet">450 feet</button>
+                <button type="button" class="pb-pill-btn" data-group="length" data-val="500 feet">500 feet</button>
+              </div>
+            </div>
+
+            <!-- 4. TAPE COLOR -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">TAPE COLOR</label>
+              <div class="pb-pill-grid">
+                <button type="button" class="pb-pill-btn pb-pill-btn--color" data-group="tape_color" data-val="White">
+                  <span class="pb-color-dot" style="background-color: #FFFFFF; border: 1px solid #D5D0C7;"></span>
+                  <span>White</span>
+                </button>
+                <button
+                  type="button"
+                  class="pb-pill-btn pb-pill-btn--color"
+                  data-group="tape_color"
+                  data-val="Tan/Kraft"
+                >
+                  <span class="pb-color-dot" style="background-color: #D3A77C;"></span>
+                  <span>Tan/Kraft</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 5. INKS -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">INKS</label>
+              <div class="pb-pill-grid">
+                <button type="button" class="pb-pill-btn is-active" data-group="inks" data-val="One ink">
+                  One ink <span class="pb-pill-sub">. 5 case min</span>
+                </button>
+                <button type="button" class="pb-pill-btn" data-group="inks" data-val="Two ink">
+                  Two ink <span class="pb-pill-sub">. 5 case min</span>
+                </button>
+                <button type="button" class="pb-pill-btn" data-group="inks" data-val="Three ink">
+                  Three ink <span class="pb-pill-sub">. 5 case min</span>
+                </button>
+                <button type="button" class="pb-pill-btn" data-group="inks" data-val="Multiple">
+                  Multiple <span class="pb-pill-sub">. 4+ colors</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 6. INKS COLORS -->
+            <div class="pb-option-group pb-divider-top">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                <label class="pb-group-label" style="margin-bottom: 0;">INKS COLORS</label>
+                <span class="pb-ink-counter-hint" id="pbInkCounterHint" style="font-family: 'Inter', sans-serif; font-size: 12px; color: #726C63; font-weight: 500;">Select 1 color</span>
+              </div>
+              <div class="pb-swatches-row" id="pbInkSwatchesRow">
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Black"
+                  aria-label="Black"
+                  style="--swatch-color: #171008;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="White"
+                  aria-label="White"
+                  style="--swatch-color: #FFFFFF; border: 1.5px solid #bbb;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Blue"
+                  aria-label="Blue"
+                  style="--swatch-color: #1F50A5;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Red"
+                  aria-label="Red"
+                  style="--swatch-color: #C1181A;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Green"
+                  aria-label="Green"
+                  style="--swatch-color: #198A48;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Orange"
+                  aria-label="Orange"
+                  style="--swatch-color: #EE4B2B;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Yellow"
+                  aria-label="Yellow"
+                  style="--swatch-color: #FEC33F;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Brown"
+                  aria-label="Brown"
+                  style="--swatch-color: #6A4A30;"
+                ></button>
+                <button
+                  type="button"
+                  class="pb-swatch-circle"
+                  data-group="ink_color"
+                  data-val="Grey"
+                  aria-label="Grey"
+                  style="--swatch-color: #7A7A78;"
+                ></button>
+              </div>
+            </div>
+
+            <!-- 7. COVERAGE -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">COVERAGE</label>
+              <div class="pb-pill-grid">
+                <button type="button" class="pb-pill-btn" data-group="coverage" data-val="Standard">Standard</button>
+                <button type="button" class="pb-pill-btn" data-group="coverage" data-val="Reverse/flood coat">
+                  Reverse/flood coat
+                </button>
+              </div>
+            </div>
+
+            <!-- 8. HAVE WE PRINTED THIS ARTWORK BEFORE? -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">HAVE WE PRINTED THIS ARTWORK BEFORE?</label>
+              <div class="pb-pill-grid">
+                <button type="button" class="pb-pill-btn" data-group="printed_before" data-val="No - New design">
+                  No - New design
+                </button>
+                <button type="button" class="pb-pill-btn" data-group="printed_before" data-val="Yes - Reprint">
+                  Yes - Reprint
+                </button>
+              </div>
+            </div>
+
+            <!-- 9. CASE (Quantity Stepper & Quick presets) -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">CASE</label>
+              <div class="pb-cases-row">
+                <!-- Stepper box -->
+                <div class="pb-stepper">
+                  <button type="button" class="pb-stepper-btn" id="pbQtyMinus" aria-label="Decrease quantity">−</button>
+                  <span class="pb-stepper-val" id="pbQtyDisplay">5</span>
+                  <button type="button" class="pb-stepper-btn" id="pbQtyPlus" aria-label="Increase quantity">+</button>
+                </div>
+                <!-- Presets: 5, 10, 25, 50, 64 -->
+                <button type="button" class="pb-case-preset is-active" data-cases="5">5</button>
+                <button type="button" class="pb-case-preset" data-cases="10">10</button>
+                <button type="button" class="pb-case-preset" data-cases="25">25</button>
+                <button type="button" class="pb-case-preset" data-cases="50">50</button>
+                <button type="button" class="pb-case-preset" data-cases="64">64</button>
+              </div>
+            </div>
+
+            <!-- 10. ARTWORK (Radio Cards) -->
+            <div class="pb-option-group pb-divider-top">
+              <label class="pb-group-label">ARTWORK</label>
+              <div class="pb-artwork-list">
+                <!-- Option 1: Upload now -->
+                <div class="pb-artwork-card-wrapper">
+                  <label class="pb-artwork-card" data-artwork="Upload now" id="pbArtworkCardUpload">
+                    <input type="radio" name="pb_artwork_choice" value="Upload now">
+                    <span class="pb-radio-disc"></span>
+                    <div class="pb-artwork-card__content">
+                      <span class="pb-artwork-card__title">Upload now</span>
+                      <span class="pb-artwork-card__sub">PDF, AI or EPS , upto 20 MB</span>
+                    </div>
+                  </label>
+                  <input type="file" id="pbArtworkFileInput" name="properties[Artwork File]" accept=".pdf,.ai,.eps,.png,.jpg,.jpeg" style="display: none;">
+                  <input type="hidden" name="properties[Artwork File Name]" id="prop_artwork_file_name" value="">
+                  <input type="hidden" name="properties[Artwork File Size]" id="prop_artwork_file_size" value="">
+                  
+                  <!-- Selected File Pill Preview in Product Form -->
+                  <div class="pb-uploaded-file-pill" id="pbUploadedFilePill" style="display: none;">
+                    <div class="pb-file-pill-left">
+                      <span class="pb-file-icon">Ai</span>
+                      <div class="pb-file-meta">
+                        <span class="pb-file-name" id="pbFileName">My-Design.pdf</span>
+                        <span class="pb-file-size" id="pbFileSize">10 MB of 30 MB</span>
+                      </div>
+                    </div>
+                    <button type="button" class="pb-file-remove-btn" id="pbFileRemoveBtn" aria-label="Remove artwork file">×</button>
+                  </div>
+                </div>
+
+                <!-- Option 2: Send it after checkout -->
+                <label class="pb-artwork-card" data-artwork="Send it after checkout">
+                  <input type="radio" name="pb_artwork_choice" value="Send it after checkout">
+                  <span class="pb-radio-disc"></span>
+                  <div class="pb-artwork-card__content">
+                    <span class="pb-artwork-card__title">Send it after checkout</span>
+                    <span class="pb-artwork-card__sub">We email you a link the moment your order</span>
+                  </div>
+                </label>
+
+                <!-- Option 3: Design it for us -->
+                <label class="pb-artwork-card" data-artwork="Design it for us">
+                  <input type="radio" name="pb_artwork_choice" value="Design it for us">
+                  <span class="pb-radio-disc"></span>
+                  <div class="pb-artwork-card__content">
+                    <span class="pb-artwork-card__title">Design it for us</span>
+                    <span class="pb-artwork-card__sub">Send a logo and rough idea - Free design support</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Orange Proof Note -->
+            <div class="pb-proof-notice">Whichever you pick, we send a proof before the press runs.</div>
+
+            <!-- Dark Summary Strip: Total cases | Total rolls | Price per case -->
+            <div class="pb-summary-strip">
+              <div class="pb-summary-col">
+                <span class="pb-summary-label">Total cases</span>
+                <span class="pb-summary-val" id="pbSummaryCases">5</span>
+              </div>
+              <div class="pb-summary-col">
+                <span class="pb-summary-label">Total rolls</span>
+                <span class="pb-summary-val" id="pbSummaryRolls">40</span>
+              </div>
+              <div class="pb-summary-col pb-summary-col--right">
+                <span class="pb-summary-label">Price per case</span>
+                <span class="pb-summary-val" id="pbSummaryPricePerCase">$82.93</span>
+              </div>
+            </div>
+
+            <!-- Total Price Row -->
+            <div class="pb-total-row">
+              <div class="pb-total-label">Total</div>
+              <div class="pb-total-price-block">
+                <div class="pb-total-price" id="pbTotalPrice">$464.63</div>
+                <div class="pb-per-roll-price" id="pbPerRollPrice">$11.62 a roll</div>
+              </div>
+            </div>
+
+            <!-- Add to Cart CTA Button -->
+            <button type="submit" class="pb-add-to-cart-btn" id="pbAddToCartBtn">Add to cart</button>
+
+            <!-- Bottom Disclaimer Footnote -->
+            <p class="pb-footer-disclaimer">
+              Nothing prints until you approve a proof. We send it back within 2-3 working days and the job ships within
+              3 weeks of your approval.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    // Pricing calculation table based on cases and options
+    // Default base: 5 cases = $82.93/case -> $414.65 or $464.63 total (8 rolls/case = 40 rolls)
+    const pricingTable = {
+      basePerCase: 82.93,
+      rollsPerCase: 8,
+      rates: {
+        5: { pricePerCase: 92.926, total: 464.63 },
+        10: { pricePerCase: 84.50, total: 845.00 },
+        25: { pricePerCase: 78.20, total: 1955.00 },
+        50: { pricePerCase: 72.80, total: 3640.00 },
+        64: { pricePerCase: 68.40, total: 4377.60 }
+      }
+    };
+
+    let currentCases = 5;
+
+    // Elements
+    const qtyDisplay = document.getElementById('pbQtyDisplay');
+    const hiddenQty = document.getElementById('pbHiddenQuantity');
+    const summaryCases = document.getElementById('pbSummaryCases');
+    const summaryRolls = document.getElementById('pbSummaryRolls');
+    const summaryPricePerCase = document.getElementById('pbSummaryPricePerCase');
+    const totalPriceEl = document.getElementById('pbTotalPrice');
+    const perRollPriceEl = document.getElementById('pbPerRollPrice');
+    const propCases = document.getElementById('prop_cases');
+
+    function updateCalculations(cases) {
+      if (cases < 1) cases = 1;
+      currentCases = cases;
+
+      if (qtyDisplay) qtyDisplay.textContent = cases;
+      if (hiddenQty) hiddenQty.value = cases;
+      if (propCases) propCases.value = cases;
+      if (summaryCases) summaryCases.textContent = cases;
+
+      const totalRolls = cases * pricingTable.rollsPerCase;
+      if (summaryRolls) summaryRolls.textContent = totalRolls;
+
+      // Calculate price
+      let pricePerCase = pricingTable.basePerCase;
+      let total = 0;
+
+      if (pricingTable.rates[cases]) {
+        pricePerCase = pricingTable.rates[cases].pricePerCase;
+        total = pricingTable.rates[cases].total;
+      } else {
+        // Linear scale fallback
+        if (cases < 10) pricePerCase = 92.93;
+        else if (cases < 25) pricePerCase = 84.50;
+        else if (cases < 50) pricePerCase = 78.20;
+        else pricePerCase = 68.40;
+        total = cases * pricePerCase;
+      }
+
+      const perRoll = total / (totalRolls || 1);
+
+      if (summaryPricePerCase) summaryPricePerCase.textContent = '$' + pricePerCase.toFixed(2);
+      if (totalPriceEl) totalPriceEl.textContent = '$' + total.toFixed(2);
+      if (perRollPriceEl) perRollPriceEl.textContent = '$' + perRoll.toFixed(2) + ' a roll';
+
+      // Update case presets active state
+      document.querySelectorAll('.pb-case-preset').forEach(btn => {
+        if (parseInt(btn.getAttribute('data-cases'), 10) === cases) {
+          btn.classList.add('is-active');
+        } else {
+          btn.classList.remove('is-active');
+        }
+      });
+    }
+
+    // Stepper buttons
+    const minusBtn = document.getElementById('pbQtyMinus');
+    const plusBtn = document.getElementById('pbQtyPlus');
+
+    if (minusBtn) {
+      minusBtn.addEventListener('click', function() {
+        if (currentCases > 1) {
+          updateCalculations(currentCases - 1);
+        }
+      });
+    }
+
+    if (plusBtn) {
+      plusBtn.addEventListener('click', function() {
+        updateCalculations(currentCases + 1);
+      });
+    }
+
+    // Quick presets
+    document.querySelectorAll('.pb-case-preset').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const val = parseInt(this.getAttribute('data-cases'), 10);
+        if (val) updateCalculations(val);
+      });
+    });
+
+    // Ink count helper & limit
+    function getMaxInksAllowed() {
+      const activeInksBtn = document.querySelector('.pb-pill-btn[data-group="inks"].is-active');
+      const inksVal = (activeInksBtn?.getAttribute('data-val') || 'One ink').toLowerCase();
+      if (inksVal.includes('two')) return 2;
+      if (inksVal.includes('three')) return 3;
+      if (inksVal.includes('multiple')) return 999;
+      return 1;
+    }
+
+    function updateInkCounterHint() {
+      const hint = document.getElementById('pbInkCounterHint');
+      const maxAllowed = getMaxInksAllowed();
+      const activeSwatches = document.querySelectorAll('.pb-swatch-circle.is-active');
+      const count = activeSwatches.length;
+
+      if (hint) {
+        if (maxAllowed === 999) {
+          hint.textContent = count > 0 ? count + ' selected (Multiple)' : 'Select any colors';
+        } else if (maxAllowed === 1) {
+          hint.textContent = 'Select 1 color';
+        } else {
+          hint.textContent = 'Selected ' + count + ' of ' + maxAllowed + ' colors';
+        }
+      }
+    }
+
+    function syncInkColorHiddenProp() {
+      const activeSwatches = Array.from(document.querySelectorAll('.pb-swatch-circle.is-active'));
+      const colors = activeSwatches.map(s => s.getAttribute('data-val')).filter(Boolean);
+      const hiddenInput = document.getElementById('prop_ink_color');
+      if (hiddenInput) {
+        hiddenInput.value = colors.length ? colors.join(', ') : 'Blue';
+      }
+      updateInkCounterHint();
+    }
+
+    // Pill buttons selection & material redirection
+    document.querySelectorAll('.pb-pill-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const group = this.getAttribute('data-group');
+        const val = this.getAttribute('data-val');
+        const redirectUrl = this.getAttribute('data-url');
+
+        // Material navigation: If user clicks another material, navigate smoothly if url exists
+        if (group === 'material' && redirectUrl && !this.classList.contains('is-active')) {
+          window.location.href = redirectUrl;
+          return;
+        }
+
+        // Toggle within same group
+        const parent = this.closest('.pb-pill-grid');
+        if (parent) {
+          parent.querySelectorAll('.pb-pill-btn').forEach(b => b.classList.remove('is-active'));
+        }
+        this.classList.add('is-active');
+
+        // Update hidden property
+        const hiddenInput = document.getElementById('prop_' + group);
+        if (hiddenInput && val) {
+          hiddenInput.value = val;
+        }
+
+        // If inks count changed, adjust active swatch count to fit new limit
+        if (group === 'inks') {
+          const maxAllowed = getMaxInksAllowed();
+          const activeSwatches = Array.from(document.querySelectorAll('.pb-swatch-circle.is-active'));
+          if (activeSwatches.length > maxAllowed) {
+            // Trim down to maxAllowed
+            activeSwatches.forEach((s, idx) => {
+              if (idx >= maxAllowed) s.classList.remove('is-active');
+            });
+          } else if (activeSwatches.length === 0) {
+            // If none active, pick first or default blue
+            const blue = document.querySelector('.pb-swatch-circle[data-val="Blue"]');
+            if (blue) blue.classList.add('is-active');
+          }
+          syncInkColorHiddenProp();
+        }
+      });
+    });
+
+    // Ink Swatches selection
+    document.querySelectorAll('.pb-swatch-circle').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const maxAllowed = getMaxInksAllowed();
+        const isAlreadyActive = this.classList.contains('is-active');
+
+        if (maxAllowed === 1) {
+          // Single select mode
+          document.querySelectorAll('.pb-swatch-circle').forEach(b => b.classList.remove('is-active'));
+          this.classList.add('is-active');
+        } else {
+          // Multi select mode (2, 3, or Multiple)
+          if (isAlreadyActive) {
+            // Allow deselecting unless it's the last selected one
+            const activeCount = document.querySelectorAll('.pb-swatch-circle.is-active').length;
+            if (activeCount > 1) {
+              this.classList.remove('is-active');
+            }
+          } else {
+            const currentActive = document.querySelectorAll('.pb-swatch-circle.is-active');
+            if (currentActive.length >= maxAllowed) {
+              // Replace earliest selected or remove first
+              currentActive[0].classList.remove('is-active');
+            }
+            this.classList.add('is-active');
+          }
+        }
+        syncInkColorHiddenProp();
+      });
+    });
+
+    // Artwork cards selection & File upload trigger
+    const fileInput = document.getElementById('pbArtworkFileInput');
+    const uploadCard = document.getElementById('pbArtworkCardUpload');
+    const uploadedPill = document.getElementById('pbUploadedFilePill');
+    const fileNameEl = document.getElementById('pbFileName');
+    const fileSizeEl = document.getElementById('pbFileSize');
+    const fileRemoveBtn = document.getElementById('pbFileRemoveBtn');
+    const propFileName = document.getElementById('prop_artwork_file_name');
+    const propFileSize = document.getElementById('prop_artwork_file_size');
+
+    document.querySelectorAll('.pb-artwork-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        document.querySelectorAll('.pb-artwork-card').forEach(c => c.classList.remove('is-active'));
+        this.classList.add('is-active');
+        const radio = this.querySelector('input[type="radio"]');
+        if (radio) {
+          radio.checked = true;
+          const propArt = document.getElementById('prop_artwork');
+          if (propArt) propArt.value = radio.value;
+        }
+
+        // If user clicked 'Upload now' card, trigger file picker if no file selected yet
+        if (this.getAttribute('data-artwork') === 'Upload now') {
+          if (fileInput && !fileInput.files.length) {
+            fileInput.click();
+          }
+        } else {
+          // If another option picked, hide file pill
+          if (uploadedPill) uploadedPill.style.display = 'none';
+          if (fileInput) fileInput.value = '';
+          if (propFileName) propFileName.value = '';
+          if (propFileSize) propFileSize.value = '';
+        }
+      });
+    });
+
+    // File input change handler
+    if (fileInput) {
+      fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+          if (fileNameEl) fileNameEl.textContent = file.name;
+          if (fileSizeEl) fileSizeEl.textContent = sizeMb + ' MB of 30 MB';
+          if (propFileName) propFileName.value = file.name;
+          if (propFileSize) propFileSize.value = sizeMb + ' MB';
+          if (uploadedPill) uploadedPill.style.display = 'flex';
+          
+          // Make sure Upload now card is active
+          if (uploadCard) {
+            document.querySelectorAll('.pb-artwork-card').forEach(c => c.classList.remove('is-active'));
+            uploadCard.classList.add('is-active');
+            const radio = uploadCard.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+          }
+          const propArt = document.getElementById('prop_artwork');
+          if (propArt) propArt.value = 'Upload now';
+        }
+      });
+    }
+
+    // Remove file cross button handler
+    if (fileRemoveBtn) {
+      fileRemoveBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (fileInput) fileInput.value = '';
+        if (propFileName) propFileName.value = '';
+        if (propFileSize) propFileSize.value = '';
+        if (uploadedPill) uploadedPill.style.display = 'none';
+      });
+    }
+
+    // Thumbnails click to swap main image
+    const mainImg = document.getElementById('pbMainImage');
+    document.querySelectorAll('.pb-thumb-item[data-full-img]').forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        document.querySelectorAll('.pb-thumb-item').forEach(t => t.classList.remove('is-active'));
+        this.classList.add('is-active');
+        const fullSrc = this.getAttribute('data-full-img');
+        if (mainImg && fullSrc) {
+          mainImg.src = fullSrc;
+        }
+      });
+    });
+
+    // Detect product from URL on client side (for fallback routes)
+    var rawPath = decodeURIComponent(window.location.pathname.toLowerCase());
+    var handle = '';
+    if (rawPath.indexOf('/products/') !== -1) {
+      handle = rawPath.split('/products/')[1].split('/')[0].split('?')[0].trim().replace(/\s+/g, '-');
+    } else if (rawPath.indexOf('/products') !== -1) {
+      handle = rawPath.replace('/products', '').replace(/^[\s\-_/]+/, '').split('/')[0].split('?')[0].trim().replace(/\s+/g, '-');
+    }
+
+    if (handle) {
+      const productConfigs = {
+        'paper-tape': {
+          title: 'Paper Tape',
+          price: 'Starting at $9.10 a roll',
+          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
+          material: 'Paper'
+        },
+        'pvc-tape': {
+          title: 'PVC Tape',
+          price: 'Starting at $7.84 a roll',
+          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/PVC_Tape.webp',
+          material: 'PVC'
+        },
+        'hi-tack-freezer-tape': {
+          title: 'Hi-Tack Freezer Tape',
+          price: 'Starting at $10.18 a roll',
+          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Hi-Tack_Freezer_Tape.webp',
+          material: 'Hi-Track Freezer'
+        },
+        'flatback-tape': {
+          title: 'Flatback Tape',
+          price: 'Starting at $7.12 a roll',
+          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Flatback_Tape.webp',
+          material: 'Flat back'
+        },
+        'dispensers': {
+          title: 'Dispensers',
+          price: 'From $34 per unit',
+          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Dispensers_83aabc72-858a-41ea-81f1-0a251ab9a8bc.webp',
+          material: 'Dispensers'
+        },
+        'polypropylene-tape': {
+          title: 'Polypropylene Tape',
+          price: 'Starting at $5.68 a roll',
+          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Polypropylene_Tape.webp',
+          material: 'Polypropylene'
+        }
+      };
+
+      if (productConfigs[handle]) {
+        const cfg = productConfigs[handle];
+        const titleEl = document.querySelector('.pb-product-title');
+        const descTitleEl = document.querySelector('.pb-desc-title');
+        const priceHighlightEl = document.querySelector('.pb-price-highlight');
+
+        if (titleEl) titleEl.textContent = cfg.title;
+        if (descTitleEl) descTitleEl.textContent = 'Custom ' + cfg.title;
+        if (priceHighlightEl) priceHighlightEl.textContent = cfg.price.replace('Starting at ', '');
+
+        // Update Main image and active thumbnail only if user hasn't set custom thumbnails or media
+        const mainImg = document.getElementById('pbMainImage');
+        const hasCustomThumb = {% if section.settings.thumb_1 != blank or product.media.size > 0 %}true{% else %}false{% endif %};
+        if (mainImg && cfg.img && !hasCustomThumb) {
+          mainImg.src = cfg.img;
+          mainImg.alt = cfg.title;
+        }
+
+        const activeThumb = document.querySelector('.pb-thumb-item.is-active');
+        if (activeThumb && cfg.img && !hasCustomThumb) {
+          activeThumb.setAttribute('data-full-img', cfg.img);
+          const thumbImg = activeThumb.querySelector('img');
+          if (thumbImg) thumbImg.src = cfg.img;
+        }
+
+        // Update active material pill
+        document.querySelectorAll('.pb-pill-btn[data-group="material"]').forEach(btn => {
+          if (btn.getAttribute('data-val') === cfg.material) {
+            btn.classList.add('is-active');
+          } else {
+            btn.classList.remove('is-active');
+          }
+        });
+      }
+    }
+
+    // Auto slide through thumbnails if more than 1 thumbnail exists
+    const thumbs = Array.from(document.querySelectorAll('.pb-thumb-item[data-full-img]'));
+    let autoSlideTimer = null;
+    let currentThumbIndex = 0;
+
+    function switchThumb(index) {
+      if (!thumbs.length) return;
+      thumbs.forEach((t, i) => {
+        if (i === index) {
+          t.classList.add('is-active');
+          const fullSrc = t.getAttribute('data-full-img');
+          if (mainImg && fullSrc) {
+            mainImg.src = fullSrc;
+          }
+        } else {
+          t.classList.remove('is-active');
+        }
+      });
+      currentThumbIndex = index;
+    }
+
+    function startAutoSlide() {
+      if (thumbs.length <= 1) return;
+      stopAutoSlide();
+      autoSlideTimer = setInterval(() => {
+        const nextIndex = (currentThumbIndex + 1) % thumbs.length;
+        switchThumb(nextIndex);
+      }, 3500);
+    }
+
+    function stopAutoSlide() {
+      if (autoSlideTimer) {
+        clearInterval(autoSlideTimer);
+        autoSlideTimer = null;
+      }
+    }
+
+    // Attach click events to thumbs and manage auto-slide
+    thumbs.forEach((thumb, index) => {
+      thumb.addEventListener('click', function() {
+        switchThumb(index);
+        stopAutoSlide();
+        // Resume after 7 seconds of inactivity
+        setTimeout(startAutoSlide, 7000);
+      });
+    });
+
+    // Pause on hovering main card or thumbnails
+    const mainCard = document.querySelector('.pb-main-image-card');
+    const thumbRow = document.querySelector('.pb-thumbnails-row');
+
+    if (mainCard) {
+      mainCard.addEventListener('mouseenter', stopAutoSlide);
+      mainCard.addEventListener('mouseleave', startAutoSlide);
+    }
+    if (thumbRow) {
+      thumbRow.addEventListener('mouseenter', stopAutoSlide);
+      thumbRow.addEventListener('mouseleave', startAutoSlide);
+    }
+
+    // Read URL parameters when user clicks "Edit Spec" from cart to restore their choices
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramEditKey = urlParams.get('edit_key');
+    if (paramEditKey) {
+      const editKeyInput = document.getElementById('pbEditKey');
+      if (editKeyInput) editKeyInput.value = paramEditKey;
+    }
+
+    const paramCases = parseInt(urlParams.get('cases'), 10);
+    const initialCases = !isNaN(paramCases) && paramCases > 0 ? paramCases : 5;
+
+    // Restore pill selections from URL if present
+    ['width', 'length', 'tape_color', 'inks', 'coverage', 'printed_before'].forEach(group => {
+      const val = urlParams.get(group);
+      if (val) {
+        const btn = document.querySelector(`.pb-pill-btn[data-group="${group}"][data-val="${val}"]`);
+        if (btn) {
+          const parent = btn.closest('.pb-pill-grid');
+          if (parent) parent.querySelectorAll('.pb-pill-btn').forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const hiddenInput = document.getElementById('prop_' + group);
+          if (hiddenInput) hiddenInput.value = val;
+        }
+      }
+    });
+
+    // Restore ink color from URL (can be single or comma-separated)
+    const paramInkColor = urlParams.get('ink_color');
+    if (paramInkColor) {
+      const colors = paramInkColor.split(',').map(c => c.trim().toLowerCase());
+      document.querySelectorAll('.pb-swatch-circle').forEach(swatch => {
+        const val = (swatch.getAttribute('data-val') || '').toLowerCase();
+        if (colors.includes(val)) {
+          swatch.classList.add('is-active');
+        } else {
+          swatch.classList.remove('is-active');
+        }
+      });
+      syncInkColorHiddenProp();
+    } else {
+      syncInkColorHiddenProp();
+    }
+
+    // Restore artwork option from URL
+    const paramArtwork = urlParams.get('artwork');
+    if (paramArtwork) {
+      const artCard = document.querySelector(`.pb-artwork-card[data-artwork="${paramArtwork}"]`);
+      if (artCard) {
+        document.querySelectorAll('.pb-artwork-card').forEach(c => c.classList.remove('is-active'));
+        artCard.classList.add('is-active');
+        const radio = artCard.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+        const propArt = document.getElementById('prop_artwork');
+        if (propArt) propArt.value = paramArtwork;
+      }
+    }
+
+    // Initialize initial calculations
+    updateCalculations(initialCases);
+
+    // Form submission: Sync all currently active pill selections to hidden inputs, then submit
+    const prodForm = document.getElementById('pbProductForm');
+    if (prodForm) {
+      prodForm.addEventListener('submit', async function(e) {
+        // Collect current active colors
+        const activeSwatches = Array.from(document.querySelectorAll('.pb-swatch-circle.is-active'));
+        const selectedColors = activeSwatches.map(s => s.getAttribute('data-val')).filter(Boolean);
+        const joinedColors = selectedColors.length ? selectedColors.join(', ') : 'Blue';
+
+        // Collect current active options
+        const activeOpts = {
+          material: document.querySelector('.pb-pill-btn[data-group="material"].is-active')?.getAttribute('data-val') || 'Polypropylene',
+          width: document.querySelector('.pb-pill-btn[data-group="width"].is-active')?.getAttribute('data-val') || '3 inch',
+          length: document.querySelector('.pb-pill-btn[data-group="length"].is-active')?.getAttribute('data-val') || '375 feet',
+          tape_color: document.querySelector('.pb-pill-btn[data-group="tape_color"].is-active')?.getAttribute('data-val') || 'Tan/Kraft',
+          inks: document.querySelector('.pb-pill-btn[data-group="inks"].is-active')?.getAttribute('data-val') || 'One ink',
+          ink_color: joinedColors,
+          coverage: document.querySelector('.pb-pill-btn[data-group="coverage"].is-active')?.getAttribute('data-val') || 'Standard',
+          printed_before: document.querySelector('.pb-pill-btn[data-group="printed_before"].is-active')?.getAttribute('data-val') || 'No - New design',
+          cases: currentCases || 5,
+          rolls: (currentCases || 5) * (pricingTable.rollsPerCase || 8),
+          total_price: document.getElementById('pbTotalPrice')?.textContent || '$464.63',
+          per_roll_price: document.getElementById('pbPerRollPrice')?.textContent || '$11.62 a roll',
+          artwork_option: document.getElementById('prop_artwork')?.value || 'Upload now',
+          file_name: document.getElementById('prop_artwork_file_name')?.value || '',
+          file_size: document.getElementById('prop_artwork_file_size')?.value || ''
+        };
+
+        // Sync hidden properties
+        for (const [k, v] of Object.entries(activeOpts)) {
+          const el = document.getElementById('prop_' + k);
+          if (el) el.value = v;
+        }
+
+        const editKey = document.getElementById('pbEditKey')?.value;
+        const variantId = document.getElementById('pbVariantId')?.value;
+
+        // If editing an existing cart line item, remove previous line item first
+        if (editKey) {
+          e.preventDefault();
+          try {
+            await fetch('/cart/change.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: editKey, quantity: 0 })
+            });
+          } catch(err) {
+            console.error('Error removing old item during edit:', err);
+          }
+
+          // If variantId is present, add the updated item via AJAX then navigate to cart
+          if (variantId) {
+            try {
+              const formData = new FormData(prodForm);
+              await fetch('/cart/add.js', {
+                method: 'POST',
+                body: formData
+              });
+            } catch(err) {
+              console.error('Error adding updated item to cart:', err);
+            }
+            window.location.href = '/cart';
+            return;
+          }
+        }
+
+        if (!variantId) {
+          // Store customized spec in localStorage for seamless cart preview
+          try {
+            let savedItems = JSON.parse(localStorage.getItem('tf_custom_cart_items') || '[]');
+            const prodTitle = document.querySelector('.pb-product-title')?.textContent || 'Polypropylene tape';
+            
+            if (editKey) {
+              // Replace the existing item if it matches editKey
+              const idx = savedItems.findIndex(it => it.id === editKey);
+              if (idx !== -1) {
+                savedItems[idx] = {
+                  id: editKey,
+                  title: prodTitle,
+                  image: document.getElementById('pbMainImage')?.src || 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
+                  properties: activeOpts
+                };
+              } else {
+                savedItems.unshift({
+                  id: editKey,
+                  title: prodTitle,
+                  image: document.getElementById('pbMainImage')?.src || 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
+                  properties: activeOpts
+                });
+              }
+            } else {
+              savedItems.unshift({
+                id: 'tf-custom-' + Date.now(),
+                title: prodTitle,
+                image: document.getElementById('pbMainImage')?.src || 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
+                properties: activeOpts
+              });
+            }
+            localStorage.setItem('tf_custom_cart_items', JSON.stringify(savedItems));
+          } catch(err) {}
+
+          e.preventDefault();
+          window.location.href = '/cart';
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Banner",
+  "tag": "section",
+  "class": "section-product-banner",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background Color",
+      "default": "#FBF8F3"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Main Image Box Background Color",
+      "default": "#F8B825"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Top Badge Text",
+      "default": "Tamper-evident + recyclabl"
+    },
+    {
+      "type": "text",
+      "id": "default_title",
+      "label": "Default Title (Fallback)",
+      "default": "Polypropylene Tape"
+    },
+    {
+      "type": "text",
+      "id": "starting_price",
+      "label": "Starting Price Subtitle",
+      "default": "$5.68 a roll"
+    },
+    {
+      "type": "textarea",
+      "id": "short_desc",
+      "label": "Short Brief Description",
+      "default": "The default for corrugated cartons. Glossy, hot-melt, and cheap enough to brand every box that leaves the building."
+    },
+    {
+      "type": "text",
+      "id": "desc_heading",
+      "label": "Description Heading",
+      "default": "Description"
+    },
+    {
+      "type": "text",
+      "id": "desc_subtitle",
+      "label": "Description Subtitle",
+      "default": "Custom Polypropylene Tape"
+    },
+    {
+      "type": "text",
+      "id": "feature_1",
+      "label": "Feature Bullet 1",
+      "default": "High-grade Kraft paper for ultimate strength and security"
+    },
+    {
+      "type": "text",
+      "id": "feature_2",
+      "label": "Feature Bullet 2",
+      "default": "Water-activated adhesive forms a tamper-evident seal"
+    },
+    {
+      "type": "text",
+      "id": "feature_3",
+      "label": "Feature Bullet 3",
+      "default": "Available in non-reinforced or reinforced paper options"
+    },
+    {
+      "type": "text",
+      "id": "feature_4",
+      "label": "Feature Bullet 4",
+      "default": "Print up to three colors to showcase your brand"
+    },
+    {
+      "type": "text",
+      "id": "feature_5",
+      "label": "Feature Bullet 5",
+      "default": "Eco-friendly and recyclable"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 40,
+      "max": 240,
+      "step": 10,
+      "default": 140,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 160,
+      "step": 10,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Portal Thumbnail Images (Theme Editor)"
+    },
+    {
+      "type": "paragraph",
+      "content": "If you don't upload images in Shopify Admin > Products, you can add up to 6 thumbnails directly here from the Theme Customizer:"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_1",
+      "label": "Thumbnail Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_2",
+      "label": "Thumbnail Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_3",
+      "label": "Thumbnail Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_4",
+      "label": "Thumbnail Image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_5",
+      "label": "Thumbnail Image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_6",
+      "label": "Thumbnail Image 6"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Banner"
+    }
+  ]
+}
+{% endschema %}

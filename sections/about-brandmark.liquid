@@ -1,0 +1,156 @@
+{{ 'about-brandmark.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="about-brandmark-{{ section.id }}"
+  class="about-brandmark-section"
+  style="
+    --abm-bg: {{ section.settings.bg_color | default: '#171008' }};
+    --abm-card-bg: {{ section.settings.card_bg | default: '#FAF7F0' }};
+    --abm-dot-color: {{ section.settings.dot_color | default: '#d4cbbe' }};
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="about-brandmark-card">
+    
+    <!-- 1. Header (Mark of Quality Badge + The brand mark Title) -->
+    <div class="about-brandmark-header">
+      {% if section.settings.badge_text != blank %}
+        <div class="abm-badge">{{ section.settings.badge_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="abm-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </div>
+
+    <!-- 2. Three Mascots Row (Left Laptop Fox, Center Magnifying Fox, Right Packing Fox) -->
+    <div class="about-brandmark-row">
+      
+      <!-- Mascot 1 (Left - Fox at Desk with Laptop) -->
+      <div class="abm-mascot-col abm-mascot-col--1">
+        {% if section.settings.mascot_1 != blank %}
+          <img
+            src="{{ section.settings.mascot_1 | image_url: width: 800 }}"
+            alt="{{ section.settings.mascot_1.alt | default: 'TapeFox Design Studio' }}"
+            class="abm-mascot-img"
+            width="380"
+            height="auto"
+            loading="lazy"
+          >
+        {% elsif request.design_mode %}
+          <div class="abm-mascot-placeholder">
+            <span>🦊 Mascot 1 (Laptop)</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Mascot 2 (Center - Fox with Magnifying Glass & Tape) -->
+      <div class="abm-mascot-col abm-mascot-col--2">
+        {% if section.settings.mascot_2 != blank %}
+          <img
+            src="{{ section.settings.mascot_2 | image_url: width: 600 }}"
+            alt="{{ section.settings.mascot_2.alt | default: 'TapeFox Inspection' }}"
+            class="abm-mascot-img"
+            width="260"
+            height="auto"
+            loading="lazy"
+          >
+        {% elsif request.design_mode %}
+          <div class="abm-mascot-placeholder">
+            <span>🔍 Mascot 2 (Magnifying Glass)</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Mascot 3 (Right - Fox Sealing Tape Box) -->
+      <div class="abm-mascot-col abm-mascot-col--3">
+        {% if section.settings.mascot_3 != blank %}
+          <img
+            src="{{ section.settings.mascot_3 | image_url: width: 700 }}"
+            alt="{{ section.settings.mascot_3.alt | default: 'TapeFox Packing Box' }}"
+            class="abm-mascot-img"
+            width="320"
+            height="auto"
+            loading="lazy"
+          >
+        {% elsif request.design_mode %}
+          <div class="abm-mascot-placeholder">
+            <span>📦 Mascot 3 (Box Packing)</span>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Brandmark",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Outer Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#FAF7F0"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot Pattern Color",
+      "default": "#d4cbbe"
+    },
+    {
+      "type": "header",
+      "content": "Header & Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Mark of quality"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The brand mark"
+    },
+    {
+      "type": "header",
+      "content": "Mascots / Characters"
+    },
+    {
+      "type": "image_picker",
+      "id": "mascot_1",
+      "label": "Mascot 1 (Left - Laptop Fox)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mascot_2",
+      "label": "Mascot 2 (Center - Magnifying Glass Fox)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mascot_3",
+      "label": "Mascot 3 (Right - Packing Box Fox)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Brandmark"
+    }
+  ]
+}
+{% endschema %}

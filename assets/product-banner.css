@@ -1,0 +1,834 @@
+/* ==========================================================================
+   PRODUCT BANNER SECTION CSS (Reference-Exact Replica)
+   ========================================================================== */
+
+.product-banner-section {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  color: #171008;
+}
+
+.pb-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1200px) {
+  .pb-container {
+    padding: 0 24px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pb-container {
+    padding: 0 16px;
+  }
+}
+
+/* Two Column Layout */
+.pb-layout {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  column-gap: 50px;
+  align-items: start;
+}
+
+@media screen and (max-width: 1100px) {
+  .pb-layout {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .pb-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+/* ==========================================================================
+   LEFT COLUMN: Main Image & Thumbnails & Description
+   ========================================================================== */
+.pb-left-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Main Image Card with Yellow / Ochre Background */
+.pb-main-image-card {
+  position: relative;
+  background-color: #F8B825;
+  border: 1.5px solid #171008;
+  border-radius: 20px;
+  aspect-ratio: 1.15 / 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 30px;
+}
+
+/* Top Left Black Pill Tag */
+.pb-tag-badge {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  background-color: #171008;
+  color: #F8B825;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pb-main-image-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pb-main-img {
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.pb-main-image-card:hover .pb-main-img {
+  transform: scale(1.03);
+}
+
+/* Thumbnails Row (Dynamic: displays exact number of uploaded thumbnails) */
+.pb-thumbnails-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  width: 100%;
+}
+
+.pb-thumb-item {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  background: transparent;
+  border: 1.5px solid #171008;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  overflow: hidden;
+}
+
+.pb-thumb-item:hover,
+.pb-thumb-item.is-active {
+  border-color: #171008;
+  border-width: 2px;
+  transform: translateY(-2px);
+}
+
+.pb-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pb-thumb-placeholder {
+  cursor: default;
+  border: 1.5px solid #A8A29A;
+  background-color: transparent;
+}
+
+.pb-thumb-placeholder:hover {
+  transform: none;
+  border-color: #A8A29A;
+}
+
+/* Description Block (Desktop) */
+.pb-description-block {
+  margin-top: 36px;
+  padding-top: 10px;
+}
+
+.pb-desc-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0 0 16px 0;
+}
+
+.pb-desc-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.pb-desc-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #55524E;
+  margin-bottom: 24px;
+}
+
+.pb-desc-text p {
+  margin: 0 0 10px 0;
+  line-height: 1.6;
+}
+
+.pb-desc-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pb-desc-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #33312E;
+}
+
+.pb-feature-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN: Configurator Card (The Box)
+   ========================================================================== */
+.pb-right-col {
+  width: 100%;
+}
+
+.pb-config-card {
+  border: 1.5px solid #171008;
+  border-radius: 20px;
+  padding: 34px 34px 28px 34px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 600px) {
+  .pb-config-card {
+    padding: 24px 18px 20px 18px;
+    border-radius: 18px;
+  }
+}
+
+/* Title & Subheadings */
+.pb-product-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 38px;
+  line-height: 1.15;
+  color: #171008;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+@media screen and (max-width: 600px) {
+  .pb-product-title {
+    font-size: 30px;
+  }
+}
+
+.pb-price-subhead {
+  font-size: 15px;
+  color: #55524E;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.pb-price-highlight {
+  font-weight: 700;
+  color: #171008;
+}
+
+.pb-product-brief {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #66635F;
+  margin-bottom: 24px;
+}
+
+/* Option Groups & Labels */
+.pb-option-group {
+  padding: 14px 0 6px 0;
+}
+
+.pb-divider-top {
+  border-top: 1px dashed #DDD7CC;
+  padding-top: 16px;
+  margin-top: 10px;
+}
+
+.pb-group-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #171008;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* Pill Grid */
+.pb-pill-grid {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Pill Buttons (Default inactive: white/beige pill with subtle border) */
+.pb-pill-btn {
+  background-color: transparent;
+  border: 1px solid #171008;
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #171008;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.pb-pill-btn:hover {
+  border-color: #171008;
+  background-color: #F2ECE0;
+}
+
+/* Active Pill Button: Solid Black with Yellowish or White text */
+.pb-pill-btn.is-active {
+  background-color: #171008;
+  color: #F8B825;
+  border-color: #171008;
+  font-weight: 600;
+}
+
+.pb-pill-sub {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+/* Tape Color button with inner circle */
+.pb-pill-btn--color {
+  padding: 6px 16px 6px 12px;
+}
+
+.pb-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Inks Color Swatches Row */
+.pb-swatches-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pb-swatch-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--swatch-color);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.15s ease;
+  padding: 0;
+  outline: none;
+}
+
+.pb-swatch-circle:hover {
+  transform: scale(1.15);
+}
+
+.pb-swatch-circle.is-active {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px #FBF8F3, 0 0 0 3.5px #171008;
+}
+
+/* Case Stepper & Presets */
+.pb-cases-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pb-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #777;
+  border-radius: 20px;
+  padding: 3px 12px;
+  background-color: #FAF6EF;
+  gap: 14px;
+  height: 34px;
+  box-sizing: border-box;
+}
+
+.pb-stepper-btn {
+  background: transparent;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  color: #171008;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.pb-stepper-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: #171008;
+  min-width: 14px;
+  text-align: center;
+}
+
+.pb-case-preset {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #171008;
+  font-size: 12px;
+  font-weight: 600;
+  color: #171008;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.pb-case-preset:hover {
+  border-color: #171008;
+}
+
+.pb-case-preset.is-active {
+  background-color: #171008;
+  color: #F8B825;
+  border-color: #171008;
+}
+
+/* Artwork Option Radio Cards */
+.pb-artwork-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.pb-artwork-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #171008;
+  border-radius: 10px;
+  padding: 12px 18px;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.pb-artwork-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pb-radio-disc {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #171008;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.pb-artwork-card.is-active {
+  background-color: #171008;
+  border-color: #171008;
+}
+
+.pb-artwork-card.is-active .pb-radio-disc {
+  border-color: #F8B825;
+  background-color: #171008;
+}
+
+.pb-artwork-card.is-active .pb-radio-disc::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #F8B825;
+}
+
+.pb-artwork-card__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.pb-artwork-card__title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #171008;
+  transition: color 0.2s ease;
+}
+
+.pb-artwork-card.is-active .pb-artwork-card__title {
+  color: #FFFFFF;
+}
+
+.pb-artwork-card__sub {
+  font-size: 11px;
+  color: #66635F;
+  margin-top: 2px;
+  transition: color 0.2s ease;
+}
+
+.pb-artwork-card.is-active .pb-artwork-card__sub {
+  color: #D5D0C7;
+}
+
+/* Uploaded File Pill Preview in Product Banner Form */
+.pb-artwork-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pb-uploaded-file-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  border: 1.5px solid #171008;
+  border-radius: 12px;
+  padding: 8px 14px;
+  box-shadow: 2px 2px 0px #171008;
+  animation: pbSlideDown 0.2s ease;
+}
+
+@keyframes pbSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pb-file-pill-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pb-file-icon {
+  width: 26px;
+  height: 30px;
+  background-color: #311500;
+  color: #FF7020;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+
+.pb-file-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.pb-file-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #171008;
+  word-break: break-all;
+}
+
+.pb-file-size {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #726C63;
+}
+
+.pb-file-remove-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #171008;
+  cursor: pointer;
+  padding: 2px 8px;
+  line-height: 1;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pb-file-remove-btn:hover {
+  transform: scale(1.15);
+  opacity: 0.7;
+}
+
+/* Orange proof text */
+.pb-proof-notice {
+  font-size: 12px;
+  font-weight: 700;
+  color: #EA5B1B;
+  margin-top: 14px;
+  margin-bottom: 16px;
+}
+
+/* Black Summary Strip */
+.pb-summary-strip {
+  background-color: #171008;
+  border-radius: 10px;
+  padding: 12px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+  align-items: center;
+  color: #FFFFFF;
+  margin-bottom: 22px;
+}
+
+@media screen and (max-width: 480px) {
+  .pb-summary-strip {
+    padding: 12px 14px;
+  }
+}
+
+.pb-summary-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.pb-summary-col--right {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.pb-summary-label {
+  font-size: 10.5px;
+  color: #BDB9B2;
+  text-transform: capitalize;
+  margin-bottom: 2px;
+}
+
+.pb-summary-val {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Total Price Row */
+.pb-total-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pb-total-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #171008;
+  padding-top: 6px;
+}
+
+.pb-total-price-block {
+  text-align: right;
+}
+
+.pb-total-price {
+  font-size: 34px;
+  font-weight: 700;
+  color: #171008;
+  line-height: 1;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.pb-per-roll-price {
+  font-size: 12px;
+  color: #66635F;
+  margin-top: 4px;
+}
+
+/* Big Gold Add to Cart Button (Capsule / Pill with 3D shadow) */
+.pb-add-to-cart-btn {
+  width: 100%;
+  background-color: #FEC33F;
+  border: 2px solid #171008;
+  border-radius: 999px;
+  padding: 14px 24px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #171008;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-shadow: 2.5px 3.5px 0px #171008;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.2px;
+}
+
+.pb-add-to-cart-btn:hover {
+  background-color: #f7bb34;
+  transform: translate(-1px, -1px);
+  box-shadow: 3.5px 4.5px 0px #171008;
+}
+
+.pb-add-to-cart-btn:active {
+  transform: translate(2px, 2.5px);
+  box-shadow: 0.5px 1px 0px #171008;
+}
+
+/* Footer Disclaimer */
+.pb-footer-disclaimer {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #726C63;
+  margin: 16px 0 0 0;
+  text-align: left;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE OVERRIDES (Matches Mobile Reference Screenshot)
+   ========================================================================== */
+@media screen and (max-width: 900px) {
+  .product-banner-section {
+    padding-top: 100px !important;
+  }
+
+  .pb-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .pb-main-image-card {
+    border-radius: 16px;
+    padding: 20px;
+    aspect-ratio: 1.1 / 1;
+  }
+
+  .pb-tag-badge {
+    top: 14px;
+    left: 14px;
+    font-size: 10.5px;
+    padding: 4px 12px;
+  }
+
+  .pb-thumbnails-row {
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .pb-thumb-item {
+    border-radius: 6px;
+  }
+
+  /* In mobile reference, Description is hidden or placed below */
+  .pb-description-block {
+    display: none;
+  }
+
+  .pb-config-card {
+    border-radius: 18px;
+    padding: 20px 16px;
+  }
+
+  .pb-product-title {
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+
+  .pb-price-subhead {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .pb-product-brief {
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+
+  .pb-pill-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .pb-pill-btn--color {
+    padding: 6px 14px;
+  }
+
+  .pb-swatches-row {
+    gap: 8px;
+  }
+
+  .pb-swatch-circle {
+    width: 22px;
+    height: 22px;
+  }
+
+  .pb-total-price {
+    font-size: 28px;
+  }
+
+  .pb-add-to-cart-btn {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+}

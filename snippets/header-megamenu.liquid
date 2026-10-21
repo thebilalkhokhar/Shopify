@@ -1,0 +1,144 @@
+{% doc %}
+  Renders the desktop mega menu dropdown for Printed Tapes.
+  Matches the exact reference design: full-width white card with rounded bottom corners,
+  subtle black border, header title and subtitle, peeking fox mascot at top right,
+  and 6 golden-yellow cards with tape product images and labels.
+
+  @param {section} section - The parent header section
+{% enddoc %}
+
+{% assign item1_img = 'polypropylene.webp' | file_img_url: 'master' %}
+{% assign item2_img = 'paper.webp' | file_img_url: 'master' %}
+{% assign item3_img = 'hitack.webp' | file_img_url: 'master' %}
+{% assign item4_img = 'pvc.webp' | file_img_url: 'master' %}
+{% assign item5_img = 'flattape.webp' | file_img_url: 'master' %}
+{% assign item6_img = 'dispensers.webp' | file_img_url: 'master' %}
+
+{% if section.settings.mm_item1_image != blank %}
+  {% assign item1_img = section.settings.mm_item1_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item2_image != blank %}
+  {% assign item2_img = section.settings.mm_item2_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item3_image != blank %}
+  {% assign item3_img = section.settings.mm_item3_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item4_image != blank %}
+  {% assign item4_img = section.settings.mm_item4_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item5_image != blank %}
+  {% assign item5_img = section.settings.mm_item5_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item6_image != blank %}
+  {% assign item6_img = section.settings.mm_item6_image | image_url: width: 350 %}
+{% endif %}
+
+<div class="header-megamenu">
+  <div class="header-megamenu__inner">
+    <!-- Header info: Title & Subtitle -->
+    <div class="header-megamenu__header">
+      <h3 class="header-megamenu__title">
+        {% comment %}
+          <a
+            href="{{ section.settings.mm_link | default: '/collections' }}"
+            style="color: inherit; text-decoration: none; text-align: left !important;"
+          >
+        {% endcomment %}
+        {{ section.settings.mm_heading | default: 'Printed Tapes' }}
+        {% comment %} </a> {% endcomment %}
+      </h3>
+      <p class="header-megamenu__subtitle">
+        {{ section.settings.mm_subheading | default: 'Every roll printed to your artwork, up to 3 inks' }}
+      </p>
+    </div>
+
+    <!-- 6 Products Grid -->
+    <div class="header-megamenu__grid">
+      <!-- Item 1 -->
+      <a href="{{ section.settings.mm_item1_url | default: '/products/polypropylene-tape' }}" class="megamenu-card">
+        <div class="megamenu-card__thumb">
+          <img
+            src="{{ item1_img }}"
+            alt="{{ section.settings.mm_item1_title | default: 'Polypropylene Tape' }}"
+            loading="lazy"
+            width="220"
+            height="150"
+          >
+        </div>
+        <span class="megamenu-card__label">{{ section.settings.mm_item1_title | default: 'Polypropylene Tape' }}</span>
+      </a>
+
+      <!-- Item 2 -->
+      <a href="{{ section.settings.mm_item2_url | default: '/products/paper-tape' }}" class="megamenu-card">
+        <div class="megamenu-card__thumb">
+          <img
+            src="{{ item2_img }}"
+            alt="{{ section.settings.mm_item2_title | default: 'Paper Tape' }}"
+            loading="lazy"
+            width="220"
+            height="150"
+          >
+        </div>
+        <span class="megamenu-card__label">{{ section.settings.mm_item2_title | default: 'Paper Tape' }}</span>
+      </a>
+
+      <!-- Item 3 -->
+      <a href="{{ section.settings.mm_item3_url | default: '/products/hi-tack-freezer-tape' }}" class="megamenu-card">
+        <div class="megamenu-card__thumb">
+          <img
+            src="{{ item3_img }}"
+            alt="{{ section.settings.mm_item3_title | default: 'Hi-Tack Freezer Tape' }}"
+            loading="lazy"
+            width="220"
+            height="150"
+          >
+        </div>
+        <span class="megamenu-card__label">
+          {{- section.settings.mm_item3_title | default: 'Hi-Tack Freezer Tape' -}}
+        </span>
+      </a>
+
+      <!-- Item 4 -->
+      <a href="{{ section.settings.mm_item4_url | default: '/products/pvc-tape' }}" class="megamenu-card">
+        <div class="megamenu-card__thumb">
+          <img
+            src="{{ item4_img }}"
+            alt="{{ section.settings.mm_item4_title | default: 'PVC Tape' }}"
+            loading="lazy"
+            width="220"
+            height="150"
+          >
+        </div>
+        <span class="megamenu-card__label">{{ section.settings.mm_item4_title | default: 'PVC Tape' }}</span>
+      </a>
+
+      <!-- Item 5 -->
+      <a href="{{ section.settings.mm_item5_url | default: '/products/flatback-tape' }}" class="megamenu-card">
+        <div class="megamenu-card__thumb">
+          <img
+            src="{{ item5_img }}"
+            alt="{{ section.settings.mm_item5_title | default: 'Flatback Tape' }}"
+            loading="lazy"
+            width="220"
+            height="150"
+          >
+        </div>
+        <span class="megamenu-card__label">{{ section.settings.mm_item5_title | default: 'Flatback Tape' }}</span>
+      </a>
+
+      <!-- Item 6 -->
+      <a href="{{ section.settings.mm_item6_url | default: '/products/dispensers' }}" class="megamenu-card">
+        <div class="megamenu-card__thumb">
+          <img
+            src="{{ item6_img }}"
+            alt="{{ section.settings.mm_item6_title | default: 'Dispensers' }}"
+            loading="lazy"
+            width="220"
+            height="150"
+          >
+        </div>
+        <span class="megamenu-card__label">{{ section.settings.mm_item6_title | default: 'Dispensers' }}</span>
+      </a>
+    </div>
+  </div>
+</div>

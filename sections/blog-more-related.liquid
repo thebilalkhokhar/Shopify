@@ -1,0 +1,300 @@
+{{ 'blog-more-related.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Dynamic resolution for Related / More blogs:
+  1. Determine current article so we can exclude it from the related list.
+  2. Pull blogs from selected_blog (default: blogs.news or current blog).
+  3. Filter out the current active article.
+  4. If real articles are fewer than 3, fallback / pad gracefully from blocks or defaults.
+{%- endcomment -%}
+
+{%- assign current_article = article -%}
+{%- assign raw_slug = '' -%}
+{%- if current_article != blank -%}
+  {%- assign raw_slug = current_article.handle -%}
+{%- elsif request.path contains '/blogs/' -%}
+  {%- assign raw_slug = request.path | split: '?' | first | split: '/' | last -%}
+{%- endif -%}
+
+{%- assign target_blog = section.settings.blog | default: blog -%}
+{%- if target_blog == blank or target_blog.articles.size == 0 -%}
+  {%- assign target_blog = blogs.news -%}
+{%- endif -%}
+
+<section
+  id="blog-more-related-{{ section.id }}"
+  class="bmr-section"
+  style="
+    --bmr-bg: {{ section.settings.bg_color | default: '#FAF7F0' }};
+    --bmr-card-bg: {{ section.settings.card_bg | default: '#EA5B1B' }};
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="bmr-container">
+    <!-- Header: Pill badge + Title -->
+    <div class="bmr-header">
+      {% if section.settings.pill_badge != blank %}
+        <div class="bmr-pill-badge">
+          <span>{{ section.settings.pill_badge }}</span>
+        </div>
+      {% endif %}
+      <h2 class="bmr-title">{{ section.settings.heading | default: 'More from Sticky Business.' }}</h2>
+    </div>
+
+    <!-- 3-Column Responsive Cards Grid -->
+    <div class="bmr-grid">
+      {%- assign rendered_count = 0 -%}
+
+      {%- comment -%} 1. Dynamic Articles from Shopify Blog {%- endcomment -%}
+      {%- if target_blog != blank and target_blog.articles.size > 0 -%}
+        {%- for art in target_blog.articles -%}
+          {%- assign art_clean_handle = art.handle | split: '/' | last -%}
+
+          {%- comment -%} Exclude the currently viewed article {%- endcomment -%}
+          {%- if current_article != blank and art.id == current_article.id -%}
+            {%- continue -%}
+          {%- elsif raw_slug != blank and raw_slug != 'news' and art_clean_handle == raw_slug -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- assign rendered_count = rendered_count | plus: 1 -%}
+          {%- assign first_tag = art.tags | first | default: section.settings.fallback_tag | default: 'Branding' -%}
+
+          <article class="bmr-card">
+            <div class="bmr-card-img-wrap">
+              {% if first_tag != blank %}
+                <span class="bmr-card-badge">{{ first_tag }}</span>
+              {% endif %}
+              <a href="{{ art.url }}" class="bmr-card-img-link" aria-label="{{ art.title }}">
+                {% if art.image != blank %}
+                  <img
+                    src="{{ art.image | image_url: width: 800 }}"
+                    alt="{{ art.image.alt | default: art.title }}"
+                    class="bmr-card-img"
+                    width="440"
+                    height="300"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="bmr-card-placeholder">
+                    <span>📰 {{ art.title | truncate: 25 }}</span>
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+
+            <div class="bmr-card-body">
+              <h3 class="bmr-card-title">
+                <a href="{{ art.url }}">{{ art.title }}</a>
+              </h3>
+
+              <div class="bmr-card-desc">
+                {% if art.excerpt != blank %}
+                  {{ art.excerpt | strip_html | truncatewords: 24 }}
+                {% else %}
+                  {{ art.content | strip_html | truncatewords: 24 }}
+                {% endif %}
+              </div>
+
+              <div class="bmr-card-date">
+                {{ art.published_at | date: "%B %d, %Y" }}
+              </div>
+            </div>
+          </article>
+
+          {%- if rendered_count >= 3 -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- comment -%} 2. Fallback / Customizer Blocks if fewer than 3 real articles are found {%- endcomment -%}
+      {%- if rendered_count < 3 and section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if rendered_count >= 3 -%}
+            {%- break -%}
+          {%- endif -%}
+
+          {%- assign block_slug = block.settings.title | default: 'blog' | handleize -%}
+          {%- if raw_slug != blank and raw_slug contains block_slug -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- assign rendered_count = rendered_count | plus: 1 -%}
+          {%- capture default_post_url -%}/blogs/news/{{ block_slug }}{%- endcapture -%}
+          {%- assign card_link = block.settings.article_link | default: default_post_url -%}
+
+          <article class="bmr-card" {{ block.shopify_attributes }}>
+            <div class="bmr-card-img-wrap">
+              {% if block.settings.category != blank %}
+                <span class="bmr-card-badge">{{ block.settings.category }}</span>
+              {% endif %}
+              <a href="{{ card_link }}" class="bmr-card-img-link" aria-label="{{ block.settings.title }}">
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 800 }}"
+                    alt="{{ block.settings.image.alt | default: block.settings.title }}"
+                    class="bmr-card-img"
+                    width="440"
+                    height="300"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="bmr-card-placeholder">
+                    <span>📰 {{ block.settings.title | default: 'More Sticky' }}</span>
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+
+            <div class="bmr-card-body">
+              <h3 class="bmr-card-title">
+                <a href="{{ card_link }}">{{ block.settings.title }}</a>
+              </h3>
+
+              <div class="bmr-card-desc">
+                {{ block.settings.description }}
+              </div>
+
+              <div class="bmr-card-date">
+                {{ block.settings.date }}
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var path = window.location.pathname;
+    var bmrSection = document.getElementById('blog-more-related-{{ section.id }}');
+    if (path.indexOf('/blogs/news/') !== -1 && path !== '/blogs/news' && path !== '/blogs/news/') {
+      if (bmrSection) {
+        bmrSection.style.display = 'block';
+      }
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Blog More Related",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF7F0"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#EA5B1B"
+    },
+    {
+      "type": "text",
+      "id": "pill_badge",
+      "label": "Top Pill Badge Text",
+      "default": "keep reading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More from Sticky Business."
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Source Blog",
+      "info": "Leave blank to automatically use the current blog or 'News'."
+    },
+    {
+      "type": "text",
+      "id": "fallback_tag",
+      "label": "Fallback Category Tag",
+      "default": "Branding"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "related_card",
+      "name": "Fallback Article Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category Tag",
+          "default": "Branding"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Custom Tape: Small Roll, Big Main-Character Energy"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Excerpt / Description",
+          "default": "Tape may be a small part of your packaging, but it is often the first branded thing people touch. It seals the box, carries your look, and helps turn an ordinary shipment into an unboxing experience people remember."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "July 30, 2026"
+        },
+        {
+          "type": "url",
+          "id": "article_link",
+          "label": "Article Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog More Related",
+      "blocks": [
+        {
+          "type": "related_card",
+          "settings": {
+            "category": "Branding",
+            "title": "Custom Tape: Small Roll, Big Main-Character Energy",
+            "description": "Tape may be a small part of your packaging, but it is often the first branded thing people touch. It seals the box, carries your look, and helps turn an ordinary shipment into an unboxing experience people remember.",
+            "date": "July 30, 2026"
+          }
+        },
+        {
+          "type": "related_card",
+          "settings": {
+            "category": "How to",
+            "title": "Your Box Is Talking. What's It Saying?",
+            "description": "Before your customer sees what is inside, they see the box. Custom printed tape turns that first moment into part of your brand—adding colour, personality, and a little \"we actually thought about this\" energy to every delivery.",
+            "date": "July 30, 2026"
+          }
+        },
+        {
+          "type": "related_card",
+          "settings": {
+            "category": "Materials",
+            "title": "Custom Tape: Small Roll, Big Main-Character Energy",
+            "description": "Tape may be a small part of your packaging, but it is often the first branded thing people touch. It seals the box, carries your look, and helps turn an ordinary shipment into an unboxing experience people remember.",
+            "date": "July 30, 2026"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

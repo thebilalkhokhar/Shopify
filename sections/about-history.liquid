@@ -1,0 +1,275 @@
+{{ 'about-history.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="about-history-{{ section.id }}"
+  class="about-history-section"
+  style="
+    --ah-bg: {{ section.settings.bg_color | default: '#171008' }};
+    --ah-tape-bg: {{ section.settings.tape_bg | default: '#EA5B1B' }};
+  "
+  {{ section.shopify_attributes }}
+>
+  <!-- 1. Header (Yellow Pill Badge + Heading + Floating Star) -->
+  <div class="about-history-header">
+    {% if section.settings.star_icon != blank %}
+      <img
+        src="{{ section.settings.star_icon | image_url: width: 80 }}"
+        alt="Star Icon"
+        class="ah-star-icon"
+        width="32"
+        height="32"
+        loading="lazy"
+      >
+    {% endif %}
+
+    {% if section.settings.badge_text != blank %}
+      <div class="ah-badge">{{ section.settings.badge_text }}</div>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="ah-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+  </div>
+
+  <!-- 2. Stage Canvas: Full-Width 3 Marquee Tape Rows with Center Circular Box -->
+  <div class="about-history-stage">
+    
+    <!-- Full-Width Background Tapes -->
+    <div class="ah-tapes-container">
+      
+      <!-- Top Tape Line (Tilts down: -12deg) -->
+      <div class="ah-tape-row ah-tape--top">
+        <div class="ah-marquee-track ah-marquee--left">
+          {% for i in (1..8) %}
+            <div class="ah-tape-item">
+              <span class="ah-tape-text">{{ section.settings.phrase_1 | default: 'Free Shipping' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+
+              <span class="ah-tape-text">{{ section.settings.phrase_2 | default: 'Free Design Support' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+
+              <span class="ah-tape-text">{{ section.settings.phrase_3 | default: 'Proof before Print' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Middle Tape Line (Horizontal: 0deg) -->
+      <div class="ah-tape-row ah-tape--middle">
+        <div class="ah-marquee-track ah-marquee--right">
+          {% for i in (1..8) %}
+            <div class="ah-tape-item">
+              <span class="ah-tape-text">{{ section.settings.phrase_1 | default: 'Free Shipping' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+
+              <span class="ah-tape-text">{{ section.settings.phrase_2 | default: 'Free Design Support' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+
+              <span class="ah-tape-text">{{ section.settings.phrase_3 | default: 'Proof before Print' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Bottom Tape Line (Tilts up: +12deg) -->
+      <div class="ah-tape-row ah-tape--bottom">
+        <div class="ah-marquee-track ah-marquee--left">
+          {% for i in (1..8) %}
+            <div class="ah-tape-item">
+              <span class="ah-tape-text">{{ section.settings.phrase_1 | default: 'Free Shipping' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+
+              <span class="ah-tape-text">{{ section.settings.phrase_2 | default: 'Free Design Support' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+
+              <span class="ah-tape-text">{{ section.settings.phrase_3 | default: 'Proof before Print' }}</span>
+              {% if section.settings.fox_icon != blank %}
+                <img class="ah-fox-icon-img" src="{{ section.settings.fox_icon | image_url: width: 60 }}" width="26" height="26" alt="Fox Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Center Circle Image (Placed on top of the tapes) -->
+    <div class="ah-center-circle-wrap">
+      {% if section.settings.center_image != blank %}
+        <img
+          src="{{ section.settings.center_image | image_url: width: 800 }}"
+          alt="{{ section.settings.center_image.alt | default: 'Tape Fox History Box' }}"
+          class="ah-center-circle-img"
+          width="380"
+          height="380"
+          loading="lazy"
+        >
+      {% elsif request.design_mode %}
+        <div class="ah-center-placeholder">
+          <span>📦 Upload Center Circle Image</span>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <!-- 3. Bottom Dual Column Story Content -->
+  <div class="about-history-content">
+    <div class="ah-col ah-col--left">
+      {% if section.settings.text_left != blank %}
+        {{ section.settings.text_left }}
+      {% else %}
+        <p>Tapefox started with a simple thought: why should packaging stop at the box?</p>
+        <p>Most tape does one job seal it up and disappear. We thought it could do more. It could carry your colors, show off your personality, and make every delivery feel a little more considered before it is even opened.</p>
+      {% endif %}
+    </div>
+
+    <div class="ah-col ah-col--right">
+      {% if section.settings.text_right != blank %}
+        {{ section.settings.text_right }}
+      {% else %}
+        <p>So we set out to turn a practical packing essential into a branding tool people actually notice. No boring boxes, no forgettable first impressions—just custom printed tape that works hard, looks good, and gives your brand one more way to stand out.</p>
+        <p>Because the smallest details often make the biggest impression.</p>
+      {% endif %}
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "About History",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "tape_bg",
+      "label": "Tape Marquee Background Color",
+      "default": "#EA5B1B"
+    },
+    {
+      "type": "header",
+      "content": "Header & Badge"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "About us"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tape fox history"
+    },
+    {
+      "type": "image_picker",
+      "id": "star_icon",
+      "label": "Floating Star Icon (Top-Left of Heading)"
+    },
+    {
+      "type": "header",
+      "content": "Center Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "center_image",
+      "label": "Center Circular Image (Circle Wali Image)"
+    },
+    {
+      "type": "header",
+      "content": "Marquee Tape Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "fox_icon",
+      "label": "Tape Fox Mascot Icon"
+    },
+    {
+      "type": "text",
+      "id": "phrase_1",
+      "label": "Marquee Phrase 1",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "phrase_2",
+      "label": "Marquee Phrase 2",
+      "default": "Free Design Support"
+    },
+    {
+      "type": "text",
+      "id": "phrase_3",
+      "label": "Marquee Phrase 3",
+      "default": "Proof before Print"
+    },
+    {
+      "type": "header",
+      "content": "Story Text (Two Columns)"
+    },
+    {
+      "type": "richtext",
+      "id": "text_left",
+      "label": "Left Column Text",
+      "default": "<p>Tapefox started with a simple thought: why should packaging stop at the box?</p><p>Most tape does one job seal it up and disappear. We thought it could do more. It could carry your colors, show off your personality, and make every delivery feel a little more considered before it is even opened.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_right",
+      "label": "Right Column Text",
+      "default": "<p>So we set out to turn a practical packing essential into a branding tool people actually notice. No boring boxes, no forgettable first impressions—just custom printed tape that works hard, looks good, and gives your brand one more way to stand out.</p><p>Because the smallest details often make the biggest impression.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About History"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,484 @@
+{{ 'faqs-browser.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="faqs-browser-{{ section.id }}"
+  class="faqs-browser-section"
+  {{ section.shopify_attributes }}
+>
+  <div class="faqs-browser__container">
+    
+    <div class="faqs-browser__layout">
+      
+      <!-- 1. Left Sticky Sidebar: Category Navigation -->
+      <aside class="faqs-browser__sidebar">
+        {% if section.settings.sidebar_title != blank %}
+          <div class="faqs-browser__sidebar-title">
+            {{ section.settings.sidebar_title }}
+          </div>
+        {% endif %}
+
+        {% comment %} Extract unique categories from blocks {% endcomment %}
+        {% assign raw_categories = '' %}
+        {% for block in section.blocks %}
+          {% assign cat = block.settings.category | default: 'General' | strip %}
+          {% unless raw_categories contains cat %}
+            {% assign raw_categories = raw_categories | append: cat | append: '|||' %}
+          {% endunless %}
+        {% endfor %}
+        {% assign category_list = raw_categories | split: '|||' %}
+
+        <ul class="faqs-browser__nav-list" role="tablist">
+          {% for cat in category_list %}
+            {% if cat != blank %}
+              {% assign cat_slug = cat | handleize %}
+              <li class="faqs-browser__nav-item" role="presentation">
+                <button
+                  type="button"
+                  class="faqs-browser__nav-btn {% if forloop.first %}is-active{% endif %}"
+                  data-target="{{ cat_slug }}"
+                  role="tab"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                >
+                  <span class="faqs-browser__nav-label">{{ cat }}</span>
+                  <span class="faqs-browser__nav-arrow" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                  </span>
+                </button>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </aside>
+
+      <!-- 2. Right Content Area: Category FAQ Groups -->
+      <main class="faqs-browser__content" id="faqsBrowserContent-{{ section.id }}">
+        
+        <!-- Top Header Row: First Category title will align and Logo on the right -->
+        <div class="faqs-browser__top-row">
+          <div class="faqs-browser__header-brand" aria-hidden="true">
+            {% if section.settings.brand_logo != blank %}
+              <img
+                src="{{ section.settings.brand_logo | image_url: width: 220 }}"
+                alt="TapeFox"
+                width="105"
+                height="auto"
+                loading="lazy"
+                class="faqs-browser__brand-img"
+              >
+            {% else %}
+              <div class="faqs-browser__brand-mark">
+                <svg viewBox="0 0 100 65" width="85" height="55" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M50 8l-8 14h16l-8-14z" fill="#E85D18"/>
+                  <path d="M42 22l8 12 8-12-8-3-8 3z" fill="#E85D18"/>
+                  <path d="M38 12l4 10-6 4 2-14z" fill="#E85D18"/>
+                  <path d="M62 12l-4 10 6 4-2-14z" fill="#E85D18"/>
+                  <text x="50" y="55" text-anchor="middle" font-family="'Bringbold Nineties', serif" font-size="16" font-weight="700" fill="#E85D18">TapeFox</text>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        {% comment %} Render each category group {% endcomment %}
+        {% for cat in category_list %}
+          {% if cat != blank %}
+            {% assign cat_slug = cat | handleize %}
+            <section
+              class="faqs-browser__group"
+              id="faq-group-{{ cat_slug }}"
+              data-category="{{ cat_slug }}"
+            >
+              <h2 class="faqs-browser__group-title">{{ cat }}</h2>
+
+              <div class="faqs-browser__accordion-list">
+                {% assign item_index = 0 %}
+                {% for block in section.blocks %}
+                  {% assign block_cat = block.settings.category | default: 'General' | strip %}
+                  {% if block_cat == cat %}
+                    {% assign item_index = item_index | plus: 1 %}
+                    <div
+                      class="faqs-browser__item {% if block.settings.is_open %}is-open{% endif %}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <button
+                        type="button"
+                        class="faqs-browser__question"
+                        aria-expanded="{% if block.settings.is_open %}true{% else %}false{% endif %}"
+                      >
+                        <span class="faqs-browser__question-text">{{ block.settings.question }}</span>
+                        <span class="faqs-browser__icon" aria-hidden="true">
+                          <span class="faqs-browser__icon-h"></span>
+                          <span class="faqs-browser__icon-v"></span>
+                        </span>
+                      </button>
+
+                      <div class="faqs-browser__answer-wrap">
+                        <div class="faqs-browser__answer">
+                          <div class="faqs-browser__answer-inner">
+                            {% if block.settings.answer_richtext != blank %}
+                              {{ block.settings.answer_richtext }}
+                            {% else %}
+                              <p>{{ block.settings.answer }}</p>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </section>
+          {% endif %}
+        {% endfor %}
+
+      </main>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function() {
+    function initFaqsBrowser(sectionContainer) {
+      if (!sectionContainer) return;
+
+      const navList = sectionContainer.querySelector('.faqs-browser__nav-list');
+      const navButtons = sectionContainer.querySelectorAll('.faqs-browser__nav-btn');
+      const contentArea = sectionContainer.querySelector('#faqsBrowserContent-{{ section.id }}');
+      const groups = sectionContainer.querySelectorAll('.faqs-browser__group');
+
+      // Magnetic Tab Slide: Smoothly scrolls tabs in both directions (forward and backward)
+      function scrollTabMagnetic(btn) {
+        if (!navList) return;
+        if (navList.scrollWidth <= navList.clientWidth) return;
+
+        const currentLi = btn.closest('.faqs-browser__nav-item');
+        if (!currentLi) return;
+
+        const prevLi = currentLi.previousElementSibling;
+        const nextLi = currentLi.nextElementSibling;
+        const listWidth = navList.clientWidth;
+        const currentScroll = navList.scrollLeft;
+        const currentLeft = currentLi.offsetLeft;
+        const currentRight = currentLeft + currentLi.offsetWidth;
+        const sideOffset = 14;
+
+        let targetScrollLeft;
+
+        // Determine if user clicked a tab to the left (previous) or to the right (forward)
+        if (currentLeft < currentScroll + sideOffset) {
+          // USER CLICKED PREVIOUS TAB (or tab is hidden/clipped to the left)
+          if (prevLi) {
+            // Scroll back so current tab is visible and previous tab peeks in front
+            targetScrollLeft = prevLi.offsetLeft - sideOffset;
+          } else {
+            // First tab: scroll all the way back to 0
+            targetScrollLeft = 0;
+          }
+        } else if (currentRight > currentScroll + listWidth - sideOffset) {
+          // USER CLICKED FORWARD / NEXT TAB (or tab is hidden/clipped to the right)
+          if (nextLi) {
+            // Place current tab near start so next tab slides prominently in front
+            const nextRight = nextLi.offsetLeft + nextLi.offsetWidth;
+            if ((nextRight - currentLeft) + (sideOffset * 2) <= listWidth) {
+              targetScrollLeft = currentLeft - sideOffset;
+            } else {
+              targetScrollLeft = nextRight - listWidth + sideOffset;
+            }
+          } else {
+            // Last tab: bring completely into view at the right end
+            targetScrollLeft = currentRight - listWidth + sideOffset;
+          }
+        } else {
+          // Tab is already in view: check if navigating forward or backward
+          if (nextLi && (currentLeft - currentScroll < listWidth * 0.35)) {
+            // If already near left, keep comfortable alignment
+            targetScrollLeft = Math.max(0, currentLeft - sideOffset);
+          } else if (nextLi) {
+            targetScrollLeft = currentLeft - sideOffset;
+          } else {
+            targetScrollLeft = currentRight - listWidth + sideOffset;
+          }
+        }
+
+        const maxScroll = navList.scrollWidth - listWidth;
+        const boundedScroll = Math.max(0, Math.min(targetScrollLeft, maxScroll));
+
+        navList.scrollTo({
+          left: boundedScroll,
+          behavior: 'smooth'
+        });
+      }
+
+      // 1. Interactive Category Reorder & Magnetic Slide
+      navButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const targetSlug = btn.getAttribute('data-target');
+          const targetGroup = sectionContainer.querySelector('#faq-group-' + targetSlug);
+
+          // Update Nav Active State
+          navButtons.forEach(b => {
+            b.classList.remove('is-active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('is-active');
+          btn.setAttribute('aria-selected', 'true');
+
+          // Trigger magnetic scroll for horizontal tabs
+          scrollTabMagnetic(btn);
+
+          if (targetGroup && contentArea) {
+            // Reorder: Move selected category to top of content area
+            const topRow = contentArea.querySelector('.faqs-browser__top-row');
+            if (topRow && topRow.nextSibling) {
+              contentArea.insertBefore(targetGroup, topRow.nextSibling);
+            } else {
+              contentArea.prepend(targetGroup);
+            }
+
+            // Flash highlight animation
+            targetGroup.classList.remove('faqs-browser__group--highlighted');
+            void targetGroup.offsetWidth; // Force reflow
+            targetGroup.classList.add('faqs-browser__group--highlighted');
+
+            // Smooth scroll vertically only if group is out of comfortable view
+            const rect = targetGroup.getBoundingClientRect();
+            const isMobile = window.innerWidth <= 912;
+            if (rect.top < 0 || rect.top > window.innerHeight * 0.7) {
+              const yOffset = isMobile ? -20 : -80;
+              const y = rect.top + window.pageYOffset + yOffset;
+              window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+            }
+          }
+        });
+      });
+
+      // 2. Keyboard Navigation for Accessibility (Arrow Left / Right)
+      if (navList) {
+        navList.addEventListener('keydown', function(e) {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            const activeBtn = sectionContainer.querySelector('.faqs-browser__nav-btn.is-active');
+            if (!activeBtn) return;
+            const currentLi = activeBtn.closest('.faqs-browser__nav-item');
+            if (!currentLi) return;
+
+            const targetLi = e.key === 'ArrowRight' ? currentLi.nextElementSibling : currentLi.previousElementSibling;
+            if (targetLi) {
+              e.preventDefault();
+              const targetBtn = targetLi.querySelector('.faqs-browser__nav-btn');
+              if (targetBtn) {
+                targetBtn.click();
+                targetBtn.focus();
+              }
+            }
+          }
+        });
+      }
+
+      // 3. Accordion Expand/Collapse Functionality
+      sectionContainer.addEventListener('click', function(e) {
+        const qBtn = e.target.closest('.faqs-browser__question');
+        if (!qBtn) return;
+
+        const item = qBtn.closest('.faqs-browser__item');
+        if (!item) return;
+
+        const isOpen = item.classList.contains('is-open');
+
+        // Toggle current item
+        if (isOpen) {
+          item.classList.remove('is-open');
+          qBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('is-open');
+          qBtn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const sectionContainer = document.getElementById('faqs-browser-{{ section.id }}');
+      initFaqsBrowser(sectionContainer);
+    });
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+        const sectionContainer = document.getElementById('faqs-browser-{{ section.id }}');
+        initFaqsBrowser(sectionContainer);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQs Browser",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sidebar_title",
+      "label": "Sidebar Title",
+      "default": "Browse by what you need."
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_logo",
+      "label": "TapeFox Corner Brand Mark"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category Name",
+          "default": "Ordering & payment",
+          "info": "Items with the same category will be grouped together."
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your minimum order?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer (Plain Text)",
+          "default": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+        },
+        {
+          "type": "richtext",
+          "id": "answer_richtext",
+          "label": "Answer (Rich Text Optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_open",
+          "label": "Open by Default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs Browser",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "What is your minimum order?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good.",
+            "is_open": true
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "How much does it cost?",
+            "answer": "Price depends on material and quantity. All prices are listed upfront on each product page with zero plate or setup fees."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "How do I place an order?",
+            "answer": "Choose your material, specify roll width and length, upload your artwork, and checkout. We send a digital proof before printing."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "I need to change or cancel my order",
+            "answer": "You can change or cancel your order anytime before your digital proof is approved for press."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Ordering & payment",
+            "question": "Can I get samples before I order?",
+            "answer": "Yes! Order our sample pack with short rolls of all 5 materials delivered free."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "What file formats do you accept?",
+            "answer": "We accept AI, PDF, EPS, SVG, and high-resolution PNG or TIFF files (300 DPI minimum).",
+            "is_open": true
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "I need help with my design",
+            "answer": "Design support is 100% free. Send us your logo or idea and our design team will create print-ready artwork."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "Will I get a proof before production?",
+            "answer": "Always. We never print anything until you explicitly review and approve your PDF proof."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "How many colours can I print?",
+            "answer": "We print up to 3 spot Pantone colours on all custom tape materials."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Artwork & proofs",
+            "question": "What is the plate charge?",
+            "answer": "Zero. Tapefox never charges plate fees or cylinder setup fees."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Materials & products",
+            "question": "What is the difference between Paper and Poly tape?",
+            "answer": "Paper tape is water-activated, biodegradable, and creates a tamper-evident seal. Poly is self-adhesive pressure tape ideal for quick general carton sealing."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Delivery",
+            "question": "How fast is delivery?",
+            "answer": "Standard production is 12-14 business days after proof approval with free shipping across the continental US."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "Reorders",
+            "question": "How do I reorder an existing design?",
+            "answer": "Simply log into your customer account or email us your previous order number for 1-click reordering."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

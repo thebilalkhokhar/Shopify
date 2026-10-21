@@ -1,0 +1,316 @@
+/* ==========================================================================
+   PRODUCT HEAD COMPARE SECTION CSS (Head to head: Polypropylene, or one of the other two?)
+   Exact replica of reference design:
+   - Outer container with background (#FBF8F3)
+   - Left-aligned header with tilted yellow badge pill "Head to head" (-6deg rotate + solid shadow)
+   - Serif large heading: "Polypropylene, or one of\nthe other two?"
+   - Dark frame comparison table card (#171008) with rounded corners (24px)
+   - 4 columns:
+     1. Attribute label (SEALS UP TO, STICKS TO, GOES ON, PRINT DETAIL, TAMPER EVIDENT, RECYCLABLE, BELOW FREEZING)
+     2. POLYPROPYLENE (highlighted column with subtle brown/gold tint #261E14 or yellow header)
+     3. PAPER
+     4. PVC
+   - Badges in table:
+     - "YES" green pill badge (#1A633F or emerald green)
+     - "NO" dark red/maroon pill badge (#592823)
+   - Bottom CTA Area:
+     - Orange rounded pill button "Compare all five →" (#EA5B1B with solid black border & 2.5px drop shadow)
+     - Explanatory note next to it: "Still not sure? The free sample box has both of these in it, printed and blank."
+   - Fully responsive for tablet and mobile
+   ========================================================================== */
+
+.product-head-compare-section {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.phc-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Header Area: Badge + Heading */
+.phc-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+/* Tilted Yellow Badge Pill */
+.phc-badge-wrap {
+  display: inline-block;
+  margin-bottom: 12px;
+  margin-left: 20px;
+}
+
+.phc-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F8B825;
+  color: #171008;
+  border: 1.8px solid #171008;
+  border-radius: 12px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 4px 16px;
+  transform: rotate(-6deg);
+  letter-spacing: -0.2px;
+  box-shadow: 2.5px 2.5px 0px #171008;
+}
+
+/* Section Title */
+.phc-heading {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 46px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  text-align: left;
+}
+
+/* Comparison Dark Table Card */
+.phc-table-card {
+  width: 100%;
+  background-color: #171008;
+  border-radius: 24px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.phc-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.phc-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 820px;
+}
+
+/* Column Header Row */
+.phc-table thead tr th {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 24px 28px;
+  border-bottom: 1.5px solid #2B2319;
+  vertical-align: middle;
+}
+
+.phc-table thead th.phc-col-attr {
+  width: 18%;
+  color: transparent;
+  /* empty or label */
+}
+
+/* Highlighted Column: Polypropylene */
+.phc-table thead th.phc-col-poly {
+  width: 34%;
+  color: #F8B825;
+  background-color: rgba(248, 184, 37, 0.06);
+}
+
+.phc-table thead th.phc-col-paper {
+  width: 24%;
+  color: #FAF6EF;
+}
+
+.phc-table thead th.phc-col-pvc {
+  width: 24%;
+  color: #FAF6EF;
+}
+
+/* Table Body Rows */
+.phc-table tbody tr:not(:last-child) td {
+  border-bottom: 1.5px dashed #342B20;
+}
+
+.phc-table tbody td {
+  font-family: "Inter", sans-serif;
+  font-size: 14.5px;
+  color: #FAF6EF;
+  padding: 18px 28px;
+  vertical-align: middle;
+}
+
+/* Left Attribute Column */
+.phc-table tbody td.phc-col-attr {
+  font-size: 11px;
+  font-weight: 700;
+  color: #A39B90;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding-left: 32px;
+}
+
+/* Highlighted Poly Column in Body */
+.phc-table tbody td.phc-col-poly {
+  background-color: rgba(248, 184, 37, 0.06);
+  color: #FAF6EF;
+  font-weight: 500;
+}
+
+/* Paper and PVC columns */
+.phc-table tbody td.phc-col-paper,
+.phc-table tbody td.phc-col-pvc {
+  color: #E2DDD5;
+}
+
+/* Badges for YES / NO */
+.phc-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 4px 14px;
+  border-radius: 12px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.phc-pill-tag.phc-tag-yes {
+  background-color: #0E5C3D;
+  color: #57E39E;
+}
+
+.phc-pill-tag.phc-tag-no {
+  background-color: #4A1F1B;
+  color: #E5827D;
+}
+
+/* Bottom CTA & Note Bar */
+.phc-bottom-bar {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 28px;
+}
+
+/* Orange Pill Button */
+.phc-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #FE6A00;
+  color: #171008;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 17.5px;
+  font-weight: 700;
+  padding: 10px 28px 11px 28px;
+  border-radius: 999px;
+  border: 2px solid #171008;
+  text-decoration: none;
+  box-shadow: 2px 2.5px 0px #171008;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.phc-cta-btn .phc-arrow {
+  font-family: "Inter", sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.phc-cta-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3.5px 0px #171008;
+  background-color: #f16525;
+}
+
+.phc-cta-btn:hover .phc-arrow {
+  transform: translateX(2px);
+}
+
+.phc-cta-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #171008;
+}
+
+/* Note Text */
+.phc-bottom-note {
+  font-family: "Inter", sans-serif;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: #635C52;
+  margin: 0;
+  max-width: 420px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media screen and (max-width: 1200px) {
+  .phc-container {
+    padding: 0 24px;
+  }
+
+  .phc-heading {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .phc-container {
+    padding: 0 16px;
+  }
+
+  .phc-heading {
+    font-size: 28px;
+  }
+
+  .phc-badge {
+    font-size: 12px;
+    padding: 4px 14px;
+  }
+
+  .phc-table thead tr th {
+    padding: 16px 14px;
+    font-size: 12px;
+  }
+
+  .phc-table tbody td {
+    padding: 14px 14px;
+    font-size: 13px;
+  }
+
+  .phc-table tbody td.phc-col-attr {
+    padding-left: 16px;
+    font-size: 10px;
+  }
+
+  .phc-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .phc-cta-btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

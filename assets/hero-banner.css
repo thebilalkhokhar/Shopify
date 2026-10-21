@@ -1,0 +1,419 @@
+/* Hero Banner CSS for TapeFox */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --custom-font-family: 'Bringbold Nineties', 'bringbold_nineties', serif;
+  --bg-beige: #F5F2EC;
+  --bg-dark: #191410;
+  --tape-orange: #FF6600;
+}
+
+.hero-banner-overlay {
+  position: relative;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.hero-banner__bg {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.hero-banner__slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.hero-banner__slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.hero-banner__slide:first-child {
+  position: relative;
+  /* to give the container height if needed */
+}
+
+.bg-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.placeholder-bg {
+  width: 100%;
+  height: 100%;
+  background-color: #e0dcd2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #666;
+}
+
+.hero-banner__container {
+  width: 100%;
+  padding: 0 3%;
+}
+
+.hero-banner__overlay-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.hero-banner__flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.hero-banner__text-box {
+  max-width: 500px;
+}
+
+.hero-banner__heading {
+  font-family: var(--custom-font-family);
+  font-size: 56px;
+  line-height: 1.1;
+  color: var(--bg-dark);
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.hero-banner__subheading {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 30px;
+  max-width: 400px;
+}
+
+.hero-banner__buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-family: var(--custom-font-family);
+  letter-spacing: -0.5px;
+  border: 1.5px solid #171008;
+  box-shadow: 3px 3px 0px #171008;
+}
+
+.btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px #171008;
+}
+
+.btn--primary {
+  background-color: var(--tape-orange);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: #e65c00;
+}
+
+.btn--secondary {
+  background-color: #f8f6f2;
+  color: var(--bg-dark);
+}
+
+.btn--secondary:hover {
+  background-color: #e8e6e1;
+}
+
+.hero-banner__price {
+  font-size: 14px;
+  color: var(--bg-dark);
+}
+
+.hero-banner__price strong {
+  font-weight: 700;
+}
+
+.hero-banner__thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.hero-banner__thumb {
+  width: 100px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hero-banner__thumb:hover {
+  transform: scale(1.1);
+}
+
+.hero-banner__footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.hero-banner__footer .hero-banner__container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* Tablet & Mobile Adjustments (Screen <= 991px) */
+@media (max-width: 991px) {
+  .hero-banner-overlay {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-dark);
+    padding: 15px 0px 45px;
+    min-height: auto;
+  }
+
+  /* Top banner image card */
+  .hero-banner__bg {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: var(--bg-beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+  }
+
+  .hero-banner__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-banner__slide:first-child {
+    position: relative;
+  }
+
+  .hero-banner__slide picture {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bg-img {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    display: block;
+    object-fit: contain;
+  }
+
+  /* Floating header on top of the banner image */
+  .tapefox-header {
+    top: 45px;
+    width: calc(100% - 40px);
+  }
+
+  /* Content area positioned UNDER the banner card */
+  .hero-banner__overlay-content {
+    position: relative;
+    height: auto;
+    padding: 35px 20px 10px;
+    background-color: transparent;
+    display: block;
+    order: 2;
+  }
+
+  .hero-banner__container {
+    padding: 0;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .hero-banner__text-box {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .hero-banner__heading {
+    color: #fff;
+    font-size: 42px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero-banner__subheading {
+    color: #ccc;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    max-width: 100%;
+  }
+
+  .hero-banner__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 40px;
+    box-shadow: 2.5px 2.5px 0px #171008;
+  }
+
+  .btn--primary {
+    background-color: #ff6000;
+    border-color: #171008;
+    color: #fff;
+  }
+
+  .btn--secondary {
+    background-color: #f7f6f2;
+    border-color: #171008;
+    color: #171008;
+  }
+
+  .hero-banner__price {
+    color: #fff;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  .hero-banner__price strong {
+    font-size: 17px;
+  }
+
+  .hero-banner__thumbnails {
+    display: none !important;
+  }
+
+  /* Footer bar (BASED IN CALIFORNIA / EST 2024) placed at the bottom inside the banner card */
+  .hero-banner__footer {
+    position: absolute;
+    bottom: 16px;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+    background: transparent;
+  }
+
+  .hero-banner__footer .hero-banner__container {
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: #444;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-banner-overlay {
+    padding: 10px 0px 35px;
+  }
+
+  .hero-banner__bg {
+    border-radius: 12px;
+  }
+
+  .tapefox-header {
+    top: 35px;
+    width: calc(100% - 30px);
+  }
+
+  .hero-banner__overlay-content {
+    padding: 26px 14px 10px;
+  }
+
+  .hero-banner__heading {
+    font-size: 32px;
+  }
+
+  .hero-banner__subheading {
+    font-size: 14px;
+  }
+
+  .hero-banner__buttons {
+    gap: 10px;
+  }
+
+  .btn {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .hero-banner__footer {
+    bottom: 12px;
+  }
+
+  .hero-banner__footer .hero-banner__container {
+    padding: 0 16px;
+    font-size: 11px;
+  }
+}

@@ -1,0 +1,198 @@
+{{ 'about-banner.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="about-banner-{{ section.id }}"
+  class="about-banner-section"
+  style="
+    --ab-page-bg: {{ section.settings.page_bg | default: '#171008' }};
+    --ab-card-bg: {{ section.settings.card_bg | default: '#F9F6F0' }};
+    --ab-dot-color: {{ section.settings.dot_color | default: 'rgba(0, 0, 0, 0.12)' }};
+    --ab-max-width: {{ section.settings.container_max_width | default: 1400 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="about-banner-outer-wrap">
+    <div class="about-banner-card">
+      
+      <!-- Left Badge: Rotating Ring (Continuous Loop) + Center Fox Mascot -->
+      <div class="about-banner-badge-left">
+        {% if section.settings.ring_image != blank %}
+          <img
+            src="{{ section.settings.ring_image | image_url: width: 300 }}"
+            alt="{{ section.settings.ring_image.alt | default: 'Rotating Tapefox Ring' }}"
+            class="ab-rotating-ring"
+            width="140"
+            height="140"
+            loading="eager"
+          >
+        {% endif %}
+
+        {% if section.settings.fox_inner_image != blank %}
+          <img
+            src="{{ section.settings.fox_inner_image | image_url: width: 200 }}"
+            alt="{{ section.settings.fox_inner_image.alt | default: 'Fox Mascot' }}"
+            class="ab-inner-fox"
+            width="70"
+            height="70"
+            loading="eager"
+          >
+        {% endif %}
+      </div>
+
+      <!-- Right Badge: Keep it Cool Sticker -->
+      {% if section.settings.keep_cool_image != blank %}
+        <div class="about-banner-badge-right">
+          <img
+            src="{{ section.settings.keep_cool_image | image_url: width: 300 }}"
+            alt="{{ section.settings.keep_cool_image.alt | default: 'Keep it Cool' }}"
+            class="ab-keep-cool-img"
+            width="130"
+            height="auto"
+            loading="lazy"
+          >
+        </div>
+      {% endif %}
+
+      <!-- Top Center Heading & Subheading -->
+      <div class="about-banner-top">
+        {% if section.settings.title != blank %}
+          <h1 class="about-banner-title">{{ section.settings.title }}</h1>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="about-banner-desc">
+            {{ section.settings.description }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Center Main About Collage Image (Complete Image) -->
+      <div class="about-banner-main-image-wrap">
+        {% if section.settings.main_image != blank %}
+          <img
+            src="{{ section.settings.main_image | image_url: width: 2400 }}"
+            alt="{{ section.settings.main_image.alt | default: section.settings.title | default: 'About TapeFox' }}"
+            class="about-banner-main-img"
+            width="1220"
+            height="auto"
+            loading="eager"
+          >
+        {% elsif request.design_mode %}
+          <div class="about-banner-placeholder">
+            <span>🖼️ Upload Full About Collage Image Here</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Corner Decorative Tape Strips -->
+      {% if section.settings.show_tape_corners %}
+        <div class="ab-corner-tape ab-corner-tape--bottom-left" aria-hidden="true"></div>
+        <div class="ab-corner-tape ab-corner-tape--bottom-right" aria-hidden="true"></div>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background & Colors"
+    },
+    {
+      "type": "color",
+      "id": "page_bg",
+      "label": "Page / Outer Background Color",
+      "default": "#171008"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Banner Card Background Color",
+      "default": "#F9F6F0"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot Pattern Color",
+      "default": "rgba(0, 0, 0, 0.12)"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "IT'S TAPEFOX"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Thanks so much for taking the time to visit our website and explore our Tapes. I take it you've landed on this page because you wanted to find out a bit more about our story (or just clicked the wrong button!), well here it is either way..."
+    },
+    {
+      "type": "header",
+      "content": "Main Collage Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main About Collage Image (Puri Image)"
+    },
+    {
+      "type": "header",
+      "content": "Left Rotating Badge"
+    },
+    {
+      "type": "image_picker",
+      "id": "ring_image",
+      "label": "Ring Image (Rotates continuously)"
+    },
+    {
+      "type": "image_picker",
+      "id": "fox_inner_image",
+      "label": "Inner Fox Image (Stays center inside the ring)"
+    },
+    {
+      "type": "header",
+      "content": "Right Sticker"
+    },
+    {
+      "type": "image_picker",
+      "id": "keep_cool_image",
+      "label": "Keep it Cool Sticker Image"
+    },
+    {
+      "type": "header",
+      "content": "Styling & Decoration"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tape_corners",
+      "label": "Show Bottom Corner Tape Strips",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Container Max Width",
+      "default": 1400
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Banner"
+    }
+  ]
+}
+{% endschema %}

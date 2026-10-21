@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
+
+    {% comment %}
+      Font preloading:
+      1. Preconnect to font CDN for faster connection
+      2. Preload only the critical font variant (base weight)
+      3. Additional variants load on-demand via @font-face
+    {% endcomment %}
+    {% unless settings.type_primary_font.system? %}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+
+      {% comment %} Preload the base font variant for initial page render {% endcomment %}
+      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
+    {% endunless %}
+
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {% # Load and preload the critical CSS %}
+    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template.name }}">
+    <script>
+      (function() {
+        var p = decodeURIComponent(window.location.pathname.toLowerCase());
+        if (p.indexOf('/checkout') !== -1 || p.indexOf('/pages/checkout') !== -1) {
+          document.body.classList.add('is-checkout-page');
+        } else if (p.indexOf('/account') !== -1 || p.indexOf('/login') !== -1 || p.indexOf('/pages/login') !== -1) {
+          document.body.classList.add('is-login-page');
+        }
+      })();
+    </script>
+    <style>
+      body.is-checkout-page .tapefox-header,
+      body.is-checkout-page .footer,
+      body.is-checkout-page .section-footer,
+      body.is-checkout-page .home-footer,
+      body.is-checkout-page .page-404-section,
+      body.is-login-page .tapefox-header,
+      body.is-login-page .footer,
+      body.is-login-page .section-footer,
+      body.is-login-page .home-footer,
+      body.is-login-page .page-404-section {
+        display: none !important;
+      }
+      body.is-login-page #LoginPageContainer {
+        display: block !important;
+      }
+      body.is-login-page #MainContent:not(:has(#TapeFoxAuthRoot)) {
+        display: none !important;
+      }
+      body.is-checkout-page #CheckoutPageContainer {
+        display: block !important;
+      }
+      body.is-checkout-page #MainContent:not(:has(#TapeFoxCheckoutRoot)) {
+        display: none !important;
+      }
+    </style>
+    {% section 'header' %}
+
+    <main id="MainContent">
+      {{ content_for_layout }}
+    </main>
+
+    {% if template.name == '404' %}
+      <div id="ProductBannerContainer" style="display: none;">
+        {% section 'product-banner' %}
+        {% section 'product-order' %}
+        {% section 'product-price-breakdown' %}
+        {% section 'product-head-compare' %}
+        {% section 'products-testimonial' %}
+        {% section 'product-faqs' %}
+        {% section 'product-more-related' %}
+        {% section 'home-footer' %}
+      </div>
+      <div id="CartPageFallbackContainer" style="display: none;">
+        {% section 'main-cart' %}
+        {% section 'cart-artwork' %}
+        {% section 'home-footer' %}
+      </div>
+      <div id="CheckoutPageContainer" style="display: none;">
+        {% section 'main-checkout' %}
+      </div>
+      <div id="LoginPageContainer" style="display: none;">
+        {% section 'main-login' %}
+      </div>
+      <div id="OrderSampleContainer" style="display: none;">
+        {% section 'order-sample-banner' %}
+        {% section 'order-head-compare' %}
+        {% section 'order-testimonial' %}
+        {% section 'order-faqs' %}
+        {% section 'order-more-related' %}
+        {% section 'home-footer' %}
+      </div>
+      <div id="PolicyPageContainer" style="display: none;">
+        {% section 'main-policy' %}
+        {% section 'home-footer' %}
+      </div>
+      <script>
+        (function() {
+          var p = decodeURIComponent(window.location.pathname.toLowerCase());
+          var isPolicy = (
+            p.indexOf('/privacy') !== -1 ||
+            p.indexOf('/terms') !== -1 ||
+            p.indexOf('/shipping') !== -1 ||
+            p.indexOf('/refund') !== -1 ||
+            p.indexOf('/returns') !== -1 ||
+            p.indexOf('/accessibility') !== -1
+          );
+
+          if (isPolicy) {
+            var mainContent = document.getElementById('MainContent');
+            var policyContainer = document.getElementById('PolicyPageContainer');
+            var p404 = document.querySelector('.page-404-section');
+            if (p404) p404.style.display = 'none';
+            if (policyContainer && (!mainContent || !mainContent.querySelector('.tapefox-policy-section'))) {
+              if (mainContent) mainContent.style.display = 'none';
+              policyContainer.style.display = 'block';
+            }
+
+            // Client-side title mapping & fallback section heading
+            var policyTitle = 'TapeFox Policy';
+            var policySubtitle = '';
+            var policyBadge = 'Legal & Policy';
+
+            if (p.indexOf('/privacy') !== -1) {
+              policyTitle = 'Privacy Policy';
+              policySubtitle = 'How Tapefox collects, uses, protects your information, and keeps your artwork safe.';
+              policyBadge = 'Privacy & Security';
+            } else if (p.indexOf('/terms') !== -1) {
+              policyTitle = 'Terms & Conditions';
+              policySubtitle = 'Standard terms of service, proofing commitments, printing tolerances, and customer agreements.';
+              policyBadge = 'Legal Terms';
+            } else if (p.indexOf('/shipping') !== -1) {
+              policyTitle = 'Shipping Policy';
+              policySubtitle = 'Free continental US ground shipping, transparent production schedules, and freight details.';
+              policyBadge = 'Shipping & Logistics';
+            } else if (p.indexOf('/refund') !== -1 || p.indexOf('/returns') !== -1) {
+              policyTitle = 'Returns & Damages';
+              policySubtitle = 'Our quality guarantee, transit damage procedures, and hassle-free reprint protocol.';
+              policyBadge = 'Returns & Replacements';
+            } else if (p.indexOf('/accessibility') !== -1) {
+              policyTitle = 'Accessibility Statement';
+              policySubtitle = 'Our ongoing commitment to ensuring an inclusive, barrier-free digital experience for all customers.';
+              policyBadge = 'Universal Access';
+            }
+
+            document.title = policyTitle + ' – Tapefox';
+
+            // Update title and subtitle dynamically in DOM if using container fallback
+            if (policyContainer) {
+              var headingEl = policyContainer.querySelector('.tapefox-policy-title');
+              var subEl = policyContainer.querySelector('.tapefox-policy-subtitle');
+              var badgeEl = policyContainer.querySelector('.tapefox-policy-badge');
+              if (headingEl) headingEl.textContent = policyTitle;
+              if (subEl) subEl.textContent = policySubtitle;
+              if (badgeEl && badgeEl.lastChild) {
+                badgeEl.lastChild.textContent = ' ' + policyBadge;
+              }
+            }
+          } else if (p.indexOf('/order-sample') !== -1 || p.indexOf('/pages/order-sample') !== -1) {
+            var mainContent = document.getElementById('MainContent');
+            var sampleContainer = document.getElementById('OrderSampleContainer');
+            var p404 = document.querySelector('.page-404-section');
+            if (p404) p404.style.display = 'none';
+            if (sampleContainer && (!mainContent || !mainContent.querySelector('.order-sample-section'))) {
+              if (mainContent) mainContent.style.display = 'none';
+              sampleContainer.style.display = 'block';
+            }
+            document.title = 'Order Sample – Tapefox';
+          } else if (p.indexOf('/account') !== -1 || p.indexOf('/login') !== -1 || p.indexOf('/pages/login') !== -1) {
+            var mainContent = document.getElementById('MainContent');
+            var loginContainer = document.getElementById('LoginPageContainer');
+            var headerEl = document.querySelector('.tapefox-header');
+            if (headerEl) headerEl.style.display = 'none';
+            var p404 = document.querySelector('.page-404-section');
+            if (p404) p404.style.display = 'none';
+            if (loginContainer && (!mainContent || !mainContent.querySelector('#TapeFoxAuthRoot'))) {
+              if (mainContent) mainContent.style.display = 'none';
+              loginContainer.style.display = 'block';
+            }
+            document.title = 'Account – Tapefox';
+          } else if (p.indexOf('/checkout') !== -1 || p.indexOf('/pages/checkout') !== -1) {
+            var mainContent = document.getElementById('MainContent');
+            var chkContainer = document.getElementById('CheckoutPageContainer');
+            var headerEl = document.querySelector('.tapefox-header');
+            if (headerEl) headerEl.style.display = 'none';
+            if (chkContainer && (!mainContent || !mainContent.querySelector('#TapeFoxCheckoutRoot'))) {
+              if (mainContent) mainContent.style.display = 'none';
+              chkContainer.style.display = 'block';
+            }
+            document.title = 'Checkout – Tapefox';
+          } else if (p.indexOf('/cart') !== -1) {
+            var mainContent = document.getElementById('MainContent');
+            var cartContainer = document.getElementById('CartPageFallbackContainer');
+            if (mainContent) mainContent.style.display = 'none';
+            if (cartContainer) cartContainer.style.display = 'block';
+            document.title = 'Your cart – Tapefox';
+          } else if (p.indexOf('/products') !== -1) {
+            var mainContent = document.getElementById('MainContent');
+            var prodContainer = document.getElementById('ProductBannerContainer');
+            if (mainContent) mainContent.style.display = 'none';
+            if (prodContainer) prodContainer.style.display = 'block';
+
+            // If user typed or visited /products paper tape or /products-paper-tape, normalize url to /products/paper-tape
+            if (p.indexOf('/products/') === -1) {
+              var slug = p.replace('/products', '').replace(/^[\s\-_/]+/, '').trim().replace(/\s+/g, '-');
+              if (slug && window.history && window.history.replaceState) {
+                window.history.replaceState(null, '', '/products/' + slug);
+              }
+            }
+
+            // Sync document.title and meta description client-side
+            var handle = p.split('/products/')[1] ? p.split('/products/')[1].split('/')[0].split('?')[0].trim().replace(/\s+/g, '-') : '';
+            var titleMap = {
+              'paper-tape': 'Paper Tape – Custom Printed Kraft Tape – Tapefox',
+              'pvc-tape': 'PVC Tape – Heavy Duty Packaging Tape – Tapefox',
+              'hi-tack-freezer-tape': 'Hi-Tack Freezer Tape – Cold Chain Packaging – Tapefox',
+              'flatback-tape': 'Flatback Tape – Strong Kraft Paper Tape – Tapefox',
+              'dispensers': 'Tape Dispensers – Industrial Tape Guns – Tapefox',
+              'polypropylene-tape': 'Polypropylene Tape – Custom Printed Tape – Tapefox'
+            };
+            var descMap = {
+              'paper-tape': 'Custom printed Paper Tape. Eco-friendly, water-activated kraft paper tape printed with your artwork up to 3 inks. Free design support & shipping.',
+              'pvc-tape': 'Custom printed PVC Tape. Ultra-quiet release and superior adhesion for heavy-duty cartons and cold storage.',
+              'hi-tack-freezer-tape': 'Hi-Tack Freezer Tape engineered for extreme cold temperatures, frozen goods, and food packaging.',
+              'flatback-tape': 'Custom Flatback paper tape. Hand-tearable, high-tack adhesive for fast carton sealing and tabbing.',
+              'dispensers': 'Industrial-grade tape guns and water-activated tape dispensers for fast, efficient warehouse shipping.',
+              'polypropylene-tape': 'The default for corrugated cartons. Glossy, hot-melt, and cheap enough to brand every box that leaves the building.'
+            };
+
+            if (handle && titleMap[handle]) {
+              document.title = titleMap[handle];
+            } else if (handle) {
+              var formatted = handle.split('-').map(function(w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+              document.title = formatted + ' – Tapefox';
+            }
+
+            var metaDescEl = document.querySelector('meta[name="description"]');
+            if (handle && descMap[handle]) {
+              if (!metaDescEl) {
+                metaDescEl = document.createElement('meta');
+                metaDescEl.name = 'description';
+                document.head.appendChild(metaDescEl);
+              }
+              metaDescEl.content = descMap[handle];
+            }
+          }
+        })();
+      </script>
+    {% endif %}
+  </body>
+</html>

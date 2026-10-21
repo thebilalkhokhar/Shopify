@@ -1,0 +1,226 @@
+{% doc %}
+  Renders the desktop compare mega menu dropdown when hovering over 'Compare'.
+  Matches the exact reference design:
+  - 5 comparison cards (Polypropylene, Paper, PVC, Hi-Tack Freezer, Flatback)
+  - Card 1 highlighted in Golden Yellow (#F8B825) with black border
+  - Cards 2-5 with white background, rounded black border
+  - Product image at top
+  - Title and price subtext
+  - Comparison specification rows (SEAL UPTO, GOES ON, BEST FOR)
+  - "Buy now" button on each card
+  - Bottom orange bar banner: "Full Comparison" | "Every spec, side by side" | "See the table"
+
+  @param {section} section - The parent header section
+{% enddoc %}
+
+{% assign c1_img = 'polypropylene.webp' | file_img_url: 'master' %}
+{% assign c2_img = 'paper.webp' | file_img_url: 'master' %}
+{% assign c3_img = 'pvc.webp' | file_img_url: 'master' %}
+{% assign c4_img = 'hitack.webp' | file_img_url: 'master' %}
+{% assign c5_img = 'flattape.webp' | file_img_url: 'master' %}
+
+{% if section.settings.mm_item1_image != blank %}
+  {% assign c1_img = section.settings.mm_item1_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item2_image != blank %}
+  {% assign c2_img = section.settings.mm_item2_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item4_image != blank %}
+  {% assign c3_img = section.settings.mm_item4_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item3_image != blank %}
+  {% assign c4_img = section.settings.mm_item3_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.mm_item5_image != blank %}
+  {% assign c5_img = section.settings.mm_item5_image | image_url: width: 350 %}
+{% endif %}
+
+{% if section.settings.cmp1_image != blank %}
+  {% assign c1_img = section.settings.cmp1_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.cmp2_image != blank %}
+  {% assign c2_img = section.settings.cmp2_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.cmp3_image != blank %}
+  {% assign c3_img = section.settings.cmp3_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.cmp4_image != blank %}
+  {% assign c4_img = section.settings.cmp4_image | image_url: width: 350 %}
+{% endif %}
+{% if section.settings.cmp5_image != blank %}
+  {% assign c5_img = section.settings.cmp5_image | image_url: width: 350 %}
+{% endif %}
+
+<div class="header-megamenu header-compare-menu" id="HeaderCompareMenu">
+  <div class="header-megamenu__inner header-compare-inner">
+    
+    <!-- 5 Compare Cards Grid -->
+    <div class="header-compare__grid">
+      
+      <!-- Card 1: Polypropylene Tape -->
+      <div class="header-compare__card">
+        <div class="header-compare__img-wrap">
+          <img src="{{ c1_img }}" alt="{{ section.settings.cmp1_title | default: 'Polypropylene Tape' }}" loading="lazy" width="220" height="130">
+        </div>
+        <div class="header-compare__card-body">
+          <h4 class="header-compare__card-title">{{ section.settings.cmp1_title | default: 'Polypropylene Tape' }}</h4>
+          <p class="header-compare__card-price">{{ section.settings.cmp1_price | default: 'Starting at $5.68/ a roll' }}</p>
+          
+          <div class="header-compare__specs">
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">SEAL UPTO</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp1_seal | default: '30-50+ lbs by mil' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">GOES ON</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp1_goes | default: 'Normal Tape gun' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">BEST FOR</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp1_best | default: 'Everyday volume' }}</strong>
+            </div>
+          </div>
+          
+          <a href="{{ section.settings.cmp1_url | default: '/products/polypropylene-tape' }}" class="header-compare__btn">
+            {{ section.settings.cmp1_btn | default: 'Buy now' }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Paper Tape -->
+      <div class="header-compare__card">
+        <div class="header-compare__img-wrap">
+          <img src="{{ c2_img }}" alt="{{ section.settings.cmp2_title | default: 'Paper Tape' }}" loading="lazy" width="220" height="130">
+        </div>
+        <div class="header-compare__card-body">
+          <h4 class="header-compare__card-title">{{ section.settings.cmp2_title | default: 'Paper Tape' }}</h4>
+          <p class="header-compare__card-price">{{ section.settings.cmp2_price | default: 'Starting at $9.10/ a roll' }}</p>
+          
+          <div class="header-compare__specs">
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">SEAL UPTO</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp2_seal | default: '30 lbs /30+ HD' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">GOES ON</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp2_goes | default: 'Need a dispenser' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">BEST FOR</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp2_best | default: 'Premium unboxing' }}</strong>
+            </div>
+          </div>
+          
+          <a href="{{ section.settings.cmp2_url | default: '/products/paper-tape' }}" class="header-compare__btn">
+            {{ section.settings.cmp2_btn | default: 'Buy now' }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: PVC Tape -->
+      <div class="header-compare__card">
+        <div class="header-compare__img-wrap">
+          <img src="{{ c3_img }}" alt="{{ section.settings.cmp3_title | default: 'PVC Tape' }}" loading="lazy" width="220" height="130">
+        </div>
+        <div class="header-compare__card-body">
+          <h4 class="header-compare__card-title">{{ section.settings.cmp3_title | default: 'PVC Tape' }}</h4>
+          <p class="header-compare__card-price">{{ section.settings.cmp3_price | default: 'Starting at $7.84/ a roll' }}</p>
+          
+          <div class="header-compare__specs">
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">SEAL UPTO</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp3_seal | default: 'Heaviest Loads' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">GOES ON</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp3_goes | default: 'Normal Tape gun' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">BEST FOR</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp3_best | default: 'Heavy + high value' }}</strong>
+            </div>
+          </div>
+          
+          <a href="{{ section.settings.cmp3_url | default: '/products/pvc-tape' }}" class="header-compare__btn">
+            {{ section.settings.cmp3_btn | default: 'Buy now' }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4: Hi-Tack Freezer Tape -->
+      <div class="header-compare__card">
+        <div class="header-compare__img-wrap">
+          <img src="{{ c4_img }}" alt="{{ section.settings.cmp4_title | default: 'Hi-Tack Freezer Tape' }}" loading="lazy" width="220" height="130">
+        </div>
+        <div class="header-compare__card-body">
+          <h4 class="header-compare__card-title">{{ section.settings.cmp4_title | default: 'Hi-Tack Freezer Tape' }}</h4>
+          <p class="header-compare__card-price">{{ section.settings.cmp4_price | default: 'Starting at $10.18/ a roll' }}</p>
+          
+          <div class="header-compare__specs">
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">SEAL UPTO</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp4_seal | default: 'Cold Chain loads' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">GOES ON</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp4_goes | default: 'Normal Tape gun' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">BEST FOR</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp4_best | default: 'Chilled and frozen' }}</strong>
+            </div>
+          </div>
+          
+          <a href="{{ section.settings.cmp4_url | default: '/products/hi-tack-freezer-tape' }}" class="header-compare__btn">
+            {{ section.settings.cmp4_btn | default: 'Buy now' }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 5: Flatback Tape -->
+      <div class="header-compare__card">
+        <div class="header-compare__img-wrap">
+          <img src="{{ c5_img }}" alt="{{ section.settings.cmp5_title | default: 'Flatback Tape' }}" loading="lazy" width="220" height="130">
+        </div>
+        <div class="header-compare__card-body">
+          <h4 class="header-compare__card-title">{{ section.settings.cmp5_title | default: 'Flatback Tape' }}</h4>
+          <p class="header-compare__card-price">{{ section.settings.cmp5_price | default: 'Starting at $7.12/ a roll' }}</p>
+          
+          <div class="header-compare__specs">
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">SEAL UPTO</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp5_seal | default: 'Bundling only' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">GOES ON</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp5_goes | default: 'Teras by hand' }}</strong>
+            </div>
+            <div class="header-compare__spec">
+              <span class="header-compare__spec-label">BEST FOR</span>
+              <strong class="header-compare__spec-value">{{ section.settings.cmp5_best | default: 'Splicing + tabbing' }}</strong>
+            </div>
+          </div>
+          
+          <a href="{{ section.settings.cmp5_url | default: '/products/flatback-tape' }}" class="header-compare__btn">
+            {{ section.settings.cmp5_btn | default: 'Buy now' }}
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Full Comparison Bar Strip -->
+    <div class="header-compare__banner">
+      <div class="header-compare__banner-left">
+        <span class="header-compare__banner-title">{{ section.settings.cmp_bottom_title | default: 'Full Comparison' }}</span>
+        <span class="header-compare__banner-sub">{{ section.settings.cmp_bottom_sub | default: 'Every spec, side by side' }}</span>
+      </div>
+      <div class="header-compare__banner-right">
+        <a href="{{ section.settings.cmp_bottom_link | default: section.settings.compare_link | default: '/pages/compare' }}" class="header-compare__banner-btn">
+          {{ section.settings.cmp_bottom_btn | default: 'See the table' }}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,824 @@
+{{ 'main-checkout.css' | asset_url | stylesheet_tag }}
+
+<div class="tf-checkout-page" id="TapeFoxCheckoutRoot">
+  <!-- Minimalist Header matching screenshot -->
+  <header class="tf-checkout-header">
+    <div class="tf-checkout-header-inner">
+      <a href="{{ routes.root_url }}" class="tf-checkout-logo">
+        <img
+          src="{{ 'headerLogo.svg' | file_url }}"
+          alt="{{ shop.name }}"
+          class="tf-checkout-logo-img"
+          width="135"
+          height="32"
+        >
+      </a>
+
+      <!-- Header Cart with count -->
+      <a href="{{ routes.cart_url }}" class="tf-checkout-header-cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="tf-checkout-cart-badge">{{ cart.item_count | default: 2 }}</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="tf-checkout-container">
+    <form id="tfCustomCheckoutForm" onsubmit="TapeFoxCheckout.handleSubmit(event)" novalidate>
+      <div class="tf-checkout-grid">
+
+        <!-- ===================================================================
+             LEFT COLUMN - CHECKOUT FORMS
+             =================================================================== -->
+        <div class="tf-checkout-form-col">
+
+          <!-- 1. Contact Card -->
+          <div class="tf-chk-card">
+            <div class="tf-chk-card-header">
+              <h2 class="tf-chk-card-title">Contact</h2>
+              <a href="{{ routes.account_login_url | default: '/account/login' }}" class="tf-chk-signin-link">Sign in</a>
+            </div>
+
+            <div class="tf-chk-fields">
+              <div class="tf-chk-field-wrap" id="wrap-email">
+                <input
+                  type="email"
+                  id="checkout-email"
+                  name="email"
+                  class="tf-chk-input"
+                  placeholder="Email"
+                  required
+                >
+                <span class="tf-chk-error-msg" id="error-email">Please enter a valid email address</span>
+              </div>
+
+              <label class="tf-chk-checkbox-label">
+                <input type="checkbox" name="news_offers" checked>
+                <span class="tf-chk-checkbox-custom"></span>
+                <span>Email me with news and offers</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- 2. Contact and Delivery Card -->
+          <div class="tf-chk-card">
+            <div class="tf-chk-card-header">
+              <h2 class="tf-chk-card-title">
+                <svg class="tf-chk-step-svg" width="22" height="22" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="11" fill="#171008"/>
+                  <text x="12" y="16.5" text-anchor="middle" font-family="'Bringbold Nineties', Georgia, serif" font-weight="900" font-size="14" fill="#FEC33F">1</text>
+                </svg>
+                Contact and delivery
+              </h2>
+            </div>
+
+            <div class="tf-chk-fields">
+              <!-- Country Select -->
+              <div class="tf-chk-field-wrap">
+                <div class="tf-chk-select-wrap">
+                  <select name="country" id="checkout-country" class="tf-chk-input tf-chk-select">
+                    <option value="United States" selected>United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                    <option value="Australia">Australia</option>
+                  </select>
+                  <span class="tf-chk-select-arrow">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- First & Last Name -->
+              <div class="tf-chk-row-2">
+                <div class="tf-chk-field-wrap" id="wrap-first-name">
+                  <input
+                    type="text"
+                    id="checkout-first-name"
+                    name="first_name"
+                    class="tf-chk-input"
+                    placeholder="First Name"
+                    required
+                  >
+                  <span class="tf-chk-error-msg" id="error-first-name">First name is required</span>
+                </div>
+                <div class="tf-chk-field-wrap" id="wrap-last-name">
+                  <input
+                    type="text"
+                    id="checkout-last-name"
+                    name="last_name"
+                    class="tf-chk-input"
+                    placeholder="Last Name"
+                    required
+                  >
+                  <span class="tf-chk-error-msg" id="error-last-name">Last name is required</span>
+                </div>
+              </div>
+
+              <!-- Company Name (Optional) -->
+              <div class="tf-chk-field-wrap">
+                <input
+                  type="text"
+                  name="company"
+                  class="tf-chk-input"
+                  placeholder="Company Name(Optional)"
+                >
+              </div>
+
+              <!-- Phone Number Section with Country Bar & Input -->
+              <div class="tf-chk-phone-wrap">
+                <span class="tf-chk-label-small">Phone number(Required For delivery updates)</span>
+                
+                <div class="tf-chk-phone-country-bar">
+                  <span>United States (+1)</span>
+                </div>
+
+                <div class="tf-chk-field-wrap" id="wrap-phone">
+                  <input
+                    type="tel"
+                    id="checkout-phone"
+                    name="phone"
+                    class="tf-chk-input"
+                    placeholder="+1"
+                    required
+                  >
+                  <!-- The red error message shown in the reference screenshot -->
+                  <span class="tf-chk-error-msg" id="error-phone">Phone Number is Required</span>
+                </div>
+              </div>
+
+              <!-- Address Section -->
+              <div class="tf-chk-field-wrap" style="margin-top: 6px;">
+                <span class="tf-chk-label-small">Address</span>
+                <div class="tf-chk-field-wrap" id="wrap-address">
+                  <input
+                    type="text"
+                    id="checkout-address"
+                    name="address1"
+                    class="tf-chk-input"
+                    placeholder="Start typing the first line of your address"
+                    required
+                  >
+                  <span class="tf-chk-error-msg" id="error-address">Address is required</span>
+                </div>
+              </div>
+
+              <!-- Apartment, Suite -->
+              <div class="tf-chk-field-wrap">
+                <input
+                  type="text"
+                  name="address2"
+                  class="tf-chk-input"
+                  placeholder="Apartment, Suite, Building etc."
+                >
+              </div>
+
+              <!-- City -->
+              <div class="tf-chk-field-wrap" id="wrap-city">
+                <input
+                  type="text"
+                  id="checkout-city"
+                  name="city"
+                  class="tf-chk-input"
+                  placeholder="City"
+                  required
+                >
+                <span class="tf-chk-error-msg" id="error-city">City is required</span>
+              </div>
+
+              <!-- State & Postal Code -->
+              <div class="tf-chk-row-2">
+                <div class="tf-chk-field-wrap" id="wrap-state">
+                  <div class="tf-chk-select-wrap">
+                    <select name="province" id="checkout-province" class="tf-chk-input tf-chk-select" required>
+                      <option value="" disabled selected>State/Province</option>
+                      <option value="Alabama">Alabama</option>
+                      <option value="California">California</option>
+                      <option value="Florida">Florida</option>
+                      <option value="New York">New York</option>
+                      <option value="Texas">Texas</option>
+                      <option value="Washington">Washington</option>
+                    </select>
+                    <span class="tf-chk-select-arrow">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                  </div>
+                  <span class="tf-chk-error-msg" id="error-state">Please select a state</span>
+                </div>
+
+                <div class="tf-chk-field-wrap" id="wrap-postal">
+                  <input
+                    type="text"
+                    id="checkout-postal"
+                    name="zip"
+                    class="tf-chk-input"
+                    placeholder="Postal Code"
+                    required
+                  >
+                  <span class="tf-chk-error-msg" id="error-postal">Postal Code is required</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 3. Shipping Method Card -->
+          <div class="tf-chk-card">
+            <div class="tf-chk-card-header">
+              <h2 class="tf-chk-card-title">
+                <svg class="tf-chk-step-svg" width="22" height="22" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="11" fill="#171008"/>
+                  <text x="12" y="16.5" text-anchor="middle" font-family="'Bringbold Nineties', Georgia, serif" font-weight="900" font-size="14" fill="#FEC33F">2</text>
+                </svg>
+                Shipping Method
+              </h2>
+            </div>
+
+            <div class="tf-chk-shipping-options">
+              <!-- Option 1: Standard Shipping (Default Selected) -->
+              <div
+                class="tf-chk-shipping-option is-selected"
+                id="shipping-standard"
+                onclick="TapeFoxCheckout.selectShipping('standard', 0.00)"
+              >
+                <div class="tf-chk-shipping-radio-wrap">
+                  <span class="tf-chk-radio-circle"></span>
+                  <div class="tf-chk-shipping-details">
+                    <span class="tf-chk-shipping-title">Standard Shipping (12-14 Days)</span>
+                    <span class="tf-chk-shipping-est">Estimated Arrival: 29 April*</span>
+                  </div>
+                </div>
+                <span class="tf-chk-shipping-price">$0.00</span>
+              </div>
+
+              <!-- Option 2: Express Shipping -->
+              <div
+                class="tf-chk-shipping-option"
+                id="shipping-express"
+                onclick="TapeFoxCheckout.selectShipping('express', 300.00)"
+              >
+                <div class="tf-chk-shipping-radio-wrap">
+                  <span class="tf-chk-radio-circle"></span>
+                  <div class="tf-chk-shipping-details">
+                    <span class="tf-chk-shipping-title">Express (4-7 Days)</span>
+                    <span class="tf-chk-shipping-est">Estimated Arrival: 20 April*</span>
+                  </div>
+                </div>
+                <span class="tf-chk-shipping-price">$300.00</span>
+              </div>
+            </div>
+
+            <div class="tf-chk-shipping-disclaimer">
+              *Lead times temporarily affected due to public holidays observed in some of our production hubs. Shipping dates not guaranteed and estimated from artwork approval within 24hrs of checkout.
+            </div>
+
+            <!-- Add Delivery Notes -->
+            <div class="tf-chk-field-wrap">
+              <input
+                type="text"
+                name="delivery_notes"
+                class="tf-chk-input"
+                placeholder="Add Delivery Notes"
+              >
+            </div>
+          </div>
+
+          <!-- 4. Payments Card -->
+          <div class="tf-chk-card">
+            <div class="tf-chk-card-header">
+              <h2 class="tf-chk-card-title">
+                <svg class="tf-chk-step-svg" width="22" height="22" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="11" fill="#171008"/>
+                  <text x="12" y="16.5" text-anchor="middle" font-family="'Bringbold Nineties', Georgia, serif" font-weight="900" font-size="14" fill="#FEC33F">3</text>
+                </svg>
+                Payments
+              </h2>
+
+              <!-- Clean, High Quality Payment Brand Logos matching reference -->
+              <div class="tf-chk-payment-badges">
+                <!-- Mastercard (clean intersecting red & orange circles) -->
+                <svg viewBox="0 0 34 22" width="28" height="18" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="11" r="9" fill="#EB001B"/>
+                  <circle cx="23" cy="11" r="9" fill="#F79E1B" fill-opacity="0.9"/>
+                </svg>
+                <!-- Visa -->
+                <svg viewBox="0 0 38 18" width="32" height="15" xmlns="http://www.w3.org/2000/svg">
+                  <text x="0" y="15" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-style="italic" font-size="16" fill="#1A1F71" letter-spacing="1">VISA</text>
+                </svg>
+                <!-- G Pay -->
+                <svg viewBox="0 0 40 18" width="34" height="15" xmlns="http://www.w3.org/2000/svg">
+                  <text x="0" y="14" font-family="'Product Sans', Arial, sans-serif" font-weight="700" font-size="14" fill="#4285F4">G</text>
+                  <text x="13" y="14" font-family="sans-serif" font-weight="600" font-size="13" fill="#5F6368">Pay</text>
+                </svg>
+                <!-- Apple Pay -->
+                <svg viewBox="0 0 38 18" width="32" height="15" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Apple icon -->
+                  <path d="M7.5 4.8c-.5.6-1.3 1-2 1-.1-.7.2-1.5.7-2 .5-.6 1.4-1 2-1 .1.7-.2 1.4-.7 2zm.7 1.1c-1.1 0-2 .7-2.5.7s-1.3-.7-2.2-.7C2.3 5.9 1 7 1 8.9c0 1.9 1.7 4.6 2.6 4.6.8 0 1.1-.6 2.1-.6s1.3.6 2.1.6c.9 0 2.4-2.5 2.4-2.5-.7-.3-1.2-1-1.2-1.9 0-1.4 1.1-2.1 1.2-2.1-1-.9-2-1.1-2-1.1z" fill="#000"/>
+                  <text x="14" y="13.5" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="13" fill="#000">Pay</text>
+                </svg>
+                <!-- PayPal -->
+                <svg viewBox="0 0 44 18" width="38" height="15" xmlns="http://www.w3.org/2000/svg">
+                  <text x="0" y="14" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-style="italic" font-size="14" fill="#003087">Pay</text>
+                  <text x="24" y="14" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-style="italic" font-size="14" fill="#0079C1">Pal</text>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Card Radio Header -->
+            <div class="tf-chk-pay-method-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+              </svg>
+              <span>Debit or Credit Cards</span>
+            </div>
+
+            <!-- Card Inputs matching reference proportions -->
+            <div class="tf-chk-fields">
+              <div class="tf-chk-card-row-top">
+                <div class="tf-chk-field-wrap" id="wrap-card-num">
+                  <span class="tf-chk-label-small">Credit Card Number</span>
+                  <div class="tf-chk-input-with-icon">
+                    <input
+                      type="text"
+                      id="checkout-card-num"
+                      class="tf-chk-input"
+                      placeholder=""
+                      maxlength="19"
+                      required
+                    >
+                    <span class="tf-chk-input-icon">
+                      <!-- Padlock icon matching reference -->
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </span>
+                  </div>
+                  <span class="tf-chk-error-msg" id="error-card-num">Credit card number is required</span>
+                </div>
+
+                <div class="tf-chk-field-wrap" id="wrap-card-exp">
+                  <span class="tf-chk-label-small">Expiration</span>
+                  <input
+                    type="text"
+                    id="checkout-card-exp"
+                    class="tf-chk-input"
+                    placeholder="MM / YY"
+                    maxlength="5"
+                    style="text-align: center;"
+                    required
+                  >
+                  <span class="tf-chk-error-msg" id="error-card-exp">Required</span>
+                </div>
+              </div>
+
+              <div class="tf-chk-card-row-bottom">
+                <div class="tf-chk-field-wrap" id="wrap-card-name">
+                  <span class="tf-chk-label-small">Name on Card</span>
+                  <input
+                    type="text"
+                    id="checkout-card-name"
+                    class="tf-chk-input"
+                    placeholder=""
+                    required
+                  >
+                  <span class="tf-chk-error-msg" id="error-card-name">Cardholder name is required</span>
+                </div>
+
+                <div class="tf-chk-field-wrap" id="wrap-card-cvv">
+                  <span class="tf-chk-label-small">
+                    CVV <span class="tf-chk-cvv-info-icon" title="3-digit security code on back of card">i</span>
+                  </span>
+                  <div class="tf-chk-input-with-icon">
+                    <input
+                      type="password"
+                      id="checkout-card-cvv"
+                      class="tf-chk-input"
+                      placeholder="•••"
+                      maxlength="4"
+                      required
+                    >
+                    <span class="tf-chk-input-icon">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </span>
+                  </div>
+                  <span class="tf-chk-error-msg" id="error-card-cvv">Required</span>
+                </div>
+              </div>
+
+              <!-- OR separator -->
+              <div class="tf-chk-divider-or">OR</div>
+
+              <!-- Cash App Pay button option -->
+              <div class="tf-chk-cashapp-btn" onclick="TapeFoxCheckout.toggleCashApp()">
+                <div class="tf-chk-cashapp-left">
+                  <span class="tf-cashapp-icon">$</span>
+                  <span>Cash app pay</span>
+                </div>
+                <span class="tf-chk-cashapp-circle" id="cashapp-radio"></span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 5. Proof Approval Agreement Card -->
+          <div class="tf-chk-proof-agreement">
+            <label class="tf-chk-checkbox-label" style="align-items: flex-start;">
+              <input type="checkbox" id="checkout-proof-agree" name="proof_agreed" required>
+              <span class="tf-chk-checkbox-custom" style="margin-top: 2px;"></span>
+              <div>
+                <span class="tf-chk-proof-title">I understand nothing prints until I approve a proof</span>
+                <div class="tf-chk-proof-desc">
+                  A proof comes back in two to three working days. Until you approve it you can change or cancel free. After approval the plate is cut and the job is scheduled.
+                </div>
+                <span class="tf-chk-error-msg" id="error-proof-agree" style="margin-left: 0; margin-top: 6px;">Please confirm you understand the proof approval process</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Complete Purchase Big Yellow Button -->
+          <button type="submit" class="tf-chk-submit-btn" id="tfSubmitBtn">
+            Complete Purchase
+          </button>
+
+          <!-- Disclaimer / Legal Footer Text -->
+          <div class="tf-chk-terms-text">
+            By paying you agree to our <a href="/policies/terms-of-service">terms</a> and <a href="/policies/refund-policy">refund policy</a>. We do not store your card.
+          </div>
+
+        </div>
+
+        <!-- ===================================================================
+             RIGHT COLUMN - ORDER SUMMARY (DARK CARD)
+             =================================================================== -->
+        <aside class="tf-chk-sidebar">
+          <div class="tf-chk-summary-card">
+
+            <!-- Ordered Items Stack -->
+            <div class="tf-chk-items-list" id="tfChkItemsList">
+              {% if cart.item_count > 0 %}
+                {% for item in cart.items %}
+                  <div class="tf-chk-item">
+                    <div class="tf-chk-item-thumb">
+                      {% if item.image != blank %}
+                        <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title }}" width="50" height="50">
+                      {% else %}
+                        <img src="{{ 'printedPoly.webp' | file_img_url: 'master' }}" onerror="this.src='{{ 'printedPaper.webp' | file_img_url: 'master' }}'" alt="{{ item.title }}" width="50" height="50">
+                      {% endif %}
+                    </div>
+                    <div class="tf-chk-item-info">
+                      <div class="tf-chk-item-title">{{ item.product.title }}</div>
+                      <div class="tf-chk-item-specs">
+                        {{ item.properties['Width'] | default: '3 inch' }} x {{ item.properties['Length'] | default: '375 feet' }} - {{ item.properties['Tape Color'] | default: 'Tan / Kraft' }}<br>
+                        {{ item.properties['Inks'] | default: 'two ink' }} · {{ item.properties['Cases'] | default: 25 }} cases · {{ item.properties['Rolls'] | default: 200 }} rolls<br>
+                        Quantity: {{ item.quantity }}
+                      </div>
+                    </div>
+                    <div class="tf-chk-item-price">
+                      {% if item.final_line_price > 0 %}
+                        ${{ item.final_line_price | divided_by: 100.0 | round: 2 }}
+                      {% elsif item.properties['Total Price'] != blank %}
+                        {{ item.properties['Total Price'] }}
+                      {% else %}
+                        $464.63
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <!-- Reference Demo items from screenshot if cart empty -->
+                <div class="tf-chk-item">
+                  <div class="tf-chk-item-thumb">
+                    <img src="{{ 'printedPoly.webp' | file_img_url: 'master' }}" onerror="this.parentElement.innerHTML='<span style=\'color:#FEC33F;font-weight:bold;\'>Tape</span>'" alt="Polypropylene Tape" width="50" height="50">
+                  </div>
+                  <div class="tf-chk-item-info">
+                    <div class="tf-chk-item-title">Polypropylene Tape</div>
+                    <div class="tf-chk-item-specs">
+                      3 inch x 375 feet - Tan / Kraft<br>
+                      two ink · 25 cases · 200 rolls<br>
+                      Quantity: 1
+                    </div>
+                  </div>
+                  <div class="tf-chk-item-price">$464.63</div>
+                </div>
+
+                <div class="tf-chk-item">
+                  <div class="tf-chk-item-thumb">
+                    <img src="{{ 'printedPaper.webp' | file_img_url: 'master' }}" onerror="this.parentElement.innerHTML='<span style=\'color:#FEC33F;font-weight:bold;\'>Tape</span>'" alt="Paper Tape" width="50" height="50">
+                  </div>
+                  <div class="tf-chk-item-info">
+                    <div class="tf-chk-item-title">Paper Tape</div>
+                    <div class="tf-chk-item-specs">
+                      3 inch x 375 feet - Tan / Kraft<br>
+                      two ink · 25 cases · 200 rolls<br>
+                      Quantity: 5
+                    </div>
+                  </div>
+                  <div class="tf-chk-item-price">$464.63</div>
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Add Discount Code Form -->
+            <div class="tf-chk-discount-wrap">
+              <input
+                type="text"
+                id="tfDiscountInput"
+                class="tf-chk-discount-input"
+                placeholder="Add Discount Code"
+              >
+              <button
+                type="button"
+                class="tf-chk-discount-btn"
+                onclick="TapeFoxCheckout.applyDiscount()"
+              >
+                Apply
+              </button>
+            </div>
+
+            <!-- Price Breakdown Calculation Rows -->
+            <div class="tf-chk-calc-rows">
+              <div class="tf-chk-calc-row">
+                <span class="tf-chk-calc-label">Tape</span>
+                <span class="tf-chk-calc-val" id="tfSubtotalVal">
+                  {% if cart.total_price > 0 %}
+                    ${{ cart.total_price | divided_by: 100.0 | round: 2 }}
+                  {% else %}
+                    $4,156.13
+                  {% endif %}
+                </span>
+              </div>
+
+              <div class="tf-chk-calc-row">
+                <span class="tf-chk-calc-label">Shipping</span>
+                <span class="tf-chk-calc-val tf-val-green" id="tfShippingVal">Free</span>
+              </div>
+
+              <div class="tf-chk-calc-row">
+                <span class="tf-chk-calc-label">Sales tax</span>
+                <span class="tf-chk-calc-val tf-val-muted">Calculated at checkout</span>
+              </div>
+
+              <div class="tf-chk-calc-row">
+                <span class="tf-chk-calc-label">Tape</span>
+                <span class="tf-chk-calc-val" id="tfSubtotalVal2">
+                  {% if cart.total_price > 0 %}
+                    ${{ cart.total_price | divided_by: 100.0 | round: 2 }}
+                  {% else %}
+                    $4,156.13
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+
+            <!-- Total Price Row with Big Yellow Typography -->
+            <div class="tf-chk-total-block">
+              <div class="tf-chk-total-label">Total</div>
+              <div class="tf-chk-total-val-wrap">
+                <div class="tf-chk-total-num" id="tfFinalTotal">
+                  {% if cart.total_price > 0 %}
+                    ${{ cart.total_price | divided_by: 100.0 | round: 2 }}
+                  {% else %}
+                    $4,156.13
+                  {% endif %}
+                </div>
+                <div class="tf-chk-total-per-roll" id="tfPerRollTotal">
+                  $11.62 a roll
+                </div>
+              </div>
+            </div>
+
+            <!-- What happens next box with yellow badges 1, 2, 3 -->
+            <div class="tf-chk-steps-box">
+              <div class="tf-chk-steps-heading">What happens next</div>
+              <div class="tf-chk-steps-list">
+                <div class="tf-chk-step-item">
+                  <span class="tf-chk-step-badge">1</span>
+                  <span>We email for artwork, or use what you sent</span>
+                </div>
+                <div class="tf-chk-step-item">
+                  <span class="tf-chk-step-badge">2</span>
+                  <span>A proof comes back in two to three working days</span>
+                </div>
+                <div class="tf-chk-step-item">
+                  <span class="tf-chk-step-badge">3</span>
+                  <span>You approve it, then it prints and ships within 3 weeks</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.TapeFoxCheckout = {
+    shippingCost: 0,
+    baseSubtotal: {% if cart.total_price > 0 %}{{ cart.total_price | divided_by: 100.0 }}{% else %}4156.13{% endif %},
+
+    selectShipping: function(type, price) {
+      document.querySelectorAll('.tf-chk-shipping-option').forEach(function(el) {
+        el.classList.remove('is-selected');
+      });
+
+      var selectedEl = document.getElementById('shipping-' + type);
+      if (selectedEl) selectedEl.classList.add('is-selected');
+
+      this.shippingCost = price;
+      var shipLabel = document.getElementById('tfShippingVal');
+      if (shipLabel) {
+        shipLabel.textContent = price === 0 ? 'Free' : ('$' + price.toFixed(2));
+        if (price === 0) {
+          shipLabel.className = 'tf-chk-calc-val tf-val-green';
+        } else {
+          shipLabel.className = 'tf-chk-calc-val';
+        }
+      }
+
+      this.updateTotal();
+    },
+
+    updateTotal: function() {
+      var total = this.baseSubtotal + this.shippingCost;
+      var totalEl = document.getElementById('tfFinalTotal');
+      if (totalEl) {
+        totalEl.textContent = '$' + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+    },
+
+    toggleCashApp: function() {
+      var radio = document.getElementById('cashapp-radio');
+      if (radio) {
+        radio.classList.toggle('is-selected');
+        if (radio.classList.contains('is-selected')) {
+          radio.style.backgroundColor = '#00D632';
+          radio.style.borderColor = '#00D632';
+        } else {
+          radio.style.backgroundColor = 'transparent';
+          radio.style.borderColor = 'var(--tf-chk-border)';
+        }
+      }
+    },
+
+    applyDiscount: function() {
+      var code = document.getElementById('tfDiscountInput').value.trim();
+      if (!code) {
+        alert('Please enter a discount code');
+        return;
+      }
+      alert('Discount code "' + code + '" will be calculated upon order review.');
+    },
+
+    // Strict validation highlighting missing fields in red + error messages
+    handleSubmit: function(e) {
+      e.preventDefault();
+
+      var hasErrors = false;
+
+      // Helper to validate field
+      function checkField(inputId, wrapId, errorId, validator) {
+        var input = document.getElementById(inputId);
+        var wrap = document.getElementById(wrapId);
+        var err = document.getElementById(errorId);
+
+        if (!input) return;
+
+        var val = input.value.trim();
+        var isValid = validator ? validator(val) : (val.length > 0);
+
+        if (!isValid) {
+          hasErrors = true;
+          input.classList.add('tf-input-error');
+          if (wrap) wrap.classList.add('has-error');
+          if (err) err.classList.add('tf-error-visible');
+        } else {
+          input.classList.remove('tf-input-error');
+          if (wrap) wrap.classList.remove('has-error');
+          if (err) err.classList.remove('tf-error-visible');
+        }
+      }
+
+      // 1. Email
+      checkField('checkout-email', 'wrap-email', 'error-email', function(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      });
+
+      // 2. Names
+      checkField('checkout-first-name', 'wrap-first-name', 'error-first-name');
+      checkField('checkout-last-name', 'wrap-last-name', 'error-last-name');
+
+      // 3. Phone (matches error state in screenshot)
+      checkField('checkout-phone', 'wrap-phone', 'error-phone', function(v) {
+        return v.length >= 6;
+      });
+
+      // 4. Address & City & Postal & Province
+      checkField('checkout-address', 'wrap-address', 'error-address');
+      checkField('checkout-city', 'wrap-city', 'error-city');
+      checkField('checkout-postal', 'wrap-postal', 'error-postal');
+      checkField('checkout-province', 'wrap-state', 'error-state');
+
+      // 5. Payment fields (Card number, expiration, name, cvv)
+      checkField('checkout-card-num', 'wrap-card-num', 'error-card-num', function(v) {
+        return v.replace(/\s+/g, '').length >= 13;
+      });
+      checkField('checkout-card-exp', 'wrap-card-exp', 'error-card-exp', function(v) {
+        return v.length >= 4;
+      });
+      checkField('checkout-card-name', 'wrap-card-name', 'error-card-name');
+      checkField('checkout-card-cvv', 'wrap-card-cvv', 'error-card-cvv', function(v) {
+        return v.length >= 3;
+      });
+
+      // 6. Proof agreement checkbox
+      var agreeCheck = document.getElementById('checkout-proof-agree');
+      var agreeErr = document.getElementById('error-proof-agree');
+      if (agreeCheck && !agreeCheck.checked) {
+        hasErrors = true;
+        if (agreeErr) agreeErr.classList.add('tf-error-visible');
+      } else if (agreeErr) {
+        agreeErr.classList.remove('tf-error-visible');
+      }
+
+      if (hasErrors) {
+        // Scroll smoothly to first error
+        var firstError = document.querySelector('.tf-input-error, .tf-error-visible');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return false;
+      }
+
+      // Submit animation
+      var btn = document.getElementById('tfSubmitBtn');
+      btn.textContent = 'Processing Order...';
+      btn.disabled = true;
+      btn.style.opacity = '0.8';
+
+      setTimeout(function() {
+        alert('Thank you! Your order has been placed. We will email your digital proof shortly.');
+        window.location.href = '/';
+      }, 1200);
+
+      return false;
+    }
+  };
+
+  // Add real-time removal of red error border as user types
+  document.addEventListener('DOMContentLoaded', function() {
+    var inputs = document.querySelectorAll('.tf-chk-input');
+    inputs.forEach(function(input) {
+      input.addEventListener('input', function() {
+        this.classList.remove('tf-input-error');
+        var parentWrap = this.closest('.tf-chk-field-wrap');
+        if (parentWrap) {
+          parentWrap.classList.remove('has-error');
+          var err = parentWrap.querySelector('.tf-chk-error-msg');
+          if (err) err.classList.remove('tf-error-visible');
+        }
+      });
+    });
+
+    // Formatting helper for Card Number (adds spaces every 4 digits)
+    var cardNumInput = document.getElementById('checkout-card-num');
+    if (cardNumInput) {
+      cardNumInput.addEventListener('input', function(e) {
+        var v = e.target.value.replace(/\D/g, '').substring(0, 16);
+        var matches = v.match(/\d{4,16}/g);
+        var match = matches && matches[0] || '';
+        var parts = [];
+        for (var i = 0, len = match.length; i < len; i += 4) {
+          parts.push(match.substring(i, i + 4));
+        }
+        if (parts.length) {
+          e.target.value = parts.join(' ');
+        } else {
+          e.target.value = v;
+        }
+      });
+    }
+
+    // Formatting helper for Expiration (MM/YY)
+    var expInput = document.getElementById('checkout-card-exp');
+    if (expInput) {
+      expInput.addEventListener('input', function(e) {
+        var v = e.target.value.replace(/\D/g, '').substring(0, 4);
+        if (v.length >= 2) {
+          e.target.value = v.substring(0, 2) + '/' + v.substring(2);
+        } else {
+          e.target.value = v;
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Main Checkout",
+  "tag": "section",
+  "class": "section-main-checkout",
+  "settings": []
+}
+{% endschema %}

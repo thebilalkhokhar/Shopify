@@ -1,0 +1,215 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "order_sample_banner": {
+      "type": "order-sample-banner",
+      "settings": {
+        "sample_image": "shopify://shop_images/order-sample-box.webp",
+        "card_bg": "#faa72b",
+        "badge_text": "Order Sample",
+        "desc_heading": "Description",
+        "desc_subtitle": "Custom Polypropylene Tape",
+        "desc_text": "Custom printed paper tape is an ideal tool for any e-commerce seller, shipping house, or retail brand looking to make their products stand out in transit. Custom printed Kraft paper tape is eco-friendly, strong, and water-activated, creating a secure seal to protect your goods during shipping while promoting your brand.",
+        "desc_point_1": "High-grade Kraft paper for ultimate strength and security",
+        "desc_point_2": "Water-activated adhesive forms a tamper-evident seal",
+        "desc_point_3": "Available in non-reinforced or reinforced paper options",
+        "desc_point_4": "Print up to three colors to showcase your brand",
+        "desc_point_5": "Eco-friendly and recyclable",
+        "card_title": "Hold it first.",
+        "base_price": "99.00",
+        "card_intro": "A printed roll and a blank roll of every material, in a box, on us. Feel the difference between paper and poly before you order sixty-four cases of the wrong one.",
+        "box_contents_title": "What is in the box?",
+        "custom_check_icon": "shopify://shop_images/Tick.webp",
+        "feature_1": "One short roll of every material poly, paper, PVC, freezer and flatback printed with our own mark, so you can judge ink on each surface.",
+        "feature_2": "The same five materials unprinted. Feel the base before the ink goes on, and hear the difference coming off the roll.",
+        "feature_3": "All nine inks laid down on white tape and on kraft tape. The same colour reads differently on each.",
+        "feature_4": "Already sealed with water-activated paper tape. Try to open it that is what tamper-evident actually looks like.",
+        "feature_5": "Case breaks at 5, 10, 25, 50 and 64, plus the plate charge, so you can work your number out at your desk."
+      }
+    },
+    "order_head_compare": {
+      "type": "order-head-compare",
+      "settings": {
+        "bg_color": "#fbf8f3",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "badge_text": "Head to head",
+        "heading": "Polypropylene, or one of\nthe other two?",
+        "col_1_title": "POLYPROPYLENE",
+        "col_2_title": "PAPER",
+        "col_3_title": "PVC",
+        "btn_text": "Compare all five",
+        "btn_link": "/pages/compare",
+        "bottom_note": "Still not sure? The free sample box has both of these in it, printed and blank."
+      }
+    },
+    "order_testimonial": {
+      "type": "order-testimonial",
+      "settings": {
+        "badge_text": "Received",
+        "heading": "What buyers said.",
+        "logo_image": "shopify://shop_images/Sticker_Logo.webp"
+      }
+    },
+    "order_faqs": {
+      "type": "order-faqs",
+      "blocks": {
+        "faq_item_kxRgmV": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        "faq_item_R8mfkT": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        "faq_item_8Yg7aa": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        "faq_item_RdtmVi": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_kxRgmV",
+        "faq_item_R8mfkT",
+        "faq_item_8Yg7aa",
+        "faq_item_RdtmVi"
+      ],
+      "settings": {
+        "page_bg": "#fbf8f3",
+        "frame_bg": "#171008",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "badge_text": "Questions",
+        "heading": "Before you order",
+        "subtext": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad.",
+        "pill_text": "STILL GOT QUESTIONS?",
+        "btn_text": "Support",
+        "btn_link": "/pages/contact"
+      }
+    },
+    "order_more_related": {
+      "type": "order-more-related",
+      "blocks": {
+        "item_1": {
+          "type": "product_item",
+          "settings": {
+            "product": "",
+            "image": "shopify://shop_images/pvc.webp",
+            "title": "PVC Tape",
+            "price_text": "Starting at $7.84 a roll",
+            "short_description": "Heavy-duty carton sealing tape with silent release and superior tack.",
+            "url": "/products/pvc-tape"
+          }
+        },
+        "item_2": {
+          "type": "product_item",
+          "settings": {
+            "product": "",
+            "image": "shopify://shop_images/flattape.webp",
+            "title": "Flatback Tape",
+            "price_text": "Starting at $7.12 a roll",
+            "short_description": "Strong Kraft paper tape designed for easy hand-tear and instant stickiness.",
+            "url": "/products/flatback-tape"
+          }
+        },
+        "item_3": {
+          "type": "product_item",
+          "settings": {
+            "product": "",
+            "image": "shopify://shop_images/dispensers.webp",
+            "title": "Dispensers",
+            "price_text": "From $34 per unit",
+            "short_description": "Industrial water-activated dispensers and handheld tape guns for fast packaging.",
+            "url": "/products/dispensers"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3"
+      ],
+      "settings": {
+        "outer_bg": "#171008",
+        "badge_text": "Goes with",
+        "heading": "People also needed these."
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "compare_link": "",
+        "about_link": "",
+        "contact_link": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "order_sample_banner",
+    "order_head_compare",
+    "order_testimonial",
+    "order_faqs",
+    "order_more_related",
+    "home_footer"
+  ]
+}

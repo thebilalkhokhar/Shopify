@@ -1,0 +1,344 @@
+{{ 'product-head-compare.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="product-head-compare-{{ section.id }}"
+  class="product-head-compare-section"
+  style="
+    background-color: {{ section.settings.bg_color | default: '#FBF8F3' }};
+    padding-top: {{ section.settings.padding_top | default: 40 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="phc-container">
+    
+    <!-- Header: Badge & Heading -->
+    <div class="phc-header">
+      {%- if section.settings.badge_text != blank -%}
+        <div class="phc-badge-wrap">
+          <span class="phc-badge">{{ section.settings.badge_text }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="phc-heading">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- endif -%}
+    </div>
+
+    <!-- Comparison Table Card (Dark Frame) -->
+    <div class="phc-table-card">
+      <div class="phc-table-responsive">
+        <table class="phc-table">
+          <thead>
+            <tr>
+              <th class="phc-col-attr"></th>
+              <th class="phc-col-poly">{{ section.settings.col_1_title | default: 'POLYPROPYLENE' }}</th>
+              <th class="phc-col-paper">{{ section.settings.col_2_title | default: 'PAPER' }}</th>
+              <th class="phc-col-pvc">{{ section.settings.col_3_title | default: 'PVC' }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- if section.blocks.size > 0 -%}
+              {%- for block in section.blocks -%}
+                <tr {{ block.shopify_attributes }}>
+                  <td class="phc-col-attr">{{ block.settings.attribute_label }}</td>
+                  
+                  <!-- Polypropylene Column -->
+                  <td class="phc-col-poly">
+                    {%- assign val_poly = block.settings.poly_val | strip -%}
+                    {%- if val_poly == 'YES' or val_poly == 'yes' or val_poly == 'Yes' -%}
+                      <span class="phc-pill-tag phc-tag-yes">YES</span>
+                    {%- elsif val_poly == 'NO' or val_poly == 'no' or val_poly == 'No' -%}
+                      <span class="phc-pill-tag phc-tag-no">NO</span>
+                    {%- else -%}
+                      {{ block.settings.poly_val }}
+                    {%- endif -%}
+                  </td>
+
+                  <!-- Paper Column -->
+                  <td class="phc-col-paper">
+                    {%- assign val_paper = block.settings.paper_val | strip -%}
+                    {%- if val_paper == 'YES' or val_paper == 'yes' or val_paper == 'Yes' -%}
+                      <span class="phc-pill-tag phc-tag-yes">YES</span>
+                    {%- elsif val_paper == 'NO' or val_paper == 'no' or val_paper == 'No' -%}
+                      <span class="phc-pill-tag phc-tag-no">NO</span>
+                    {%- else -%}
+                      {{ block.settings.paper_val }}
+                    {%- endif -%}
+                  </td>
+
+                  <!-- PVC Column -->
+                  <td class="phc-col-pvc">
+                    {%- assign val_pvc = block.settings.pvc_val | strip -%}
+                    {%- if val_pvc == 'YES' or val_pvc == 'yes' or val_pvc == 'Yes' -%}
+                      <span class="phc-pill-tag phc-tag-yes">YES</span>
+                    {%- elsif val_pvc == 'NO' or val_pvc == 'no' or val_pvc == 'No' -%}
+                      <span class="phc-pill-tag phc-tag-no">NO</span>
+                    {%- else -%}
+                      {{ block.settings.pvc_val }}
+                    {%- endif -%}
+                  </td>
+                </tr>
+              {%- endfor -%}
+            {%- else -%}
+              <!-- Fallback Default Rows Matching Screenshot -->
+              <tr>
+                <td class="phc-col-attr">SEALS UP TO</td>
+                <td class="phc-col-poly">1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)</td>
+                <td class="phc-col-paper">240 grade (30 lbs) · 260 HD (30+ lbs)</td>
+                <td class="phc-col-pvc">50+ lbs, heaviest loads</td>
+              </tr>
+              <tr>
+                <td class="phc-col-attr">STICKS TO</td>
+                <td class="phc-col-poly">Cardboard</td>
+                <td class="phc-col-paper">Cardboard</td>
+                <td class="phc-col-pvc">Cardboard, plastic, glass, metal</td>
+              </tr>
+              <tr>
+                <td class="phc-col-attr">GOES ON</td>
+                <td class="phc-col-poly">Tape gun or machine</td>
+                <td class="phc-col-paper">Water dispenser</td>
+                <td class="phc-col-pvc">Tape gun</td>
+              </tr>
+              <tr>
+                <td class="phc-col-attr">PRINT DETAIL</td>
+                <td class="phc-col-poly">Sharp</td>
+                <td class="phc-col-paper">Sharp</td>
+                <td class="phc-col-pvc">Limited detail</td>
+              </tr>
+              <tr>
+                <td class="phc-col-attr">TAMPER EVIDENT</td>
+                <td class="phc-col-poly"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-paper"><span class="phc-pill-tag phc-tag-yes">YES</span></td>
+                <td class="phc-col-pvc"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+              </tr>
+              <tr>
+                <td class="phc-col-attr">RECYCLABLE</td>
+                <td class="phc-col-poly"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-paper"><span class="phc-pill-tag phc-tag-yes">YES</span></td>
+                <td class="phc-col-pvc"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+              </tr>
+              <tr>
+                <td class="phc-col-attr">BELOW FREEZING</td>
+                <td class="phc-col-poly"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-paper"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-pvc"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+              </tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Bottom CTA Bar -->
+    {%- if section.settings.btn_text != blank or section.settings.bottom_note != blank -%}
+      <div class="phc-bottom-bar">
+        {%- if section.settings.btn_text != blank -%}
+          <a href="{{ section.settings.btn_link | default: '#' }}" class="phc-cta-btn">
+            <span>{{ section.settings.btn_text }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.bottom_note != blank -%}
+          <p class="phc-bottom-note">{{ section.settings.bottom_note }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Head Compare",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FBF8F3"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Pill Text",
+      "default": "Head to head"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Polypropylene, or one of\nthe other two?"
+    },
+    {
+      "type": "header",
+      "content": "Columns Header Titles"
+    },
+    {
+      "type": "text",
+      "id": "col_1_title",
+      "label": "Column 1 (Highlighted)",
+      "default": "POLYPROPYLENE"
+    },
+    {
+      "type": "text",
+      "id": "col_2_title",
+      "label": "Column 2",
+      "default": "PAPER"
+    },
+    {
+      "type": "text",
+      "id": "col_3_title",
+      "label": "Column 3",
+      "default": "PVC"
+    },
+    {
+      "type": "header",
+      "content": "Bottom CTA"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "Compare all five →"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "textarea",
+      "id": "bottom_note",
+      "label": "Bottom Note",
+      "default": "Still not sure? The free sample box has both of these in it, printed and blank."
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 140,
+      "step": 10,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 20,
+      "max": 160,
+      "step": 10,
+      "default": 80,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "compare_row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "attribute_label",
+          "label": "Attribute Label",
+          "default": "SEALS UP TO"
+        },
+        {
+          "type": "text",
+          "id": "poly_val",
+          "label": "Polypropylene Value (Type YES / NO for pill)",
+          "default": "1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)"
+        },
+        {
+          "type": "text",
+          "id": "paper_val",
+          "label": "Paper Value (Type YES / NO for pill)",
+          "default": "240 grade (30 lbs) · 260 HD (30+ lbs)"
+        },
+        {
+          "type": "text",
+          "id": "pvc_val",
+          "label": "PVC Value (Type YES / NO for pill)",
+          "default": "50+ lbs, heaviest loads"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Head Compare",
+      "blocks": [
+        {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "SEALS UP TO",
+            "poly_val": "1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)",
+            "paper_val": "240 grade (30 lbs) · 260 HD (30+ lbs)",
+            "pvc_val": "50+ lbs, heaviest loads"
+          }
+        },
+        {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "STICKS TO",
+            "poly_val": "Cardboard",
+            "paper_val": "Cardboard",
+            "pvc_val": "Cardboard, plastic, glass, metal"
+          }
+        },
+        {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "GOES ON",
+            "poly_val": "Tape gun or machine",
+            "paper_val": "Water dispenser",
+            "pvc_val": "Tape gun"
+          }
+        },
+        {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "PRINT DETAIL",
+            "poly_val": "Sharp",
+            "paper_val": "Sharp",
+            "pvc_val": "Limited detail"
+          }
+        },
+        {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "TAMPER EVIDENT",
+            "poly_val": "NO",
+            "paper_val": "YES",
+            "pvc_val": "NO"
+          }
+        },
+        {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "RECYCLABLE",
+            "poly_val": "NO",
+            "paper_val": "YES",
+            "pvc_val": "NO"
+          }
+        },
+        {
+          "type": "compare_row",
+          "settings": {
+            "attribute_label": "BELOW FREEZING",
+            "poly_val": "NO",
+            "paper_val": "NO",
+            "pvc_val": "NO"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

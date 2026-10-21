@@ -1,0 +1,315 @@
+/* TapeFox Legal & Policy Page Styles */
+
+.tapefox-policy-section {
+  width: 100%;
+  background-color: var(--policy-bg, #171008);
+  padding: 60px 24px 80px 24px;
+  box-sizing: border-box;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  color: #171008;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .tapefox-policy-section {
+    padding: 30px 14px 60px 14px;
+  }
+}
+
+.tapefox-policy-container {
+  width: 100%;
+  max-width: var(--policy-max-w, 1200px);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Card Wrapper with TapeFox signature subtle border & background */
+.tapefox-policy-card {
+  width: 100%;
+  background-color: var(--policy-card-bg, #F9F6F0);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  border-radius: 24px;
+  border: 2px solid var(--policy-border, rgba(255, 255, 255, 0.15));
+  padding: 56px 64px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 900px) {
+  .tapefox-policy-card {
+    padding: 40px 32px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .tapefox-policy-card {
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+}
+
+/* Top Hero Area */
+.tapefox-policy-header {
+  border-bottom: 2px solid rgba(23, 16, 8, 0.12);
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+/* Badge & Last Updated Meta */
+.tapefox-policy-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.tapefox-policy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #EA5B1B;
+  color: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.tapefox-policy-date {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B655F;
+}
+
+/* Title & Subtitle */
+.tapefox-policy-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #171008;
+  letter-spacing: -0.5px;
+  margin: 0 0 14px 0;
+}
+
+.tapefox-policy-subtitle {
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.6;
+  color: #554F49;
+  max-width: 820px;
+  margin: 0;
+}
+
+/* 2-Column Policy Layout (Quick Nav Sticky Sidebar + Main Content) */
+.tapefox-policy-grid {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .tapefox-policy-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+/* Left Quick Nav (Sticky) */
+.tapefox-policy-sidebar {
+  position: sticky;
+  top: 100px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(23, 16, 8, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 960px) {
+  .tapefox-policy-sidebar {
+    position: static;
+    top: auto;
+    padding: 20px;
+  }
+}
+
+.tapefox-policy-nav-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #171008;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tapefox-policy-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tapefox-policy-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #4A443E;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  line-height: 1.35;
+}
+
+.tapefox-policy-nav-item:hover,
+.tapefox-policy-nav-item.is-active {
+  background-color: #EA5B1B;
+  color: #FFFFFF;
+  transform: translateX(4px);
+}
+
+/* Right Content Area: Rich Text Formatting */
+.tapefox-policy-body {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #2F2A25;
+}
+
+.tapefox-policy-body h2 {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 700;
+  color: #171008;
+  margin: 36px 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid rgba(23, 16, 8, 0.08);
+  scroll-margin-top: 110px;
+}
+
+.tapefox-policy-body h2:first-of-type {
+  margin-top: 0;
+}
+
+.tapefox-policy-body h3 {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: #171008;
+  margin: 24px 0 12px 0;
+  scroll-margin-top: 110px;
+}
+
+.tapefox-policy-body p {
+  margin-bottom: 18px;
+  color: #38322C;
+}
+
+.tapefox-policy-body ul,
+.tapefox-policy-body ol {
+  margin: 0 0 22px 0;
+  padding-left: 24px;
+}
+
+.tapefox-policy-body li {
+  margin-bottom: 10px;
+  color: #38322C;
+}
+
+.tapefox-policy-body a {
+  color: #EA5B1B;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.tapefox-policy-body a:hover {
+  color: #171008;
+}
+
+.tapefox-policy-body strong {
+  font-weight: 700;
+  color: #171008;
+}
+
+/* Callout Box inside policy body */
+.tapefox-policy-callout {
+  background-color: #FFF3EB;
+  border-left: 4px solid #EA5B1B;
+  padding: 18px 22px;
+  border-radius: 8px;
+  margin: 28px 0;
+  color: #171008;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.tapefox-policy-callout strong {
+  color: #EA5B1B;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+/* Need Help / Support Footer inside Card */
+.tapefox-policy-contact-box {
+  margin-top: 48px;
+  padding: 24px 28px;
+  border-radius: 16px;
+  background-color: #171008;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.tapefox-policy-contact-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #FFFFFF;
+}
+
+.tapefox-policy-contact-desc {
+  font-size: 13.5px;
+  color: #D4CECE;
+  margin: 0;
+}
+
+.tapefox-policy-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #EA5B1B;
+  color: #FFFFFF;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.tapefox-policy-contact-btn:hover {
+  background-color: #d1490d;
+  transform: translateY(-2px);
+  color: #FFFFFF;
+}

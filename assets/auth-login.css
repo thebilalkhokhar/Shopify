@@ -1,0 +1,396 @@
+/* ==========================================================================
+   TAPEFOX CUSTOM LOGIN & OTP VERIFICATION CSS
+   Exact match to provided reference design screenshots:
+   - Soft warm background (#FAF6F0)
+   - Centered minimalist layout:
+     * Top centered official TapeFox logo
+     * Star sparkle decorations (left)
+     * "Your Account" / "Check your email" pill/tape badge (yellow with black border)
+     * Big serif headlines:
+       - Screen 1: "No password. Just a code."
+       - Screen 2: "Six digits. Ten minutes."
+     * Subtitles with instructions
+     * Screen 1 Input: Clean pill/rounded input for Email
+     * Screen 1 Button: Orange pill CTA ("Send the code") with black border and 3D offset shadow + "Checked out as a guest? Find an order" link
+     * Screen 2 Inputs: 6 individual rounded square digit boxes
+     * Screen 2 Button: Orange pill CTA ("Sign in") with black border and 3D offset shadow + "Nothing yet? Send it again" link
+     * Footer disclaimer line: "Code not arriving? Check spam, or call (800) 555-0199, Mon–Fri, 8am–6pm CT."
+   - Fully responsive design
+   ========================================================================== */
+
+:root {
+  --tf-auth-bg: #FAF6F0;
+  --tf-auth-dark: #191410;
+  --tf-auth-orange: #F55A00;
+  --tf-auth-orange-hover: #E04E00;
+  --tf-auth-yellow: #FEC33F;
+  --tf-auth-border: #191410;
+  --tf-auth-serif: var(--custom-font-family, "Bringbold Nineties", Georgia, serif);
+  --tf-auth-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body.is-login-page {
+  background-color: var(--tf-auth-bg) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+body.is-login-page #MainContent,
+body.is-login-page main,
+body.is-login-page #LoginPageContainer {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+body.is-login-page .block-container {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.is-login-page .block-container > * {
+  grid-column: auto !important;
+}
+
+body.is-login-page .tapefox-header,
+body.is-login-page .footer,
+body.is-login-page .section-footer,
+body.is-login-page .home-footer {
+  display: none !important;
+}
+
+.tf-auth-page {
+  background-color: var(--tf-auth-bg);
+  min-height: 100vh;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 20px 28px 20px;
+  box-sizing: border-box;
+  font-family: var(--tf-auth-sans);
+  color: var(--tf-auth-dark);
+  position: relative;
+  margin: 0 auto;
+}
+
+/* Top Center Logo */
+.tf-auth-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.tf-auth-logo-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.tf-auth-logo-img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+/* Center Content Area */
+.tf-auth-main {
+  width: 100%;
+  max-width: 580px;
+  margin: auto;
+  padding: 20px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Sparkle stars on left */
+.tf-auth-sparkles {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.tf-sparkle-star {
+  color: #ED6422;
+  line-height: 1;
+}
+
+.tf-sparkle-star.large {
+  font-size: 26px;
+  transform: rotate(5deg);
+}
+
+.tf-sparkle-star.small {
+  font-size: 16px;
+  margin-top: 10px;
+  transform: rotate(-10deg);
+}
+
+/* Badges (Yellow pill with black border) */
+.tf-auth-badge {
+  display: inline-block;
+  background-color: var(--tf-auth-yellow);
+  color: #191410;
+  font-family: var(--tf-auth-serif);
+  font-size: 13.5px;
+  font-weight: 800;
+  padding: 5px 16px;
+  border: 1.8px solid var(--tf-auth-border);
+  border-radius: 999px;
+  box-shadow: 0 2px 0 var(--tf-auth-border);
+  margin-bottom: 14px;
+  transform: rotate(-3deg);
+  letter-spacing: -0.2px;
+}
+
+/* Big Headlines */
+.tf-auth-heading {
+  font-family: var(--tf-auth-serif);
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--tf-auth-dark);
+  margin: 0 0 16px 0;
+  letter-spacing: -1px;
+}
+
+.tf-auth-heading .tf-highlight-orange {
+  color: #F35900;
+}
+
+/* Subtitles */
+.tf-auth-subheading {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #574F46;
+  max-width: 440px;
+  margin: 0 auto 28px auto;
+}
+
+.tf-auth-email-target {
+  font-weight: 600;
+  color: var(--tf-auth-dark);
+}
+
+/* Form container */
+.tf-auth-form {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Email Input (Step 1) */
+.tf-auth-email-wrap {
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.tf-auth-input {
+  width: 100%;
+  height: 52px;
+  background-color: transparent;
+  border: 1.8px solid var(--tf-auth-border);
+  border-radius: 12px;
+  padding: 0 18px;
+  font-size: 15px;
+  color: var(--tf-auth-dark);
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.tf-auth-input:focus {
+  border-color: #000;
+  box-shadow: 0 0 0 1px #000;
+}
+
+.tf-auth-input::placeholder {
+  color: #8C867E;
+}
+
+/* 6-Digit OTP Inputs (Step 2) */
+.tf-auth-otp-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 26px;
+}
+
+.tf-otp-box {
+  width: 58px;
+  height: 64px;
+  background-color: transparent;
+  border: 1.8px solid var(--tf-auth-border);
+  border-radius: 12px;
+  font-family: var(--tf-auth-serif);
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--tf-auth-dark);
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+.tf-otp-box:focus {
+  border-color: #000;
+  box-shadow: 0 0 0 1.5px #000;
+  background-color: #FFFDF9;
+}
+
+/* Action Row (Orange Button + Side Link) */
+.tf-auth-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Tactile Orange Capsule Button */
+.tf-auth-btn {
+  background-color: var(--tf-auth-orange);
+  color: #fff;
+  font-family: var(--tf-auth-sans);
+  font-size: 14.5px;
+  font-weight: 700;
+  padding: 13px 28px;
+  border: 1.8px solid var(--tf-auth-border);
+  border-radius: 999px;
+  box-shadow: 0 4px 0 var(--tf-auth-border);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tf-auth-btn:hover {
+  background-color: var(--tf-auth-orange-hover);
+}
+
+.tf-auth-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--tf-auth-border);
+}
+
+/* Side Helper Links */
+.tf-auth-side-link {
+  font-size: 13px;
+  color: #574F46;
+  text-decoration: none;
+}
+
+.tf-auth-side-link a,
+.tf-auth-action-link {
+  color: var(--tf-auth-dark);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tf-auth-side-link a:hover,
+.tf-auth-action-link:hover {
+  color: var(--tf-auth-orange);
+}
+
+/* Bottom Disclaimer Footer - Perfectly Centered */
+.tf-auth-footer-notice,
+footer.tf-auth-footer-notice {
+  font-size: 12.5px;
+  color: #726A61;
+  text-align: center !important;
+  margin: 0 auto !important;
+  padding: 16px 20px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  justify-content: center !important;
+  align-items: center !important;
+  clear: both !important;
+}
+
+/* Error Alert */
+.tf-auth-error {
+  color: #D93829;
+  font-size: 12px;
+  margin-top: 6px;
+  display: none;
+  text-align: left;
+  width: 100%;
+}
+
+.has-error .tf-auth-input,
+.has-error .tf-otp-box {
+  border-color: #D93829 !important;
+  background-color: #FFF8F7;
+}
+
+.has-error .tf-auth-error {
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .tf-auth-page {
+    padding: 24px 16px 20px 16px;
+  }
+
+  .tf-auth-sparkles {
+    position: static;
+    margin-bottom: 8px;
+  }
+
+  .tf-auth-heading {
+    font-size: 34px;
+    letter-spacing: -0.5px;
+  }
+
+  .tf-auth-subheading {
+    font-size: 13px;
+  }
+
+  .tf-auth-otp-row {
+    gap: 8px;
+  }
+
+  .tf-otp-box {
+    width: 44px;
+    height: 52px;
+    font-size: 20px;
+    border-radius: 8px;
+  }
+
+  .tf-auth-actions-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tf-auth-btn {
+    width: 100%;
+  }
+}

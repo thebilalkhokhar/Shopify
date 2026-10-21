@@ -1,0 +1,559 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "hero-banner",
+      "settings": {
+        "desktop_image": "shopify://shop_images/banner1.webp",
+        "tablet_image": "shopify://shop_images/tabBanner.webp",
+        "mobile_image": "shopify://shop_images/mobBanner.webp",
+        "slider_image_1": "shopify://shop_images/banner1.webp",
+        "slider_image_1_tablet": "shopify://shop_images/tabBanner.webp",
+        "slider_image_1_mobile": "shopify://shop_images/mobBanner.webp",
+        "slider_image_2": "shopify://shop_images/banner3.webp",
+        "slider_image_2_tablet": "shopify://shop_images/tabBnr2.webp",
+        "slider_image_2_mobile": "shopify://shop_images/mblBnr2.webp",
+        "slider_image_3": "shopify://shop_images/banner2.webp",
+        "slider_image_3_tablet": "shopify://shop_images/tabBnr3.webp",
+        "slider_image_3_mobile": "shopify://shop_images/mblBnr3.webp",
+        "heading": "Designed to be seen",
+        "subheading": "Premium printed tape for packaging, projects, and ideas that deserve more than the ordinary.",
+        "button_1_label": "Browse all Products",
+        "button_1_link": "",
+        "button_2_label": "Get Sample",
+        "button_2_link": "",
+        "price_text": "Starting from $5.68 a roll",
+        "thumbnail_image_1": "shopify://shop_images/banner1.webp",
+        "thumbnail_image_2": "shopify://shop_images/banner3.webp",
+        "thumbnail_image_3": "shopify://shop_images/banner2.webp",
+        "bottom_left_text": "BASED IN CALIFORNIA",
+        "bottom_right_text": "EST 2024"
+      }
+    },
+    "about": {
+      "type": "home-about",
+      "settings": {
+        "fox_image": "shopify://shop_images/innerRingLogo.webp",
+        "ring_image": "shopify://shop_images/ringLogo.webp",
+        "heading": "We believe the little things make the big impression",
+        "subheading": "Tapefox began with a simple belief packaging should never be an afterthought. A strip of tape can seal a box but it can also introduce a brand, spark a smile, and make an ordinary delivery feel like something worth opening.",
+        "link_label": "MORE ABOUT TAPEFOX",
+        "link_url": "",
+        "bottom_image": "shopify://shop_images/aboutMain.webp",
+        "star_image": "shopify://shop_images/star.webp"
+      }
+    },
+    "top_products": {
+      "type": "home-top-products",
+      "blocks": {
+        "block_1": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/polypropylene.webp",
+            "title": "Polypropylene Tape",
+            "price_text": "Starting at $5.68 a roll",
+            "card_badge": "Most Ordered",
+            "bg_color": "rgba(0,0,0,0)"
+          }
+        },
+        "block_2": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/paper.webp",
+            "title": "Paper Tape",
+            "price_text": "Starting at $9.10 a roll",
+            "card_badge": "",
+            "bg_color": "rgba(0,0,0,0)"
+          }
+        },
+        "block_3": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/hitack.webp",
+            "title": "Hi-Tack Freezer Tape",
+            "price_text": "Starting at $10.18 a roll",
+            "card_badge": "",
+            "bg_color": "rgba(0,0,0,0)"
+          }
+        },
+        "block_4": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/pvc.webp",
+            "title": "PVC Tape",
+            "price_text": "Starting at $7.84 a roll",
+            "card_badge": "",
+            "bg_color": "rgba(0,0,0,0)"
+          }
+        },
+        "block_5": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/flattape.webp",
+            "title": "Flatback Tape",
+            "price_text": "Starting at $7.12 a roll",
+            "card_badge": "",
+            "bg_color": "rgba(0,0,0,0)"
+          }
+        },
+        "block_6": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/dispensers.webp",
+            "title": "Dispensers",
+            "price_text": "From $34 per unit",
+            "card_badge": "",
+            "bg_color": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "block_1",
+        "block_2",
+        "block_3",
+        "block_4",
+        "block_5",
+        "block_6"
+      ],
+      "settings": {
+        "top_badge": "Top Picks",
+        "heading": "Pick a roll. Cause a scene.",
+        "subheading": "Bold tape for boxes, gifts, projects, and anything else crying out for a little more personality. Pick your favorite or don't. We're not here to limit you."
+      }
+    },
+    "why_us": {
+      "type": "home-why-us",
+      "settings": {
+        "badge_text": "Why Tapefox",
+        "heading": "Why people stick with us",
+        "icon_image": "shopify://shop_images/foxMarquee.svg",
+        "circle1_title": "Free Shipping",
+        "circle1_desc": "More tape. Less checkout pain.",
+        "circle2_title": "FREE DESIGN\nSUPPORT",
+        "circle2_desc": "We'll help make your tape look unfairly good.",
+        "circle3_title": "Quick\nTurnaround",
+        "circle4_title": "Proof before\nPrint",
+        "circle5_title": "NO PLATE\nFEES"
+      }
+    },
+    "home_cart": {
+      "type": "home-cart",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "custom_icon": "shopify://shop_images/Tick.webp",
+            "text": "One short roll of every material poly, paper, PVC, freezer and flatback printed with our own mark, so you can judge ink on each surface."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "custom_icon": "shopify://shop_images/Tick.webp",
+            "text": "The same five materials unprinted. Feel the base before the ink goes on, and hear the difference coming off the roll."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "custom_icon": "shopify://shop_images/Tick.webp",
+            "text": "All nine inks laid down on white tape and on kraft tape. The same colour reads differently on each."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "custom_icon": "shopify://shop_images/Tick.webp",
+            "text": "Already sealed with water-activated paper tape. Try to open it: that is what tamper-evident actually looks like."
+          }
+        },
+        "feature_5": {
+          "type": "feature",
+          "settings": {
+            "custom_icon": "shopify://shop_images/Tick.webp",
+            "text": "Case breaks at 5, 10, 25, 50 and 64, plus the plate charge, so you can work your number out at your desk."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4",
+        "feature_5"
+      ],
+      "settings": {
+        "box_image": "shopify://shop_images/homeCartBoxes.webp",
+        "sticker_text": "keep it\nCool!",
+        "badge_text": "Before you commit",
+        "heading": "Hold it first.",
+        "price": "$2.04",
+        "price_subtext": "Prices per roll\nas low as",
+        "description": "A printed roll and a blank roll of every material, in a box, on us. Feel the difference between paper and poly before you order sixty-four cases of the wrong one.",
+        "features_heading": "What is in the box?",
+        "button_text": "Add to Cart",
+        "button_url": ""
+      }
+    },
+    "home_artwork": {
+      "type": "home-artwork",
+      "blocks": {
+        "step_1": {
+          "type": "step_card",
+          "settings": {
+            "title": "Order",
+            "description": "Choose the tape, the dimensions and the ink colours, then upload artwork. Price is on the page as you build it.",
+            "time_badge": "5 min",
+            "image": "shopify://shop_images/order.webp",
+            "bg_color": "#fdb927",
+            "title_color": "#171008",
+            "desc_color": "#362415"
+          }
+        },
+        "step_2": {
+          "type": "step_card",
+          "settings": {
+            "title": "Approve the proof",
+            "description": "We send an electronic proof. Nothing goes on press until you approve it and if the artwork needs work, our team fixes it first.",
+            "time_badge": "2-3 business days",
+            "image": "shopify://shop_images/approve.webp",
+            "bg_color": "#de5f48",
+            "title_color": "#ffffff",
+            "desc_color": "#ffffff"
+          }
+        },
+        "step_3": {
+          "type": "step_card",
+          "settings": {
+            "title": "Delivery",
+            "description": "Your tape prints and ships, tracked from our floor to your dock. Free shipping across the continental US.",
+            "time_badge": "Within 12-14 business days",
+            "image": "shopify://shop_images/delivery.webp",
+            "bg_color": "#2d76f6",
+            "title_color": "#ffffff",
+            "desc_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "badge_text": "The Route",
+        "heading": "Artwork in. Tape out."
+      }
+    },
+    "home_testimonial": {
+      "type": "home-testimonial",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Boxes look like packages now",
+            "text": "We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed that for less than we spend on bubble wrap.",
+            "author": "Dana Whitfield · Subscription coffee"
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "title": "The proof caught our own typo",
+            "text": "Our artwork, our mistake, flagged before anything ran. That one email saved sixty-four cases of a misspelled URL.",
+            "author": "Marcus Lee · Hardware brand"
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Paper tape ended our claims problem",
+            "text": "Water-activated made tampering obvious, so disputed deliveries stopped being our word against theirs",
+            "author": "Priya Raman · 3PL warehouse"
+          }
+        },
+        "testimonial_4": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Clean peel, zero residue on retail boxes",
+            "text": "Switched from generic clear packing tape to custom branded PVC. Our boxes now look like bespoke luxury retail packaging.",
+            "author": "Elena Rostova · Boutique Ceramics"
+          }
+        },
+        "testimonial_5": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Unmatched quality on kraft tape",
+            "text": "The custom print on the water-activated tape is razor-sharp. Our unboxing experience leveled up instantly.",
+            "author": "Sophie Zhang · Artisan Goods"
+          }
+        },
+        "testimonial_6": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Fast turnaround saved our launch",
+            "text": "Needed 50 rolls for our product debut in 10 days. Tapefox delivered ahead of schedule with flawless printing.",
+            "author": "David Miller · Studio Kin"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3",
+        "testimonial_4",
+        "testimonial_5",
+        "testimonial_6"
+      ],
+      "settings": {
+        "badge_text": "Received",
+        "heading": "What buyers said.",
+        "logo_image": "shopify://shop_images/Sticker_Logo.webp"
+      }
+    },
+    "home_faqs": {
+      "type": "home-faqs",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can you help with my tape design?",
+            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are there any plate or setup fees?",
+            "answer": "No hidden fees. What you see on the product page is what you pay."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will my custom tape take?",
+            "answer": "Standard turnaround is 12-14 business days from artwork approval."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What do I need to get started?",
+            "answer": "Just your logo file (vector PDF, AI, or high-res PNG) and your preferred tape specifications."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I change my design later?",
+            "answer": "Yes, you can update your design anytime before the proof is approved for printing."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "badge_text": "Questions",
+        "heading": "Before you order",
+        "description": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad.",
+        "fox_image": "shopify://shop_images/faqsMoscout.png",
+        "btn1_text": "STILL GOT QUESTIONS?",
+        "btn1_url": "/pages/faqs",
+        "btn2_text": "Support",
+        "btn2_url": ""
+      }
+    },
+    "home_follow_insta": {
+      "type": "home-follow-insta",
+      "blocks": {
+        "insta_1": {
+          "type": "insta_item",
+          "settings": {
+            "image": "shopify://shop_images/octa.webp",
+            "link": "",
+            "alt_text": "Tape in the wild"
+          }
+        },
+        "insta_2": {
+          "type": "insta_item",
+          "settings": {
+            "image": "shopify://shop_images/star1.webp",
+            "link": "",
+            "alt_text": "Tape in the wild"
+          }
+        },
+        "insta_3": {
+          "type": "insta_item",
+          "settings": {
+            "image": "shopify://shop_images/apple.webp",
+            "link": "",
+            "alt_text": "Tape in the wild"
+          }
+        },
+        "insta_4": {
+          "type": "insta_item",
+          "settings": {
+            "image": "shopify://shop_images/circleStar.webp",
+            "link": "",
+            "alt_text": "Tape in the wild"
+          }
+        },
+        "insta_5": {
+          "type": "insta_item",
+          "settings": {
+            "image": "shopify://shop_images/eggStar.webp",
+            "link": "",
+            "alt_text": "Tape in the wild"
+          }
+        },
+        "insta_6": {
+          "type": "insta_item",
+          "settings": {
+            "image": "shopify://shop_images/4star.webp",
+            "link": "",
+            "alt_text": "Tape in the wild"
+          }
+        }
+      },
+      "block_order": [
+        "insta_1",
+        "insta_2",
+        "insta_3",
+        "insta_4",
+        "insta_5",
+        "insta_6"
+      ],
+      "settings": {
+        "badge_text": "Stuck on the internet",
+        "heading": "Tape in the wild",
+        "button_text": "Follow @tapefox",
+        "button_url": "https://instagram.com/tapefox",
+        "bg_color": "#171008",
+        "btn_bg_color": "#ed632b",
+        "btn_text_color": "#171008",
+        "padding_top": 50,
+        "padding_bottom": 80
+      }
+    },
+    "home_content": {
+      "type": "home-content",
+      "blocks": {
+        "content_1": {
+          "type": "content_group",
+          "settings": {
+            "heading": "Why TapeFox Is a Trusted Custom Packaging Partner",
+            "text": "<p>Finding the right packaging supplier shouldn't mean juggling multiple vendors, inconsistent quality, and endless back-and-forth. TapeFox makes custom packaging simpler. We help businesses create packaging that protects their products, strengthens their brand, and makes every order feel more intentional.</p><p>From custom food packaging and paper products to branded packaging essentials, TapeFox brings quality materials, thoughtful customization, and dependable service together in one place.</p><p>Whether you're launching a new product, refreshing your existing packaging, or scaling your business, we make it easier to get packaging that fits your brand and your requirements. Our team works closely with you from the initial idea through production, helping you make the right choices for materials, finishes, sizes, and branding.</p><p>Our goal is simple: make packaging that works hard for your product and looks good doing it.</p>"
+          }
+        },
+        "content_2": {
+          "type": "content_group",
+          "settings": {
+            "heading": "TapeFox Packaging Solutions, All in One Place",
+            "text": "<p>Managing packaging through different suppliers can quickly become complicated. Different specifications, different timelines, and different points of contact make even a simple packaging order harder than it needs to be.</p><p>TapeFox brings your packaging needs together under one roof. Whether you need branded food paper, custom packaging, labels, or other packaging essentials, we help you create a consistent look across every customer touchpoint.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "content_1",
+        "content_2"
+      ],
+      "settings": {
+        "bg_color": "#171008",
+        "border_color": "#ffffff52",
+        "heading_color": "#ffffff",
+        "text_color": "#d4cece",
+        "max_width": 1100,
+        "padding_top": 40,
+        "padding_bottom": 80
+      }
+    },
+    "home_browser_footer": {
+      "type": "home-browser-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#ea5b1b",
+        "card_border": "#171008",
+        "badge_text": "Still deciding?",
+        "heading": "Don't guess. Hold it first",
+        "subheading": "Ten rolls and three cards, free, next working day. Or price a run right now it takes a minute and you don't need an account.",
+        "mascot_image": "shopify://shop_images/footerBrowserFox.webp",
+        "mascot_width": 220,
+        "box_image": "shopify://shop_images/footerBrowserBox.webp",
+        "box_width": 280,
+        "btn_1_text": "Browse all Products",
+        "btn_1_url": "/collections/all",
+        "btn_2_text": "Get Sample",
+        "btn_2_url": "/pages/sample"
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "social_facebook": "",
+        "social_instagram": "",
+        "social_pinterest": "",
+        "social_linkedin": "",
+        "menu_1_title": "Tapes",
+        "menu_1": "",
+        "menu_2_title": "Company",
+        "menu_2": "",
+        "menu_3_title": "Help",
+        "menu_3": "",
+        "info_1_label": "Talk to a person",
+        "info_1_val": "+1 (800) 555-0199",
+        "info_2_label": "Email",
+        "info_2_val": "hello@tapefox.com",
+        "info_3_label": "Hours",
+        "info_3_val": "Mon–Fri, 8am–6pm EST",
+        "info_4_label": "Where we print",
+        "info_4_val": "1631 Cottonwood School Rd, Building 3 Rosenberg, TX 77471",
+        "copyright_text": "Tapefox. All rights reserved.",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "",
+        "legal_2_text": "Terms",
+        "legal_2_link": "",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": ""
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "about",
+    "top_products",
+    "why_us",
+    "home_cart",
+    "home_artwork",
+    "home_testimonial",
+    "home_faqs",
+    "home_follow_insta",
+    "home_content",
+    "home_browser_footer",
+    "home_footer"
+  ]
+}

@@ -1,0 +1,234 @@
+{{ 'home-why-us.css' | asset_url | stylesheet_tag }}
+
+<div class="home-why-us-section tapefox-dark-section" {{ section.shopify_attributes }}>
+  <!-- Header -->
+  <div class="hwu-header">
+    {% if section.settings.badge_text != blank %}
+      <div class="hwu-badge">{{ section.settings.badge_text }}</div>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="hwu-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+  </div>
+
+  <!-- Stage Canvas -->
+  <div class="hwu-stage">
+    
+    <!-- Tapes Background -->
+    <div class="hwu-tapes-container">
+      
+      <!-- Top Tape: Tilts down-right (-10deg) -->
+      <div class="hwu-tape-row hwu-tape--top">
+        <div class="hwu-marquee-track hwu-marquee--left">
+          {% for i in (1..8) %}
+            <div class="hwu-tape-group">
+              <span class="hwu-tape-text">Free Shipping</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+              <span class="hwu-tape-text">Free Design Support</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+              <span class="hwu-tape-text">Proof before Print</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Middle Tape: Perfectly Horizontal (0deg) -->
+      <div class="hwu-tape-row hwu-tape--middle">
+        <div class="hwu-marquee-track hwu-marquee--right">
+          {% for i in (1..8) %}
+            <div class="hwu-tape-group">
+              <span class="hwu-tape-text">Free Shipping</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+              <span class="hwu-tape-text">Free Design Support</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+              <span class="hwu-tape-text">Proof before Print</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Bottom Tape: Tilts up-right (+10deg) -->
+      <div class="hwu-tape-row hwu-tape--bottom">
+        <div class="hwu-marquee-track hwu-marquee--left">
+          {% for i in (1..8) %}
+            <div class="hwu-tape-group">
+              <span class="hwu-tape-text">Free Shipping</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+              <span class="hwu-tape-text">Free Design Support</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+              <span class="hwu-tape-text">Proof before Print</span>
+              {% if section.settings.icon_image != blank %}
+                <img class="hwu-fox-img" src="{{ section.settings.icon_image | image_url: width: 60 }}" width="24" height="24" alt="Icon">
+              {% else %}
+                {% render 'icon-fox' %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Circles Cluster Positioned Exactly Like Reference -->
+    <div class="hwu-circles-cluster">
+      
+      <!-- 1. Center Large Orange Circle -->
+      <div class="hwu-circle hwu-circle--main">
+        <div class="hwu-circle-main-inner">
+          <h3 class="hwu-circle-title">{{ section.settings.circle1_title }}</h3>
+          <p class="hwu-circle-desc">{{ section.settings.circle1_desc }}</p>
+        </div>
+      </div>
+
+      <!-- 2. Top-Right Big Yellow Circle -->
+      <div class="hwu-circle hwu-circle--yellow-tr">
+        <h4 class="hwu-circle-title">{{ section.settings.circle2_title | newline_to_br }}</h4>
+        <p class="hwu-circle-desc">{{ section.settings.circle2_desc }}</p>
+      </div>
+
+      <!-- 3. Bottom-Left Medium Yellow Circle -->
+      <div class="hwu-circle hwu-circle--yellow-bl">
+        <h4 class="hwu-circle-title">{{ section.settings.circle3_title | newline_to_br }}</h4>
+      </div>
+
+      <!-- 4. Top-Left Small Orange Circle (Proof before Print) -->
+      <div class="hwu-circle hwu-circle--small-tl">
+        <span class="hwu-circle-title">{{ section.settings.circle4_title | newline_to_br }}</span>
+      </div>
+
+      <!-- 5. Bottom-Right Small Orange Circle (NO PLATE FEES) -->
+      <div class="hwu-circle hwu-circle--small-br">
+        <span class="hwu-circle-title">{{ section.settings.circle5_title | newline_to_br }}</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Home Why Us",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Why Tapefox"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why people stick with us"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image",
+      "label": "Tape Icon Image (Fox logo between texts)"
+    },
+    {
+      "type": "header",
+      "content": "Center Main Orange Circle"
+    },
+    {
+      "type": "text",
+      "id": "circle1_title",
+      "label": "Title",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "circle1_desc",
+      "label": "Description",
+      "default": "More tape. Less checkout pain."
+    },
+    {
+      "type": "header",
+      "content": "Top-Right Yellow Circle"
+    },
+    {
+      "type": "textarea",
+      "id": "circle2_title",
+      "label": "Title",
+      "default": "FREE DESIGN\nSUPPORT"
+    },
+    {
+      "type": "text",
+      "id": "circle2_desc",
+      "label": "Description",
+      "default": "We'll help make your tape look unfairly good."
+    },
+    {
+      "type": "header",
+      "content": "Bottom-Left Yellow Circle"
+    },
+    {
+      "type": "textarea",
+      "id": "circle3_title",
+      "label": "Title",
+      "default": "Quick\nTurnaround"
+    },
+    {
+      "type": "header",
+      "content": "Top-Left Small Orange Circle"
+    },
+    {
+      "type": "textarea",
+      "id": "circle4_title",
+      "label": "Title",
+      "default": "Proof before\nPrint"
+    },
+    {
+      "type": "header",
+      "content": "Bottom-Right Small Orange Circle"
+    },
+    {
+      "type": "textarea",
+      "id": "circle5_title",
+      "label": "Title",
+      "default": "NO PLATE\nFEES"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Why Us"
+    }
+  ]
+}
+{% endschema %}

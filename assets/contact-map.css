@@ -1,0 +1,301 @@
+/* Contact Map Section CSS matching Tapefox visual style */
+
+.contact-map-section {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--cmap-bg, #171008);
+  /* Top padding barha di aur bottom space maintain rakhi */
+  padding: 60px 20px 70px 20px;
+  position: relative;
+  overflow: visible;
+  z-index: 8;
+}
+
+.contact-map-outer {
+  width: 100%;
+  /* Width thori kam ki taake frame compact aur centered ho jaisa reference mein hai */
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   Top Header Area (Centered Badge, Heading, Description)
+   ========================================================= */
+.contact-map-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 36px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-map-badge-wrap {
+  margin-bottom: 12px;
+}
+
+.contact-map-badge {
+  display: inline-block;
+  background-color: #F8B825;
+  color: #171008;
+  padding: 5px 20px 4px;
+  border-radius: 999px;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  border: 1.8px solid #171008;
+  transform: rotate(-3.5deg);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.contact-map-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 48px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin: 0 0 14px 0;
+  letter-spacing: -0.5px;
+}
+
+.contact-map-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  max-width: 580px;
+}
+
+/* Rounded Map Frame */
+.contact-map-frame {
+  width: 100%;
+  min-height: 480px;
+  background-color: #E35205;
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+/* Background SVG Map Graphic */
+.contact-map-svg-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.contact-map-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================================================
+   BLDG 3 Marker Pin (Star icon directly centered on the left vertical Cottonwood School Rd line)
+   ========================================================= */
+.contact-map-pin-group {
+  position: absolute;
+  top: 48%;
+  left: calc(25% - 24px);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.contact-map-starburst {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -10px;
+  z-index: 2;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+}
+
+.contact-map-burst-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.contact-map-bldg-badge {
+  background-color: #F8B825;
+  border: 2px solid #171008;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #171008;
+  box-shadow: 2px 3px 0 #171008;
+  white-space: nowrap;
+  letter-spacing: -0.2px;
+}
+
+/* =========================================================
+   Floating Address Information Card
+   ========================================================= */
+.contact-map-info-card {
+  position: absolute;
+  left: 55px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 100%;
+  max-width: 250px;
+  background-color: #F8B825;
+  border: 1.8px solid #171008;
+  border-radius: 20px;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.cmap-card-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cmap-card-label {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  color: #9E6500;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.cmap-card-address-lines {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 12px;
+  line-height: 1.45;
+  color: #171008;
+}
+
+.cmap-card-address-lines strong {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #171008;
+}
+
+.cmap-card-value {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #171008;
+}
+
+.cmap-card-phone-link {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  color: #171008;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.cmap-card-phone-link:hover {
+  opacity: 0.8;
+}
+
+/* Get Directions Button */
+.cmap-card-btn {
+  background-color: #FFFFFF;
+  color: #171008;
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+  box-shadow: 2px 2.5px 0 #171008;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.cmap-card-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3.5px 0 #171008;
+}
+
+.cmap-card-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #171008;
+}
+
+.cmap-btn-icon {
+  transform: rotate(45deg);
+  stroke: #171008;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN (Tablets & Mobile)
+   ========================================================= */
+
+@media screen and (max-width: 900px) {
+  .contact-map-frame {
+    min-height: 600px;
+    padding: 30px 20px;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .contact-map-info-card {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    max-width: 100%;
+    margin-top: auto;
+  }
+
+  .contact-map-pin-group {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .contact-map-section {
+    padding: 10px 16px 30px 16px;
+  }
+
+  .contact-map-frame {
+    border-radius: 20px;
+    min-height: 520px;
+  }
+
+  .contact-map-bldg-badge {
+    padding: 8px 18px;
+    font-size: 16px;
+  }
+
+  .contact-map-starburst {
+    width: 44px;
+    height: 44px;
+  }
+}

@@ -1,0 +1,1290 @@
+/* Header CSS for TapeFox */
+.tapefox-header {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  max-width: 1400px;
+  z-index: 100;
+  /* Not clipped here so dropdown can render outside */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  color: #fff;
+  padding: 15px 40px;
+  z-index: 100;
+}
+
+/* Background & jagged edge isolated to ::before pseudo-element so child elements are not clipped */
+.header-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #191410;
+  z-index: -1;
+  /* Custom highly irregular jagged edge matching the exact reference image */
+  clip-path: polygon(8px 0,
+      calc(100% - 8px) 0,
+      calc(100% - 8px) 15%,
+      calc(100% - 18px) 25%,
+      calc(100% - 18px) 30%,
+      100% 40%,
+      calc(100% - 18px) 50%,
+      calc(100% - 10px) 55%,
+      calc(100% - 10px) 65%,
+      calc(100% - 18px) 75%,
+      calc(100% - 18px) 85%,
+      calc(100% - 12px) 90%,
+      calc(100% - 12px) 95%,
+      calc(100% - 18px) 100%,
+      18px 100%,
+      12px 95%,
+      12px 90%,
+      18px 85%,
+      18px 75%,
+      10px 65%,
+      10px 55%,
+      18px 50%,
+      0 40%,
+      18px 30%,
+      18px 25%,
+      8px 15%,
+      8px 0);
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header__logo img {
+  max-width: 150px;
+  height: auto;
+  display: block;
+}
+
+.logo-text {
+  font-family: var(--custom-font-family, "Inter", sans-serif);
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff6b00;
+  /* Tapefox orange */
+}
+
+.header__menu {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.header__menu-item {
+  display: flex;
+  align-items: center;
+}
+
+.header__menu-link {
+  color: #fff;
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.header__menu-link:hover {
+  color: #ff6b00;
+}
+
+.has-dropdown,
+.has-megamenu,
+.has-compare-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.header__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #191410;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 150;
+  padding: 10px 0;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+}
+
+.has-dropdown:hover .header__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.header__dropdown-link {
+  color: #fff;
+  text-decoration: none;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  padding: 10px 20px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.header__dropdown-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ff6b00;
+}
+
+/* =========================================
+   Mega Menu (Printed Tapes) Styles
+   ========================================= */
+.header-megamenu {
+  position: absolute;
+  top: 100%;
+  left: 14px;
+  right: 14px;
+  width: calc(100% - 28px);
+  margin-top: -6px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.25s;
+  transform: translateY(4px);
+  z-index: 99;
+}
+
+/* Open mega menu when hovering trigger or the mega menu itself, or when active */
+.has-megamenu:hover .header-megamenu:not(.header-compare-menu),
+.header-container:has(.has-megamenu:hover)~.header-megamenu:not(.header-compare-menu),
+.header-megamenu:not(.header-compare-menu):hover,
+.header-megamenu:not(.header-compare-menu).is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.header-megamenu__inner {
+  position: relative;
+  background-color: #faf8f5;
+  border: 2px solid #191410;
+  border-top: none;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+  padding: 24px 34px 28px;
+  width: 100%;
+}
+
+/* Peeking Fox Mascot on Header Hover */
+.header__peeking-mascot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 95px;
+  height: auto;
+  margin-right: -41px;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 105;
+}
+
+.header__peeking-mascot img {
+  position: absolute;
+  top: 100%;
+  /* Initially hidden down inside the header */
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  width: 95px;
+  height: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25),
+    top 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25),
+    visibility 0.3s;
+  z-index: 105;
+}
+
+/* When hovering anywhere on the header bar or mega menu, fox mascot slides up and peeks over top header edge */
+.tapefox-header:hover .header__peeking-mascot img,
+.header__icons:hover .header__peeking-mascot img {
+  opacity: 1;
+  visibility: visible;
+  top: -16px;
+  /* Sits perfectly peeking over the top header edge */
+  transform: translateX(-50%) translateY(0);
+}
+
+.header-megamenu__header {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.header-megamenu__title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: #191410;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.3px;
+  text-align: left !important;
+}
+
+.header-megamenu__title a {
+  text-align: left !important;
+}
+
+.header-megamenu__subtitle {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+  margin: 0;
+  text-align: left;
+}
+
+/* 6 Items Grid */
+.header-megamenu__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.megamenu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.megamenu-card__thumb {
+  background-color: #F8B825;
+  border: 1.5px solid #191410;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1.1 / 1;
+  padding: 10px;
+  box-sizing: border-box;
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.megamenu-card:hover .megamenu-card__thumb {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.megamenu-card__thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.megamenu-card:hover .megamenu-card__thumb img {
+  transform: scale(1.05);
+}
+
+.megamenu-card__label {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #191410;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+  word-break: break-word;
+}
+
+.megamenu-card:hover .megamenu-card__label {
+  color: #ff6b00;
+}
+
+/* =========================================
+   Compare Mega Menu Dropdown Styles
+   ========================================= */
+.compare-trigger svg,
+.has-compare-menu svg {
+  display: none !important;
+}
+
+.header-compare-menu {
+  position: absolute;
+  top: 100%;
+  left: 14px;
+  right: 14px;
+  width: calc(100% - 28px);
+  margin-top: -6px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.25s;
+  transform: translateY(4px);
+  z-index: 99;
+}
+
+/* Open compare menu on hover or active */
+.has-compare-menu:hover~.header-compare-menu,
+.tapefox-header:has(.has-compare-menu:hover) .header-compare-menu,
+.header__menu:has(.has-compare-menu:hover)~.header-compare-menu,
+.header-container:has(.has-compare-menu:hover)~.header-compare-menu,
+.header-compare-menu:hover,
+.header-compare-menu.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.header-compare-inner {
+  padding: 24px 28px 20px;
+}
+
+/* 5 Cards Row */
+.header-compare__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.header-compare__card {
+  background-color: #ffffff;
+  border: 1.5px solid #191410;
+  border-radius: 12px;
+  padding: 16px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.header-compare__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+  background-color: #f8b825;
+}
+
+.header-compare__card:hover .header-compare__spec-label {
+  color: #7a5b00;
+}
+
+/* First card highlighted in yellow matching reference image */
+.header-compare__card--highlighted {
+  background-color: #f8b825;
+  border: 2px solid #191410;
+}
+
+.header-compare__img-wrap {
+  width: 100%;
+  aspect-ratio: 1.45 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.header-compare__img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.header-compare__card:hover .header-compare__img-wrap img {
+  transform: scale(1.05);
+}
+
+.header-compare__card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.header-compare__card-title {
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #191410;
+  margin: 0 0 2px 0;
+  line-height: 1.25;
+}
+
+.header-compare__card-price {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ff6b00;
+  margin: 0 0 14px 0;
+}
+
+/* Spec labels & values */
+.header-compare__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.header-compare__spec {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-compare__spec-label {
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.header-compare__card--highlighted .header-compare__spec-label {
+  color: #7a5b00;
+}
+
+.header-compare__spec-value {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #191410;
+  line-height: 1.25;
+}
+
+/* Orange Pill Buy Now button */
+.header-compare__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #ff6600;
+  color: #ffffff;
+  border-radius: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid #191410;
+  box-shadow: 0 2px 0 #191410;
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+
+.header-compare__btn:hover {
+  background-color: #e65500;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 #191410;
+}
+
+.header-compare__btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #191410;
+}
+
+/* Bottom Full Comparison Bar Strip */
+.header-compare__banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #ff6600;
+  color: #171008;
+  border: 1.5px solid #191410;
+  border-radius: 24px;
+  padding: 10px 24px;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.header-compare__banner-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-compare__banner-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #171008;
+  letter-spacing: -0.2px;
+}
+
+.header-compare__banner-sub {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #171008;
+  opacity: 0.9;
+}
+
+.header-compare__banner-btn {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #171008;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.header-compare__banner-btn:hover {
+  opacity: 0.75;
+  transform: translateX(2px);
+}
+
+.header__icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-icon {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.header-icon:hover {
+  color: #ff6b00;
+}
+
+.header-cart {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: #EA5B1B;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 4px;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', -apple-system, sans-serif;
+  border: 1.5px solid #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  line-height: 1;
+  letter-spacing: -0.2px;
+  box-sizing: border-box;
+  z-index: 10;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* Mobile & Tablet Header Responsive */
+@media (max-width: 991px) {
+  .tapefox-header {
+    top: 45px;
+    width: 95%;
+  }
+
+  .header-container {
+    padding: 12px 35px;
+    min-height: 60px;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .header__left {
+    gap: 15px;
+  }
+
+  .header__logo img {
+    max-width: 120px;
+  }
+
+  .header-megamenu,
+  .header-compare-menu {
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .tapefox-header {
+    top: 40px;
+    width: 95%;
+  }
+
+  .header-container {
+    padding: 4px 30px;
+    min-height: 50px;
+  }
+
+  .header-container::before {
+    /* Maintain the jagged tape look nicely on smaller screens */
+    clip-path: polygon(6px 0,
+        calc(100% - 6px) 0,
+        calc(100% - 6px) 15%,
+        calc(100% - 14px) 25%,
+        calc(100% - 14px) 30%,
+        100% 40%,
+        calc(100% - 14px) 50%,
+        calc(100% - 8px) 55%,
+        calc(100% - 8px) 65%,
+        calc(100% - 14px) 75%,
+        calc(100% - 14px) 85%,
+        calc(100% - 10px) 90%,
+        calc(100% - 10px) 95%,
+        calc(100% - 14px) 100%,
+        14px 100%,
+        10px 95%,
+        10px 90%,
+        14px 85%,
+        14px 75%,
+        8px 65%,
+        8px 55%,
+        14px 50%,
+        0 40%,
+        14px 30%,
+        14px 25%,
+        6px 15%,
+        6px 0);
+  }
+
+  .header__logo img {
+    max-width: 105px;
+  }
+
+  .header__icons {
+    gap: 9px !important;
+  }
+
+  .header__secondary-logo {
+    display: none;
+    /* Hide small secondary logo on mobile for clean spacing */
+  }
+
+  .cart-count {
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    top: -7px;
+    right: -8px;
+  }
+}
+
+/* =========================================
+   Mobile Navigation Drawer & Slide-in Styles
+   ========================================= */
+body.mobile-nav-locked {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+.tapefox-mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.tapefox-mobile-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile Drawer & Slide-in Styles */
+
+.tapefox-mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 340px;
+  max-width: 90vw;
+  height: 100vh;
+  background-color: #f7f3ee;
+  color: #191410;
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  box-shadow: none;
+  transform: translateX(-100%);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+@media (max-width: 992px) {
+  .tapefox-mobile-drawer {
+    display: flex;
+  }
+}
+
+@media (max-width: 575px) {
+  .tapefox-mobile-drawer {
+    width: 100%;
+    max-width: 100vw;
+  }
+}
+
+.tapefox-mobile-drawer.is-open {
+  transform: translateX(0);
+  box-shadow: 12px 0 35px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 20px 16px;
+  background-color: #f7f3ee;
+}
+
+.mobile-drawer__logo img {
+  max-width: 130px;
+  height: auto;
+  display: block;
+}
+
+.mobile-drawer__close {
+  background: none;
+  border: none;
+  color: #ff6600;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobile-drawer__close:hover {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+
+.mobile-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 20px 24px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Heading: Printed Tapes */
+.mobile-drawer__section-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: #191410;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.mobile-drawer__section-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 6 Tape Product Cards Grid */
+.mobile-drawer__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.mobile-tape-card {
+  display: flex;
+  align-items: center;
+  background-color: #f1ede8;
+  border: 1.5px solid #191410;
+  border-radius: 14px;
+  padding: 8px 14px 8px 10px;
+  text-decoration: none;
+  color: #191410;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.mobile-tape-card:hover,
+.mobile-tape-card:active {
+  transform: translateY(-1px);
+  background-color: #eae3db;
+  box-shadow: 0 3px 0 #191410;
+}
+
+.mobile-tape-card__img {
+  width: 58px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.mobile-tape-card__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.mobile-tape-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mobile-tape-card__title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #191410;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-tape-card__price {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #2b2520;
+  line-height: 1.3;
+}
+
+.mobile-tape-card__price strong {
+  font-weight: 700;
+  color: #191410;
+}
+
+.mobile-tape-card__arrow {
+  color: #191410;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.mobile-tape-card:hover .mobile-tape-card__arrow {
+  transform: translateX(3px);
+}
+
+/* Serif links list (Compare, About, Contact) */
+.mobile-drawer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.mobile-drawer__serif-link {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: #191410;
+  text-decoration: none;
+  line-height: 1.2;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: block;
+}
+
+.mobile-drawer__serif-link:hover,
+.mobile-drawer__serif-link:focus {
+  color: #ff6600;
+  transform: translateX(4px);
+}
+
+/* Footer CTA Buttons matching screenshot */
+.mobile-drawer__footer {
+  padding: 16px 20px 24px;
+  background-color: #f7f3ee;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-drawer__btn-sample {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff6600;
+  color: #191410;
+  border: 2px solid #191410;
+  border-radius: 999px;
+  padding: 12px 16px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 3px 0 #191410;
+  transition: all 0.15s ease;
+}
+
+.mobile-drawer__btn-sample:hover,
+.mobile-drawer__btn-sample:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #191410;
+  background-color: #e65500;
+}
+
+.mobile-drawer__btn-cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f7f3ee;
+  color: #191410;
+  border: 1.5px solid #191410;
+  border-radius: 999px;
+  padding: 11px 18px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+  transition: all 0.15s ease;
+}
+
+.mobile-drawer__btn-cart:hover,
+.mobile-drawer__btn-cart:active {
+  background-color: #eee7de;
+  border-color: #191410;
+}
+
+.mobile-drawer__cart-badge {
+  background-color: #ff6600;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* =========================================
+   Header Search Dropdown Styles
+   ========================================= */
+.header-search-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition:
+    color 0.2s,
+    transform 0.2s;
+}
+
+.header-search-toggle:hover {
+  color: #ff6b00;
+}
+
+.header-search-toggle.is-active {
+  color: #ff6b00;
+}
+
+.header-search-menu {
+  position: absolute;
+  top: 100%;
+  left: 14px;
+  right: 14px;
+  width: calc(100% - 28px);
+  margin-top: -6px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.25s;
+  transform: translateY(4px);
+  z-index: 99;
+}
+
+.header-search-menu.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.header-search-inner {
+  padding: 24px 34px 28px;
+}
+
+/* Input Search Pill */
+.header-search__form {
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.header-search__bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #f4efeb;
+  border: 1.5px solid #191410;
+  border-radius: 9999px;
+  padding: 4px 18px 4px 18px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background-color 0.2s;
+}
+
+.header-search__bar:focus-within {
+  background-color: #faf8f5;
+  border-color: #ff6b00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+}
+
+.header-search__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: #2e2722;
+  flex-shrink: 0;
+}
+
+.header-search__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  font-size: 15px;
+  color: #191410;
+  padding: 10px 0;
+}
+
+.header-search__input::placeholder {
+  color: #8c847e;
+  font-size: 15px;
+}
+
+.header-search__clear {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  color: #7e7771;
+  transition:
+    color 0.2s,
+    transform 0.2s;
+  flex-shrink: 0;
+}
+
+.header-search__clear:hover {
+  color: #191410;
+  transform: scale(1.1);
+}
+
+/* Popular Searches Row */
+.header-search__popular {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header-search__popular-label {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #706a64;
+}
+
+.header-search__tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header-search__tag-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1.5px solid #191410;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #191410;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.header-search__tag-pill:hover {
+  background-color: #ffbf29;
+  border-color: #191410;
+  color: #191410;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Live Predictive Results */
+.header-search__results {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(25, 20, 16, 0.12);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.header-search__results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.header-search__result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid rgba(25, 20, 16, 0.15);
+  border-radius: 10px;
+  text-decoration: none;
+  color: #191410;
+  transition: all 0.2s;
+}
+
+.header-search__result-item:hover {
+  border-color: #ff6b00;
+  background: #fff8f2;
+  transform: translateY(-1px);
+}
+
+.header-search__result-thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #f4efeb;
+}
+
+.header-search__result-title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.header-search__result-price {
+  font-size: 12px;
+  color: #666;
+}
+
+.header-search__results-empty {
+  font-size: 14px;
+  color: #777;
+  padding: 10px 0;
+}

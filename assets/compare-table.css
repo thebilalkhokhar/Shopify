@@ -1,0 +1,298 @@
+/* Compare Page Styles for TapeFox */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+.compare-page-section {
+  width: 100%;
+  background-color: var(--cp-page-bg, #F6F3EE);
+  padding: 160px 24px 100px 24px;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #171008;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* -------------------------------------------------------------
+   Header / Hero Area
+   ------------------------------------------------------------- */
+.compare-hero-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 52px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.compare-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F8B825;
+  color: #171008;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 8px 18px 7px;
+  border-radius: 999px;
+  border: 2px solid #171008;
+  box-shadow: 2.5px 3.5px 0px #171008;
+  transform: rotate(-3.5deg);
+  margin-bottom: 18px;
+  letter-spacing: 0.2px;
+  transition: transform 0.2s ease;
+}
+
+.compare-hero-title {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 58px;
+  font-weight: 700;
+  color: #171008;
+  line-height: 1.08;
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-wrap: balance;
+}
+
+@media screen and (max-width: 768px) {
+  .compare-page-section {
+    padding: 160px 0px 70px 0px !important;
+  }
+
+  .compare-hero-title {
+    font-size: 36px;
+  }
+
+  .compare-hero-header {
+    margin-bottom: 36px;
+  }
+}
+
+/* -------------------------------------------------------------
+   Comparison Card Wrapper (Dark Rounded Container)
+   ------------------------------------------------------------- */
+.compare-container {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  background-color: #171008;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(23, 16, 8, 0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Horizontal scroll container for smaller screens */
+.compare-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #F8B825 #171008;
+}
+
+.compare-table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.compare-table-scroll::-webkit-scrollbar-track {
+  background: #171008;
+}
+
+.compare-table-scroll::-webkit-scrollbar-thumb {
+  background-color: #F8B825;
+  border-radius: 4px;
+}
+
+/* -------------------------------------------------------------
+   Table Grid Layout
+   Column 1: Spec Label column (approx 180px)
+   Column 2-6: The 5 products (approx 1fr each)
+   ------------------------------------------------------------- */
+.compare-table {
+  width: 100%;
+  min-width: 980px;
+  /* guarantees integrity on mobile/tablets with horizontal scroll */
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Table Header Row (Material Top Bar) */
+.compare-table thead th {
+  padding: 22px 18px 20px 18px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 2px solid #281D12;
+  background-color: #171008;
+}
+
+.compare-table thead th.col-label {
+  width: 170px;
+}
+
+.compare-table thead th.col-item {
+  width: calc((100% - 170px) / 5);
+}
+
+.compare-head-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compare-head-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.compare-head-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #A39B93;
+  line-height: 1.25;
+}
+
+/* -------------------------------------------------------------
+   Section Separator Bar (Golden Yellow Bar)
+   ------------------------------------------------------------- */
+.compare-cat-row td {
+  background-color: #F8B825;
+  color: #171008;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 8px 18px 7px 18px;
+  border: none;
+}
+
+/* -------------------------------------------------------------
+   Standard Data Rows
+   ------------------------------------------------------------- */
+.compare-data-row {
+  border-bottom: 1px solid #2A2016;
+}
+
+.compare-data-row:last-child {
+  border-bottom: none;
+}
+
+.compare-data-row td {
+  padding: 15px 18px;
+  vertical-align: middle;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #DFDAD3;
+  line-height: 1.35;
+}
+
+/* First Column: Row Label (Uppercase muted title) */
+.compare-data-row td.cell-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #DFDAD3;
+  padding-left: 18px;
+}
+
+/* Standard Cell Data */
+.compare-data-row td.cell-data {
+  font-weight: 500;
+}
+
+/* Pill Badges: YES (Forest Green) & NO (Muted Dark Pill) */
+.compare-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.compare-pill--yes {
+  background-color: #0E5E3D;
+  color: #5CF1A7;
+  border: 1px solid #148053;
+}
+
+.compare-pill--no {
+  background-color: #261D15;
+  color: #7A726A;
+  border: 1px solid #36291F;
+}
+
+/* Price Big Numbers */
+.compare-price-val {
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: #F8B825;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.compare-price-sub {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #9E958C;
+  line-height: 1.2;
+}
+
+/* Footer Link / CTA in Bottom Row */
+.compare-footer-row td {
+  padding: 24px 18px 28px 18px;
+  border-top: 1px solid #2A2016;
+  background-color: #171008;
+}
+
+.compare-see-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #DFDAD3;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease, transform 0.2s ease;
+}
+
+.compare-see-link:hover {
+  color: #F8B825;
+  text-decoration-color: #F8B825;
+  transform: translateX(2px);
+}
+
+.compare-see-link .arr {
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+.compare-see-link:hover .arr {
+  transform: translateX(3px);
+}

@@ -1,0 +1,368 @@
+/* TapeFox FAQs Footer Support Section CSS */
+
+.faqs-footer-support-section {
+  background-color: #171008 !important;
+  width: calc(100% + 40px);
+  max-width: calc(100% + 40px);
+  margin-left: -20px;
+  margin-right: -20px;
+  box-sizing: border-box;
+  padding: 50px var(--footer-px, 15px) 0 var(--footer-px, 15px);
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+  margin-bottom: 0;
+  margin-bottom: -60px;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+/* Orange Main Card: No Outer Border, No Box Shadow */
+.ffs-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: var(--ffs-card-bg, #EA5B1B);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.12) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  border-radius: 24px;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0px 56px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 290px;
+}
+
+/* Combined Left Group: Text + Fox right next to it */
+.ffs-left-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  position: relative;
+  z-index: 3;
+  flex: 0 1 auto;
+}
+
+/* 1. Left Text Column */
+.ffs-text-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 420px;
+  flex: 0 1 420px;
+  position: relative;
+  z-index: 3;
+}
+
+/* Yellow Sticker Badge ("Still deciding?") */
+.ffs-badge {
+  background-color: #F8B825;
+  color: #171008;
+  font-family: var(--custom-font-family, serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 5px 18px;
+  border-radius: 999px;
+  border: 1.8px solid #171008;
+  display: inline-block;
+  transform: rotate(-4deg);
+  margin-bottom: 14px;
+  box-shadow: none !important;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+/* Heading: "Not in there? Ask a person." */
+.ffs-heading {
+  font-family: var(--custom-font-family, serif);
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.12;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px 0;
+}
+
+/* Subheading / Description */
+.ffs-subheading {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  max-width: 340px;
+}
+
+/* 2. Fox Mascot: Placed right next to the text */
+.ffs-mascot-col {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+  flex: 0 0 auto;
+  margin-bottom: -65px;
+  margin-top: -165px;
+  margin-left: 0;
+  filter: none !important;
+}
+
+.ffs-mascot-img {
+  width: auto;
+  max-width: var(--ffs-mascot-w, 220px);
+  height: auto;
+  max-height: 295px;
+  object-fit: contain;
+  display: block;
+}
+
+.ffs-slot-hint {
+  border: 1.5px dashed rgba(23, 16, 8, 0.35);
+  border-radius: 12px;
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #171008;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 3. Right Support Cards Wrap */
+.ffs-contact-cards-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 4;
+}
+
+/* Individual Support Card */
+.ffs-contact-card {
+  background-color: #FFFFFF;
+  border: 1.8px solid #171008;
+  border-radius: 16px;
+  padding: 18px 22px;
+  min-width: 195px;
+  max-width: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: none !important;
+  box-sizing: border-box;
+  transition: transform 0.15s ease;
+}
+
+.ffs-contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: none !important;
+}
+
+.ffs-card-label {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #554F47;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.ffs-card-value {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #171008;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 8px;
+  word-break: break-all;
+  transition: color 0.15s ease;
+}
+
+.ffs-card-value:hover {
+  color: #EA5B1B;
+}
+
+.ffs-card-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+}
+
+.ffs-card-action-link {
+  font-weight: 700;
+  color: #171008;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s ease;
+}
+
+.ffs-card-action-link:hover {
+  color: #EA5B1B;
+}
+
+.ffs-card-action-sep {
+  color: #7A7267;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.ffs-wa-link {
+  color: #171008;
+}
+
+.ffs-wa-icon {
+  display: inline-block;
+  vertical-align: middle;
+  color: #25D366;
+}
+
+.ffs-card-note {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 11px;
+  line-height: 1.35;
+  color: #7A7267;
+  display: block;
+}
+
+/* =========================================================================
+   Responsive Design
+   ========================================================================= */
+
+@media screen and (max-width: 1200px) {
+  .ffs-card {
+    padding: 30px 32px;
+    gap: 16px;
+  }
+
+  .ffs-heading {
+    font-size: 36px;
+  }
+
+  .ffs-mascot-col {
+    margin-top: -50px;
+  }
+
+  .ffs-contact-card {
+    min-width: 175px;
+    padding: 16px 18px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .faqs-footer-support-section {
+    padding-top: 36px;
+  }
+
+  .ffs-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 36px 24px 30px 24px;
+    min-height: auto;
+  }
+
+  .ffs-left-group {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .ffs-text-col {
+    align-items: center;
+    text-align: center;
+    max-width: 520px;
+    flex: 0 0 auto;
+  }
+
+  .ffs-badge {
+    margin-bottom: 12px;
+  }
+
+  .ffs-heading {
+    font-size: 32px;
+  }
+
+  .ffs-subheading {
+    max-width: 480px;
+  }
+
+  .ffs-mascot-col {
+    order: 2;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: 0;
+  }
+
+  .ffs-mascot-img {
+    max-height: 220px;
+  }
+
+  .ffs-contact-cards-wrap {
+    order: 3;
+    width: 100%;
+    max-width: 500px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .ffs-contact-card {
+    /* flex: 1 1 200px; */
+    min-width: 190px;
+    text-align: left;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .faqs-footer-support-section {
+    padding: 28px 12px 0 12px;
+    /* width: calc(100% + 32px);
+    max-width: calc(100% + 32px);
+    margin-left: -16px;
+    margin-right: -16px; */
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    margin-bottom: -40px;
+  }
+
+  .ffs-card {
+    border-radius: 18px;
+    padding: 24px 16px 20px 16px;
+  }
+
+  .ffs-heading {
+    font-size: 26px;
+  }
+
+  .ffs-subheading {
+    font-size: 12.5px;
+  }
+
+  .ffs-contact-cards-wrap {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .ffs-contact-card {
+    width: 100%;
+    max-width: 100%;
+  }
+}

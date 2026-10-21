@@ -1,0 +1,212 @@
+/* ==========================================================================
+   ORDER MORE RELATED SECTION CSS
+   - 3 Column Grid with Cards
+   - Product Image, Title, Price, AND Short Description all inside the card/box
+   - Matches the premium Tapefox styling
+   ========================================================================== */
+
+.order-more-related-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background-color: #171008 !important;
+  padding: 20px 20px 0 20px;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
+  margin-bottom: -40px;
+  border-bottom-left-radius: 48px;
+  border-bottom-right-radius: 48px;
+}
+
+.omr-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Cream Main Card */
+.omr-card {
+  width: 100%;
+  background-color: #FAF7F0;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+  border-radius: 28px;
+  border: 1.8px solid #171008;
+  box-sizing: border-box;
+  padding: 44px 40px 56px;
+  position: relative;
+  box-shadow: none;
+}
+
+@media screen and (min-width: 1200px) {
+  .omr-card {
+    padding: 44px 120px 56px;
+  }
+}
+
+/* Header */
+.omr-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.omr-badge-wrap {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.omr-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F8B825;
+  color: #171008;
+  border: 1.8px solid #171008;
+  border-radius: 12px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 3px 16px;
+  transform: rotate(-6deg);
+  letter-spacing: -0.2px;
+  box-shadow: 2.5px 2.5px 0px #171008;
+}
+
+.omr-heading {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 42px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+/* 3 Column Grid */
+.omr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  align-items: stretch;
+  max-width: 1200px;
+  justify-content: center;
+  margin: auto;
+}
+
+/* Individual Product Card (Title, Price, Description INSIDE the box) */
+.omr-box-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #171008;
+  background-color: transparent;
+  border: 1.8px solid #171008;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-sizing: border-box;
+  padding: 24px 20px 22px;
+  height: 100%;
+}
+
+.omr-box-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 4px 5px 0px #171008;
+}
+
+/* Image Inside Box */
+.omr-image-wrap {
+  width: 100%;
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+}
+
+.omr-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.omr-box-card:hover .omr-image {
+  transform: scale(1.04);
+}
+
+/* Content Container Inside Box */
+.omr-content-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.omr-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+.omr-price {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #171008;
+  margin: 0;
+}
+
+.omr-price strong {
+  color: #E85D18;
+  font-weight: 700;
+}
+
+/* Short Description Inside Box */
+.omr-desc {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #655F55;
+  margin: 4px 0 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Responsive */
+@media screen and (max-width: 991px) {
+  .order-more-related-section {
+    padding: 16px 16px 0 16px;
+    margin-bottom: -56px;
+  }
+
+  .omr-card {
+    padding: 36px 20px 44px;
+  }
+
+  .omr-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 480px;
+  }
+
+  .omr-heading {
+    font-size: 30px;
+  }
+}

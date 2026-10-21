@@ -1,0 +1,149 @@
+{{ 'faq-banner.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="faq-banner-{{ section.id }}"
+  class="faq-banner-section"
+  style="
+    --faq-banner-bg: {{ section.settings.card_bg | default: '#EA5B1B' }};
+    --faq-banner-border: {{ section.settings.card_border | default: '#171008' }};
+    --faq-fox-width: {{ section.settings.fox_width | default: 360 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="faq-banner-card">
+    
+    <!-- Left Illustration: Fox with Tape Boxes -->
+    <div class="faq-banner-fox">
+      {% if section.settings.fox_image != blank %}
+        <img
+          src="{{ section.settings.fox_image | image_url: width: 800 }}"
+          alt="{{ section.settings.fox_image.alt | default: 'TapeFox FAQ Mascot' }}"
+          class="faq-banner-fox__img"
+          width="{{ section.settings.fox_width | default: 360 }}"
+          height="auto"
+          loading="lazy"
+        >
+      {% elsif request.design_mode %}
+        <div class="faq-banner-fox__placeholder">
+          <span>🦊 Upload Fox Mascot</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Center Content -->
+    <div class="faq-banner-content">
+      {% if section.settings.badge_text != blank %}
+        <div class="faq-banner-badge">{{ section.settings.badge_text }}</div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h1 class="faq-banner-title">{{ section.settings.heading }}</h1>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <div class="faq-banner-desc">
+          {{ section.settings.subheading }}
+        </div>
+      {% endif %}
+
+      <!-- Search Bar -->
+      <div class="faq-banner-search-wrap">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="faq-banner-search-form">
+          <div class="faq-banner-search-inner">
+            <span class="faq-banner-search__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input
+              type="search"
+              name="q"
+              class="faq-banner-search__input"
+              placeholder="{{ section.settings.search_placeholder | default: "Search try 'Minimum' , 'Plate' , 'Freezer'" }}"
+              aria-label="Search FAQs"
+              autocomplete="off"
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQs Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background Color",
+      "default": "#EA5B1B"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card Border Color",
+      "default": "#171008"
+    },
+    {
+      "type": "header",
+      "content": "Fox Illustration"
+    },
+    {
+      "type": "image_picker",
+      "id": "fox_image",
+      "label": "Fox Graphic (with boxes)"
+    },
+    {
+      "type": "range",
+      "id": "fox_width",
+      "min": 200,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Fox Graphic Width",
+      "default": 360
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "FAQ'S"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ask us anything!"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Everything we get asked on the phone, written down. If your question is not here, the last section tells you exactly who to send it to and how long they will take.</p>"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Bar Placeholder",
+      "default": "Search try 'Minimum' , 'Plate' , 'Freezer'"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs Banner"
+    }
+  ]
+}
+{% endschema %}

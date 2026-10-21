@@ -1,0 +1,228 @@
+/* ==========================================================================
+   PRODUCT PRICE BREAKDOWN SECTION CSS (The whole ladder, nothing hidden)
+   Exact replica of reference design:
+   - Outer container with background (#FBF8F3)
+   - Centered tilted yellow badge pill "Price breaks" with solid black border & slight rotate (-5deg)
+   - Serif large heading: "The whole ladder, nothing hidden."
+   - Rounded border table box (#FAF6EF / transparent background with 1.5px solid #171008 border)
+   - Columns: CASES, ROLLS, PER CASE, TAPE, TOTAL, PER ROLL
+   - Dashed horizontal row dividers
+   - Orange colored last column (PER ROLL)
+   - Fully responsive on mobile with horizontal scrollable table wrapper
+   ========================================================================== */
+
+.product-price-breakdown-section {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.ppb-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Header Area: Badge + Heading (Left Aligned matching image) */
+.ppb-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+/* Tilted Yellow Badge Pill */
+.ppb-badge-wrap {
+  display: inline-block;
+  margin-bottom: 12px;
+  margin-left: 22px;
+}
+
+.ppb-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F8B825;
+  color: #171008;
+  border: 1.8px solid #171008;
+  border-radius: 12px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 4px 16px;
+  transform: rotate(-6deg);
+  letter-spacing: -0.2px;
+  box-shadow: 2.5px 2.5px 0px #171008;
+}
+
+/* Section Title */
+.ppb-heading {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 46px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  text-align: left;
+}
+
+/* Table Card Box */
+.ppb-table-card {
+  width: 100%;
+  border: 1.5px solid #0A0A0A;
+  border-radius: 24px;
+  background-color: transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Responsive Table Wrapper */
+.ppb-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Table Element */
+.ppb-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 760px;
+}
+
+/* Table Header */
+.ppb-table thead th {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #55504A;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 22px 24px 18px;
+  border-bottom: 1.5px dashed #C8C2B8;
+}
+
+/* Table Body Rows */
+.ppb-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.ppb-table tbody tr:hover {
+  background-color: rgba(248, 184, 37, 0.08);
+}
+
+.ppb-table tbody tr:not(:last-child) td {
+  border-bottom: 1.5px dashed #C8C2B8;
+}
+
+.ppb-table tbody td {
+  font-family: "Inter", sans-serif;
+  font-size: 14.5px;
+  color: #171008;
+  padding: 18px 24px;
+  vertical-align: middle;
+}
+
+/* Bold Values */
+.ppb-table tbody td.ppb-col-cases,
+.ppb-table tbody td.ppb-col-rolls {
+  font-weight: 600;
+}
+
+.ppb-table tbody td.ppb-col-percase,
+.ppb-table tbody td.ppb-col-tape,
+.ppb-table tbody td.ppb-col-total {
+  font-weight: 700;
+}
+
+/* Orange Per Roll Column */
+.ppb-table tbody td.ppb-col-perroll {
+  font-weight: 700;
+  color: #EA5B1B;
+}
+
+/* Alignment per column */
+.ppb-table th.ppb-col-cases,
+.ppb-table td.ppb-col-cases {
+  padding-left: 36px;
+  width: 12%;
+}
+
+.ppb-table th.ppb-col-rolls,
+.ppb-table td.ppb-col-rolls {
+  width: 14%;
+}
+
+.ppb-table th.ppb-col-percase,
+.ppb-table td.ppb-col-percase {
+  width: 18%;
+}
+
+.ppb-table th.ppb-col-tape,
+.ppb-table td.ppb-col-tape {
+  width: 18%;
+}
+
+.ppb-table th.ppb-col-total,
+.ppb-table td.ppb-col-total {
+  width: 20%;
+}
+
+.ppb-table th.ppb-col-perroll,
+.ppb-table td.ppb-col-perroll {
+  padding-right: 36px;
+  width: 18%;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media screen and (max-width: 1200px) {
+  .ppb-container {
+    padding: 0 24px;
+  }
+
+  .ppb-heading {
+    font-size: 34px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ppb-container {
+    padding: 0 16px;
+  }
+
+  .ppb-heading {
+    font-size: 26px;
+  }
+
+  .ppb-badge {
+    font-size: 12px;
+    padding: 4px 14px;
+  }
+
+  .ppb-table thead th {
+    padding: 16px 14px;
+    font-size: 11px;
+  }
+
+  .ppb-table tbody td {
+    padding: 14px 14px;
+    font-size: 13.5px;
+  }
+
+  .ppb-table th.ppb-col-cases,
+  .ppb-table td.ppb-col-cases {
+    padding-left: 20px;
+  }
+
+  .ppb-table th.ppb-col-perroll,
+  .ppb-table td.ppb-col-perroll {
+    padding-right: 20px;
+  }
+}

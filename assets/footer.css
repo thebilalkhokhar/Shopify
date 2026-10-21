@@ -1,0 +1,446 @@
+/* TapeFox Footer CSS */
+.tapefox-footer-section {
+  background-color: var(--footer-bg, #171008);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 24px var(--footer-px, 0px) 48px var(--footer-px, 0px);
+  position: relative;
+  overflow: visible;
+  z-index: 5;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+}
+
+/* Outer Bordered Card Frame */
+.footer-frame {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  border: 3px solid var(--footer-border, #ffffff) !important;
+  border-top: 3px solid var(--footer-border, #ffffff) !important;
+  border-right: 3px solid var(--footer-border, #ffffff) !important;
+  border-bottom: 3px solid var(--footer-border, #ffffff) !important;
+  border-left: 3px solid var(--footer-border, #ffffff) !important;
+  border-radius: 28px !important;
+  background-color: var(--footer-card-bg, #171008);
+  padding: 72px 56px 32px 56px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+}
+
+/* Floating Elements Hook (For absolute items placed above/overlapping footer) */
+.footer-floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+.footer-floating-item {
+  position: absolute;
+  pointer-events: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Main Grid: 2 Columns on desktop (Brand & Newsletter on left, 3 Menus on right) */
+.footer-main-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(0, 2.8fr);
+  gap: 40px;
+  align-items: flex-start;
+  margin-bottom: 44px;
+  width: 100%;
+}
+
+/* Brand & Newsletter Column */
+.footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+  width: 100%;
+}
+
+.footer-logo-wrap {
+  margin-bottom: 18px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.footer-logo-img {
+  max-height: 42px;
+  width: auto;
+  display: block;
+}
+
+/* Fallback SVG Logo matching TapeFox Brand */
+.footer-logo-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.footer-logo-text {
+  font-family: var(--custom-font-family, serif);
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+
+.footer-brand-desc {
+  color: #D4CECE;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 22px 0;
+}
+
+/* Newsletter Section */
+.footer-newsletter-wrap {
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.footer-newsletter-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+}
+
+.footer-newsletter-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.footer-newsletter-input {
+  flex: 1;
+  background-color: #FAF7F0;
+  color: #171008;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1.5px solid #171008;
+  outline: none;
+  min-width: 0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer-newsletter-input::placeholder {
+  color: #7A7269;
+}
+
+.footer-newsletter-input:focus {
+  border-color: #ED632B;
+  box-shadow: 0 0 0 2px rgba(237, 99, 43, 0.3);
+}
+
+.footer-newsletter-btn {
+  background-color: #ED632B;
+  color: #171008;
+  font-family: var(--custom-font-family, serif);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 1.8px solid #171008;
+  box-shadow: 2px 3px 0 0 #ffffff, 2px 3px 0 1.5px #171008;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.2;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+}
+
+.footer-newsletter-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 4px 0 0 #ffffff, 3px 4px 0 1.5px #171008;
+}
+
+.footer-newsletter-btn:active {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 0 #ffffff, 1px 1px 0 1.5px #171008;
+}
+
+/* Social Icons */
+.footer-social-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-social-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.footer-social-icon:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Menus Wrap: 3 Columns side-by-side */
+.footer-menus-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+/* Individual Menu Column */
+.footer-menu-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Torn / Jagged Tape Dispenser Badge Header */
+.footer-tape-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #171008;
+  font-family: var(--custom-font-family, serif);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 5px 20px;
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: -0.2px;
+  /* Serrated tape dispenser teeth on left and right */
+  clip-path: polygon(0% 0%, 100% 0%,
+      calc(100% - 5px) 16%, 100% 33%, calc(100% - 5px) 50%, 100% 66%, calc(100% - 5px) 83%, 100% 100%,
+      0% 100%,
+      5px 83%, 0% 66%, 5px 50%, 0% 33%, 5px 16%);
+}
+
+.footer-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.footer-menu-link {
+  color: #D4CECE;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-menu-link:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+/* Tiny Yellow "New" Pill Badge */
+.footer-new-badge {
+  background-color: #F8B825;
+  color: #171008;
+  font-family: var(--custom-font-family, serif);
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+  padding: 1px 7px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-left: 6px;
+  line-height: 1.2;
+}
+
+/* Info Bar Row (4-column bordered strip) */
+.footer-info-bar {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.15fr;
+  margin-bottom: 28px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.footer-info-item {
+  padding: 20px 24px;
+  border-right: 1px solid rgba(255, 255, 255, 0.22);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.footer-info-item:last-child {
+  border-right: none;
+}
+
+.footer-info-label {
+  font-family: var(--custom-font-family, serif);
+  color: #ED632B;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.footer-info-value {
+  color: #D4CECE;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14px;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+a.footer-info-value:hover {
+  color: #ffffff;
+}
+
+/* Bottom Legal & Copyright Row */
+.footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: #A89F95;
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.footer-copyright {
+  color: inherit;
+}
+
+.footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.footer-legal-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover {
+  color: #ffffff;
+}
+
+.footer-dot {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1100px) {
+  .tapefox-footer-section {
+    padding: 20px 30px 40px 30px;
+  }
+
+  .footer-frame {
+    padding: 60px 40px 28px 40px;
+  }
+
+  .footer-main-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-menus-wrap {
+    gap: 30px;
+  }
+
+  .footer-info-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-info-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .footer-info-item:nth-child(1),
+  .footer-info-item:nth-child(2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  }
+}
+
+@media (max-width: 680px) {
+  .footer-menus-wrap {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px 20px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 600px) {
+  .tapefox-footer-section {
+    padding: 16px 16px 30px 16px !important;
+  }
+
+  .footer-frame {
+    padding: 42px 18px 22px 18px !important;
+    border-radius: 20px;
+  }
+
+  .footer-menus-wrap {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+  }
+
+  .footer-info-bar {
+    grid-template-columns: 1fr;
+    border-radius: 14px;
+  }
+
+  .footer-info-item {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 16px 18px;
+  }
+
+  .footer-info-item:last-child {
+    border-bottom: none;
+  }
+
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .footer-legal-links {
+    font-size: 12px;
+  }
+}
