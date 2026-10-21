@@ -99,6 +99,111 @@
       </div>
     </div>
 
+    <div class="ppb-mobile-cards">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <article class="ppb-mobile-card">
+            <div class="ppb-mobile-card-header">
+              <h3 class="ppb-mobile-card-title">
+                <span>{{ block.settings.cases | escape }}</span>
+                <span>{{ section.settings.col_1_label | default: 'CASES' | downcase | escape }}</span>
+              </h3>
+              <p class="ppb-mobile-card-rolls">
+                <span>{{ block.settings.rolls | escape }}</span>
+                <span>{{ section.settings.col_2_label | default: 'ROLLS' | downcase | escape }}</span>
+              </p>
+            </div>
+
+            <dl class="ppb-mobile-details">
+              <div class="ppb-mobile-detail">
+                <dt>{{ section.settings.col_3_label | default: 'PER CASE' | escape }}</dt>
+                <dd>{{ block.settings.per_case | escape }}</dd>
+              </div>
+              <div class="ppb-mobile-detail">
+                <dt>{{ section.settings.col_4_label | default: 'TAPE' | escape }}</dt>
+                <dd>{{ block.settings.tape | escape }}</dd>
+              </div>
+              <div class="ppb-mobile-detail">
+                <dt>{{ section.settings.col_5_label | default: 'TOTAL' | escape }}</dt>
+                <dd>{{ block.settings.total | escape }}</dd>
+              </div>
+              <div class="ppb-mobile-detail ppb-mobile-detail--per-roll">
+                <dt>{{ section.settings.col_6_label | default: 'PER ROLL' | escape }}</dt>
+                <dd>{{ block.settings.per_roll | escape }}</dd>
+              </div>
+            </dl>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign fallback_cases = '5,10,25,50,64' | split: ',' -%}
+        {%- for case_count in fallback_cases -%}
+          {%- case case_count -%}
+            {%- when '5' -%}
+              {%- assign row_rolls = '40' -%}
+              {%- assign row_per_case = '$82.93' -%}
+              {%- assign row_tape = '$414.63' -%}
+              {%- assign row_total = '$464.63' -%}
+              {%- assign row_per_roll = '$11.62' -%}
+            {%- when '10' -%}
+              {%- assign row_rolls = '80' -%}
+              {%- assign row_per_case = '$71.72' -%}
+              {%- assign row_tape = '$717.22' -%}
+              {%- assign row_total = '$767.22' -%}
+              {%- assign row_per_roll = '$9.59' -%}
+            {%- when '25' -%}
+              {%- assign row_rolls = '200' -%}
+              {%- assign row_per_case = '$57.06' -%}
+              {%- assign row_tape = '$1476.62' -%}
+              {%- assign row_total = '$1476.62' -%}
+              {%- assign row_per_roll = '$7.38' -%}
+            {%- when '50' -%}
+              {%- assign row_rolls = '400' -%}
+              {%- assign row_per_case = '$51.07' -%}
+              {%- assign row_tape = '$2,553.47' -%}
+              {%- assign row_total = '$2,603.47' -%}
+              {%- assign row_per_roll = '$6.51' -%}
+            {%- when '64' -%}
+              {%- assign row_rolls = '512' -%}
+              {%- assign row_per_case = '$44.66' -%}
+              {%- assign row_tape = '$2,858.55' -%}
+              {%- assign row_total = '$2,908.55' -%}
+              {%- assign row_per_roll = '$5.68' -%}
+          {%- endcase -%}
+          <article class="ppb-mobile-card">
+            <div class="ppb-mobile-card-header">
+              <h3 class="ppb-mobile-card-title">
+                <span>{{ case_count }}</span>
+                <span>{{ section.settings.col_1_label | default: 'CASES' | downcase | escape }}</span>
+              </h3>
+              <p class="ppb-mobile-card-rolls">
+                <span>{{ row_rolls }}</span>
+                <span>{{ section.settings.col_2_label | default: 'ROLLS' | downcase | escape }}</span>
+              </p>
+            </div>
+
+            <dl class="ppb-mobile-details">
+              <div class="ppb-mobile-detail">
+                <dt>{{ section.settings.col_3_label | default: 'PER CASE' | escape }}</dt>
+                <dd>{{ row_per_case }}</dd>
+              </div>
+              <div class="ppb-mobile-detail">
+                <dt>{{ section.settings.col_4_label | default: 'TAPE' | escape }}</dt>
+                <dd>{{ row_tape }}</dd>
+              </div>
+              <div class="ppb-mobile-detail">
+                <dt>{{ section.settings.col_5_label | default: 'TOTAL' | escape }}</dt>
+                <dd>{{ row_total }}</dd>
+              </div>
+              <div class="ppb-mobile-detail ppb-mobile-detail--per-roll">
+                <dt>{{ section.settings.col_6_label | default: 'PER ROLL' | escape }}</dt>
+                <dd>{{ row_per_roll }}</dd>
+              </div>
+            </dl>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
   </div>
 </section>
 

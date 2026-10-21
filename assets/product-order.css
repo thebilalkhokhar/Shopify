@@ -36,7 +36,7 @@
   font-family: var(--custom-font-family, "Bringbold Nineties", serif);
   font-size: 38px;
   font-weight: 700;
-  color: #FAF6EF;
+  color: #faf6ef;
   text-align: center;
   margin: 0 0 46px 0;
   letter-spacing: -0.4px;
@@ -54,7 +54,7 @@
 
 /* Step Card Item */
 .po-step-card {
-  background-color: #FAF6EF;
+  background-color: #faf6ef;
   border-radius: 20px;
   padding: 30px 26px 32px;
   display: flex;
@@ -62,7 +62,9 @@
   justify-content: space-between;
   min-height: 240px;
   box-sizing: border-box;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .po-step-card:hover {
@@ -84,7 +86,7 @@
   align-items: center;
   justify-content: center;
   background-color: #171008;
-  color: #F8B825;
+  color: #f8b825;
   font-family: "Inter", sans-serif;
   font-size: 13.5px;
   font-weight: 700;
@@ -101,14 +103,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #EA5B1B;
+  color: #ea5b1b;
   flex-shrink: 0;
 }
 
 .po-step-icon svg {
   width: 26px;
   height: 26px;
-  stroke: #EA5B1B;
+  stroke: #ea5b1b;
   stroke-width: 1.7;
   fill: none;
 }
@@ -126,7 +128,7 @@
 
 .po-step-title {
   font-family: var(--custom-font-family, "Bringbold Nineties", serif);
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
   color: #171008;
   margin: 0 0 10px 0;
@@ -136,9 +138,9 @@
 
 .po-step-text {
   font-family: "Inter", sans-serif;
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 400;
-  color: #55504A;
+  color: #55504a;
   line-height: 1.5;
   margin: 0;
 }
@@ -153,9 +155,9 @@
   align-items: center;
   justify-content: center;
   background-color: #171008;
-  color: #EA5B1B;
+  color: #ea5b1b;
   font-family: "Inter", sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
   padding: 7px 18px;
   border-radius: 20px;
@@ -186,14 +188,14 @@
   }
 
   .po-step-card {
-    padding: 24px 20px 26px;
+    padding: 13px 15px 13px;
   }
 }
 
 @media screen and (max-width: 900px) {
   .po-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 7px;
   }
 
   .po-card-frame {
@@ -208,6 +210,13 @@
 
   .po-step-card {
     min-height: auto;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .po-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 

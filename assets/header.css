@@ -680,13 +680,13 @@
 
 @media (max-width: 600px) {
   .tapefox-header {
-    top: 40px;
+    top: 45px;
     width: 95%;
   }
 
   .header-container {
     padding: 4px 30px;
-    min-height: 50px;
+    min-height: 60px;
   }
 
   .header-container::before {

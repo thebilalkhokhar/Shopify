@@ -6,7 +6,7 @@
   width: 100%;
   position: relative;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   color: #171008;
 }
 
@@ -39,11 +39,11 @@
 @media screen and (max-width: 1100px) {
   .pb-layout {
     grid-template-columns: 1fr 1fr;
-    column-gap: 32px;
+    column-gap: 25px;
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 829px) {
   .pb-layout {
     display: flex;
     flex-direction: column;
@@ -63,7 +63,7 @@
 /* Main Image Card with Yellow / Ochre Background */
 .pb-main-image-card {
   position: relative;
-  background-color: #F8B825;
+  background-color: #f8b825;
   border: 1.5px solid #171008;
   border-radius: 20px;
   aspect-ratio: 1.15 / 1;
@@ -82,7 +82,7 @@
   top: 18px;
   left: 20px;
   background-color: #171008;
-  color: #F8B825;
+  color: #f8b825;
   font-size: 11.5px;
   font-weight: 600;
   padding: 5px 14px;
@@ -134,7 +134,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
   overflow: hidden;
 }
 
@@ -153,13 +155,13 @@
 
 .pb-thumb-placeholder {
   cursor: default;
-  border: 1.5px solid #A8A29A;
+  border: 1.5px solid #a8a29a;
   background-color: transparent;
 }
 
 .pb-thumb-placeholder:hover {
   transform: none;
-  border-color: #A8A29A;
+  border-color: #a8a29a;
 }
 
 /* Description Block (Desktop) */
@@ -169,7 +171,7 @@
 }
 
 .pb-desc-heading {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #171008;
@@ -177,7 +179,7 @@
 }
 
 .pb-desc-title {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 600;
   color: #222;
@@ -187,7 +189,7 @@
 .pb-desc-text {
   font-size: 13.5px;
   line-height: 1.6;
-  color: #55524E;
+  color: #55524e;
   margin-bottom: 24px;
 }
 
@@ -211,7 +213,7 @@
   gap: 12px;
   font-size: 13.5px;
   line-height: 1.45;
-  color: #33312E;
+  color: #33312e;
 }
 
 .pb-feature-icon {
@@ -232,7 +234,7 @@
 .pb-config-card {
   border: 1.5px solid #171008;
   border-radius: 20px;
-  padding: 34px 34px 28px 34px;
+  padding: 34px 24px 20px 24px;
   background: transparent;
   box-sizing: border-box;
 }
@@ -246,8 +248,8 @@
 
 /* Title & Subheadings */
 .pb-product-title {
-  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
-  font-size: 38px;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 34px;
   line-height: 1.15;
   color: #171008;
   margin: 0 0 10px 0;
@@ -263,7 +265,7 @@
 
 .pb-price-subhead {
   font-size: 15px;
-  color: #55524E;
+  color: #55524e;
   margin-bottom: 12px;
   font-weight: 500;
 }
@@ -276,7 +278,7 @@
 .pb-product-brief {
   font-size: 13px;
   line-height: 1.5;
-  color: #66635F;
+  color: #66635f;
   margin-bottom: 24px;
 }
 
@@ -286,7 +288,7 @@
 }
 
 .pb-divider-top {
-  border-top: 1px dashed #DDD7CC;
+  border-top: 1px dashed #ddd7cc;
   padding-top: 16px;
   margin-top: 10px;
 }
@@ -329,13 +331,13 @@
 
 .pb-pill-btn:hover {
   border-color: #171008;
-  background-color: #F2ECE0;
+  background-color: #f2ece0;
 }
 
 /* Active Pill Button: Solid Black with Yellowish or White text */
 .pb-pill-btn.is-active {
   background-color: #171008;
-  color: #F8B825;
+  color: #f8b825;
   border-color: #171008;
   font-weight: 600;
 }
@@ -385,7 +387,9 @@
 
 .pb-swatch-circle.is-active {
   transform: scale(1.15);
-  box-shadow: 0 0 0 2px #FBF8F3, 0 0 0 3.5px #171008;
+  box-shadow:
+    0 0 0 2px #fbf8f3,
+    0 0 0 3.5px #171008;
 }
 
 /* Case Stepper & Presets */
@@ -402,7 +406,7 @@
   border: 1px solid #777;
   border-radius: 20px;
   padding: 3px 12px;
-  background-color: #FAF6EF;
+  background-color: #faf6ef;
   gap: 14px;
   height: 34px;
   box-sizing: border-box;
@@ -450,7 +454,7 @@
 
 .pb-case-preset.is-active {
   background-color: #171008;
-  color: #F8B825;
+  color: #f8b825;
   border-color: #171008;
 }
 
@@ -496,12 +500,12 @@
 }
 
 .pb-artwork-card.is-active .pb-radio-disc {
-  border-color: #F8B825;
+  border-color: #f8b825;
   background-color: #171008;
 }
 
 .pb-artwork-card.is-active .pb-radio-disc::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -509,7 +513,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #F8B825;
+  background-color: #f8b825;
 }
 
 .pb-artwork-card__content {
@@ -525,18 +529,18 @@
 }
 
 .pb-artwork-card.is-active .pb-artwork-card__title {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .pb-artwork-card__sub {
   font-size: 11px;
-  color: #66635F;
+  color: #66635f;
   margin-top: 2px;
   transition: color 0.2s ease;
 }
 
 .pb-artwork-card.is-active .pb-artwork-card__sub {
-  color: #D5D0C7;
+  color: #d5d0c7;
 }
 
 /* Uploaded File Pill Preview in Product Banner Form */
@@ -550,7 +554,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 1.5px solid #171008;
   border-radius: 12px;
   padding: 8px 14px;
@@ -559,8 +563,14 @@
 }
 
 @keyframes pbSlideDown {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .pb-file-pill-left {
@@ -573,7 +583,7 @@
   width: 26px;
   height: 30px;
   background-color: #311500;
-  color: #FF7020;
+  color: #ff7020;
   border-radius: 4px;
   font-size: 11px;
   font-weight: 800;
@@ -590,7 +600,7 @@
 }
 
 .pb-file-name {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 13px;
   font-weight: 700;
   color: #171008;
@@ -598,9 +608,9 @@
 }
 
 .pb-file-size {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 11px;
-  color: #726C63;
+  color: #726c63;
 }
 
 .pb-file-remove-btn {
@@ -612,7 +622,9 @@
   cursor: pointer;
   padding: 2px 8px;
   line-height: 1;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .pb-file-remove-btn:hover {
@@ -624,7 +636,7 @@
 .pb-proof-notice {
   font-size: 12px;
   font-weight: 700;
-  color: #EA5B1B;
+  color: #ea5b1b;
   margin-top: 14px;
   margin-bottom: 16px;
 }
@@ -637,7 +649,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1.3fr;
   align-items: center;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 22px;
 }
 
@@ -659,7 +671,7 @@
 
 .pb-summary-label {
   font-size: 10.5px;
-  color: #BDB9B2;
+  color: #bdb9b2;
   text-transform: capitalize;
   margin-bottom: 2px;
 }
@@ -667,7 +679,7 @@
 .pb-summary-val {
   font-size: 15px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 /* Total Price Row */
@@ -690,24 +702,24 @@
 }
 
 .pb-total-price {
-  font-size: 34px;
+  font-size: 25px;
   font-weight: 700;
   color: #171008;
   line-height: 1;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   letter-spacing: -0.5px;
 }
 
 .pb-per-roll-price {
   font-size: 12px;
-  color: #66635F;
+  color: #66635f;
   margin-top: 4px;
 }
 
 /* Big Gold Add to Cart Button (Capsule / Pill with 3D shadow) */
 .pb-add-to-cart-btn {
   width: 100%;
-  background-color: #FEC33F;
+  background-color: #fec33f;
   border: 2px solid #171008;
   border-radius: 999px;
   padding: 14px 24px;
@@ -716,7 +728,10 @@
   font-weight: 700;
   color: #171008;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
   box-shadow: 2.5px 3.5px 0px #171008;
   display: flex;
   align-items: center;
@@ -739,7 +754,7 @@
 .pb-footer-disclaimer {
   font-size: 13px;
   line-height: 1.5;
-  color: #726C63;
+  color: #726c63;
   margin: 16px 0 0 0;
   text-align: left;
 }
@@ -747,9 +762,9 @@
 /* ==========================================================================
    MOBILE RESPONSIVE OVERRIDES (Matches Mobile Reference Screenshot)
    ========================================================================== */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 829px) {
   .product-banner-section {
-    padding-top: 100px !important;
+    padding-top: 120px;
   }
 
   .pb-layout {
@@ -830,5 +845,18 @@
   .pb-add-to-cart-btn {
     padding: 14px 16px;
     font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 829px) {
+  .pb-main-img {
+    width: 78%;
+    height: 78%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .product-banner-section {
+    padding-top: 125px !important;
   }
 }

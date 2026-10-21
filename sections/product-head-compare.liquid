@@ -26,7 +26,7 @@
     </div>
 
     <!-- Comparison Table Card (Dark Frame) -->
-    <div class="phc-table-card">
+    <div class="phc-table-card{% if section.blocks.size > 0 %} phc-table-card--has-mobile-cards{% endif %}">
       <div class="phc-table-responsive">
         <table class="phc-table">
           <thead>
@@ -129,6 +129,14 @@
         </table>
       </div>
     </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="phc-mobile-cards">
+        {% render 'product-head-compare-card', section: section, title: section.settings.col_1_title, value_key: 'poly_val' %}
+        {% render 'product-head-compare-card', section: section, title: section.settings.col_2_title, value_key: 'paper_val' %}
+        {% render 'product-head-compare-card', section: section, title: section.settings.col_3_title, value_key: 'pvc_val' %}
+      </div>
+    {%- endif -%}
 
     <!-- Bottom CTA Bar -->
     {%- if section.settings.btn_text != blank or section.settings.bottom_note != blank -%}

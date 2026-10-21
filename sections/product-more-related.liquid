@@ -26,8 +26,8 @@
         {%- endif -%}
       </div>
 
-      <!-- 3 Columns Products Grid -->
-      <div class="pmr-grid">
+      <!-- Related Products -->
+      <div class="pmr-grid" id="pmrTrack-{{ section.id }}">
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             {%- assign linked_product = block.settings.product -%}
@@ -82,10 +82,79 @@
         {%- endif -%}
       </div>
 
+      <div class="pmr-controls" aria-label="Related product navigation">
+        <div class="pmr-progress-wrap" aria-hidden="true">
+          <div class="pmr-progress-bar" id="pmrProgress-{{ section.id }}"></div>
+        </div>
+        <div class="pmr-nav-buttons">
+          <button
+            type="button"
+            class="pmr-nav-button"
+            id="pmrPrevious-{{ section.id }}"
+            aria-label="Previous related products"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="pmr-nav-button"
+            id="pmrNext-{{ section.id }}"
+            aria-label="Next related products"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
     </div>
 
   </div>
 </section>
+
+<script>
+  (function() {
+    const track = document.getElementById('pmrTrack-{{ section.id }}');
+    const progress = document.getElementById('pmrProgress-{{ section.id }}');
+    const previousButton = document.getElementById('pmrPrevious-{{ section.id }}');
+    const nextButton = document.getElementById('pmrNext-{{ section.id }}');
+
+    if (!track || !progress || !previousButton || !nextButton) return;
+
+    const updateProgress = function() {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const scrollRatio = maxScroll > 0 ? track.scrollLeft / maxScroll : 0;
+      progress.style.width = (30 + scrollRatio * 70) + '%';
+      previousButton.disabled = maxScroll <= 0 || track.scrollLeft <= 1;
+      nextButton.disabled = maxScroll <= 0 || track.scrollLeft >= maxScroll - 1;
+    };
+
+    const scrollToAdjacentProduct = function(direction) {
+      const firstItem = track.querySelector('.pmr-item');
+      if (!firstItem) return;
+
+      const trackStyles = window.getComputedStyle(track);
+      const gap = parseFloat(trackStyles.columnGap) || 0;
+      track.scrollBy({
+        left: direction * (firstItem.getBoundingClientRect().width + gap),
+        behavior: 'smooth'
+      });
+    };
+
+    previousButton.addEventListener('click', function() {
+      scrollToAdjacentProduct(-1);
+    });
+    nextButton.addEventListener('click', function() {
+      scrollToAdjacentProduct(1);
+    });
+    track.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  })();
+</script>
 
 {% schema %}
 {

@@ -262,6 +262,19 @@
     padding: 24px 0 32px 24px;
   }
 
+  .products-testimonial__slider-track {
+    align-items: stretch;
+  }
+
+  .products-testimonial__slide {
+    display: flex;
+  }
+
+  .products-testimonial__item-card {
+    width: 100%;
+    height: 100%;
+  }
+
   .products-testimonial__header,
   .products-testimonial__controls {
     padding-right: 24px;

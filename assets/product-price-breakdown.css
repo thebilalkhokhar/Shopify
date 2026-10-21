@@ -8,7 +8,7 @@
    - Columns: CASES, ROLLS, PER CASE, TAPE, TOTAL, PER ROLL
    - Dashed horizontal row dividers
    - Orange colored last column (PER ROLL)
-   - Fully responsive on mobile with horizontal scrollable table wrapper
+   - Desktop table with individual price cards on smaller screens
    ========================================================================== */
 
 .product-price-breakdown-section {
@@ -93,6 +93,10 @@
   border-collapse: collapse;
   text-align: left;
   min-width: 760px;
+}
+
+.ppb-mobile-cards {
+  display: none;
 }
 
 /* Table Header */
@@ -192,13 +196,14 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 640px) {
   .ppb-container {
     padding: 0 16px;
   }
 
   .ppb-heading {
-    font-size: 26px;
+    font-size: clamp(22px, 5.5vw, 26px);
+    line-height: 1.15;
   }
 
   .ppb-badge {
@@ -206,23 +211,121 @@
     padding: 4px 14px;
   }
 
-  .ppb-table thead th {
-    padding: 16px 14px;
-    font-size: 11px;
+  .ppb-header {
+    margin-bottom: 20px;
   }
 
-  .ppb-table tbody td {
-    padding: 14px 14px;
-    font-size: 13.5px;
+  .ppb-badge-wrap {
+    margin-left: 12px;
+    margin-bottom: 10px;
   }
 
-  .ppb-table th.ppb-col-cases,
-  .ppb-table td.ppb-col-cases {
-    padding-left: 20px;
+  .ppb-table-card {
+    display: none;
   }
 
-  .ppb-table th.ppb-col-perroll,
-  .ppb-table td.ppb-col-perroll {
-    padding-right: 20px;
+  .ppb-mobile-cards {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .ppb-mobile-card {
+    min-width: 0;
+    padding: 10px 12px 8px;
+    border: 1px solid #171008;
+    border-radius: 12px;
+    box-sizing: border-box;
+    background-color: transparent;
+  }
+
+  .ppb-mobile-card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px dashed #c8c2b8;
+  }
+
+  .ppb-mobile-card-title,
+  .ppb-mobile-card-rolls {
+    margin: 0;
+  }
+
+  .ppb-mobile-card-title {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #171008;
+  }
+
+  .ppb-mobile-card-rolls {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    line-height: 1.3;
+    color: #726c63;
+    white-space: nowrap;
+  }
+
+  .ppb-mobile-details {
+    margin: 0;
+  }
+
+  .ppb-mobile-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 25px;
+    border-bottom: 1px dashed #ded9d1;
+    font-family: "Inter", sans-serif;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .ppb-mobile-detail:last-child {
+    border-bottom: 0;
+  }
+
+  .ppb-mobile-detail dt {
+    color: #726c63;
+  }
+
+  .ppb-mobile-detail dd {
+    margin: 0;
+    color: #171008;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .ppb-mobile-detail--per-roll dd {
+    color: #ea5b1b;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .ppb-container {
+    padding: 0 12px;
+  }
+
+  .ppb-heading {
+    font-size: 22px;
+  }
+
+  .ppb-mobile-card {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .ppb-mobile-detail {
+    font-size: 9.5px;
   }
 }
