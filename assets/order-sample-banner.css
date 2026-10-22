@@ -494,13 +494,16 @@
   .osb-headline {
     font-size: 36px;
   }
+
   .osb-lead-text {
     font-size: 12px;
   }
+
   .osb-feature-item {
     font-size: 11.5px;
   }
 }
+
 @media screen and (max-width: 1024px) {
   .order-sample-section {
     padding: 110px 0px 20px 0px;

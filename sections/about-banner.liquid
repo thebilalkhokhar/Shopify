@@ -16,27 +16,33 @@
       
       <!-- Left Badge: Rotating Ring (Continuous Loop) + Center Fox Mascot -->
       <div class="about-banner-badge-left">
-        {% if section.settings.ring_image != blank %}
-          <img
-            src="{{ section.settings.ring_image | image_url: width: 300 }}"
-            alt="{{ section.settings.ring_image.alt | default: 'Rotating Tapefox Ring' }}"
-            class="ab-rotating-ring"
-            width="140"
-            height="140"
-            loading="eager"
-          >
-        {% endif %}
+        <div class="ab-badge-inner-holder">
+          {% if section.settings.ring_image != blank %}
+            {{
+              section.settings.ring_image
+              | image_url: width: 300
+              | image_tag:
+                class: 'ab-rotating-ring',
+                alt: section.settings.ring_image.alt | default: 'Rotating Tapefox Ring',
+                loading: 'eager',
+                width: 300,
+                height: 300
+            }}
+          {% endif %}
 
-        {% if section.settings.fox_inner_image != blank %}
-          <img
-            src="{{ section.settings.fox_inner_image | image_url: width: 200 }}"
-            alt="{{ section.settings.fox_inner_image.alt | default: 'Fox Mascot' }}"
-            class="ab-inner-fox"
-            width="70"
-            height="70"
-            loading="eager"
-          >
-        {% endif %}
+          {% if section.settings.fox_inner_image != blank %}
+            {{
+              section.settings.fox_inner_image
+              | image_url: width: 200
+              | image_tag:
+                class: 'ab-inner-fox',
+                alt: section.settings.fox_inner_image.alt | default: 'Fox Mascot',
+                loading: 'eager',
+                width: 200,
+                height: 200
+            }}
+          {% endif %}
+        </div>
       </div>
 
       <!-- Right Badge: Keep it Cool Sticker -->

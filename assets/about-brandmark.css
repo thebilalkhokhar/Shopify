@@ -121,8 +121,7 @@
 @media screen and (max-width: 992px) {
   .about-brandmark-row {
     justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 10px;
   }
 }
 
@@ -177,11 +176,11 @@
   padding: 12px;
 }
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
 
   .abm-mascot-col--1,
   .abm-mascot-col--2,
   .abm-mascot-col--3 {
     max-width: 240px;
   }
-}
+} */

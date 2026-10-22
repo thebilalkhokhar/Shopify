@@ -13,8 +13,10 @@
   "
   {{ section.shopify_attributes }}
 >
-  <div class="products-testimonial__card" style="width: 100% !important; max-width: 100% !important; margin: 0 !important;">
-
+  <div
+    class="products-testimonial__card"
+    style="width: 100% !important; max-width: 100% !important; margin: 0 !important;"
+  >
     <!-- Header Row -->
     <div class="products-testimonial__header">
       <div class="products-testimonial__header-left">
@@ -59,7 +61,6 @@
           {% for block in section.blocks %}
             <div class="products-testimonial__slide" {{ block.shopify_attributes }}>
               <div class="products-testimonial__item-card">
-                
                 <!-- 5 Stars -->
                 <div class="products-testimonial__stars" aria-label="5 out of 5 stars">
                   {% for star in (1..5) %}
@@ -84,9 +85,10 @@
 
                 <!-- Reviewer Info -->
                 <div class="products-testimonial__author">
-                  {{ block.settings.author_name }}{% if block.settings.author_name != blank and block.settings.author_handle != blank %} · {% endif %}{{ block.settings.author_handle }}
+                  {{ block.settings.author_name -}}
+                  {%- if block.settings.author_name != blank and block.settings.author_handle != blank %} · {% endif -%}
+                  {{- block.settings.author_handle }}
                 </div>
-
               </div>
             </div>
           {% endfor %}
@@ -96,11 +98,16 @@
             <div class="products-testimonial__item-card">
               <div class="products-testimonial__stars">
                 {% for star in (1..5) %}
-                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18">
+                    <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/>
+                  </svg>
                 {% endfor %}
               </div>
               <h3 class="products-testimonial__item-title">Boxes look like packages now</h3>
-              <p class="products-testimonial__item-text">We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed that for less than we spend on bubble wrap.</p>
+              <p class="products-testimonial__item-text">
+                We shipped in plain brown cartons and kept getting mistaken for a drop-shipper. Three-colour poly fixed
+                that for less than we spend on bubble wrap.
+              </p>
               <div class="products-testimonial__divider"></div>
               <div class="products-testimonial__author">Dana Whitfield · Subscription coffee</div>
             </div>
@@ -110,11 +117,16 @@
             <div class="products-testimonial__item-card">
               <div class="products-testimonial__stars">
                 {% for star in (1..5) %}
-                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18">
+                    <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/>
+                  </svg>
                 {% endfor %}
               </div>
               <h3 class="products-testimonial__item-title">The proof caught our own typo</h3>
-              <p class="products-testimonial__item-text">Our artwork, our mistake, flagged before anything ran. That one email saved sixty-four cases of a misspelled URL.</p>
+              <p class="products-testimonial__item-text">
+                Our artwork, our mistake, flagged before anything ran. That one email saved sixty-four cases of a
+                misspelled URL.
+              </p>
               <div class="products-testimonial__divider"></div>
               <div class="products-testimonial__author">Marcus Lee · Hardware brand</div>
             </div>
@@ -124,11 +136,15 @@
             <div class="products-testimonial__item-card">
               <div class="products-testimonial__stars">
                 {% for star in (1..5) %}
-                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18">
+                    <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/>
+                  </svg>
                 {% endfor %}
               </div>
               <h3 class="products-testimonial__item-title">Paper tape ended our claims problem</h3>
-              <p class="products-testimonial__item-text">Water-activated made tampering obvious, so disputed deliveries stopped being our word against theirs.</p>
+              <p class="products-testimonial__item-text">
+                Water-activated made tampering obvious, so disputed deliveries stopped being our word against theirs.
+              </p>
               <div class="products-testimonial__divider"></div>
               <div class="products-testimonial__author">Priya Raman · 3PL warehouse</div>
             </div>
@@ -138,11 +154,16 @@
             <div class="products-testimonial__item-card">
               <div class="products-testimonial__stars">
                 {% for star in (1..5) %}
-                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18">
+                    <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/>
+                  </svg>
                 {% endfor %}
               </div>
               <h3 class="products-testimonial__item-title">Clean peel, zero residue on retail boxes</h3>
-              <p class="products-testimonial__item-text">Switched from generic clear packing tape to custom branded PVC. Our boxes now look like bespoke luxury retail packaging.</p>
+              <p class="products-testimonial__item-text">
+                Switched from generic clear packing tape to custom branded PVC. Our boxes now look like bespoke luxury
+                retail packaging.
+              </p>
               <div class="products-testimonial__divider"></div>
               <div class="products-testimonial__author">Elena Rostova · Boutique Ceramics</div>
             </div>
@@ -152,11 +173,16 @@
             <div class="products-testimonial__item-card">
               <div class="products-testimonial__stars">
                 {% for star in (1..5) %}
-                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18"><path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/></svg>
+                  <svg viewBox="0 0 20 20" width="16" height="16" fill="#E85D18">
+                    <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8-4.2-4.1 5.9-.9L10 1.5z"/>
+                  </svg>
                 {% endfor %}
               </div>
               <h3 class="products-testimonial__item-title">Unmatched print fidelity</h3>
-              <p class="products-testimonial__item-text">The custom ink formulation rendered our intricate brand lines razor sharp. Our customers notice the details.</p>
+              <p class="products-testimonial__item-text">
+                The custom ink formulation rendered our intricate brand lines razor sharp. Our customers notice the
+                details.
+              </p>
               <div class="products-testimonial__divider"></div>
               <div class="products-testimonial__author">Sophie Zhang · Design Goods</div>
             </div>
@@ -180,7 +206,16 @@
           id="orderTestimonialPrev-{{ section.id }}"
           aria-label="Previous testimonials"
         >
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="#171008"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
         </button>
@@ -190,13 +225,21 @@
           id="orderTestimonialNext-{{ section.id }}"
           aria-label="Next testimonials"
         >
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="#171008"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </button>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -222,7 +265,7 @@
         return;
       }
       const scrollPercent = (track.scrollLeft / maxScroll) * 100;
-      const barWidth = Math.max(20, Math.min(100, 20 + (scrollPercent * 0.8)));
+      const barWidth = Math.max(20, Math.min(100, 20 + scrollPercent * 0.8));
       progress.style.width = barWidth + '%';
     }
 

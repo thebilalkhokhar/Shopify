@@ -262,9 +262,13 @@
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media screen and (max-width: 900px) {
   .home-testimonial__card {
     padding: 24px 0 32px 24px;
+  }
+
+  .home-testimonial__brand-logo {
+    max-width: 110px;
   }
 
   .home-testimonial__punches,
@@ -287,9 +291,13 @@
   }
 }
 
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
   .home-testimonial-section {
     padding: 0;
+  }
+
+  .home-testimonial__brand-logo {
+    max-width: 90px;
   }
 
   .home-testimonial__card {

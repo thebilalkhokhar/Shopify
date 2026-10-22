@@ -10,7 +10,6 @@
   {{ section.shopify_attributes }}
 >
   <div class="phc-container">
-    
     <!-- Header: Badge & Heading -->
     <div class="phc-header">
       {%- if section.settings.badge_text != blank -%}
@@ -41,7 +40,7 @@
               {%- for block in section.blocks -%}
                 <tr {{ block.shopify_attributes }}>
                   <td class="phc-col-attr">{{ block.settings.attribute_label }}</td>
-                  
+
                   <!-- Polypropylene Column -->
                   <td class="phc-col-poly">
                     {%- assign val_poly = block.settings.poly_val | strip -%}
@@ -167,39 +166,102 @@
         <article class="phc-mobile-card phc-mobile-card--poly">
           <h3 class="phc-mobile-card-title">{{ section.settings.col_1_title | default: 'POLYPROPYLENE' | escape }}</h3>
           <dl class="phc-mobile-card-details">
-            <div class="phc-mobile-card-row"><dt>SEALS UP TO</dt><dd>1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)</dd></div>
-            <div class="phc-mobile-card-row"><dt>STICKS TO</dt><dd>Cardboard</dd></div>
-            <div class="phc-mobile-card-row"><dt>GOES ON</dt><dd>Tape gun or machine</dd></div>
-            <div class="phc-mobile-card-row"><dt>PRINT DETAIL</dt><dd>Sharp</dd></div>
-            <div class="phc-mobile-card-row"><dt>TAMPER EVIDENT</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
-            <div class="phc-mobile-card-row"><dt>RECYCLABLE</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
-            <div class="phc-mobile-card-row"><dt>BELOW FREEZING</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+            <div class="phc-mobile-card-row">
+              <dt>SEALS UP TO</dt>
+              <dd>1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>STICKS TO</dt>
+              <dd>Cardboard</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>GOES ON</dt>
+              <dd>Tape gun or machine</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>PRINT DETAIL</dt>
+              <dd>Sharp</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>TAMPER EVIDENT</dt>
+              <dd><span class="phc-pill-tag phc-tag-no">NO</span></dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>RECYCLABLE</dt>
+              <dd><span class="phc-pill-tag phc-tag-no">NO</span></dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>BELOW FREEZING</dt>
+              <dd><span class="phc-pill-tag phc-tag-no">NO</span></dd>
+            </div>
           </dl>
         </article>
 
         <article class="phc-mobile-card">
           <h3 class="phc-mobile-card-title">{{ section.settings.col_2_title | default: 'PAPER' | escape }}</h3>
           <dl class="phc-mobile-card-details">
-            <div class="phc-mobile-card-row"><dt>SEALS UP TO</dt><dd>240 grade (30 lbs) · 260 HD (30+ lbs)</dd></div>
-            <div class="phc-mobile-card-row"><dt>STICKS TO</dt><dd>Cardboard</dd></div>
-            <div class="phc-mobile-card-row"><dt>GOES ON</dt><dd>Water dispenser</dd></div>
-            <div class="phc-mobile-card-row"><dt>PRINT DETAIL</dt><dd>Sharp</dd></div>
-            <div class="phc-mobile-card-row"><dt>TAMPER EVIDENT</dt><dd><span class="phc-pill-tag phc-tag-yes">YES</span></dd></div>
-            <div class="phc-mobile-card-row"><dt>RECYCLABLE</dt><dd><span class="phc-pill-tag phc-tag-yes">YES</span></dd></div>
-            <div class="phc-mobile-card-row"><dt>BELOW FREEZING</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+            <div class="phc-mobile-card-row">
+              <dt>SEALS UP TO</dt>
+              <dd>240 grade (30 lbs) · 260 HD (30+ lbs)</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>STICKS TO</dt>
+              <dd>Cardboard</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>GOES ON</dt>
+              <dd>Water dispenser</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>PRINT DETAIL</dt>
+              <dd>Sharp</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>TAMPER EVIDENT</dt>
+              <dd><span class="phc-pill-tag phc-tag-yes">YES</span></dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>RECYCLABLE</dt>
+              <dd><span class="phc-pill-tag phc-tag-yes">YES</span></dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>BELOW FREEZING</dt>
+              <dd><span class="phc-pill-tag phc-tag-no">NO</span></dd>
+            </div>
           </dl>
         </article>
 
         <article class="phc-mobile-card">
           <h3 class="phc-mobile-card-title">{{ section.settings.col_3_title | default: 'PVC' | escape }}</h3>
           <dl class="phc-mobile-card-details">
-            <div class="phc-mobile-card-row"><dt>SEALS UP TO</dt><dd>50+ lbs, heaviest loads</dd></div>
-            <div class="phc-mobile-card-row"><dt>STICKS TO</dt><dd>Cardboard, plastic, glass, metal</dd></div>
-            <div class="phc-mobile-card-row"><dt>GOES ON</dt><dd>Tape gun</dd></div>
-            <div class="phc-mobile-card-row"><dt>PRINT DETAIL</dt><dd>Limited detail</dd></div>
-            <div class="phc-mobile-card-row"><dt>TAMPER EVIDENT</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
-            <div class="phc-mobile-card-row"><dt>RECYCLABLE</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
-            <div class="phc-mobile-card-row"><dt>BELOW FREEZING</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+            <div class="phc-mobile-card-row">
+              <dt>SEALS UP TO</dt>
+              <dd>50+ lbs, heaviest loads</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>STICKS TO</dt>
+              <dd>Cardboard, plastic, glass, metal</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>GOES ON</dt>
+              <dd>Tape gun</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>PRINT DETAIL</dt>
+              <dd>Limited detail</dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>TAMPER EVIDENT</dt>
+              <dd><span class="phc-pill-tag phc-tag-no">NO</span></dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>RECYCLABLE</dt>
+              <dd><span class="phc-pill-tag phc-tag-no">NO</span></dd>
+            </div>
+            <div class="phc-mobile-card-row">
+              <dt>BELOW FREEZING</dt>
+              <dd><span class="phc-pill-tag phc-tag-no">NO</span></dd>
+            </div>
           </dl>
         </article>
       {%- endif -%}
@@ -220,7 +282,6 @@
         {%- endif -%}
       </div>
     {%- endif -%}
-
   </div>
 </section>
 

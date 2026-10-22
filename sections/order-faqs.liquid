@@ -15,15 +15,18 @@
   "
   {{ section.shopify_attributes }}
 >
-  <div class="pf-container" style="max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important;">
-    <div class="pf-card-frame" style="background-color: {{ section.settings.frame_bg | default: '#171008' }}; width: 100% !important; max-width: 100% !important; margin: 0 !important;">
-      
+  <div
+    class="pf-container"
+    style="max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important;"
+  >
+    <div
+      class="pf-card-frame"
+      style="background-color: {{ section.settings.frame_bg | default: '#171008' }}; width: 100% !important; max-width: 100% !important; margin: 0 !important;"
+    >
       <div class="pf-layout">
-        
         <!-- LEFT COLUMN: Badge, Heading, Subtext, Still Got Questions Pill & Support Btn -->
         <div class="pf-left-col">
           <div class="pf-left-top">
-            
             {%- if section.settings.badge_text != blank -%}
               <div class="pf-badge-wrap">
                 <span class="pf-badge">{{ section.settings.badge_text }}</span>
@@ -49,7 +52,6 @@
             {%- if section.settings.subtext != blank -%}
               <p class="pf-subtext">{{ section.settings.subtext }}</p>
             {%- endif -%}
-
           </div>
 
           <!-- Left Bottom Buttons -->
@@ -78,7 +80,15 @@
                 >
                   <span class="pf-faq-title">{{ block.settings.question }}</span>
                   <span class="pf-faq-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="#171008"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                    >
                       <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
                       <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
@@ -100,7 +110,15 @@
               <button type="button" class="pf-faq-header" aria-expanded="true">
                 <span class="pf-faq-title">Can you help with my tape design?</span>
                 <span class="pf-faq-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="#171008"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  >
                     <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
                     <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
@@ -108,7 +126,8 @@
               </button>
               <div class="pf-faq-content" style="max-height: 500px;">
                 <div class="pf-faq-body">
-                  Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good.
+                  Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll
+                  help make it look good.
                 </div>
               </div>
             </div>
@@ -117,7 +136,15 @@
               <button type="button" class="pf-faq-header" aria-expanded="false">
                 <span class="pf-faq-title">Are there any plate or setup fees?</span>
                 <span class="pf-faq-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="#171008"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  >
                     <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
                     <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
@@ -134,7 +161,15 @@
               <button type="button" class="pf-faq-header" aria-expanded="false">
                 <span class="pf-faq-title">How long will my custom tape take?</span>
                 <span class="pf-faq-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="#171008"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  >
                     <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
                     <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
@@ -142,7 +177,8 @@
               </button>
               <div class="pf-faq-content">
                 <div class="pf-faq-body">
-                  Standard turnaround is 10–14 working days from proof approval to dispatch, shipped free across the continental US.
+                  Standard turnaround is 10–14 working days from proof approval to dispatch, shipped free across the
+                  continental US.
                 </div>
               </div>
             </div>
@@ -151,7 +187,15 @@
               <button type="button" class="pf-faq-header" aria-expanded="false">
                 <span class="pf-faq-title">What do I need to get started?</span>
                 <span class="pf-faq-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="#171008"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  >
                     <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
                     <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
@@ -159,7 +203,8 @@
               </button>
               <div class="pf-faq-content">
                 <div class="pf-faq-body">
-                  Just your logo or artwork file (vector AI, EPS, PDF, or high-res PNG). Pick your quantity and we take care of the rest.
+                  Just your logo or artwork file (vector AI, EPS, PDF, or high-res PNG). Pick your quantity and we take
+                  care of the rest.
                 </div>
               </div>
             </div>
@@ -168,7 +213,15 @@
               <button type="button" class="pf-faq-header" aria-expanded="false">
                 <span class="pf-faq-title">Can I change my design later?</span>
                 <span class="pf-faq-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="#171008"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  >
                     <line class="pf-icon-v" x1="12" y1="5" x2="12" y2="19"></line>
                     <line class="pf-icon-h" x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
@@ -176,37 +229,36 @@
               </button>
               <div class="pf-faq-content">
                 <div class="pf-faq-body">
-                  Yes, anytime before you approve the digital press proof. Once you confirm the proof, printing begins immediately.
+                  Yes, anytime before you approve the digital press proof. Once you confirm the proof, printing begins
+                  immediately.
                 </div>
               </div>
             </div>
           {%- endif -%}
         </div>
-
       </div>
-
     </div>
   </div>
 </section>
 
 <script>
-  (function() {
+  (function () {
     function initOrderFaqs() {
       const container = document.getElementById('orderFaqsAccordion-{{ section.id }}');
       if (!container) return;
 
       const items = container.querySelectorAll('.pf-faq-item');
-      items.forEach(function(item) {
+      items.forEach(function (item) {
         const header = item.querySelector('.pf-faq-header');
         const content = item.querySelector('.pf-faq-content');
 
         if (!header || !content) return;
 
-        header.addEventListener('click', function() {
+        header.addEventListener('click', function () {
           const isOpen = item.classList.contains('is-open');
 
           // Close other items
-          items.forEach(function(otherItem) {
+          items.forEach(function (otherItem) {
             if (otherItem !== item) {
               otherItem.classList.remove('is-open');
               const otherHeader = otherItem.querySelector('.pf-faq-header');

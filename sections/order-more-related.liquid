@@ -15,10 +15,8 @@
   {{ section.shopify_attributes }}
 >
   <div class="omr-container">
-    
     <!-- Cream Card with Dot Grid -->
     <div class="omr-card">
-      
       <!-- Header: Badge & Heading -->
       <div class="omr-header">
         {%- if section.settings.badge_text != blank -%}
@@ -50,7 +48,11 @@
             <a href="{{ item_url | default: '#' }}" class="omr-item" {{ block.shopify_attributes }}>
               <div class="omr-image-box">
                 {%- if item_img != blank -%}
-                  {{ item_img | image_url: width: 600 | image_tag: class: 'omr-image', loading: 'lazy', alt: item_title }}
+                  {{
+                    item_img
+                    | image_url: width: 600
+                    | image_tag: class: 'omr-image', loading: 'lazy', alt: item_title
+                  }}
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'omr-image' }}
                 {%- endif -%}
@@ -64,7 +66,9 @@
                 {%- if block.settings.price_text != blank -%}
                   <p class="omr-price">{{ block.settings.price_text }}</p>
                 {%- elsif linked_product != blank -%}
-                  <p class="omr-price">Starting at <strong>{{ linked_product.price | money }}</strong></p>
+                  <p class="omr-price">
+                    Starting at <strong>{{ linked_product.price | money }}</strong>
+                  </p>
                 {%- endif -%}
 
                 {%- if block.settings.short_description != blank -%}
@@ -145,7 +149,17 @@
             id="omrPrevious-{{ section.id }}"
             aria-label="Previous related products"
           >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
           </button>
@@ -155,14 +169,23 @@
             id="omrNext-{{ section.id }}"
             aria-label="Next related products"
           >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </button>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 

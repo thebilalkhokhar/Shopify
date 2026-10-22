@@ -20,452 +20,453 @@
    ========================================================================== */
 
 .product-head-compare-section {
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
-  padding-bottom: 40px;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    padding-bottom: 40px;
 }
 
 .phc-container {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 40px;
-  box-sizing: border-box;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
 }
 
 /* Header Area: Badge + Heading */
 .phc-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin-bottom: 28px;
-  text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-bottom: 28px;
+    text-align: left;
 }
 
 /* Tilted Yellow Badge Pill */
 .phc-badge-wrap {
-  display: inline-block;
-  margin-bottom: 12px;
-  margin-left: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+    margin-left: 20px;
 }
 
 .phc-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f8b825;
-  color: #171008;
-  border: 1.8px solid #171008;
-  border-radius: 12px;
-  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
-  font-size: 15px;
-  font-weight: 700;
-  padding: 4px 16px;
-  transform: rotate(-6deg);
-  letter-spacing: -0.2px;
-  box-shadow: 2.5px 2.5px 0px #171008;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8b825;
+    color: #171008;
+    border: 1.8px solid #171008;
+    border-radius: 12px;
+    font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 4px 16px;
+    transform: rotate(-6deg);
+    letter-spacing: -0.2px;
+    box-shadow: 2.5px 2.5px 0px #171008;
 }
 
 /* Section Title */
 .phc-heading {
-  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
-  font-size: 46px;
-  font-weight: 700;
-  color: #171008;
-  margin: 0;
-  letter-spacing: -0.5px;
-  line-height: 1.15;
-  text-align: left;
+    font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+    font-size: 46px;
+    font-weight: 700;
+    color: #171008;
+    margin: 0;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    text-align: left;
 }
 
 /* Comparison Dark Table Card */
 .phc-table-card {
-  width: 100%;
-  background-color: #171008;
-  border-radius: 24px;
-  box-sizing: border-box;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    background-color: #171008;
+    border-radius: 24px;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .phc-table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .phc-mobile-cards {
-  display: none;
+    display: none;
 }
 
 .phc-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  min-width: 820px;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 820px;
 }
 
 /* Column Header Row */
 .phc-table thead tr th {
-  font-family: "Inter", sans-serif;
-  font-size: 13.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 24px 28px;
-  border-bottom: 1.5px solid #2b2319;
-  vertical-align: middle;
+    font-family: "Inter", sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 24px 28px;
+    border-bottom: 1.5px solid #2b2319;
+    vertical-align: middle;
 }
 
 .phc-table thead th.phc-col-attr {
-  width: 18%;
-  color: transparent;
-  /* empty or label */
+    width: 18%;
+    color: transparent;
+    /* empty or label */
 }
 
 /* Highlighted Column: Polypropylene */
 .phc-table thead th.phc-col-poly {
-  width: 34%;
-  color: #f8b825;
+    width: 34%;
+    color: #f8b825;
 }
 
 .phc-table thead th.phc-col-paper {
-  width: 24%;
-  color: #faf6ef;
+    width: 24%;
+    color: #faf6ef;
 }
 
 .phc-table thead th.phc-col-pvc {
-  width: 24%;
-  color: #faf6ef;
+    width: 24%;
+    color: #faf6ef;
 }
 
 /* Table Body Rows */
 .phc-table tbody tr:not(:last-child) td {
-  border-bottom: 1.5px dashed #342b20;
+    border-bottom: 1.5px dashed #342b20;
 }
 
 .phc-table tbody td {
-  font-family: "Inter", sans-serif;
-  font-size: 14.5px;
-  color: #faf6ef;
-  padding: 18px 28px;
-  vertical-align: middle;
+    font-family: "Inter", sans-serif;
+    font-size: 14.5px;
+    color: #faf6ef;
+    padding: 18px 28px;
+    vertical-align: middle;
 }
 
 /* Left Attribute Column */
 .phc-table tbody td.phc-col-attr {
-  font-size: 11px;
-  font-weight: 700;
-  color: #a39b90;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding-left: 32px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #a39b90;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding-left: 32px;
 }
 
 /* Highlighted Poly Column in Body */
 .phc-table tbody td.phc-col-poly {
-  color: #faf6ef;
-  font-weight: 500;
+    color: #faf6ef;
+    font-weight: 500;
 }
 
 /* Paper and PVC columns */
 .phc-table tbody td.phc-col-paper,
 .phc-table tbody td.phc-col-pvc {
-  color: #e2ddd5;
+    color: #e2ddd5;
 }
 
 /* Badges for YES / NO */
 .phc-pill-tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Inter", sans-serif;
-  font-size: 11.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 4px 14px;
-  border-radius: 12px;
-  min-width: 44px;
-  text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 4px 14px;
+    border-radius: 12px;
+    min-width: 44px;
+    text-align: center;
 }
 
 .phc-pill-tag.phc-tag-yes {
-  background-color: #0e5c3d;
-  color: #57e39e;
+    background-color: #0e5c3d;
+    color: #57e39e;
 }
 
 .phc-pill-tag.phc-tag-no {
-  background-color: #4a1f1b;
-  color: #e5827d;
+    background-color: #4a1f1b;
+    color: #e5827d;
 }
 
 /* Bottom CTA & Note Bar */
 .phc-bottom-bar {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-top: 28px;
 }
 
 /* Orange Pill Button */
 .phc-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: #fe6a00;
-  color: #171008;
-  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
-  font-size: 17.5px;
-  font-weight: 700;
-  padding: 10px 28px 11px 28px;
-  border-radius: 999px;
-  border: 2px solid #171008;
-  text-decoration: none;
-  box-shadow: 2px 2.5px 0px #171008;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background-color 0.15s ease;
-  white-space: nowrap;
-  line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #fe6a00;
+    color: #171008;
+    font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+    font-size: 17.5px;
+    font-weight: 700;
+    padding: 10px 28px 11px 28px;
+    border-radius: 999px;
+    border: 2px solid #171008;
+    text-decoration: none;
+    box-shadow: 2px 2.5px 0px #171008;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease;
+    white-space: nowrap;
+    line-height: 1.2;
 }
 
 .phc-cta-btn .phc-arrow {
-  font-family: "Inter", sans-serif;
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 1;
-  display: inline-block;
-  transition: transform 0.15s ease;
+    font-family: "Inter", sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.15s ease;
 }
 
 .phc-cta-btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3.5px 0px #171008;
-  background-color: #f16525;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3.5px 0px #171008;
+    background-color: #f16525;
 }
 
 .phc-cta-btn:hover .phc-arrow {
-  transform: translateX(2px);
+    transform: translateX(2px);
 }
 
 .phc-cta-btn:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px #171008;
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #171008;
 }
 
 /* Note Text */
 .phc-bottom-note {
-  font-family: "Inter", sans-serif;
-  font-size: 14.5px;
-  line-height: 1.45;
-  color: #635c52;
-  margin: 0;
-  max-width: 420px;
+    font-family: "Inter", sans-serif;
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: #635c52;
+    margin: 0;
+    max-width: 420px;
 }
 
 /* ==========================================================================
    RESPONSIVE DESIGN
    ========================================================================== */
 @media screen and (max-width: 1550px) {
-  .phc-heading {
-    font-size: 40px;
-  }
+    .phc-heading {
+        font-size: 40px;
+    }
 }
 
 @media screen and (max-width: 1450px) {
-  .phc-table tbody td {
-    font-size: 11px;
-  }
+    .phc-table tbody td {
+        font-size: 11px;
+    }
 }
 
 @media screen and (max-width: 1280px) {
-  .phc-heading {
-    font-size: 36px;
-  }
+    .phc-heading {
+        font-size: 36px;
+    }
 }
 
 @media screen and (max-width: 1200px) {
-  .phc-container {
-    padding: 0 0px;
-  }
+    .phc-container {
+        padding: 0 0px;
+    }
 
-  .phc-heading {
-    font-size: 30px;
-  }
-  .phc-table thead tr th {
-    font-size: 11px;
-  }
+    .phc-heading {
+        font-size: 30px;
+    }
+
+    .phc-table thead tr th {
+        font-size: 11px;
+    }
 }
 
 @media screen and (max-width: 768px) {
-  .phc-container {
-    padding: 0 0px;
-  }
+    .phc-container {
+        padding: 0 0px;
+    }
 
-  .phc-heading {
-    font-size: clamp(24px, 5.5vw, 28px);
-    line-height: 1.15;
-  }
+    .phc-heading {
+        font-size: clamp(24px, 5.5vw, 28px);
+        line-height: 1.15;
+    }
 
-  .phc-badge {
-    font-size: 12px;
-    padding: 4px 14px;
-  }
+    .phc-badge {
+        font-size: 12px;
+        padding: 4px 14px;
+    }
 
-  .phc-table thead tr th {
-    padding: 16px 14px;
-    font-size: 12px;
-  }
+    .phc-table thead tr th {
+        padding: 16px 14px;
+        font-size: 12px;
+    }
 
-  .phc-table tbody td {
-    padding: 14px 14px;
-    font-size: 11.5px;
-  }
+    .phc-table tbody td {
+        padding: 14px 14px;
+        font-size: 11.5px;
+    }
 
-  .phc-table tbody td.phc-col-attr {
-    padding-left: 16px;
-    font-size: 10px;
-  }
+    .phc-table tbody td.phc-col-attr {
+        padding-left: 16px;
+        font-size: 10px;
+    }
 
-  .phc-bottom-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
+    .phc-bottom-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
 
-  .phc-cta-btn {
-    width: 100%;
-    box-sizing: border-box;
-  }
+    .phc-cta-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
 
 @media screen and (max-width: 640px) {
-  .phc-header {
-    margin-bottom: 20px;
-  }
+    .phc-header {
+        margin-bottom: 20px;
+    }
 
-  .phc-heading {
-    font-size: clamp(24px, 6vw, 28px);
-  }
+    .phc-heading {
+        font-size: clamp(24px, 6vw, 28px);
+    }
 
-  .phc-table-card--has-mobile-cards {
-    display: none;
-  }
+    .phc-table-card--has-mobile-cards {
+        display: none;
+    }
 
-  .phc-mobile-cards {
-    display: grid;
-    gap: 8px;
-  }
+    .phc-mobile-cards {
+        display: grid;
+        gap: 8px;
+    }
 
-  .phc-mobile-card {
-    min-width: 0;
-    padding: 12px;
-    border: 1px solid #171008;
-    border-radius: 12px;
-    background-color: #171008;
-    color: #faf6ef;
-    box-sizing: border-box;
-  }
+    .phc-mobile-card {
+        min-width: 0;
+        padding: 12px;
+        border: 1px solid #171008;
+        border-radius: 12px;
+        background-color: #171008;
+        color: #faf6ef;
+        box-sizing: border-box;
+    }
 
-  .phc-mobile-card--poly {
-    border: 2px solid #fe6a00;
-  }
+    .phc-mobile-card--poly {
+        border: 2px solid #fe6a00;
+    }
 
-  .phc-mobile-card-title {
-    margin: 0;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #342b20;
-    color: #f8b825;
-    font-family: "Inter", sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.3;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+    .phc-mobile-card-title {
+        margin: 0;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #342b20;
+        color: #f8b825;
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.3;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
 
-  .phc-mobile-card--poly .phc-mobile-card-title {
-    color: #fe6a00;
-  }
+    .phc-mobile-card--poly .phc-mobile-card-title {
+        color: #fe6a00;
+    }
 
-  .phc-mobile-card-details {
-    margin: 0;
-  }
+    .phc-mobile-card-details {
+        margin: 0;
+    }
 
-  .phc-mobile-card-row {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    align-items: center;
-    gap: 8px;
-    min-height: 34px;
-    padding: 5px 0;
-    border-bottom: 1px solid #342b20;
-  }
+    .phc-mobile-card-row {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        align-items: center;
+        gap: 8px;
+        min-height: 34px;
+        padding: 5px 0;
+        border-bottom: 1px solid #342b20;
+    }
 
-  .phc-mobile-card-row:last-child {
-    border-bottom: 0;
-  }
+    .phc-mobile-card-row:last-child {
+        border-bottom: 0;
+    }
 
-  .phc-mobile-card-row dt {
-    color: #a39b90;
-    font-family: "Inter", sans-serif;
-    font-size: 9px;
-    font-weight: 700;
-    line-height: 1.35;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-  }
+    .phc-mobile-card-row dt {
+        color: #a39b90;
+        font-family: "Inter", sans-serif;
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1.35;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+    }
 
-  .phc-mobile-card-row dd {
-    margin: 0;
-    color: #e2ddd5;
-    font-family: "Inter", sans-serif;
-    font-size: 10px;
-    line-height: 1.4;
-    text-align: right;
-    overflow-wrap: anywhere;
-  }
+    .phc-mobile-card-row dd {
+        margin: 0;
+        color: #e2ddd5;
+        font-family: "Inter", sans-serif;
+        font-size: 10px;
+        line-height: 1.4;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
 
-  .phc-mobile-card-row .phc-pill-tag {
-    font-size: 9px;
-    padding: 3px 10px;
-  }
+    .phc-mobile-card-row .phc-pill-tag {
+        font-size: 9px;
+        padding: 3px 10px;
+    }
 
-  .phc-bottom-bar {
-    margin-top: 16px;
-    gap: 10px;
-  }
+    .phc-bottom-bar {
+        margin-top: 16px;
+        gap: 10px;
+    }
 
-  .phc-cta-btn {
-    width: auto;
-    max-width: 100%;
-    padding: 9px 20px;
-    font-size: 15px;
-  }
+    .phc-cta-btn {
+        width: auto;
+        max-width: 100%;
+        padding: 9px 20px;
+        font-size: 15px;
+    }
 
-  .phc-bottom-note {
-    font-size: 12px;
-  }
+    .phc-bottom-note {
+        font-size: 12px;
+    }
 
-  .product-head-compare-section {
-    padding-bottom: 20px;
-  }
+    .product-head-compare-section {
+        padding-bottom: 20px;
+    }
 }
 
 @media screen and (max-width: 360px) {
-  .phc-container {
-    padding: 0 12px;
-  }
+    .phc-container {
+        padding: 0 12px;
+    }
 
-  .phc-mobile-card {
-    padding: 10px;
-  }
+    .phc-mobile-card {
+        padding: 10px;
+    }
 
-  .phc-mobile-card-row {
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  }
+    .phc-mobile-card-row {
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    }
 }
