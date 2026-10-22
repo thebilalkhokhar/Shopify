@@ -131,21 +131,39 @@
 
     {%- if section.blocks.size > 0 -%}
       <div class="phc-mobile-cards">
-        {% render 'product-head-compare-card',
-          section: section,
-          title: section.settings.col_1_title,
-          value_key: 'poly_val'
-        %}
-        {% render 'product-head-compare-card',
-          section: section,
-          title: section.settings.col_2_title,
-          value_key: 'paper_val'
-        %}
-        {% render 'product-head-compare-card',
-          section: section,
-          title: section.settings.col_3_title,
-          value_key: 'pvc_val'
-        %}
+        {%- assign columns = 'poly_val,paper_val,pvc_val' | split: ',' -%}
+        {%- for key in columns -%}
+          {%- assign card_title = '' -%}
+          {%- if key == 'poly_val' -%}
+            {%- assign card_title = section.settings.col_1_title | default: 'POLYPROPYLENE' -%}
+          {%- elsif key == 'paper_val' -%}
+            {%- assign card_title = section.settings.col_2_title | default: 'PAPER' -%}
+          {%- elsif key == 'pvc_val' -%}
+            {%- assign card_title = section.settings.col_3_title | default: 'PVC' -%}
+          {%- endif -%}
+
+          <article class="phc-mobile-card{% if key == 'poly_val' %} phc-mobile-card--poly{% endif %}">
+            <h3 class="phc-mobile-card-title">{{ card_title | escape }}</h3>
+
+            <dl class="phc-mobile-card-details">
+              {%- for block in section.blocks -%}
+                {%- assign comparison_value = block.settings[key] | strip -%}
+                <div class="phc-mobile-card-row" {{ block.shopify_attributes }}>
+                  <dt>{{ block.settings.attribute_label | escape }}</dt>
+                  <dd>
+                    {%- if comparison_value == 'YES' or comparison_value == 'yes' or comparison_value == 'Yes' -%}
+                      <span class="phc-pill-tag phc-tag-yes">YES</span>
+                    {%- elsif comparison_value == 'NO' or comparison_value == 'no' or comparison_value == 'No' -%}
+                      <span class="phc-pill-tag phc-tag-no">NO</span>
+                    {%- else -%}
+                      {{ comparison_value | escape }}
+                    {%- endif -%}
+                  </dd>
+                </div>
+              {%- endfor -%}
+            </dl>
+          </article>
+        {%- endfor -%}
       </div>
     {%- endif -%}
 
