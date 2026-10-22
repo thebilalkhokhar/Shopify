@@ -1,0 +1,355 @@
+/* ==========================================================================
+   ORDER TESTIMONIAL SECTION CSS (Exact 1:1 replica of home-testimonial, but NO black container background)
+   - Background: Pure transparent / page background (#FAF7F0 or #FBF8F3)
+   - NO top punch dots
+   - Card container with subtle radial grid pattern (#d4cbbe 1.2px)
+   - Left-aligned header with tilted yellow pill badge ("Received") with solid shadow
+   - Serif bold title: "What buyers said."
+   - Fox brand logo on the top right
+   - Carousel cards with rounded corners (20px), solid black border (2px),
+     solid shadow (4px 5px 0 0 #171008), 5 orange stars (#E85D18),
+     bold title, quote text, dotted divider, and author line
+   - Bottom progress bar indicator + circle arrow navigation buttons with 3D shadow
+   - Smooth horizontal scrollable carousel with mobile responsiveness
+   ========================================================================== */
+
+.products-testimonial-section {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  padding: 0;
+}
+
+.products-testimonial__card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  background-color: #FAF7F0;
+  background-image: radial-gradient(#d4cbbe 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+  /* Left has 60px padding, Right has 0 padding so cards bleed off the right edge */
+  padding: 40px 0 48px 60px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header Area (Maintains 60px right margin) */
+.products-testimonial__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-right: 60px;
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+.products-testimonial__header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Badge (Received) */
+.products-testimonial__badge {
+  background-color: #F8B825;
+  color: #171008;
+  padding: 4px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-family: var(--custom-font-family, serif);
+  font-size: 14px;
+  border: 1.8px solid #171008;
+  display: inline-block;
+  transform: rotate(-5deg);
+  margin-bottom: 12px;
+  box-shadow: 0 3px 0 0 #E85D18, 0 4.5px 0 0 #171008;
+  letter-spacing: -0.2px;
+}
+
+/* Title */
+.products-testimonial__title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 44px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+/* Brand Mark / Logo */
+.products-testimonial__brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.products-testimonial__brand-logo {
+  max-width: 130px;
+  height: auto;
+  display: block;
+}
+
+/* Slider Track: Extends completely to the right edge so cards bleed off the right */
+.products-testimonial__slider-wrap {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+
+.products-testimonial__slider-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 8px;
+  padding-right: 0;
+  /* Cards bleed right off the edge */
+}
+
+.products-testimonial__slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Slide Card */
+.products-testimonial__slide {
+  flex: 0 0 clamp(350px, 25vw, 420px);
+  max-width: 420px;
+  scroll-snap-align: start;
+}
+
+.products-testimonial__item-card {
+  background-color: #FAF7F0;
+  border: 2px solid #171008;
+  border-radius: 20px;
+  box-shadow: 4px 5px 0 0 #171008;
+  padding: 26px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  box-sizing: border-box;
+}
+
+.products-testimonial__item-card:hover {
+  transform: none;
+  box-shadow: 4px 5px 0 0 #171008;
+}
+
+/* 5 Stars */
+.products-testimonial__stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.products-testimonial__stars svg {
+  display: block;
+}
+
+/* Card Heading */
+.products-testimonial__item-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+
+/* Review Text */
+.products-testimonial__item-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.48;
+  color: #171008;
+  margin: 0 0 16px 0;
+  flex-grow: 1;
+}
+
+/* Dotted Line Divider */
+.products-testimonial__divider {
+  border-top: 1px dotted rgba(23, 16, 8, 0.4);
+  margin-bottom: 14px;
+  width: 100%;
+}
+
+/* Author Info */
+.products-testimonial__author {
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  color: #171008;
+  line-height: 1.3;
+}
+
+/* Controls Area (Progress Bar + Nav Buttons) */
+.products-testimonial__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 8px;
+  padding-right: 60px;
+  box-sizing: border-box;
+}
+
+/* Progress Bar Track */
+.products-testimonial__progress-wrap {
+  width: 280px;
+  height: 7px;
+  background-color: #FAF7F0;
+  border: 1.5px solid #171008;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.products-testimonial__progress-bar {
+  height: 100%;
+  width: 30%;
+  background-color: #171008;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+/* Nav Buttons with 3D Shadow matching Reference Image */
+.products-testimonial__nav-btns {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.products-testimonial__nav-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #171008;
+  background-color: #FAF7F0;
+  box-shadow: 3px 3px 0 0 #171008;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 0;
+}
+
+.products-testimonial__nav-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 #171008;
+  background-color: #FAF7F0;
+}
+
+.products-testimonial__nav-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 #171008;
+}
+
+.products-testimonial__nav-btn svg {
+  stroke: #171008;
+  display: block;
+}
+
+/* Responsive */
+@media screen and (max-width: 1550px) {
+  .products-testimonial__title {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .products-testimonial__title {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .products-testimonial__card {
+    padding: 24px 0 32px 24px;
+  }
+
+  .products-testimonial__slider-track {
+    align-items: stretch;
+  }
+
+  .products-testimonial__slide {
+    display: flex;
+  }
+
+  .products-testimonial__item-card {
+    width: 100%;
+    height: 100%;
+  }
+
+  .products-testimonial__header,
+  .products-testimonial__controls {
+    padding-right: 24px;
+  }
+
+  .products-testimonial__title {
+    font-size: 34px;
+  }
+
+  .products-testimonial__slide {
+    flex: 0 0 300px;
+    max-width: 300px;
+  }
+
+  .products-testimonial__progress-wrap {
+    width: 180px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .products-testimonial__brand-logo {
+    max-width: 90px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .products-testimonial-section {
+    padding: 0;
+  }
+
+  .products-testimonial__card {
+    padding: 24px 0 24px 16px;
+  }
+
+  .products-testimonial__header,
+  .products-testimonial__controls {
+    padding-right: 16px;
+  }
+
+  .products-testimonial__title {
+    font-size: 26px;
+  }
+
+  .products-testimonial__slide {
+    flex: 0 0 280px;
+    max-width: 280px;
+  }
+
+  .products-testimonial__item-card {
+    min-height: 220px;
+    padding: 20px 18px 16px;
+  }
+
+  .products-testimonial__controls {
+    margin-top: 24px;
+  }
+
+  .products-testimonial__progress-wrap {
+    width: 140px;
+  }
+
+  .products-testimonial__nav-btn {
+    width: 36px;
+    height: 36px;
+  }
+}

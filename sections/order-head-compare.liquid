@@ -1,12 +1,11 @@
-{{ 'product-head-compare.css' | asset_url | stylesheet_tag }}
+{{ 'order-head-compare.css' | asset_url | stylesheet_tag }}
 
 <section
   id="order-head-compare-{{ section.id }}"
   class="product-head-compare-section order-head-compare-section"
   style="
     background-color: {{ section.settings.bg_color | default: '#FBF8F3' }};
-    padding-top: {{ section.settings.padding_top | default: 40 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    padding-top: {{ section.settings.padding_top | default: 40 }}px;;
   "
   {{ section.shopify_attributes }}
 >
@@ -26,7 +25,7 @@
     </div>
 
     <!-- Comparison Table Card (Dark Frame) -->
-    <div class="phc-table-card">
+    <div class="phc-table-card phc-table-card--has-mobile-cards">
       <div class="phc-table-responsive">
         <table class="phc-table">
           <thead>
@@ -128,6 +127,82 @@
           </tbody>
         </table>
       </div>
+    </div>
+
+    <div class="phc-mobile-cards">
+      {%- if section.blocks.size > 0 -%}
+        {%- assign columns = 'poly_val,paper_val,pvc_val' | split: ',' -%}
+        {%- for key in columns -%}
+          {%- assign card_title = '' -%}
+          {%- if key == 'poly_val' -%}
+            {%- assign card_title = section.settings.col_1_title | default: 'POLYPROPYLENE' -%}
+          {%- elsif key == 'paper_val' -%}
+            {%- assign card_title = section.settings.col_2_title | default: 'PAPER' -%}
+          {%- elsif key == 'pvc_val' -%}
+            {%- assign card_title = section.settings.col_3_title | default: 'PVC' -%}
+          {%- endif -%}
+
+          <article class="phc-mobile-card{% if key == 'poly_val' %} phc-mobile-card--poly{% endif %}">
+            <h3 class="phc-mobile-card-title">{{ card_title | escape }}</h3>
+            <dl class="phc-mobile-card-details">
+              {%- for block in section.blocks -%}
+                {%- assign comparison_value = block.settings[key] | strip -%}
+                <div class="phc-mobile-card-row" {{ block.shopify_attributes }}>
+                  <dt>{{ block.settings.attribute_label | escape }}</dt>
+                  <dd>
+                    {%- if comparison_value == 'YES' or comparison_value == 'yes' or comparison_value == 'Yes' -%}
+                      <span class="phc-pill-tag phc-tag-yes">YES</span>
+                    {%- elsif comparison_value == 'NO' or comparison_value == 'no' or comparison_value == 'No' -%}
+                      <span class="phc-pill-tag phc-tag-no">NO</span>
+                    {%- else -%}
+                      {{ comparison_value | escape }}
+                    {%- endif -%}
+                  </dd>
+                </div>
+              {%- endfor -%}
+            </dl>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        <article class="phc-mobile-card phc-mobile-card--poly">
+          <h3 class="phc-mobile-card-title">{{ section.settings.col_1_title | default: 'POLYPROPYLENE' | escape }}</h3>
+          <dl class="phc-mobile-card-details">
+            <div class="phc-mobile-card-row"><dt>SEALS UP TO</dt><dd>1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)</dd></div>
+            <div class="phc-mobile-card-row"><dt>STICKS TO</dt><dd>Cardboard</dd></div>
+            <div class="phc-mobile-card-row"><dt>GOES ON</dt><dd>Tape gun or machine</dd></div>
+            <div class="phc-mobile-card-row"><dt>PRINT DETAIL</dt><dd>Sharp</dd></div>
+            <div class="phc-mobile-card-row"><dt>TAMPER EVIDENT</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+            <div class="phc-mobile-card-row"><dt>RECYCLABLE</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+            <div class="phc-mobile-card-row"><dt>BELOW FREEZING</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+          </dl>
+        </article>
+
+        <article class="phc-mobile-card">
+          <h3 class="phc-mobile-card-title">{{ section.settings.col_2_title | default: 'PAPER' | escape }}</h3>
+          <dl class="phc-mobile-card-details">
+            <div class="phc-mobile-card-row"><dt>SEALS UP TO</dt><dd>240 grade (30 lbs) · 260 HD (30+ lbs)</dd></div>
+            <div class="phc-mobile-card-row"><dt>STICKS TO</dt><dd>Cardboard</dd></div>
+            <div class="phc-mobile-card-row"><dt>GOES ON</dt><dd>Water dispenser</dd></div>
+            <div class="phc-mobile-card-row"><dt>PRINT DETAIL</dt><dd>Sharp</dd></div>
+            <div class="phc-mobile-card-row"><dt>TAMPER EVIDENT</dt><dd><span class="phc-pill-tag phc-tag-yes">YES</span></dd></div>
+            <div class="phc-mobile-card-row"><dt>RECYCLABLE</dt><dd><span class="phc-pill-tag phc-tag-yes">YES</span></dd></div>
+            <div class="phc-mobile-card-row"><dt>BELOW FREEZING</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+          </dl>
+        </article>
+
+        <article class="phc-mobile-card">
+          <h3 class="phc-mobile-card-title">{{ section.settings.col_3_title | default: 'PVC' | escape }}</h3>
+          <dl class="phc-mobile-card-details">
+            <div class="phc-mobile-card-row"><dt>SEALS UP TO</dt><dd>50+ lbs, heaviest loads</dd></div>
+            <div class="phc-mobile-card-row"><dt>STICKS TO</dt><dd>Cardboard, plastic, glass, metal</dd></div>
+            <div class="phc-mobile-card-row"><dt>GOES ON</dt><dd>Tape gun</dd></div>
+            <div class="phc-mobile-card-row"><dt>PRINT DETAIL</dt><dd>Limited detail</dd></div>
+            <div class="phc-mobile-card-row"><dt>TAMPER EVIDENT</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+            <div class="phc-mobile-card-row"><dt>RECYCLABLE</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+            <div class="phc-mobile-card-row"><dt>BELOW FREEZING</dt><dd><span class="phc-pill-tag phc-tag-no">NO</span></dd></div>
+          </dl>
+        </article>
+      {%- endif -%}
     </div>
 
     <!-- Bottom CTA Bar -->

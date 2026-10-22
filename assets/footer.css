@@ -97,8 +97,8 @@
 }
 
 .footer-brand-desc {
-  color: #D4CECE;
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  color: #d4cece;
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 14px;
   line-height: 1.55;
   margin: 0 0 22px 0;
@@ -130,29 +130,31 @@
 
 .footer-newsletter-input {
   flex: 1;
-  background-color: #FAF7F0;
+  background-color: #faf7f0;
   color: #171008;
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 14px;
   padding: 9px 18px;
   border-radius: 999px;
   border: 1.5px solid #171008;
   outline: none;
   min-width: 0;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .footer-newsletter-input::placeholder {
-  color: #7A7269;
+  color: #7a7269;
 }
 
 .footer-newsletter-input:focus {
-  border-color: #ED632B;
+  border-color: #ed632b;
   box-shadow: 0 0 0 2px rgba(237, 99, 43, 0.3);
 }
 
 .footer-newsletter-btn {
-  background-color: #ED632B;
+  background-color: #ed632b;
   color: #171008;
   font-family: var(--custom-font-family, serif);
   font-size: 15px;
@@ -160,21 +162,29 @@
   padding: 8px 22px;
   border-radius: 999px;
   border: 1.8px solid #171008;
-  box-shadow: 2px 3px 0 0 #ffffff, 2px 3px 0 1.5px #171008;
+  box-shadow:
+    2px 3px 0 0 #ffffff,
+    2px 3px 0 1.5px #171008;
   cursor: pointer;
   white-space: nowrap;
   line-height: 1.2;
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s ease;
 }
 
 .footer-newsletter-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 3px 4px 0 0 #ffffff, 3px 4px 0 1.5px #171008;
+  box-shadow:
+    3px 4px 0 0 #ffffff,
+    3px 4px 0 1.5px #171008;
 }
 
 .footer-newsletter-btn:active {
   transform: translate(1px, 2px);
-  box-shadow: 1px 1px 0 0 #ffffff, 1px 1px 0 1.5px #171008;
+  box-shadow:
+    1px 1px 0 0 #ffffff,
+    1px 1px 0 1.5px #171008;
 }
 
 /* Social Icons */
@@ -194,7 +204,10 @@
   justify-content: center;
   color: #ffffff;
   text-decoration: none;
-  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .footer-social-icon:hover {
@@ -235,10 +248,22 @@
   margin-bottom: 20px;
   letter-spacing: -0.2px;
   /* Serrated tape dispenser teeth on left and right */
-  clip-path: polygon(0% 0%, 100% 0%,
-      calc(100% - 5px) 16%, 100% 33%, calc(100% - 5px) 50%, 100% 66%, calc(100% - 5px) 83%, 100% 100%,
-      0% 100%,
-      5px 83%, 0% 66%, 5px 50%, 0% 33%, 5px 16%);
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    calc(100% - 5px) 16%,
+    100% 33%,
+    calc(100% - 5px) 50%,
+    100% 66%,
+    calc(100% - 5px) 83%,
+    100% 100%,
+    0% 100%,
+    5px 83%,
+    0% 66%,
+    5px 50%,
+    0% 33%,
+    5px 16%
+  );
 }
 
 .footer-menu-list {
@@ -252,13 +277,15 @@
 }
 
 .footer-menu-link {
-  color: #D4CECE;
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  color: #d4cece;
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 14px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .footer-menu-link:hover {
@@ -268,7 +295,7 @@
 
 /* Tiny Yellow "New" Pill Badge */
 .footer-new-badge {
-  background-color: #F8B825;
+  background-color: #f8b825;
   color: #171008;
   font-family: var(--custom-font-family, serif);
   font-size: 11px;
@@ -307,7 +334,7 @@
 
 .footer-info-label {
   font-family: var(--custom-font-family, serif);
-  color: #ED632B;
+  color: #ed632b;
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 6px;
@@ -315,8 +342,8 @@
 }
 
 .footer-info-value {
-  color: #D4CECE;
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  color: #d4cece;
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 14px;
   line-height: 1.45;
   text-decoration: none;
@@ -332,8 +359,8 @@ a.footer-info-value:hover {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  color: #A89F95;
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  color: #a89f95;
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 13px;
   flex-wrap: wrap;
 }
@@ -410,7 +437,7 @@ a.footer-info-value:hover {
   }
 
   .footer-frame {
-    padding: 42px 18px 22px 18px !important;
+    padding: 80px 18px 22px 18px !important;
     border-radius: 20px;
   }
 

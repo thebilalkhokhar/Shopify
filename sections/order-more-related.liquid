@@ -32,8 +32,8 @@
         {%- endif -%}
       </div>
 
-      <!-- 3 Columns Products Grid (Title, Price, and Short Description all inside the Box) -->
-      <div class="omr-grid">
+      <!-- Related Products -->
+      <div class="omr-grid" id="omrTrack-{{ section.id }}">
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             {%- assign linked_product = block.settings.product -%}
@@ -47,9 +47,8 @@
 
             {%- assign item_img = block.settings.image | default: linked_product.featured_image -%}
 
-            <a href="{{ item_url | default: '#' }}" class="omr-box-card" {{ block.shopify_attributes }}>
-              <!-- Image Box -->
-              <div class="omr-image-wrap">
+            <a href="{{ item_url | default: '#' }}" class="omr-item" {{ block.shopify_attributes }}>
+              <div class="omr-image-box">
                 {%- if item_img != blank -%}
                   {{ item_img | image_url: width: 600 | image_tag: class: 'omr-image', loading: 'lazy', alt: item_title }}
                 {%- else -%}
@@ -57,8 +56,7 @@
                 {%- endif -%}
               </div>
 
-              <!-- Product Info & Short Description Inside the Box/Card -->
-              <div class="omr-content-wrap">
+              <div class="omr-info">
                 {%- if item_title != blank -%}
                   <h3 class="omr-title">{{ item_title }}</h3>
                 {%- endif -%}
@@ -77,8 +75,8 @@
           {%- endfor -%}
         {%- else -%}
           <!-- Default 3 Product Boxes if no blocks added -->
-          <a href="/products/pvc-tape" class="omr-box-card">
-            <div class="omr-image-wrap">
+          <a href="/products/pvc-tape" class="omr-item">
+            <div class="omr-image-box">
               <img
                 src="{{ 'pvc.webp' | file_url }}"
                 alt="PVC Tape"
@@ -89,15 +87,15 @@
                 onerror="this.onerror=null; this.src='https://0ap41c-jc.myshopify.com/cdn/shop/files/pvc.webp';"
               >
             </div>
-            <div class="omr-content-wrap">
+            <div class="omr-info">
               <h3 class="omr-title">PVC Tape</h3>
               <p class="omr-price">Starting at <strong>$7.84</strong> a roll</p>
               <p class="omr-desc">Heavy-duty carton sealing tape with silent release and superior tack.</p>
             </div>
           </a>
 
-          <a href="/products/flatback-tape" class="omr-box-card">
-            <div class="omr-image-wrap">
+          <a href="/products/flatback-tape" class="omr-item">
+            <div class="omr-image-box">
               <img
                 src="{{ 'flattape.webp' | file_url }}"
                 alt="Flatback Tape"
@@ -108,15 +106,15 @@
                 onerror="this.onerror=null; this.src='https://0ap41c-jc.myshopify.com/cdn/shop/files/flattape.webp';"
               >
             </div>
-            <div class="omr-content-wrap">
+            <div class="omr-info">
               <h3 class="omr-title">Flatback Tape</h3>
               <p class="omr-price">Starting at <strong>$7.12</strong> a roll</p>
               <p class="omr-desc">Strong Kraft paper tape designed for easy hand-tear and instant stickiness.</p>
             </div>
           </a>
 
-          <a href="/products/dispensers" class="omr-box-card">
-            <div class="omr-image-wrap">
+          <a href="/products/dispensers" class="omr-item">
+            <div class="omr-image-box">
               <img
                 src="{{ 'dispensers.webp' | file_url }}"
                 alt="Dispensers"
@@ -127,7 +125,7 @@
                 onerror="this.onerror=null; this.src='https://0ap41c-jc.myshopify.com/cdn/shop/files/dispensers.webp';"
               >
             </div>
-            <div class="omr-content-wrap">
+            <div class="omr-info">
               <h3 class="omr-title">Dispensers</h3>
               <p class="omr-price">From <strong>$34</strong> per unit</p>
               <p class="omr-desc">Industrial water-activated dispensers and handheld tape guns for fast packaging.</p>
@@ -136,10 +134,78 @@
         {%- endif -%}
       </div>
 
+      <div class="omr-controls" aria-label="Related product navigation">
+        <div class="omr-progress-wrap" aria-hidden="true">
+          <div class="omr-progress-bar" id="omrProgress-{{ section.id }}"></div>
+        </div>
+        <div class="omr-nav-buttons">
+          <button
+            type="button"
+            class="omr-nav-button"
+            id="omrPrevious-{{ section.id }}"
+            aria-label="Previous related products"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="omr-nav-button"
+            id="omrNext-{{ section.id }}"
+            aria-label="Next related products"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
 
   </div>
 </section>
+
+<script>
+  (function () {
+    const track = document.getElementById('omrTrack-{{ section.id }}');
+    const progress = document.getElementById('omrProgress-{{ section.id }}');
+    const previousButton = document.getElementById('omrPrevious-{{ section.id }}');
+    const nextButton = document.getElementById('omrNext-{{ section.id }}');
+
+    if (!track || !progress || !previousButton || !nextButton) return;
+
+    const updateProgress = function () {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const scrollRatio = maxScroll > 0 ? track.scrollLeft / maxScroll : 0;
+      progress.style.width = 30 + scrollRatio * 70 + '%';
+      previousButton.disabled = maxScroll <= 0 || track.scrollLeft <= 1;
+      nextButton.disabled = maxScroll <= 0 || track.scrollLeft >= maxScroll - 1;
+    };
+
+    const scrollToAdjacentProduct = function (direction) {
+      const firstItem = track.querySelector('.omr-item');
+      if (!firstItem) return;
+
+      const trackStyles = window.getComputedStyle(track);
+      const gap = parseFloat(trackStyles.columnGap) || 0;
+      track.scrollBy({
+        left: direction * (firstItem.getBoundingClientRect().width + gap),
+        behavior: 'smooth',
+      });
+    };
+
+    previousButton.addEventListener('click', function () {
+      scrollToAdjacentProduct(-1);
+    });
+    nextButton.addEventListener('click', function () {
+      scrollToAdjacentProduct(1);
+    });
+    track.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  })();
+</script>
 
 {% schema %}
 {
@@ -198,7 +264,7 @@
           "id": "short_description",
           "label": "Short Description",
           "default": "Heavy-duty carton sealing tape with silent release and superior adhesion.",
-          "info": "Displayed directly inside the card below the price"
+          "info": "Displayed below the product price"
         },
         {
           "type": "url",

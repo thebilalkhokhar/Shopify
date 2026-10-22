@@ -31,7 +31,13 @@
   box-sizing: border-box;
   padding: 130px 24px 80px 24px;
   background-color: transparent;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   color: #171008;
 }
 
@@ -63,7 +69,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1.15 / 1;
-  background-color: var(--osb-banner-bg, #FAA72B);
+  background-color: var(--osb-banner-bg, #faa72b);
   border: 1.8px solid #171008;
   border-radius: 28px;
   overflow: hidden;
@@ -80,7 +86,7 @@
   top: 24px;
   left: 24px;
   background-color: #171008;
-  color: #FEC33F;
+  color: #fec33f;
   font-size: 13px;
   font-weight: 700;
   padding: 8px 18px;
@@ -131,7 +137,7 @@
 }
 
 .osb-desc-title {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 18px;
   font-weight: 700;
   color: #171008;
@@ -148,7 +154,7 @@
 .osb-desc-paragraph {
   font-size: 13px;
   line-height: 1.6;
-  color: #574F46;
+  color: #574f46;
   margin: 0 0 20px 0;
 }
 
@@ -168,11 +174,11 @@
   gap: 10px;
   font-size: 13px;
   line-height: 1.45;
-  color: #2F2922;
+  color: #2f2922;
 }
 
 .osb-sparkle-icon {
-  color: #EA5B1B;
+  color: #ea5b1b;
   font-size: 16px;
   line-height: 1;
   flex-shrink: 0;
@@ -208,7 +214,7 @@
 
 .osb-sub-price {
   font-size: 15px;
-  color: #574F46;
+  color: #574f46;
   margin: 0 0 18px 0;
 }
 
@@ -220,13 +226,13 @@
 .osb-lead-text {
   font-size: 13.5px;
   line-height: 1.55;
-  color: #574F46;
+  color: #574f46;
   margin: 0 0 22px 0;
 }
 
 /* "What is in the box?" Section */
 .osb-box-title {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 15px;
   font-weight: 800;
   color: #171008;
@@ -248,7 +254,7 @@
   gap: 12px;
   font-size: 12.5px;
   line-height: 1.45;
-  color: #4A423A;
+  color: #4a423a;
 }
 
 /* Orange Scalloped Rosette Checkmark Badge matching reference image */
@@ -274,7 +280,7 @@
 .osb-divider {
   width: 100%;
   border: none;
-  border-top: 1.5px dotted #D1C9BE;
+  border-top: 1.5px dotted #d1c9be;
   margin: 24px 0 20px 0;
 }
 
@@ -325,7 +331,7 @@
 }
 
 .osb-step-btn:hover {
-  background-color: #F0ECE4;
+  background-color: #f0ece4;
 }
 
 .osb-step-input {
@@ -364,12 +370,12 @@
 }
 
 .osb-num-pill:hover {
-  background-color: #F2EDE4;
+  background-color: #f2ede4;
 }
 
 .osb-num-pill.is-active {
   background-color: #171008;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 /* Total Price Row */
@@ -397,13 +403,13 @@
   font-weight: 800;
   color: #171008;
   line-height: 1;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   letter-spacing: -0.5px;
 }
 
 .osb-per-roll-price {
   font-size: 12px;
-  color: #66635F;
+  color: #66635f;
   margin-top: 4px;
 }
 
@@ -415,7 +421,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1.3fr;
   align-items: center;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-bottom: 24px;
   box-sizing: border-box;
 }
@@ -432,19 +438,19 @@
 
 .osb-summary-label {
   font-size: 11px;
-  color: #A8A29A;
+  color: #a8a29a;
 }
 
 .osb-summary-val {
   font-size: 13.5px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 /* Big Gold Add to Cart Button (Capsule / Pill with 3D shadow) */
 .osb-add-to-cart-btn {
   width: 100%;
-  background-color: #FEC33F;
+  background-color: #fec33f;
   border: 2px solid #171008;
   border-radius: 999px;
   padding: 15px 24px;
@@ -453,7 +459,10 @@
   font-weight: 700;
   color: #171008;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
   box-shadow: 2.5px 3.5px 0px #171008;
   display: flex;
   align-items: center;
@@ -480,14 +489,26 @@
 /* ==========================================================================
    RESPONSIVE DESIGN
    ========================================================================== */
+
+@media screen and (max-width: 1280px) {
+  .osb-headline {
+    font-size: 36px;
+  }
+  .osb-lead-text {
+    font-size: 12px;
+  }
+  .osb-feature-item {
+    font-size: 11.5px;
+  }
+}
 @media screen and (max-width: 1024px) {
   .order-sample-section {
-    padding: 110px 20px 60px 20px;
+    padding: 110px 0px 20px 0px;
   }
 
   .osb-layout {
-    grid-template-columns: 1fr;
-    row-gap: 40px;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 25px;
   }
 
   .osb-config-card {
@@ -495,9 +516,49 @@
   }
 }
 
+@media screen and (max-width: 829px) {
+  .osb-layout {
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 900px) {
+  .osb-summary-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .osb-summary-col {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .osb-summary-col--right {
+    justify-content: center;
+  }
+
+  .osb-summary-label {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .osb-summary-val {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .osb-total-price {
+    font-size: 25px;
+  }
+}
+
 @media screen and (max-width: 640px) {
   .order-sample-section {
-    padding: 100px 16px 50px 16px;
+    padding: 100px 0px 50px 0px;
   }
 
   .osb-banner-card {
