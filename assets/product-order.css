@@ -13,6 +13,9 @@
   width: 100%;
   position: relative;
   box-sizing: border-box;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .po-container {
@@ -190,6 +193,11 @@
   .po-step-card {
     padding: 13px 15px 13px;
   }
+
+  .product-order-section {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }
 
 @media screen and (max-width: 900px) {
@@ -213,10 +221,20 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .po-container {
+    padding: 0 16px;
+  }
+}
+
 @media screen and (max-width: 640px) {
   .po-grid {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .product-order-section {
+    padding-bottom: 20px;
   }
 }
 

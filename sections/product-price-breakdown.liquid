@@ -6,12 +6,11 @@
   style="
     background-color: {{ section.settings.bg_color | default: '#FBF8F3' }};
     padding-top: {{ section.settings.padding_top | default: 40 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    {% comment %} padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px; {% endcomment %}
   "
   {{ section.shopify_attributes }}
 >
   <div class="ppb-container">
-    
     <!-- Header: Badge & Main Title -->
     <div class="ppb-header">
       {%- if section.settings.badge_text != blank -%}
@@ -203,7 +202,6 @@
         {%- endfor -%}
       {%- endif -%}
     </div>
-
   </div>
 </section>
 

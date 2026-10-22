@@ -1,0 +1,107 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_policy": {
+      "type": "main-policy",
+      "blocks": {
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "title": "1. Custom Print Guarantee"
+          }
+        },
+        "text_1": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Because custom printed tape is manufactured specifically to your brand artwork, ink colors, and core specifications, rolls cannot be restocked or returned for change of mind.</p><p>However, we stand 100% behind our print quality. If the delivered tape contains printing defects, misaligned colors that deviate from your approved proof, or manufacturing flaws, we will rerun your order or issue an immediate refund.</p>"
+          }
+        },
+        "callout_1": {
+          "type": "callout",
+          "settings": {
+            "callout_title": "Damaged in Transit",
+            "callout_text": "If cartons arrive crushed, wet, or with broken cores from carrier mishandling, snap a quick photo and contact us within 7 days of delivery. We will open a carrier claim and put replacement rolls into priority queue immediately."
+          }
+        },
+        "heading_2": {
+          "type": "heading",
+          "settings": {
+            "title": "2. How to Report an Issue"
+          }
+        },
+        "text_2": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>To report damaged packages or print discrepancy:</p><ol><li>Take 2–3 clear photos showing the damaged boxes or the defect on the tape roll.</li><li>Email <a href=\"mailto:hello@tapefox.com\">hello@tapefox.com</a> with your order number.</li><li>A representative will respond within 24 hours with an immediate reprint or credit resolution.</li></ol>"
+          }
+        },
+        "heading_3": {
+          "type": "heading",
+          "settings": {
+            "title": "3. Unprinted Dispensers & Stock Goods"
+          }
+        },
+        "text_3": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Standard non-custom items like manual dispensers and tape guns in new, unopened condition may be returned within 30 days of receipt. Return shipping costs apply unless the item arrived defective.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_1",
+        "text_1",
+        "callout_1",
+        "heading_2",
+        "text_2",
+        "heading_3",
+        "text_3"
+      ],
+      "settings": {
+        "page_bg": "#FAF7F0",
+        "badge_text": "Returns & Replacements",
+        "heading": "Returns & Damages",
+        "subheading": "Our quality guarantee, transit damage procedures, and hassle-free reprint protocol.",
+        "last_updated": "October 2026",
+        "show_contact_box": true,
+        "contact_title": "Need help with a damaged carton?",
+        "contact_desc": "Email photos directly to hello@tapefox.com with your order number for same-day resolution."
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "/pages/privacy-policy",
+        "legal_2_text": "Terms",
+        "legal_2_link": "/pages/terms-of-service",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "/pages/shipping-policy",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "/pages/refund-policy",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": "/pages/accessibility"
+      }
+    }
+  },
+  "order": [
+    "main_policy",
+    "home_footer"
+  ]
+}

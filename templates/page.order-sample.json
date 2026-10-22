@@ -39,8 +39,6 @@
       "type": "order-head-compare",
       "settings": {
         "bg_color": "#fbf8f3",
-        "padding_top": 40,
-        "padding_bottom": 80,
         "badge_text": "Head to head",
         "heading": "Polypropylene, or one of\nthe other two?",
         "col_1_title": "POLYPROPYLENE",
@@ -55,53 +53,14 @@
       "type": "order-testimonial",
       "settings": {
         "badge_text": "Received",
-        "heading": "What buyers said.",
-        "logo_image": "shopify://shop_images/Sticker_Logo.webp"
+        "heading": "What buyers said."
       }
     },
     "order_faqs": {
       "type": "order-faqs",
-      "blocks": {
-        "faq_item_kxRgmV": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Can you help with my tape design?",
-            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
-          }
-        },
-        "faq_item_R8mfkT": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Can you help with my tape design?",
-            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
-          }
-        },
-        "faq_item_8Yg7aa": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Can you help with my tape design?",
-            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
-          }
-        },
-        "faq_item_RdtmVi": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Can you help with my tape design?",
-            "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good."
-          }
-        }
-      },
-      "block_order": [
-        "faq_item_kxRgmV",
-        "faq_item_R8mfkT",
-        "faq_item_8Yg7aa",
-        "faq_item_RdtmVi"
-      ],
       "settings": {
         "page_bg": "#fbf8f3",
         "frame_bg": "#171008",
-        "padding_top": 40,
-        "padding_bottom": 80,
         "badge_text": "Questions",
         "heading": "Before you order",
         "subtext": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad.",
@@ -116,7 +75,6 @@
         "item_1": {
           "type": "product_item",
           "settings": {
-            "product": "",
             "image": "shopify://shop_images/pvc.webp",
             "title": "PVC Tape",
             "price_text": "Starting at $7.84 a roll",
@@ -127,7 +85,6 @@
         "item_2": {
           "type": "product_item",
           "settings": {
-            "product": "",
             "image": "shopify://shop_images/flattape.webp",
             "title": "Flatback Tape",
             "price_text": "Starting at $7.12 a roll",
@@ -138,7 +95,6 @@
         "item_3": {
           "type": "product_item",
           "settings": {
-            "product": "",
             "image": "shopify://shop_images/dispensers.webp",
             "title": "Dispensers",
             "price_text": "From $34 per unit",

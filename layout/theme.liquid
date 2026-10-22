@@ -25,6 +25,7 @@
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'page-policy.css' | asset_url | stylesheet_tag }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -118,6 +119,7 @@
             p.indexOf('/shipping') !== -1 ||
             p.indexOf('/refund') !== -1 ||
             p.indexOf('/returns') !== -1 ||
+            p.indexOf('/turnaround') !== -1 ||
             p.indexOf('/accessibility') !== -1
           );
 
@@ -145,30 +147,114 @@
               policySubtitle = 'Standard terms of service, proofing commitments, printing tolerances, and customer agreements.';
               policyBadge = 'Legal Terms';
             } else if (p.indexOf('/shipping') !== -1) {
-              policyTitle = 'Shipping Policy';
-              policySubtitle = 'Free continental US ground shipping, transparent production schedules, and freight details.';
-              policyBadge = 'Shipping & Logistics';
-            } else if (p.indexOf('/refund') !== -1 || p.indexOf('/returns') !== -1) {
+              policyTitle = 'Shipping & Delivery';
+              policySubtitle = 'Free continental US ground shipping, transparent production schedules, tracking updates, and freight delivery details.';
+              policyBadge = 'Shipping & Delivery';
+            } else if (p.indexOf('/refund') !== -1 || p.indexOf('/returns') !== -1 || p.indexOf('/damages') !== -1) {
               policyTitle = 'Returns & Damages';
-              policySubtitle = 'Our quality guarantee, transit damage procedures, and hassle-free reprint protocol.';
+              policySubtitle = 'Our 100% custom print guarantee, transit damage protocols, and expedited reprint policy.';
               policyBadge = 'Returns & Replacements';
+            } else if (p.indexOf('/turnaround') !== -1) {
+              policyTitle = 'Turnaround Times';
+              policySubtitle = 'Clear timelines from artwork submission to proof sign-off, flexographic press runs, slitting, and doorstep delivery.';
+              policyBadge = 'Production Speed';
             } else if (p.indexOf('/accessibility') !== -1) {
               policyTitle = 'Accessibility Statement';
               policySubtitle = 'Our ongoing commitment to ensuring an inclusive, barrier-free digital experience for all customers.';
               policyBadge = 'Universal Access';
             }
 
+            // Full unique content mapping per policy page
+            var policyContentMap = {
+              'privacy': [
+                '<h2>1. Information We Collect</h2><p>When you visit Tapefox or configure custom printed packaging tape, we collect information needed to process your orders, produce proofs, and fulfill shipments. This includes contact details (name, email address, phone number), billing and delivery addresses, payment methods, and any artwork files, logos, or brand assets you upload to our press portal.</p>',
+                '<h2>2. How We Safeguard Your Artwork</h2><p>Your logos, die-lines, and vector files are strictly utilized for plate engraving, proofing, and printing your custom tape rolls. Tapefox never resells, distributes, or publicly displays customer artwork without your explicit authorization.</p><div class="tapefox-policy-callout"><strong>256-Bit SSL Data Encryption</strong>All files, checkout transactions, and customer details are transmitted through end-to-end encrypted SSL layers. Credit card numbers are tokenized by PCI-compliant payment gateways and are never stored on our local web servers.</div>',
+                '<h2>3. Cookies & Session Storage</h2><p>We use functional cookies to remember items in your cart, calculate real-time tier pricing discounts, and maintain your proof upload session across page refreshes.</p>',
+                '<h2>4. Data Rights & Inquiries</h2><p>You may request a copy of your personal data or request permanent deletion of your account records at any time by contacting our privacy compliance desk at <a href="mailto:privacy@tapefox.com">privacy@tapefox.com</a>.</p>'
+              ].join(''),
+
+              'terms': [
+                '<h2>1. Agreement & Acceptance</h2><p>By browsing Tapefox, submitting artwork, requesting digital press proofs, or placing an order, you agree to comply with and be bound by these Terms and Conditions.</p>',
+                '<h2>2. Digital Proofing & Final Approval</h2><p>All custom orders receive a digital PDF proof detailing imprint dimensions, repeat lengths, ink selections, and seam alignments. Physical plate engraving and press scheduling commence solely upon receipt of your written or electronic approval.</p><div class="tapefox-policy-callout"><strong>Approval Finality & Warranty</strong>Once a proof is confirmed, custom orders are routed directly into plate production and master slitting. Custom jobs cannot be canceled or modified post-approval. Customers warrant they possess all legal copyrights and trademark permissions for submitted graphics.</div>',
+                '<h2>3. Pricing, Inks & Printing Plates</h2><p>Stated base prices include single ink imprint. Additional spot inks are etched onto distinct physical plates which remain safely archived in our facility for seamless reordering.</p>',
+                '<h2>4. Yield Tolerances</h2><p>Consistent with industrial web rotary flexographic printing, standard industry yield tolerances of &plusmn;5% apply across custom roll production runs.</p>'
+              ].join(''),
+
+              'shipping': [
+                '<div class="tapefox-policy-stats-grid"><div class="tapefox-policy-stat-card"><div class="tapefox-policy-stat-num">$0</div><div class="tapefox-policy-stat-label">Free US Ground Shipping</div><p class="tapefox-policy-stat-sub">Zero freight surcharges or liftgate fees across all lower 48 states.</p></div><div class="tapefox-policy-stat-card"><div class="tapefox-policy-stat-num">2-3 Wks</div><div class="tapefox-policy-stat-label">Production + Curing</div><p class="tapefox-policy-stat-sub">From digital proof confirmation to slit cases on outbound pallets.</p></div><div class="tapefox-policy-stat-card"><div class="tapefox-policy-stat-num">100%</div><div class="tapefox-policy-stat-label">Insured &amp; Tracked</div><p class="tapefox-policy-stat-sub">Every parcel dispatched via certified carriers with live milestones.</p></div></div>',
+                '<h2>1. Free Ground Shipping Across Continental US</h2><p>Every custom printed packing tape order ships <strong>100% free</strong> to all 48 continental US states. We do not charge handling surcharges, residential dock penalties, or liftgate fees at checkout.</p><div class="tapefox-policy-callout"><strong>Production & Transit Timelines</strong>Standard flexographic production averages 2–3 weeks following your digital proof sign-off. Finished cases and pallets are dispatched promptly via certified freight or express ground carriers with continuous tracking.</div>',
+                '<h2>2. Carrier & Freight Services</h2><ul><li><strong>Standard Deliveries (1–32 Cases):</strong> Dispatched via FedEx Ground or UPS Ground with doorstep signature services.</li><li><strong>Freight Shipments (33+ Cases):</strong> Loaded on shrink-wrapped pallets with corner protectors and delivered by certified LTL carriers.</li><li><strong>Live Milestone Tracking:</strong> Tracking numbers and pro-bills are emailed the moment your rolls clear the packaging floor.</li></ul>',
+                '<h2>3. Alaska, Hawaii & International Inquiries</h2><p>For shipments to Alaska, Hawaii, Puerto Rico, or international destinations, our logistics desk calculates customized freight quotes without markup. Contact <a href="mailto:shipping@tapefox.com">shipping@tapefox.com</a> prior to placing your order.</p>'
+              ].join(''),
+
+              'refund': [
+                '<div class="tapefox-policy-protocol-grid"><div class="tapefox-policy-protocol-card is-guarantee"><div class="tapefox-policy-protocol-title"><svg viewBox="0 0 24 24" width="20" height="20" fill="#28A745"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 100% Print Guarantee</div><p class="tapefox-policy-protocol-desc">If print registration or ink colors deviate from your approved PDF proof, we reprint your rolls at zero cost or issue a prompt refund.</p></div><div class="tapefox-policy-protocol-card is-damage"><div class="tapefox-policy-protocol-title"><svg viewBox="0 0 24 24" width="20" height="20" fill="#EA5B1B"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg> Rapid Damage Replacement</div><p class="tapefox-policy-protocol-desc">Cartons crushed or water-damaged in transit? Send 2 photos within 7 days and we expedite replacement rolls into our immediate press queue.</p></div></div>',
+                '<h2>1. Custom Print Guarantee</h2><p>Because every roll is customized to your bespoke dimensions, artwork, and adhesives, custom printed tape cannot be returned for change of mind or restocked.</p><p>However, we stand 100% behind our craftsmanship. If your delivered tape displays ink defects, color variations deviating from your approved proof, or adhesive defects, we will reprint your order at zero cost or issue an immediate refund.</p><div class="tapefox-policy-callout"><strong>Damaged in Transit Protocol</strong>If your cartons or cores arrive crushed, pierced, or water-damaged by the carrier, photograph the boxes within 7 days of delivery and email us. We will immediately expedite replacement rolls into our press queue.</div>',
+                '<h2>2. How to Report Print or Shipping Issues</h2><ol><li>Capture 2–3 clear photos illustrating the print flaw or crushed cartons.</li><li>Email <a href="mailto:hello@tapefox.com">hello@tapefox.com</a> with your order number.</li><li>Our team will reply within 24 business hours with an authorized reprint schedule or refund credit.</li></ol>',
+                '<h2>3. Dispensers & Stock Hardware</h2><p>Stock hand dispensers and water-activated tape machines in original, unopened packaging can be returned within 30 days of purchase.</p>'
+              ].join(''),
+
+              'turnaround': [
+                '<div class="tapefox-policy-timeline"><div class="tapefox-policy-step-card"><div class="tapefox-policy-step-header"><span class="tapefox-policy-step-badge">1</span><span class="tapefox-policy-step-time">2-3 Days</span></div><div class="tapefox-policy-step-title">Artwork &amp; Proofing</div><p class="tapefox-policy-step-desc">Our design studio redraws logos for flexographic plates, checks seam repeats, and sends your digital PDF proof for approval.</p></div><div class="tapefox-policy-step-card"><div class="tapefox-policy-step-header"><span class="tapefox-policy-step-badge">2</span><span class="tapefox-policy-step-time">10-14 Days</span></div><div class="tapefox-policy-step-title">Plate, Press &amp; Slit</div><p class="tapefox-policy-step-desc">Plates are engraved, Pantone inks laid down on master rolls, UV cured, slit to size, and packed into heavy-duty cartons.</p></div><div class="tapefox-policy-step-card"><div class="tapefox-policy-step-header"><span class="tapefox-policy-step-badge">3</span><span class="tapefox-policy-step-time">3-5 Days</span></div><div class="tapefox-policy-step-title">Free Ground Transit</div><p class="tapefox-policy-step-desc">Orders ship directly from our plant via FedEx Ground, UPS, or certified freight carriers with doorstep tracking.</p></div></div>',
+                '<h2>1. Transparent Production Timelines</h2><p>Custom printed tape is an industrial manufacturing process involving chemical inks, custom engraved photopolymer plates, and web flexographic machinery. We believe in clear, reliable commitments so your packing line never runs dry.</p><div class="tapefox-policy-callout"><strong>Need Rolls for an Impending Product Launch?</strong>If you are facing a strict product drop date, contact our press scheduling desk before placing your order. We can often accommodate rush plate engraving or expedite ground freight shipping.</div>',
+                '<h2>2. What Can Speed Up or Delay Your Order?</h2><ul><li><strong>Vector Artwork:</strong> Uploading vector files (.AI, .EPS, .PDF) eliminates vector redrawing delays.</li><li><strong>Prompt Proof Approval:</strong> Production begins only once your electronic proof approval is logged.</li><li><strong>Multi-Color Registrations:</strong> 2-color and 3-color designs require multi-station cylinder registration which adds 1–2 days.</li></ul>',
+                '<h2>3. Reorders &amp; Repeat Press Runs</h2><p>When you reorder identical artwork, your printing plates are already archived in our climate-controlled library. Reorders bypass proofing and enter the printing queue directly, typically shipping in <strong>8–10 business days</strong>.</p>'
+              ].join(''),
+
+              'accessibility': [
+                '<h2>1. Our Accessibility Mission</h2><p>Tapefox is dedicated to providing an accessible, intuitive digital experience for packaging buyers of all abilities. We strive to adhere to the Web Content Accessibility Guidelines (WCAG 2.1) Level AA standards.</p><div class="tapefox-policy-callout"><strong>Assistive Device Compatibility</strong>Our website architecture supports keyboard navigation, screen readers, semantic headings, and high color-contrast typography to ensure barrier-free ordering.</div>',
+                '<h2>2. Implemented Accessibility Features</h2><ul><li>High-contrast text and interactive states for readability across lighting environments.</li><li>Accessible ARIA form labels and error notifications during file uploads and checkout.</li><li>Full keyboard tab accessibility across navigation, modals, and drop-downs.</li><li>Descriptive alternative text on all mascot artwork and technical comparison diagrams.</li></ul>',
+                '<h2>3. Need Ordering Assistance?</h2><p>If you encounter difficulty accessing any tool or completing a tape order, please call our accessibility coordinator at <strong>+1 (800) 555-0199</strong> or email <a href="mailto:accessibility@tapefox.com">accessibility@tapefox.com</a>. We will gladly prepare your proof and finalize your order directly.</p>'
+              ].join('')
+            };
+
+            var selectedKey = 'privacy';
+            if (p.indexOf('/terms') !== -1) selectedKey = 'terms';
+            else if (p.indexOf('/shipping') !== -1) selectedKey = 'shipping';
+            else if (p.indexOf('/refund') !== -1 || p.indexOf('/returns') !== -1 || p.indexOf('/damages') !== -1) selectedKey = 'refund';
+            else if (p.indexOf('/turnaround') !== -1) selectedKey = 'turnaround';
+            else if (p.indexOf('/accessibility') !== -1) selectedKey = 'accessibility';
+
             document.title = policyTitle + ' – Tapefox';
 
-            // Update title and subtitle dynamically in DOM if using container fallback
-            if (policyContainer) {
-              var headingEl = policyContainer.querySelector('.tapefox-policy-title');
-              var subEl = policyContainer.querySelector('.tapefox-policy-subtitle');
-              var badgeEl = policyContainer.querySelector('.tapefox-policy-badge');
+            // Update title, subtitle, badge, and body content dynamically in DOM (checks both MainContent and fallback container)
+            var activeSection = (mainContent && mainContent.querySelector('.tapefox-policy-section')) || policyContainer;
+            if (activeSection) {
+              var headingEl = activeSection.querySelector('.tapefox-policy-title');
+              var subEl = activeSection.querySelector('.tapefox-policy-subtitle');
+              var badgeEl = activeSection.querySelector('.tapefox-policy-badge');
+              var bodyArticle = activeSection.querySelector('.tapefox-policy-body');
+              var contactBox = activeSection.querySelector('.tapefox-policy-contact-box');
+
               if (headingEl) headingEl.textContent = policyTitle;
               if (subEl) subEl.textContent = policySubtitle;
               if (badgeEl && badgeEl.lastChild) {
                 badgeEl.lastChild.textContent = ' ' + policyBadge;
+              }
+
+              // Replace placeholder text with page-specific rich policy content
+              if (bodyArticle && policyContentMap[selectedKey]) {
+                var contentWrap = bodyArticle.querySelector('.tapefox-policy-dynamic-html');
+                if (!contentWrap) {
+                  contentWrap = document.createElement('div');
+                  contentWrap.className = 'tapefox-policy-dynamic-html';
+                  contentWrap.style.display = 'block';
+                  contentWrap.style.width = '100%';
+                  contentWrap.style.marginTop = '24px';
+                  contentWrap.style.clear = 'both';
+                  if (contactBox) {
+                    bodyArticle.insertBefore(contentWrap, contactBox);
+                  } else {
+                    bodyArticle.appendChild(contentWrap);
+                  }
+                }
+                contentWrap.innerHTML = policyContentMap[selectedKey];
+
+                // Hide generic placeholder or default custom content blocks if present
+                var blocks = bodyArticle.querySelectorAll('.tapefox-policy-block, .tapefox-policy-custom-content, .tapefox-policy-page-content');
+                blocks.forEach(function(b) { b.style.display = 'none'; });
+                var defaultP = bodyArticle.querySelector(':scope > p');
+                if (defaultP) defaultP.style.display = 'none';
               }
             }
           } else if (p.indexOf('/order-sample') !== -1 || p.indexOf('/pages/order-sample') !== -1) {

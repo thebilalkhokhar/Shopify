@@ -6,12 +6,11 @@
   style="
     background-color: {{ section.settings.bg_color | default: '#FBF8F3' }};
     padding-top: {{ section.settings.padding_top | default: 40 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    {% comment %} padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px; {% endcomment %}
   "
   {{ section.shopify_attributes }}
 >
   <div class="phc-container">
-    
     <!-- Header: Badge & Heading -->
     <div class="phc-header">
       {%- if section.settings.badge_text != blank -%}
@@ -42,7 +41,7 @@
               {%- for block in section.blocks -%}
                 <tr {{ block.shopify_attributes }}>
                   <td class="phc-col-attr">{{ block.settings.attribute_label }}</td>
-                  
+
                   <!-- Polypropylene Column -->
                   <td class="phc-col-poly">
                     {%- assign val_poly = block.settings.poly_val | strip -%}
@@ -132,9 +131,21 @@
 
     {%- if section.blocks.size > 0 -%}
       <div class="phc-mobile-cards">
-        {% render 'product-head-compare-card', section: section, title: section.settings.col_1_title, value_key: 'poly_val' %}
-        {% render 'product-head-compare-card', section: section, title: section.settings.col_2_title, value_key: 'paper_val' %}
-        {% render 'product-head-compare-card', section: section, title: section.settings.col_3_title, value_key: 'pvc_val' %}
+        {% render 'product-head-compare-card',
+          section: section,
+          title: section.settings.col_1_title,
+          value_key: 'poly_val'
+        %}
+        {% render 'product-head-compare-card',
+          section: section,
+          title: section.settings.col_2_title,
+          value_key: 'paper_val'
+        %}
+        {% render 'product-head-compare-card',
+          section: section,
+          title: section.settings.col_3_title,
+          value_key: 'pvc_val'
+        %}
       </div>
     {%- endif -%}
 
@@ -152,7 +163,6 @@
         {%- endif -%}
       </div>
     {%- endif -%}
-
   </div>
 </section>
 

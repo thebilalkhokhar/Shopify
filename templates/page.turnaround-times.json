@@ -1,0 +1,107 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_policy": {
+      "type": "main-policy",
+      "blocks": {
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "title": "1. Production Workflow Breakdown"
+          }
+        },
+        "text_1": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Every custom printed tape order is manufactured in three distinct, tightly coordinated phases to ensure flawless ink laydown and durable carton adhesion.</p>"
+          }
+        },
+        "callout_1": {
+          "type": "callout",
+          "settings": {
+            "callout_title": "Strict Proof Approval Policy",
+            "callout_text": "Production days are counted starting the first business day AFTER your digital proof approval is received. Please approve proofs promptly to prevent scheduling delays."
+          }
+        },
+        "heading_2": {
+          "type": "heading",
+          "settings": {
+            "title": "2. Estimated Stage Breakdown"
+          }
+        },
+        "text_2": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<ul><li><strong>Step 1 — Studio Prep & Digital Proofing (2–3 business days):</strong> Converting vector artwork, verifying repeat seam dimensions, and emailing your PDF proof.</li><li><strong>Step 2 — Plate Engraving, Press Run & Slitting (10–14 business days):</strong> Photopolymer plate curing, cylinder mounting, web flexographic printing, drying, precision rotary slitting, and case packing.</li><li><strong>Step 3 — Doorstep Transit (3–5 business days):</strong> 100% free ground transportation via FedEx Ground, UPS, or certified freight carriers.</li></ul>"
+          }
+        },
+        "heading_3": {
+          "type": "heading",
+          "settings": {
+            "title": "3. Need a Rush Press Run?"
+          }
+        },
+        "text_3": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Have a tight brand launch, expo, or seasonal marketing event? Contact our scheduling desk at <a href=\"mailto:hello@tapefox.com\">hello@tapefox.com</a>. We can often arrange expedited plate engraving or priority freight delivery.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_1",
+        "text_1",
+        "callout_1",
+        "heading_2",
+        "text_2",
+        "heading_3",
+        "text_3"
+      ],
+      "settings": {
+        "page_bg": "#FAF7F0",
+        "badge_text": "Production Speed",
+        "heading": "Turnaround Times",
+        "subheading": "Clear timelines from artwork submission to proof sign-off, flexographic press runs, slitting, and doorstep delivery.",
+        "last_updated": "October 2026",
+        "show_contact_box": true,
+        "contact_title": "Have a tight deadline?",
+        "contact_desc": "Contact our press scheduling coordinators directly at hello@tapefox.com to discuss rush options."
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "/pages/privacy-policy",
+        "legal_2_text": "Terms",
+        "legal_2_link": "/pages/terms-of-service",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "/pages/shipping-policy",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "/pages/refund-policy",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": "/pages/accessibility"
+      }
+    }
+  },
+  "order": [
+    "main_policy",
+    "home_footer"
+  ]
+}

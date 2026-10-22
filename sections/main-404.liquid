@@ -7,7 +7,7 @@
     --p404-card-bg: {{ section.settings.card_bg | default: '#EA5B1B' }};
     --p404-card-border: {{ section.settings.card_border | default: '#171008' }};
     {% if request.path contains '/blogs/news/' and request.path != '/blogs/news' and request.path != '/blogs/news/' %}display: none !important;{% endif %}
-    {% if request.path contains '/login' or request.path contains '/account' or request.path contains '/checkout' or request.path contains '/order-sample' or request.path contains '/privacy' or request.path contains '/terms' or request.path contains '/shipping' or request.path contains '/refund' or request.path contains '/returns' or request.path contains '/accessibility' %}display: none !important;{% endif %}
+    {% if request.path contains '/login' or request.path contains '/account' or request.path contains '/checkout' or request.path contains '/order-sample' or request.path contains '/privacy' or request.path contains '/terms' or request.path contains '/shipping' or request.path contains '/refund' or request.path contains '/returns' or request.path contains '/damages' or request.path contains '/turnaround' or request.path contains '/accessibility' %}display: none !important;{% endif %}
   "
   {{ section.shopify_attributes }}
 >
@@ -95,6 +95,8 @@
       path.indexOf('/shipping') !== -1 ||
       path.indexOf('/refund') !== -1 ||
       path.indexOf('/returns') !== -1 ||
+      path.indexOf('/damages') !== -1 ||
+      path.indexOf('/turnaround') !== -1 ||
       path.indexOf('/accessibility') !== -1
     ) {
       var p404Section = document.getElementById('page-404-{{ section.id }}');

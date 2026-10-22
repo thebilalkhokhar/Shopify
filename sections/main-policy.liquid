@@ -1,0 +1,491 @@
+{{ 'page-policy.css' | asset_url | stylesheet_tag }}
+
+{% comment %}
+  Determine current policy context dynamically based on page handle or URL path
+{% endcomment %}
+{%- assign current_handle = page.handle | default: '' -%}
+{%- assign path_downcase = request.path | downcase -%}
+
+{%- if current_handle == 'privacy-policy' or current_handle == 'privacy' or path_downcase contains 'privacy' -%}
+  {%- assign policy_type = 'privacy' -%}
+  {%- assign default_badge = 'Privacy & Security' -%}
+  {%- assign default_title = 'Privacy Policy' -%}
+  {%- assign default_subtitle = 'How Tapefox collects, uses, protects your information, and keeps your artwork safe.' -%}
+{%- elsif current_handle == 'terms-of-service'
+  or current_handle == 'terms'
+  or current_handle == 'terms-and-conditions'
+  or path_downcase contains 'terms'
+-%}
+  {%- assign policy_type = 'terms' -%}
+  {%- assign default_badge = 'Legal Terms' -%}
+  {%- assign default_title = 'Terms & Conditions' -%}
+  {%- assign default_subtitle = 'Standard terms of service, proofing commitments, printing tolerances, and customer agreements.' -%}
+{%- elsif current_handle == 'shipping-policy' or current_handle == 'shipping' or path_downcase contains 'shipping' -%}
+  {%- assign policy_type = 'shipping' -%}
+  {%- assign default_badge = 'Shipping & Logistics' -%}
+  {%- assign default_title = 'Shipping Policy' -%}
+  {%- assign default_subtitle = 'Free continental US ground shipping, transparent production schedules, and freight details.' -%}
+{%- elsif current_handle == 'refund-policy'
+  or current_handle == 'returns-damages'
+  or current_handle == 'returns'
+  or path_downcase contains 'refund'
+  or path_downcase contains 'returns'
+-%}
+  {%- assign policy_type = 'refund' -%}
+  {%- assign default_badge = 'Returns & Replacements' -%}
+  {%- assign default_title = 'Returns & Damages' -%}
+  {%- assign default_subtitle = 'Our quality guarantee, transit damage procedures, and hassle-free reprint protocol.' -%}
+{%- elsif current_handle == 'accessibility' or path_downcase contains 'accessibility' -%}
+  {%- assign policy_type = 'accessibility' -%}
+  {%- assign default_badge = 'Universal Access' -%}
+  {%- assign default_title = 'Accessibility Statement' -%}
+  {%- assign default_subtitle = 'Our ongoing commitment to ensuring an inclusive, barrier-free digital experience for all customers.' -%}
+{%- else -%}
+  {%- assign policy_type = 'general' -%}
+  {%- assign default_badge = 'TapeFox Legal & Policy' -%}
+  {%- assign default_title = page.title | default: 'TapeFox Policy' -%}
+  {%- assign default_subtitle = 'Everything you need to know about doing business with Tapefox.' -%}
+{%- endif -%}
+
+<section
+  id="tapefox-policy-{{ section.id }}"
+  class="tapefox-policy-section"
+  style="
+    --policy-bg: {{ section.settings.page_bg | default: '#FAF7F0' }};
+    --policy-max-w: {{ section.settings.max_width | default: 1100 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="tapefox-policy-container">
+    <!-- Policy Header -->
+    <div
+      class="tapefox-policy-header"
+      style="display: flex !important; flex-direction: column !important; align-items: flex-start !important; width: 100% !important; height: auto !important; min-height: 0 !important; border-bottom: 1.5px solid rgba(23, 16, 8, 0.12) !important; padding-bottom: 32px !important; margin-bottom: 40px !important; clear: both !important; box-sizing: border-box !important;"
+    >
+      <div
+        class="tapefox-policy-meta-row"
+        style="display: flex !important; align-items: center !important; gap: 16px !important; margin-bottom: 20px !important; width: 100% !important;"
+      >
+        <span class="tapefox-policy-badge">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+          </svg>
+          {{ section.settings.badge_text | default: default_badge }}
+        </span>
+
+        {% if section.settings.last_updated != blank %}
+          <span class="tapefox-policy-date"> Last updated: {{ section.settings.last_updated }} </span>
+        {% endif %}
+      </div>
+
+      <h1
+        class="tapefox-policy-title"
+        style="display: block !important; width: 100% !important; margin: 0 0 16px 0 !important; padding: 0 !important; clear: both !important;"
+      >
+        {% if section.settings.heading != blank %}
+          {{ section.settings.heading }}
+        {% else %}
+          {{ default_title }}
+        {% endif %}
+      </h1>
+
+      <p
+        class="tapefox-policy-subtitle"
+        style="display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; clear: both !important; font-size: 16px !important; line-height: 1.6 !important; color: #554F49 !important;"
+      >
+        {% if section.settings.subheading != blank %}
+          {{ section.settings.subheading }}
+        {% else %}
+          {{ default_subtitle }}
+        {% endif %}
+      </p>
+    </div>
+
+    <!-- Content Body (Full Single Column, No Sidebar Tabs) -->
+    <div class="tapefox-policy-body" style="display: block !important; width: 100% !important; clear: both !important;">
+      {% comment %}
+        1. If custom section blocks are configured, render them
+        2. Else if custom_content is filled in Theme Editor, render it
+        3. Else if page.content has text from Shopify admin, render it
+        4. Else fallback to specific rich legal text according to the current policy_type
+      {% endcomment %}
+
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <div class="tapefox-policy-block" {{ block.shopify_attributes }}>
+            {% case block.type %}
+              {% when 'heading' %}
+                <h2 id="sec-{{ forloop.index }}">{{ block.settings.title }}</h2>
+              {% when 'rich_text' %}
+                <div class="tapefox-policy-text-block">
+                  {{ block.settings.content }}
+                </div>
+              {% when 'callout' %}
+                <div class="tapefox-policy-callout">
+                  {% if block.settings.callout_title != blank %}
+                    <strong>{{ block.settings.callout_title }}</strong>
+                  {% endif %}
+                  {{ block.settings.callout_text }}
+                </div>
+            {% endcase %}
+          </div>
+        {% endfor %}
+      {% elsif section.settings.custom_content != blank %}
+        <div class="tapefox-policy-custom-content">
+          {{ section.settings.custom_content }}
+        </div>
+      {% elsif page.content != blank %}
+        <div class="tapefox-policy-page-content">
+          {{ page.content }}
+        </div>
+      {% else %}
+        {% comment %} Specific content per page if page.content is empty in Shopify admin {% endcomment %}
+        {% case policy_type %}
+          {% when 'privacy' %}
+            <h2>1. Information We Collect</h2>
+            <p>
+              When you visit Tapefox or configure custom printed packaging tape, we collect information needed to
+              process your orders, produce proofs, and fulfill shipments. This includes contact details (name, email
+              address, phone number), billing and delivery addresses, payment methods, and any artwork files, logos, or
+              brand assets you upload to our press portal.
+            </p>
+
+            <h2>2. How We Safeguard Your Artwork</h2>
+            <p>
+              Your logos, die-lines, and vector files are strictly utilized for plate engraving, proofing, and printing
+              your custom tape rolls. Tapefox never resells, distributes, or publicly displays customer artwork without
+              your explicit authorization.
+            </p>
+
+            <div class="tapefox-policy-callout">
+              <strong>256-Bit SSL Data Encryption</strong>
+              All files, checkout transactions, and customer details are transmitted through end-to-end encrypted SSL
+              layers. Credit card numbers are tokenized by PCI-compliant payment gateways and are never stored on our
+              local web servers.
+            </div>
+
+            <h2>3. Cookies & Session Storage</h2>
+            <p>
+              We use functional cookies to remember items in your cart, calculate real-time tier pricing discounts, and
+              maintain your proof upload session across page refreshes.
+            </p>
+
+            <h2>4. Data Rights & Inquiries</h2>
+            <p>
+              You may request a copy of your personal data or request permanent deletion of your account records at any
+              time by contacting our privacy compliance desk at
+              <a href="mailto:privacy@tapefox.com">privacy@tapefox.com</a>.
+            </p>
+
+          {% when 'terms' %}
+            <h2>1. Agreement & Acceptance</h2>
+            <p>
+              By browsing Tapefox, submitting artwork, requesting digital press proofs, or placing an order, you agree
+              to comply with and be bound by these Terms and Conditions.
+            </p>
+
+            <h2>2. Digital Proofing & Final Approval</h2>
+            <p>
+              All custom orders receive a digital PDF proof detailing imprint dimensions, repeat lengths, ink
+              selections, and seam alignments. Physical plate engraving and press scheduling commence solely upon
+              receipt of your written or electronic approval.
+            </p>
+
+            <div class="tapefox-policy-callout">
+              <strong>Approval Finality & Warranty</strong>
+              Once a proof is confirmed, custom orders are routed directly into plate production and master slitting.
+              Custom jobs cannot be canceled or modified post-approval. Customers warrant they possess all legal
+              copyrights and trademark permissions for submitted graphics.
+            </div>
+
+            <h2>3. Pricing, Inks & Printing Plates</h2>
+            <p>
+              Stated base prices include single ink imprint. Additional spot inks are etched onto distinct physical
+              plates which remain safely archived in our facility for seamless reordering.
+            </p>
+
+            <h2>4. Yield Tolerances</h2>
+            <p>
+              Consistent with industrial web rotary flexographic printing, standard industry yield tolerances of
+              &plusmn;5% apply across custom roll production runs.
+            </p>
+
+          {% when 'shipping' %}
+            <h2>1. Free Ground Shipping Across Continental US</h2>
+            <p>
+              Every custom printed packing tape order ships <strong>100% free</strong> to all 48 continental US states.
+              We do not charge handling surcharges, residential dock penalties, or liftgate fees at checkout.
+            </p>
+
+            <div class="tapefox-policy-callout">
+              <strong>Production & Transit Timelines</strong>
+              Standard flexographic production averages 2–3 weeks following your digital proof sign-off. Finished cases
+              and pallets are dispatched promptly via certified freight or express ground carriers with continuous
+              tracking.
+            </div>
+
+            <h2>2. Production Workflow</h2>
+            <ul>
+              <li>
+                <strong>Proofing (2–3 business days):</strong> Art prep, vector redrawing, color matching, and digital
+                proof generation.
+              </li>
+              <li>
+                <strong>Press & Slitting (10–15 business days):</strong> Plate mounting, flexographic ink laydown, UV
+                curing, master slitting, and case packing.
+              </li>
+              <li>
+                <strong>Transit (3–5 business days):</strong> Ground transport directly from our Rosenberg, TX plant to
+                your loading dock or door.
+              </li>
+            </ul>
+
+            <h2>3. Pallet & Freight Shipments</h2>
+            <p>
+              Bulk orders of 64+ cases are palletized, corner-guarded, and shrink-wrapped. For appointment deliveries or
+              specialized unloading needs, contact our logistics team at
+              <a href="mailto:shipping@tapefox.com">shipping@tapefox.com</a>.
+            </p>
+
+          {% when 'refund' %}
+            <h2>1. Custom Print Guarantee</h2>
+            <p>
+              Because every roll is customized to your bespoke dimensions, artwork, and adhesives, custom printed tape
+              cannot be returned for change of mind or restocked.
+            </p>
+            <p>
+              However, we stand 100% behind our craftsmanship. If your delivered tape displays ink defects, color
+              variations deviating from your approved proof, or adhesive defects, we will reprint your order at zero
+              cost or issue an immediate refund.
+            </p>
+
+            <div class="tapefox-policy-callout">
+              <strong>Damaged in Transit Protocol</strong>
+              If your cartons or cores arrive crushed, pierced, or water-damaged by the carrier, photograph the boxes
+              within 7 days of delivery and email us. We will immediately expedite replacement rolls into our press
+              queue.
+            </div>
+
+            <h2>2. How to Report Print or Shipping Issues</h2>
+            <ol>
+              <li>Capture 2–3 clear photos illustrating the print flaw or crushed cartons.</li>
+              <li>Email <a href="mailto:hello@tapefox.com">hello@tapefox.com</a> with your order number.</li>
+              <li>
+                Our team will reply within 24 business hours with an authorized reprint schedule or refund credit.
+              </li>
+            </ol>
+
+            <h2>3. Dispensers & Stock Hardware</h2>
+            <p>
+              Stock hand dispensers and water-activated tape machines in original, unopened packaging can be returned
+              within 30 days of purchase.
+            </p>
+
+          {% when 'accessibility' %}
+            <h2>1. Our Accessibility Mission</h2>
+            <p>
+              Tapefox is dedicated to providing an accessible, intuitive digital experience for packaging buyers of all
+              abilities. We strive to adhere to the Web Content Accessibility Guidelines (WCAG 2.1) Level AA standards.
+            </p>
+
+            <div class="tapefox-policy-callout">
+              <strong>Assistive Device Compatibility</strong>
+              Our website architecture supports keyboard navigation, screen readers, semantic headings, and high
+              color-contrast typography to ensure barrier-free ordering.
+            </div>
+
+            <h2>2. Implemented Accessibility Features</h2>
+            <ul>
+              <li>High-contrast text and interactive states for readability across lighting environments.</li>
+              <li>Accessible ARIA form labels and error notifications during file uploads and checkout.</li>
+              <li>Full keyboard tab accessibility across navigation, modals, and drop-downs.</li>
+              <li>Descriptive alternative text on all mascot artwork and technical comparison diagrams.</li>
+            </ul>
+
+            <h2>3. Need Ordering Assistance?</h2>
+            <p>
+              If you encounter difficulty accessing any tool or completing a tape order, please call our accessibility
+              coordinator at <strong>+1 (800) 555-0199</strong> or email
+              <a href="mailto:accessibility@tapefox.com">accessibility@tapefox.com</a>. We will gladly prepare your
+              proof and finalize your order directly.
+            </p>
+
+          {% else %}
+            <p>Please contact our support desk for full policy documentation regarding your order.</p>
+        {% endcase %}
+      {% endif %}
+
+      <!-- Need Help / Contact Banner -->
+      {% if section.settings.show_contact_box %}
+        <div class="tapefox-policy-contact-box">
+          <div>
+            <div class="tapefox-policy-contact-title">
+              {{ section.settings.contact_title | default: 'Have a specific question?' }}
+            </div>
+            <p class="tapefox-policy-contact-desc">
+              {{
+                section.settings.contact_desc
+                | default: 'Our support team is available Mon–Fri, 8am–6pm EST. We reply in one business day or less.'
+              }}
+            </p>
+          </div>
+          <a
+            href="{{ section.settings.contact_btn_link | default: '/pages/contact' }}"
+            class="tapefox-policy-contact-btn"
+          >
+            <span>{{ section.settings.contact_btn_text | default: 'Contact Support' }}</span>
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Policy & Legal Content",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance & Styling"
+    },
+    {
+      "type": "color",
+      "id": "page_bg",
+      "label": "Page Background Color",
+      "default": "#FAF7F0"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Container Max Width (px)",
+      "min": 800,
+      "max": 1400,
+      "step": 20,
+      "default": 1100,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Header Content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text Override",
+      "info": "Leave blank to automatically use the policy page badge."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Override",
+      "info": "Leave blank to automatically use the policy page title."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading Override",
+      "info": "Leave blank to automatically use the policy page subtitle."
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Last Updated Date",
+      "default": "October 2026"
+    },
+    {
+      "type": "header",
+      "content": "Portal Dynamic Content"
+    },
+    {
+      "type": "richtext",
+      "id": "custom_content",
+      "label": "Custom Content (Portal Editor)",
+      "info": "Edit rich text here in the Theme Editor, or leave blank to render from Shopify Admin > Online Store > Pages."
+    },
+    {
+      "type": "header",
+      "content": "Contact / Help Card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact_box",
+      "label": "Show Contact Card",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_title",
+      "label": "Contact Box Title",
+      "default": "Have a specific question?"
+    },
+    {
+      "type": "text",
+      "id": "contact_desc",
+      "label": "Contact Box Description",
+      "default": "Our support team is available Mon–Fri, 8am–6pm EST. We reply in one business day or less."
+    },
+    {
+      "type": "text",
+      "id": "contact_btn_text",
+      "label": "Button Text",
+      "default": "Contact Support"
+    },
+    {
+      "type": "url",
+      "id": "contact_btn_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Section Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading Text",
+          "default": "1. Overview & Information"
+        }
+      ]
+    },
+    {
+      "type": "rich_text",
+      "name": "Rich Text Block",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Add and edit paragraphs, lists, or custom links directly from the Shopify customizer.</p>"
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "name": "Callout Note",
+      "settings": [
+        {
+          "type": "text",
+          "id": "callout_title",
+          "label": "Callout Title",
+          "default": "Important Notice"
+        },
+        {
+          "type": "textarea",
+          "id": "callout_text",
+          "label": "Callout Text",
+          "default": "Proof approvals are final once confirmed. Please review all ink colors and dimensions closely."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TapeFox Policy Page"
+    }
+  ]
+}
+{% endschema %}

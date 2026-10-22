@@ -6,16 +6,14 @@
   style="
     background-color: {{ section.settings.page_bg | default: '#FBF8F3' }};
     padding-top: {{ section.settings.padding_top | default: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
+    {% comment %} padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px; {% endcomment %}
   "
   {{ section.shopify_attributes }}
 >
   <div class="po-container">
     <div
       class="po-card-frame"
-      style="
-        background-color: {{ section.settings.frame_bg | default: '#171008' }};
-      "
+      style="        background-color: {{ section.settings.frame_bg | default: '#171008' }};"
     >
       <!-- Main Section Heading -->
       {%- if section.settings.heading != blank -%}
@@ -32,13 +30,12 @@
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             <div class="po-step-card" {{ block.shopify_attributes }}>
-              
               <!-- Top Row: Number Badge & Icon -->
               <div class="po-step-top">
                 <span class="po-num-badge">
                   {{ block.settings.step_number | default: forloop.index | prepend: '0' | slice: -2, 2 }}
                 </span>
-                
+
                 <div class="po-step-icon" aria-hidden="true">
                   {%- if block.settings.custom_icon != blank -%}
                     <img
@@ -93,12 +90,11 @@
                   <span class="po-status-pill">{{ block.settings.pill_text }}</span>
                 </div>
               {%- endif -%}
-
             </div>
           {%- endfor -%}
         {%- else -%}
           <!-- Default fallback blocks matching reference image -->
-          
+
           <!-- Card 1 -->
           <div class="po-step-card">
             <div class="po-step-top">
@@ -161,7 +157,6 @@
               <span class="po-status-pill">2-3 working days</span>
             </div>
           </div>
-
         {%- endif -%}
       </div>
     </div>

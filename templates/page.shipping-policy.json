@@ -1,0 +1,121 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_policy": {
+      "type": "main-policy",
+      "blocks": {
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "title": "1. Free Continental US Shipping"
+          }
+        },
+        "text_1": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Every custom printed tape order ships <strong>100% free</strong> across the 48 contiguous United States. We do not tack on fuel surcharges, packaging fees, or surprise residential handling costs at checkout.</p>"
+          }
+        },
+        "callout_1": {
+          "type": "callout",
+          "settings": {
+            "callout_title": "Turnaround & Production Time",
+            "callout_text": "Standard production is typically 2-3 weeks following digital proof sign-off. Once palletized or boxed, shipments travel via ground freight or standard carrier with live tracking."
+          }
+        },
+        "heading_2": {
+          "type": "heading",
+          "settings": {
+            "title": "2. Production & Transit Timelines"
+          }
+        },
+        "text_2": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Our workflow is divided into two phases:</p><ul><li><strong>Proofing (2-3 business days):</strong> Redrawing and confirming artwork, plate etching, and PDF alignment proof.</li><li><strong>Press & Curing (10-15 business days):</strong> Running ink on master rolls, UV curing, slit winding, and carton packaging.</li></ul>"
+          }
+        },
+        "heading_3": {
+          "type": "heading",
+          "settings": {
+            "title": "3. Pallet & Freight Deliveries"
+          }
+        },
+        "text_3": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>High-volume orders (e.g. 64+ cases) ship via LTL freight on shrink-wrapped pallets. Liftgate services or delivery appointments can be arranged with our logistics desk at <a href=\"mailto:hello@tapefox.com\">hello@tapefox.com</a>.</p>"
+          }
+        },
+        "heading_4": {
+          "type": "heading",
+          "settings": {
+            "title": "4. Alaska, Hawaii & International"
+          }
+        },
+        "text_4": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Orders bound for Alaska, Hawaii, Puerto Rico, or Canada require custom freight calculation. Please reach out to our team before submitting your order so we can provide accurate rate options.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_1",
+        "text_1",
+        "callout_1",
+        "heading_2",
+        "text_2",
+        "heading_3",
+        "text_3",
+        "heading_4",
+        "text_4"
+      ],
+      "settings": {
+        "page_bg": "#FAF7F0",
+        "badge_text": "Shipping & Logistics",
+        "heading": "Shipping Policy",
+        "subheading": "Free continental US ground shipping, transparent production schedules, and freight details.",
+        "last_updated": "October 2026",
+        "show_contact_box": true,
+        "contact_title": "Need expedited delivery or tracking help?",
+        "contact_desc": "Contact our logistics coordinators directly at shipping@tapefox.com."
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "/pages/privacy-policy",
+        "legal_2_text": "Terms",
+        "legal_2_link": "/pages/terms-of-service",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "/pages/shipping-policy",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "/pages/refund-policy",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": "/pages/accessibility"
+      }
+    }
+  },
+  "order": [
+    "main_policy",
+    "home_footer"
+  ]
+}

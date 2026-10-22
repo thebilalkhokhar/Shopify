@@ -106,7 +106,7 @@
 
 .pf-heading {
   font-family: var(--custom-font-family, "Bringbold Nineties", serif);
-  font-size: 50px;
+  font-size: 46px;
   font-weight: 700;
   color: #faf6ef;
   margin: 0;
@@ -305,6 +305,16 @@
 /* ==========================================================================
    RESPONSIVE DESIGN
    ========================================================================== */
+@media screen and (max-width: 1550px) {
+  .pf-heading {
+    font-size: 40px;
+  }
+
+  .pf-faq-title {
+    font-size: 17px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .pf-card-frame {
     padding: 48px 40px;
@@ -315,7 +325,11 @@
   }
 
   .pf-heading {
-    font-size: 40px;
+    font-size: 36px;
+  }
+
+  .pf-faq-title {
+    font-size: 16px;
   }
 }
 

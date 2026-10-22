@@ -1,0 +1,107 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_policy": {
+      "type": "main-policy",
+      "blocks": {
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "title": "1. Commitment to Accessibility"
+          }
+        },
+        "text_1": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>Tapefox is committed to making our digital storefront and custom packaging configurator accessible to the widest possible audience, regardless of ability or technology.</p><p>We continually improve user experience for everyone, striving to adhere to Level AA of the Web Content Accessibility Guidelines (WCAG 2.1).</p>"
+          }
+        },
+        "callout_1": {
+          "type": "callout",
+          "settings": {
+            "callout_title": "Assistive Technology Compatibility",
+            "callout_text": "Our site is built to support screen readers, keyboard-only tab navigation, ARIA landmarks, high contrast color ratios, and resizable fonts."
+          }
+        },
+        "heading_2": {
+          "type": "heading",
+          "settings": {
+            "title": "2. Continuous Improvements & Measures"
+          }
+        },
+        "text_2": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>To ensure accessibility across all device types and screen readers, we take the following actions:</p><ul><li>Ensure clear keyboard focus rings on all interactive buttons, inputs, and selectors.</li><li>Provide alternative text descriptions for all imagery, charts, and mascot graphics.</li><li>Maintain high typographic contrast against background surfaces.</li><li>Support screen magnification without loss of critical checkout features.</li></ul>"
+          }
+        },
+        "heading_3": {
+          "type": "heading",
+          "settings": {
+            "title": "3. Accessibility Feedback & Assistance"
+          }
+        },
+        "text_3": {
+          "type": "rich_text",
+          "settings": {
+            "content": "<p>If you encounter an accessibility barrier or need personalized assistance placing a custom tape order, please contact our accessibility coordinator:</p><p><strong>Phone:</strong> +1 (800) 555-0199<br><strong>Email:</strong> <a href=\"mailto:accessibility@tapefox.com\">accessibility@tapefox.com</a><br><strong>Address:</strong> 1631 Cottonwood School Rd, Building 3, Rosenberg, TX 77471</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_1",
+        "text_1",
+        "callout_1",
+        "heading_2",
+        "text_2",
+        "heading_3",
+        "text_3"
+      ],
+      "settings": {
+        "page_bg": "#FAF7F0",
+        "badge_text": "Universal Access",
+        "heading": "Accessibility Statement",
+        "subheading": "Our ongoing commitment to ensuring an inclusive, barrier-free digital experience for all customers.",
+        "last_updated": "October 2026",
+        "show_contact_box": true,
+        "contact_title": "Need assistance ordering?",
+        "contact_desc": "Give our team a call at +1 (800) 555-0199 and we'll happily walk you through the ordering process."
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
+      "settings": {
+        "bg_color": "#171008",
+        "card_bg": "#171008",
+        "border_color": "#ffffff",
+        "logo": "shopify://shop_images/footer_logo.webp",
+        "description": "Custom printed packing tape. Your artwork, up to three inks, proofed before it runs, shipped free across the continental US.",
+        "newsletter_heading": "Price breaks and new materials. Monthly, not weekly.",
+        "newsletter_placeholder": "Your@company.com",
+        "newsletter_btn_text": "Join",
+        "legal_1_text": "Privacy",
+        "legal_1_link": "/pages/privacy-policy",
+        "legal_2_text": "Terms",
+        "legal_2_link": "/pages/terms-of-service",
+        "legal_3_text": "Shipping",
+        "legal_3_link": "/pages/shipping-policy",
+        "legal_4_text": "Returns & damages",
+        "legal_4_link": "/pages/refund-policy",
+        "legal_5_text": "Accessibility",
+        "legal_5_link": "/pages/accessibility"
+      }
+    }
+  },
+  "order": [
+    "main_policy",
+    "home_footer"
+  ]
+}

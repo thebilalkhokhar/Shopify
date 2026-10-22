@@ -3,16 +3,12 @@
 <section
   id="product-more-related-{{ section.id }}"
   class="product-more-related-section"
-  style="
-    background-color: {{ section.settings.outer_bg | default: '#171008' }};
-  "
+  style="    background-color: {{ section.settings.outer_bg | default: '#171008' }};"
   {{ section.shopify_attributes }}
 >
   <div class="pmr-container">
-    
     <!-- Cream Card with Dot Grid -->
     <div class="pmr-card">
-      
       <!-- Header: Badge & Heading -->
       <div class="pmr-header">
         {%- if section.settings.badge_text != blank -%}
@@ -44,7 +40,11 @@
             <a href="{{ item_url | default: '#' }}" class="pmr-item" {{ block.shopify_attributes }}>
               <div class="pmr-image-box">
                 {%- if item_img != blank -%}
-                  {{ item_img | image_url: width: 600 | image_tag: class: 'pmr-image', loading: 'lazy', alt: item_title }}
+                  {{
+                    item_img
+                    | image_url: width: 600
+                    | image_tag: class: 'pmr-image', loading: 'lazy', alt: item_title
+                  }}
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'pmr-image' }}
                 {%- endif -%}
@@ -56,7 +56,9 @@
                 {%- if block.settings.price_text != blank -%}
                   <p class="pmr-price">{{ block.settings.price_text }}</p>
                 {%- elsif linked_product != blank -%}
-                  <p class="pmr-price">Starting at <strong>{{ linked_product.price | money }}</strong></p>
+                  <p class="pmr-price">
+                    Starting at <strong>{{ linked_product.price | money }}</strong>
+                  </p>
                 {%- endif -%}
               </div>
             </a>
@@ -68,14 +70,20 @@
             <a href="{{ prod.url }}" class="pmr-item">
               <div class="pmr-image-box">
                 {%- if prod.featured_image != blank -%}
-                  {{ prod.featured_image | image_url: width: 600 | image_tag: class: 'pmr-image', loading: 'lazy', alt: prod.title }}
+                  {{
+                    prod.featured_image
+                    | image_url: width: 600
+                    | image_tag: class: 'pmr-image', loading: 'lazy', alt: prod.title
+                  }}
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'pmr-image' }}
                 {%- endif -%}
               </div>
               <div class="pmr-info">
                 <h3 class="pmr-title">{{ prod.title }}</h3>
-                <p class="pmr-price">Starting at <strong>{{ prod.price | money }}</strong></p>
+                <p class="pmr-price">
+                  Starting at <strong>{{ prod.price | money }}</strong>
+                </p>
               </div>
             </a>
           {%- endfor -%}
@@ -93,7 +101,17 @@
             id="pmrPrevious-{{ section.id }}"
             aria-label="Previous related products"
           >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
           </button>
@@ -103,20 +121,28 @@
             id="pmrNext-{{ section.id }}"
             aria-label="Next related products"
           >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </button>
         </div>
       </div>
-
     </div>
-
   </div>
 </section>
 
 <script>
-  (function() {
+  (function () {
     const track = document.getElementById('pmrTrack-{{ section.id }}');
     const progress = document.getElementById('pmrProgress-{{ section.id }}');
     const previousButton = document.getElementById('pmrPrevious-{{ section.id }}');
@@ -124,15 +150,15 @@
 
     if (!track || !progress || !previousButton || !nextButton) return;
 
-    const updateProgress = function() {
+    const updateProgress = function () {
       const maxScroll = track.scrollWidth - track.clientWidth;
       const scrollRatio = maxScroll > 0 ? track.scrollLeft / maxScroll : 0;
-      progress.style.width = (30 + scrollRatio * 70) + '%';
+      progress.style.width = 30 + scrollRatio * 70 + '%';
       previousButton.disabled = maxScroll <= 0 || track.scrollLeft <= 1;
       nextButton.disabled = maxScroll <= 0 || track.scrollLeft >= maxScroll - 1;
     };
 
-    const scrollToAdjacentProduct = function(direction) {
+    const scrollToAdjacentProduct = function (direction) {
       const firstItem = track.querySelector('.pmr-item');
       if (!firstItem) return;
 
@@ -140,14 +166,14 @@
       const gap = parseFloat(trackStyles.columnGap) || 0;
       track.scrollBy({
         left: direction * (firstItem.getBoundingClientRect().width + gap),
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     };
 
-    previousButton.addEventListener('click', function() {
+    previousButton.addEventListener('click', function () {
       scrollToAdjacentProduct(-1);
     });
-    nextButton.addEventListener('click', function() {
+    nextButton.addEventListener('click', function () {
       scrollToAdjacentProduct(1);
     });
     track.addEventListener('scroll', updateProgress, { passive: true });
