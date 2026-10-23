@@ -62,11 +62,7 @@
           }
         }
       },
-      "block_order": [
-        "step_1",
-        "step_2",
-        "step_3"
-      ],
+      "block_order": ["step_1", "step_2", "step_3"],
       "settings": {
         "page_bg": "#FBF8F3",
         "frame_bg": "#171008",
@@ -134,13 +130,7 @@
           }
         }
       },
-      "block_order": [
-        "row_1",
-        "row_2",
-        "row_3",
-        "row_4",
-        "row_5"
-      ],
+      "block_order": ["row_1", "row_2", "row_3", "row_4", "row_5"],
       "settings": {
         "bg_color": "#FBF8F3",
         "badge_text": "Price breaks",
@@ -250,7 +240,7 @@
         "badge_text": "Head to head",
         "heading": "Polypropylene, or one of\nthe other two?",
         "btn_text": "Compare all five →",
-        "btn_link": "",
+        "btn_link": "/pages/compare",
         "bottom_note": "Still not sure? The free sample box has both of these in it, printed and blank.",
         "padding_top": 40,
         "padding_bottom": 80
@@ -361,13 +351,7 @@
           }
         }
       },
-      "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4",
-        "faq_5"
-      ],
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5"],
       "settings": {
         "page_bg": "#FBF8F3",
         "frame_bg": "#171008",
