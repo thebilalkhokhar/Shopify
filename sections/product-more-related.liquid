@@ -32,60 +32,54 @@
             {%- if item_url == blank and linked_product != blank -%}
               {%- assign item_url = linked_product.url -%}
             {%- elsif item_url == blank and item_title != blank -%}
-              {%- assign item_url = '/products/' | append: item_title | handleize -%}
+              {%- assign title_clean = item_title | downcase -%}
+              {%- if title_clean contains 'dispenser' -%}
+                {%- assign item_url = '/products/dispensers' -%}
+              {%- elsif title_clean contains 'pvc' -%}
+                {%- assign item_url = '/products/pvc-tape' -%}
+              {%- elsif title_clean contains 'flat' -%}
+                {%- assign item_url = '/products/flatback-tape' -%}
+              {%- elsif title_clean contains 'freezer' or title_clean contains 'hi-tack' or title_clean contains 'hi tack' -%}
+                {%- assign item_url = '/products/hi-tack-freezer-tape' -%}
+              {%- elsif title_clean contains 'paper' -%}
+                {%- assign item_url = '/products/paper-tape' -%}
+              {%- elsif title_clean contains 'poly' -%}
+                {%- assign item_url = '/products/polypropylene-tape' -%}
+              {%- else -%}
+                {%- assign item_url = '/products/' | append: item_title | handleize -%}
+              {%- endif -%}
             {%- endif -%}
 
+            {%- assign item_handle = item_url | split: '/products/' | last | split: '?' | first | split: '/' | first -%}
             {%- assign item_img = block.settings.image | default: linked_product.featured_image -%}
 
-            <a href="{{ item_url | default: '#' }}" class="pmr-item" {{ block.shopify_attributes }}>
-              <div class="pmr-image-box">
-                {%- if item_img != blank -%}
-                  {{
-                    item_img
-                    | image_url: width: 600
-                    | image_tag: class: 'pmr-image', loading: 'lazy', alt: item_title
-                  }}
-                {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'pmr-image' }}
-                {%- endif -%}
-              </div>
-              <div class="pmr-info">
-                {%- if item_title != blank -%}
-                  <h3 class="pmr-title">{{ item_title }}</h3>
-                {%- endif -%}
-                {%- if block.settings.price_text != blank -%}
-                  <p class="pmr-price">{{ block.settings.price_text }}</p>
-                {%- elsif linked_product != blank -%}
-                  <p class="pmr-price">
-                    Starting at <strong>{{ linked_product.price | money }}</strong>
-                  </p>
-                {%- endif -%}
-              </div>
-            </a>
-          {%- endfor -%}
-        {%- else -%}
-          <!-- Default Fallback using store products or placeholders -->
-          {%- assign sample_products = collections.all.products -%}
-          {%- for prod in sample_products limit: 3 -%}
-            <a href="{{ prod.url }}" class="pmr-item">
-              <div class="pmr-image-box">
-                {%- if prod.featured_image != blank -%}
-                  {{
-                    prod.featured_image
-                    | image_url: width: 600
-                    | image_tag: class: 'pmr-image', loading: 'lazy', alt: prod.title
-                  }}
-                {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'pmr-image' }}
-                {%- endif -%}
-              </div>
-              <div class="pmr-info">
-                <h3 class="pmr-title">{{ prod.title }}</h3>
-                <p class="pmr-price">
-                  Starting at <strong>{{ prod.price | money }}</strong>
-                </p>
-              </div>
-            </a>
+            <div class="pmr-item pmr-item-pool" data-handle="{{ item_handle }}" {{ block.shopify_attributes }}>
+              <a href="{{ item_url | default: '#' }}" class="pmr-item-link">
+                <div class="pmr-image-box">
+                  {%- if item_img != blank -%}
+                    {{
+                      item_img
+                      | image_url: width: 600
+                      | image_tag: class: 'pmr-image', loading: 'lazy', alt: item_title
+                    }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'pmr-image' }}
+                  {%- endif -%}
+                </div>
+                <div class="pmr-info">
+                  {%- if item_title != blank -%}
+                    <h3 class="pmr-title">{{ item_title }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.price_text != blank -%}
+                    <p class="pmr-price">{{ block.settings.price_text }}</p>
+                  {%- elsif linked_product != blank -%}
+                    <p class="pmr-price">
+                      Starting at <strong>{{ linked_product.price | money }}</strong>
+                    </p>
+                  {%- endif -%}
+                </div>
+              </a>
+            </div>
           {%- endfor -%}
         {%- endif -%}
       </div>
@@ -148,7 +142,49 @@
     const previousButton = document.getElementById('pmrPrevious-{{ section.id }}');
     const nextButton = document.getElementById('pmrNext-{{ section.id }}');
 
-    if (!track || !progress || !previousButton || !nextButton) return;
+    if (!track) return;
+
+    // Detect current page product handle from pathname
+    var rawPath = decodeURIComponent(window.location.pathname.toLowerCase());
+    var currentHandle = '';
+    if (rawPath.indexOf('/products/') !== -1) {
+      currentHandle = rawPath.split('/products/')[1].split('/')[0].split('?')[0].trim().replace(/\s+/g, '-');
+    } else if (rawPath.indexOf('/products') !== -1) {
+      currentHandle = rawPath.replace('/products', '').replace(/^[\s\-_/]+/, '').split('/')[0].split('?')[0].trim().replace(/\s+/g, '-');
+    }
+
+    // Get all candidate items
+    const poolItems = Array.from(track.querySelectorAll('.pmr-item-pool'));
+    if (poolItems.length > 0) {
+      // Filter out current product
+      const availableItems = poolItems.filter(item => {
+        const handle = item.getAttribute('data-handle');
+        return handle && handle !== currentHandle;
+      });
+
+      // Fisher-Yates shuffle available items
+      for (let i = availableItems.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = availableItems[i];
+        availableItems[i] = availableItems[j];
+        availableItems[j] = temp;
+      }
+
+      // Pick top 3 random products
+      const selectedItems = availableItems.slice(0, 3);
+
+      // Hide unselected items and display selected items in track
+      poolItems.forEach(item => {
+        if (selectedItems.indexOf(item) !== -1) {
+          item.style.display = 'flex';
+          track.appendChild(item); // Re-order in DOM according to shuffle
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    if (!progress || !previousButton || !nextButton) return;
 
     const updateProgress = function () {
       const maxScroll = track.scrollWidth - track.clientWidth;
@@ -159,7 +195,7 @@
     };
 
     const scrollToAdjacentProduct = function (direction) {
-      const firstItem = track.querySelector('.pmr-item');
+      const firstItem = track.querySelector('.pmr-item:not([style*="display: none"])');
       if (!firstItem) return;
 
       const trackStyles = window.getComputedStyle(track);

@@ -42,6 +42,19 @@
               <p class="pf-subtext">{{ section.settings.subtext }}</p>
             {%- endif -%}
           </div>
+
+          <!-- Bottom Button Group inside Left Column -->
+          <div class="pf-left-bottom">
+            {%- if section.settings.pill_text != blank -%}
+              <span class="pf-question-pill">{{ section.settings.pill_text }}</span>
+            {%- endif -%}
+
+            {%- if section.settings.btn_text != blank -%}
+              <a href="{{ section.settings.btn_link | default: '/pages/contact' }}" class="pf-support-btn">
+                <span>{{ section.settings.btn_text }}</span>
+              </a>
+            {%- endif -%}
+          </div>
         </div>
 
         <!-- RIGHT COLUMN: Accordion FAQ Items -->
@@ -211,18 +224,6 @@
               </div>
             </div>
           {%- endif -%}
-
-          <div class="pf-left-bottom">
-            {%- if section.settings.pill_text != blank -%}
-              <span class="pf-question-pill">{{ section.settings.pill_text }}</span>
-            {%- endif -%}
-
-            {%- if section.settings.btn_text != blank -%}
-              <a href="{{ section.settings.btn_link | default: '#' }}" class="pf-support-btn">
-                <span>{{ section.settings.btn_text }}</span>
-              </a>
-            {%- endif -%}
-          </div>
         </div>
       </div>
     </div>

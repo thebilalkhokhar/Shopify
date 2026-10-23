@@ -164,7 +164,9 @@
             "attribute_label": "SEALS UP TO",
             "poly_val": "1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)",
             "paper_val": "240 grade (30 lbs) · 260 HD (30+ lbs)",
-            "pvc_val": "50+ lbs, heaviest loads"
+            "pvc_val": "50+ lbs, heaviest loads",
+            "hitack_val": "Cold-chain loads",
+            "flatback_val": "Bundling only, not for sealing"
           }
         },
         "row_2": {
@@ -173,7 +175,9 @@
             "attribute_label": "STICKS TO",
             "poly_val": "Cardboard",
             "paper_val": "Cardboard",
-            "pvc_val": "Cardboard, plastic, glass, metal"
+            "pvc_val": "Cardboard, plastic, glass, metal",
+            "hitack_val": "Cardboard, damp or frosted",
+            "flatback_val": "Paper and board"
           }
         },
         "row_3": {
@@ -182,7 +186,9 @@
             "attribute_label": "GOES ON",
             "poly_val": "Tape gun or machine",
             "paper_val": "Water dispenser",
-            "pvc_val": "Tape gun"
+            "pvc_val": "Tape gun",
+            "hitack_val": "Tape gun",
+            "flatback_val": "Tears by hand"
           }
         },
         "row_4": {
@@ -191,7 +197,9 @@
             "attribute_label": "PRINT DETAIL",
             "poly_val": "Sharp",
             "paper_val": "Sharp",
-            "pvc_val": "Limited detail"
+            "pvc_val": "Limited detail",
+            "hitack_val": "Standard",
+            "flatback_val": "Sharp, matte"
           }
         },
         "row_5": {
@@ -200,7 +208,9 @@
             "attribute_label": "TAMPER EVIDENT",
             "poly_val": "NO",
             "paper_val": "YES",
-            "pvc_val": "NO"
+            "pvc_val": "NO",
+            "hitack_val": "NO",
+            "flatback_val": "NO"
           }
         },
         "row_6": {
@@ -209,7 +219,9 @@
             "attribute_label": "RECYCLABLE",
             "poly_val": "NO",
             "paper_val": "YES",
-            "pvc_val": "NO"
+            "pvc_val": "NO",
+            "hitack_val": "NO",
+            "flatback_val": "YES"
           }
         },
         "row_7": {
@@ -218,7 +230,9 @@
             "attribute_label": "BELOW FREEZING",
             "poly_val": "NO",
             "paper_val": "NO",
-            "pvc_val": "NO"
+            "pvc_val": "NO",
+            "hitack_val": "YES",
+            "flatback_val": "NO"
           }
         }
       },
@@ -235,9 +249,6 @@
         "bg_color": "#FBF8F3",
         "badge_text": "Head to head",
         "heading": "Polypropylene, or one of\nthe other two?",
-        "col_1_title": "POLYPROPYLENE",
-        "col_2_title": "PAPER",
-        "col_3_title": "PVC",
         "btn_text": "Compare all five →",
         "btn_link": "",
         "bottom_note": "Still not sure? The free sample box has both of these in it, printed and blank.",
@@ -379,7 +390,7 @@
             "image": "shopify://shop_images/pvc.webp",
             "title": "PVC Tape",
             "price_text": "Starting at $7.84 a roll",
-            "url": ""
+            "url": "/products/pvc-tape"
           }
         },
         "item_2": {
@@ -388,7 +399,7 @@
             "image": "shopify://shop_images/flattape.webp",
             "title": "Flatback Tape",
             "price_text": "Starting at $7.12 a roll",
-            "url": ""
+            "url": "/products/flatback-tape"
           }
         },
         "item_3": {
@@ -397,14 +408,44 @@
             "image": "shopify://shop_images/dispensers.webp",
             "title": "Dispensers",
             "price_text": "From $34 per unit",
-            "url": ""
+            "url": "/products/dispensers"
+          }
+        },
+        "item_4": {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/paper.webp",
+            "title": "Paper Tape",
+            "price_text": "Starting at $9.10 a roll",
+            "url": "/products/paper-tape"
+          }
+        },
+        "item_5": {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/hitack.webp",
+            "title": "Hi-Tack Freezer Tape",
+            "price_text": "Starting at $10.18 a roll",
+            "url": "/products/hi-tack-freezer-tape"
+          }
+        },
+        "item_6": {
+          "type": "related_product",
+          "settings": {
+            "image": "shopify://shop_images/polypropylene.webp",
+            "title": "Polypropylene Tape",
+            "price_text": "Starting at $5.68 a roll",
+            "url": "/products/polypropylene-tape"
           }
         }
       },
       "block_order": [
         "item_1",
         "item_2",
-        "item_3"
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6"
       ],
       "settings": {
         "outer_bg": "#171008",

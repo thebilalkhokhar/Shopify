@@ -237,29 +237,37 @@
   .home-cart__title {
     font-size: 40px;
   }
+
   .home-cart__desc {
     font-size: 14px;
   }
+
   .home-cart__features-heading {
     font-size: 16px;
   }
+
   .home-cart__feature-icon img,
   .home-cart__feature-icon svg {
     width: 85%;
     height: 85%;
   }
+
   .home-cart__btn {
     font-size: 16px;
   }
+
   .home-cart__price {
     font-size: 25px;
   }
+
   .home-cart__price-label {
     font-size: 10px;
   }
+
   .home-cart__feature-text {
     font-size: 14px;
   }
+
   .home-cart__img {
     width: 97%;
   }
@@ -270,6 +278,7 @@
     width: 100%;
   }
 }
+
 @media (max-width: 992px) {
   .home-cart__grid {
     grid-template-columns: 1fr;
@@ -328,26 +337,33 @@
     align-items: center;
     gap: 8px;
   }
+
   .home-cart__price-wrap {
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
   }
+
   .home-cart__price-label {
     font-size: 10px;
   }
+
   .home-cart__price-label br {
     display: none;
   }
+
   .home-cart__desc {
     font-size: 12px;
   }
+
   .home-cart__features-heading {
     font-size: 16px;
   }
+
   .home-cart__feature-text {
     font-size: 12px;
   }
+
   .home-cart__feature-icon img,
   .home-cart__feature-icon svg {
     width: 80%;
@@ -409,12 +425,15 @@
   .home-cart__content {
     padding: clamp(13px, 0vw, 15px) clamp(18px, 2.5vw, 31px);
   }
+
   .home-cart__title {
     font-size: 30px;
   }
+
   .home-cart__badge {
     font-size: 12px;
   }
+
   .home-cart__title {
     font-size: clamp(30px, 3.2vw, 36px);
   }
@@ -454,15 +473,19 @@
   .home-cart__btn {
     padding: clamp(10px, 1vw, 14px) clamp(16px, 1.8vw, 22px);
   }
+
   .home-cart__btn {
     font-size: 14px;
   }
+
   .home-cart__features-heading {
     margin-bottom: 8px;
   }
+
   .home-cart__desc {
     margin-bottom: 10px;
   }
+
   .home-cart__header-row {
     margin-bottom: 10px;
   }
@@ -473,17 +496,21 @@
     top: -23px;
     height: auto;
   }
+
   .home-cart__content {
     padding: 50px 16px 24px;
   }
+
   .home-cart__badge {
     font-size: 11px;
   }
+
   .home-cart__feature-icon img,
   .home-cart__feature-icon svg {
     width: 70%;
     height: 70%;
   }
+
   .home-cart__feature-item {
     gap: 8px;
   }

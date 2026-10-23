@@ -18,10 +18,8 @@
   max-width: 100%;
   margin: 0 auto;
   background-color: var(--hbf-card-bg, #ea5b1b);
-  background-image: radial-gradient(
-    rgba(0, 0, 0, 0.1) 1.2px,
-    transparent 1.2px
-  );
+  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1.2px,
+      transparent 1.2px);
   background-size: 24px 24px;
   border-radius: 24px;
   border: 2px solid var(--hbf-card-border, #171008);
@@ -403,9 +401,11 @@
     padding: 12px 20px;
     font-size: 14.5px;
   }
+
   .hbf-box-col {
     display: none;
   }
+
   .hbf-actions-col {
     width: 50%;
   }
@@ -422,6 +422,7 @@
     width: 100%;
     max-width: none;
   }
+
   .footer-frame {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;

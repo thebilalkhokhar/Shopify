@@ -13,6 +13,7 @@
   background-color: #FAF7F0;
   background-image: radial-gradient(#d4cbbe 1.2px, transparent 1.2px);
   background-size: 20px 20px;
+  border-top: 2px solid #171008;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   /* Left has 60px padding, Right has 0 padding so cards bleed off the right edge */

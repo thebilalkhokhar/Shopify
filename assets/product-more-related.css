@@ -126,6 +126,14 @@
   transition: transform 0.2s ease;
 }
 
+.pmr-item-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
 .pmr-item:hover {
   transform: translateY(-3px);
 }
@@ -147,7 +155,8 @@
   transition: box-shadow 0.2s ease;
 }
 
-.pmr-item:hover .pmr-image-box {
+.pmr-item:hover .pmr-image-box,
+.pmr-item-link:hover .pmr-image-box {
   box-shadow: 3px 3px 0px #171008;
 }
 

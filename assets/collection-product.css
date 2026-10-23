@@ -204,8 +204,60 @@
   font-size: 14px;
 }
 
+/* Quick View Overlay Button on Hover */
+.cp-card__quick-view {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  z-index: 4;
+}
+
+.cp-card__quick-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #fe6a00;
+  color: #ffffff;
+  font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  text-align: center;
+  border-radius: 999px;
+  border: 1.5px solid #171008;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.cp-card__box:hover .cp-card__quick-view,
+.cp-card:hover .cp-card__quick-view {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.cp-card__quick-view:hover .cp-card__quick-view-btn {
+  background-color: #e55e00;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1024px) {
+  /* Hide quick view completely on tablet and mobile view */
+  .cp-card__quick-view {
+    display: none !important;
+  }
+
   .cp-container {
     padding: 0 24px;
   }

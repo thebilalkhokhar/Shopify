@@ -88,6 +88,7 @@
               {%- elsif current_title_lower contains 'freezer'
                 or current_title_lower contains 'hi-tack'
                 or current_handle contains 'freezer'
+                or current_handle contains 'hi-tack'
               -%}
                 {%- assign fallback_img_name = 'hitack.webp' -%}
                 {%- assign cdn_img_file = 'Hi-Tack_Freezer_Tape.webp' -%}
@@ -96,17 +97,18 @@
                 {%- assign cdn_img_file = 'Flatback_Tape.webp' -%}
               {%- elsif current_title_lower contains 'dispenser' or current_handle contains 'dispenser' -%}
                 {%- assign fallback_img_name = 'dispensers.webp' -%}
-                {%- assign cdn_img_file = 'Dispensers_83aabc72-858a-41ea-81f1-0a251ab9a8bc.webp' -%}
+                {%- assign cdn_img_file = 'dispensers.webp' -%}
               {%- endif -%}
               <img
                 id="pbMainImage"
-                src="/cdn/shop/files/{{ cdn_img_file }}"
+                src="{{ fallback_img_name | asset_url | default: fallback_img_name | file_img_url: 'master' }}"
+                data-fallback-cdn="/cdn/shop/files/{{ cdn_img_file }}"
                 alt="{{ display_title | default: 'Tape Product' }}"
                 class="pb-main-img"
                 loading="eager"
                 width="800"
                 height="650"
-                onerror="this.src='{{ fallback_img_name | file_img_url: 'master' }}'"
+                onerror="if (!this.getAttribute('data-retried')) { this.setAttribute('data-retried', '1'); this.src='/cdn/shop/files/' + (this.getAttribute('data-fallback-cdn') ? this.getAttribute('data-fallback-cdn').split('/').pop() : '{{ cdn_img_file }}'); } else { this.src='{{ fallback_img_name | file_img_url: 'master' }}'; }"
               >
             {%- endif -%}
           </div>
@@ -399,7 +401,7 @@
                   Three ink <span class="pb-pill-sub">. 5 case min</span>
                 </button>
                 <button type="button" class="pb-pill-btn" data-group="inks" data-val="Multiple">
-                  Multiple <span class="pb-pill-sub">. 4+ colors</span>
+                  Multiple <span class="pb-pill-sub">. 5 case min</span>
                 </button>
               </div>
             </div>
@@ -954,37 +956,37 @@
         'paper-tape': {
           title: 'Paper Tape',
           price: 'Starting at $9.10 a roll',
-          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
+          img: '{{ "paper.webp" | file_img_url: "master" }}',
           material: 'Paper'
         },
         'pvc-tape': {
           title: 'PVC Tape',
           price: 'Starting at $7.84 a roll',
-          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/PVC_Tape.webp',
+          img: '{{ "pvc.webp" | file_img_url: "master" }}',
           material: 'PVC'
         },
         'hi-tack-freezer-tape': {
           title: 'Hi-Tack Freezer Tape',
           price: 'Starting at $10.18 a roll',
-          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Hi-Tack_Freezer_Tape.webp',
+          img: '{{ "hitack.webp" | file_img_url: "master" }}',
           material: 'Hi-Track Freezer'
         },
         'flatback-tape': {
           title: 'Flatback Tape',
           price: 'Starting at $7.12 a roll',
-          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Flatback_Tape.webp',
+          img: '{{ "flattape.webp" | file_img_url: "master" }}',
           material: 'Flat back'
         },
         'dispensers': {
           title: 'Dispensers',
           price: 'From $34 per unit',
-          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Dispensers_83aabc72-858a-41ea-81f1-0a251ab9a8bc.webp',
+          img: '{{ "dispensers.webp" | file_img_url: "master" }}',
           material: 'Dispensers'
         },
         'polypropylene-tape': {
           title: 'Polypropylene Tape',
           price: 'Starting at $5.68 a roll',
-          img: 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Polypropylene_Tape.webp',
+          img: '{{ "polypropylene.webp" | file_img_url: "master" }}',
           material: 'Polypropylene'
         }
       };
@@ -1011,7 +1013,9 @@
         if (activeThumb && cfg.img && !hasCustomThumb) {
           activeThumb.setAttribute('data-full-img', cfg.img);
           const thumbImg = activeThumb.querySelector('img');
-          if (thumbImg) thumbImg.src = cfg.img;
+          if (thumbImg) {
+            thumbImg.src = cfg.img;
+          }
         }
 
         // Update active material pill

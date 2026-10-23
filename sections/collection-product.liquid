@@ -78,6 +78,11 @@
                   </div>
                 {%- endif -%}
               </a>
+
+              <!-- Quick View Button -->
+              <a href="{{ card_url | default: '#' }}" class="cp-card__quick-view">
+                <span class="cp-card__quick-view-btn">Quick View</span>
+              </a>
             </div>
 
             <!-- Card Info -->
@@ -130,6 +135,11 @@
                       {{ 'product-1' | placeholder_svg_tag }}
                     </div>
                   {%- endif -%}
+                </a>
+
+                <!-- Quick View Button -->
+                <a href="{{ card_product.url }}" class="cp-card__quick-view">
+                  <span class="cp-card__quick-view-btn">Quick View</span>
                 </a>
               </div>
 

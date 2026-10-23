@@ -1,13 +1,107 @@
 {{ 'product-head-compare.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Determine Current Product Key (Polypropylene, Paper, PVC, Hi-Tack, Flatback)
+  Excludes dispensers from comparison.
+{%- endcomment -%}
+
+{%- assign current_handle = product.handle | default: '' -%}
+{%- if current_handle == blank and request.path contains '/products/' -%}
+  {%- assign path_parts = request.path | split: '/products/' -%}
+  {%- assign current_handle = path_parts[1] | split: '?' | first | split: '/' | first -%}
+{%- endif -%}
+
+{%- assign current_title_lower = product.title | default: '' | downcase -%}
+{%- assign cur_type = 'poly' -%}
+
+{%- if current_title_lower contains 'paper' or current_handle contains 'paper' -%}
+  {%- assign cur_type = 'paper' -%}
+{%- elsif current_title_lower contains 'pvc' or current_handle contains 'pvc' -%}
+  {%- assign cur_type = 'pvc' -%}
+{%- elsif current_title_lower contains 'freezer' or current_title_lower contains 'hi-tack' or current_handle contains 'freezer' or current_handle contains 'hitack' -%}
+  {%- assign cur_type = 'hitack' -%}
+{%- elsif current_title_lower contains 'flat' or current_handle contains 'flat' -%}
+  {%- assign cur_type = 'flatback' -%}
+{%- elsif current_title_lower contains 'poly' or current_handle contains 'poly' -%}
+  {%- assign cur_type = 'poly' -%}
+{%- endif -%}
+
+{%- comment -%}
+  Fetch 2 comparison products for this active product from Section Settings, with smart defaults.
+{%- endcomment -%}
+{%- case cur_type -%}
+  {%- when 'poly' -%}
+    {%- assign setting_comp1 = section.settings.poly_comp_1 | default: 'paper' -%}
+    {%- assign setting_comp2 = section.settings.poly_comp_2 | default: 'pvc' -%}
+    {%- assign default_heading = 'Polypropylene, or one of\nthe other two?' -%}
+  {%- when 'paper' -%}
+    {%- assign setting_comp1 = section.settings.paper_comp_1 | default: 'poly' -%}
+    {%- assign setting_comp2 = section.settings.paper_comp_2 | default: 'pvc' -%}
+    {%- assign default_heading = 'Paper, or one of\nthe other two?' -%}
+  {%- when 'pvc' -%}
+    {%- assign setting_comp1 = section.settings.pvc_comp_1 | default: 'poly' -%}
+    {%- assign setting_comp2 = section.settings.pvc_comp_2 | default: 'paper' -%}
+    {%- assign default_heading = 'PVC, or one of\nthe other two?' -%}
+  {%- when 'hitack' -%}
+    {%- assign setting_comp1 = section.settings.hitack_comp_1 | default: 'poly' -%}
+    {%- assign setting_comp2 = section.settings.hitack_comp_2 | default: 'paper' -%}
+    {%- assign default_heading = 'Hi-Tack Freezer, or one of\nthe other two?' -%}
+  {%- when 'flatback' -%}
+    {%- assign setting_comp1 = section.settings.flatback_comp_1 | default: 'paper' -%}
+    {%- assign setting_comp2 = section.settings.flatback_comp_2 | default: 'hitack' -%}
+    {%- assign default_heading = 'Flatback, or one of\nthe other two?' -%}
+  {%- else -%}
+    {%- assign setting_comp1 = 'paper' -%}
+    {%- assign setting_comp2 = 'pvc' -%}
+    {%- assign default_heading = 'Polypropylene, or one of\nthe other two?' -%}
+{%- endcase -%}
+
+{%- comment -%}
+  Column 1 is always the CURRENT PRODUCT (Highlighted)
+  Column 2 is comparison product 1
+  Column 3 is comparison product 2
+{%- endcomment -%}
+{%- assign col_1_key = cur_type | append: '_val' -%}
+{%- assign col_2_key = setting_comp1 | append: '_val' -%}
+{%- assign col_3_key = setting_comp2 | append: '_val' -%}
+
+{%- case cur_type -%}
+  {%- when 'poly' -%}{%- assign col_1_name = section.settings.title_poly | default: 'POLYPROPYLENE' -%}
+  {%- when 'paper' -%}{%- assign col_1_name = section.settings.title_paper | default: 'PAPER' -%}
+  {%- when 'pvc' -%}{%- assign col_1_name = section.settings.title_pvc | default: 'PVC' -%}
+  {%- when 'hitack' -%}{%- assign col_1_name = section.settings.title_hitack | default: 'HI-TACK FREEZER' -%}
+  {%- when 'flatback' -%}{%- assign col_1_name = section.settings.title_flatback | default: 'FLATBACK' -%}
+{%- endcase -%}
+
+{%- case setting_comp1 -%}
+  {%- when 'poly' -%}{%- assign col_2_name = section.settings.title_poly | default: 'POLYPROPYLENE' -%}
+  {%- when 'paper' -%}{%- assign col_2_name = section.settings.title_paper | default: 'PAPER' -%}
+  {%- when 'pvc' -%}{%- assign col_2_name = section.settings.title_pvc | default: 'PVC' -%}
+  {%- when 'hitack' -%}{%- assign col_2_name = section.settings.title_hitack | default: 'HI-TACK FREEZER' -%}
+  {%- when 'flatback' -%}{%- assign col_2_name = section.settings.title_flatback | default: 'FLATBACK' -%}
+{%- endcase -%}
+
+{%- case setting_comp2 -%}
+  {%- when 'poly' -%}{%- assign col_3_name = section.settings.title_poly | default: 'POLYPROPYLENE' -%}
+  {%- when 'paper' -%}{%- assign col_3_name = section.settings.title_paper | default: 'PAPER' -%}
+  {%- when 'pvc' -%}{%- assign col_3_name = section.settings.title_pvc | default: 'PVC' -%}
+  {%- when 'hitack' -%}{%- assign col_3_name = section.settings.title_hitack | default: 'HI-TACK FREEZER' -%}
+  {%- when 'flatback' -%}{%- assign col_3_name = section.settings.title_flatback | default: 'FLATBACK' -%}
+{%- endcase -%}
+
+{%- assign heading_text = section.settings.heading -%}
+{%- if heading_text == blank or heading_text contains 'Polypropylene, or one of' -%}
+  {%- assign heading_text = default_heading -%}
+{%- endif -%}
+
 <section
   id="product-head-compare-{{ section.id }}"
   class="product-head-compare-section"
   style="
     background-color: {{ section.settings.bg_color | default: '#FBF8F3' }};
     padding-top: {{ section.settings.padding_top | default: 40 }}px;
-    {% comment %} padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px; {% endcomment %}
   "
+  data-active-type="{{ cur_type }}"
   {{ section.shopify_attributes }}
 >
   <div class="phc-container">
@@ -19,8 +113,8 @@
         </div>
       {%- endif -%}
 
-      {%- if section.settings.heading != blank -%}
-        <h2 class="phc-heading">{{ section.settings.heading | newline_to_br }}</h2>
+      {%- if heading_text != blank -%}
+        <h2 class="phc-heading" id="phcSectionHeading">{{ heading_text | newline_to_br }}</h2>
       {%- endif -%}
     </div>
 
@@ -31,97 +125,106 @@
           <thead>
             <tr>
               <th class="phc-col-attr"></th>
-              <th class="phc-col-poly">{{ section.settings.col_1_title | default: 'POLYPROPYLENE' }}</th>
-              <th class="phc-col-paper">{{ section.settings.col_2_title | default: 'PAPER' }}</th>
-              <th class="phc-col-pvc">{{ section.settings.col_3_title | default: 'PVC' }}</th>
+              <th class="phc-col-poly phc-col-highlighted" data-phc-head="col1">{{ col_1_name }}</th>
+              <th class="phc-col-paper phc-col-other" data-phc-head="col2">{{ col_2_name }}</th>
+              <th class="phc-col-pvc phc-col-other" data-phc-head="col3">{{ col_3_name }}</th>
             </tr>
           </thead>
           <tbody>
             {%- if section.blocks.size > 0 -%}
               {%- for block in section.blocks -%}
-                <tr {{ block.shopify_attributes }}>
+                <tr {{ block.shopify_attributes }}
+                  data-val-poly="{{ block.settings.poly_val | escape }}"
+                  data-val-paper="{{ block.settings.paper_val | escape }}"
+                  data-val-pvc="{{ block.settings.pvc_val | escape }}"
+                  data-val-hitack="{{ block.settings.hitack_val | escape }}"
+                  data-val-flatback="{{ block.settings.flatback_val | escape }}"
+                >
                   <td class="phc-col-attr">{{ block.settings.attribute_label }}</td>
 
-                  <!-- Polypropylene Column -->
-                  <td class="phc-col-poly">
-                    {%- assign val_poly = block.settings.poly_val | strip -%}
-                    {%- if val_poly == 'YES' or val_poly == 'yes' or val_poly == 'Yes' -%}
+                  <!-- Column 1 (Highlighted / Active Product) -->
+                  <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1">
+                    {%- assign val_col1 = block.settings[col_1_key] | strip -%}
+                    {%- if val_col1 == blank and col_1_key == 'poly_val' -%}{%- assign val_col1 = block.settings.poly_val | strip -%}{%- endif -%}
+                    {%- if val_col1 == 'YES' or val_col1 == 'yes' or val_col1 == 'Yes' -%}
                       <span class="phc-pill-tag phc-tag-yes">YES</span>
-                    {%- elsif val_poly == 'NO' or val_poly == 'no' or val_poly == 'No' -%}
+                    {%- elsif val_col1 == 'NO' or val_col1 == 'no' or val_col1 == 'No' -%}
                       <span class="phc-pill-tag phc-tag-no">NO</span>
                     {%- else -%}
-                      {{ block.settings.poly_val }}
+                      {{ val_col1 }}
                     {%- endif -%}
                   </td>
 
-                  <!-- Paper Column -->
-                  <td class="phc-col-paper">
-                    {%- assign val_paper = block.settings.paper_val | strip -%}
-                    {%- if val_paper == 'YES' or val_paper == 'yes' or val_paper == 'Yes' -%}
+                  <!-- Column 2 (Comparison Product 1) -->
+                  <td class="phc-col-paper phc-col-other" data-phc-cell="col2">
+                    {%- assign val_col2 = block.settings[col_2_key] | strip -%}
+                    {%- if val_col2 == blank and col_2_key == 'paper_val' -%}{%- assign val_col2 = block.settings.paper_val | strip -%}{%- endif -%}
+                    {%- if val_col2 == 'YES' or val_col2 == 'yes' or val_col2 == 'Yes' -%}
                       <span class="phc-pill-tag phc-tag-yes">YES</span>
-                    {%- elsif val_paper == 'NO' or val_paper == 'no' or val_paper == 'No' -%}
+                    {%- elsif val_col2 == 'NO' or val_col2 == 'no' or val_col2 == 'No' -%}
                       <span class="phc-pill-tag phc-tag-no">NO</span>
                     {%- else -%}
-                      {{ block.settings.paper_val }}
+                      {{ val_col2 }}
                     {%- endif -%}
                   </td>
 
-                  <!-- PVC Column -->
-                  <td class="phc-col-pvc">
-                    {%- assign val_pvc = block.settings.pvc_val | strip -%}
-                    {%- if val_pvc == 'YES' or val_pvc == 'yes' or val_pvc == 'Yes' -%}
+                  <!-- Column 3 (Comparison Product 2) -->
+                  <td class="phc-col-pvc phc-col-other" data-phc-cell="col3">
+                    {%- assign val_col3 = block.settings[col_3_key] | strip -%}
+                    {%- if val_col3 == blank and col_3_key == 'pvc_val' -%}{%- assign val_col3 = block.settings.pvc_val | strip -%}{%- endif -%}
+                    {%- if val_col3 == 'YES' or val_col3 == 'yes' or val_col3 == 'Yes' -%}
                       <span class="phc-pill-tag phc-tag-yes">YES</span>
-                    {%- elsif val_pvc == 'NO' or val_pvc == 'no' or val_pvc == 'No' -%}
+                    {%- elsif val_col3 == 'NO' or val_col3 == 'no' or val_col3 == 'No' -%}
                       <span class="phc-pill-tag phc-tag-no">NO</span>
                     {%- else -%}
-                      {{ block.settings.pvc_val }}
+                      {{ val_col3 }}
                     {%- endif -%}
                   </td>
                 </tr>
               {%- endfor -%}
             {%- else -%}
-              <!-- Fallback Default Rows Matching Screenshot -->
-              <tr>
+              <!-- Fallback Default Rows -->
+              <tr data-val-poly="1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)" data-val-paper="240 grade (30 lbs) · 260 HD (30+ lbs)" data-val-pvc="50+ lbs, heaviest loads" data-val-hitack="Cold-chain loads" data-val-flatback="Bundling only, not for sealing">
                 <td class="phc-col-attr">SEALS UP TO</td>
-                <td class="phc-col-poly">1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)</td>
-                <td class="phc-col-paper">240 grade (30 lbs) · 260 HD (30+ lbs)</td>
-                <td class="phc-col-pvc">50+ lbs, heaviest loads</td>
+                <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1">1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)</td>
+                <td class="phc-col-paper phc-col-other" data-phc-cell="col2">240 grade (30 lbs) · 260 HD (30+ lbs)</td>
+                <td class="phc-col-pvc phc-col-other" data-phc-cell="col3">50+ lbs, heaviest loads</td>
               </tr>
-              <tr>
+              <tr data-val-poly="Cardboard" data-val-paper="Cardboard" data-val-pvc="Cardboard, plastic, glass, metal" data-val-hitack="Cardboard, damp or frosted" data-val-flatback="Paper and board">
                 <td class="phc-col-attr">STICKS TO</td>
-                <td class="phc-col-poly">Cardboard</td>
-                <td class="phc-col-paper">Cardboard</td>
-                <td class="phc-col-pvc">Cardboard, plastic, glass, metal</td>
+                <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1">Cardboard</td>
+                <td class="phc-col-paper phc-col-other" data-phc-cell="col2">Cardboard</td>
+                <td class="phc-col-pvc phc-col-other" data-phc-cell="col3">Cardboard, plastic, glass, metal</td>
               </tr>
-              <tr>
+              <tr data-val-poly="Tape gun or machine" data-val-paper="Water dispenser" data-val-pvc="Tape gun" data-val-hitack="Tape gun" data-val-flatback="Tears by hand">
                 <td class="phc-col-attr">GOES ON</td>
-                <td class="phc-col-poly">Tape gun or machine</td>
-                <td class="phc-col-paper">Water dispenser</td>
-                <td class="phc-col-pvc">Tape gun</td>
+                <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1">Tape gun or machine</td>
+                <td class="phc-col-paper phc-col-other" data-phc-cell="col2">Water dispenser</td>
+                <td class="phc-col-pvc phc-col-other" data-phc-cell="col3">Tape gun</td>
               </tr>
-              <tr>
+              <tr data-val-poly="Sharp" data-val-paper="Sharp" data-val-pvc="Limited detail" data-val-hitack="Standard" data-val-flatback="Sharp, matte">
                 <td class="phc-col-attr">PRINT DETAIL</td>
-                <td class="phc-col-poly">Sharp</td>
-                <td class="phc-col-paper">Sharp</td>
-                <td class="phc-col-pvc">Limited detail</td>
+                <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1">Sharp</td>
+                <td class="phc-col-paper phc-col-other" data-phc-cell="col2">Sharp</td>
+                <td class="phc-col-pvc phc-col-other" data-phc-cell="col3">Limited detail</td>
               </tr>
-              <tr>
+              <tr data-val-poly="NO" data-val-paper="YES" data-val-pvc="NO" data-val-hitack="NO" data-val-flatback="NO">
                 <td class="phc-col-attr">TAMPER EVIDENT</td>
-                <td class="phc-col-poly"><span class="phc-pill-tag phc-tag-no">NO</span></td>
-                <td class="phc-col-paper"><span class="phc-pill-tag phc-tag-yes">YES</span></td>
-                <td class="phc-col-pvc"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-paper phc-col-other" data-phc-cell="col2"><span class="phc-pill-tag phc-tag-yes">YES</span></td>
+                <td class="phc-col-pvc phc-col-other" data-phc-cell="col3"><span class="phc-pill-tag phc-tag-no">NO</span></td>
               </tr>
-              <tr>
+              <tr data-val-poly="NO" data-val-paper="YES" data-val-pvc="NO" data-val-hitack="NO" data-val-flatback="YES">
                 <td class="phc-col-attr">RECYCLABLE</td>
-                <td class="phc-col-poly"><span class="phc-pill-tag phc-tag-no">NO</span></td>
-                <td class="phc-col-paper"><span class="phc-pill-tag phc-tag-yes">YES</span></td>
-                <td class="phc-col-pvc"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-paper phc-col-other" data-phc-cell="col2"><span class="phc-pill-tag phc-tag-yes">YES</span></td>
+                <td class="phc-col-pvc phc-col-other" data-phc-cell="col3"><span class="phc-pill-tag phc-tag-no">NO</span></td>
               </tr>
-              <tr>
+              <tr data-val-poly="NO" data-val-paper="NO" data-val-pvc="NO" data-val-hitack="YES" data-val-flatback="NO">
                 <td class="phc-col-attr">BELOW FREEZING</td>
-                <td class="phc-col-poly"><span class="phc-pill-tag phc-tag-no">NO</span></td>
-                <td class="phc-col-paper"><span class="phc-pill-tag phc-tag-no">NO</span></td>
-                <td class="phc-col-pvc"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-poly phc-col-highlighted" data-phc-cell="col1"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-paper phc-col-other" data-phc-cell="col2"><span class="phc-pill-tag phc-tag-no">NO</span></td>
+                <td class="phc-col-pvc phc-col-other" data-phc-cell="col3"><span class="phc-pill-tag phc-tag-no">NO</span></td>
               </tr>
             {%- endif -%}
           </tbody>
@@ -129,43 +232,14 @@
       </div>
     </div>
 
-    {%- if section.blocks.size > 0 -%}
-      <div class="phc-mobile-cards">
-        {%- assign columns = 'poly_val,paper_val,pvc_val' | split: ',' -%}
-        {%- for key in columns -%}
-          {%- assign card_title = '' -%}
-          {%- if key == 'poly_val' -%}
-            {%- assign card_title = section.settings.col_1_title | default: 'POLYPROPYLENE' -%}
-          {%- elsif key == 'paper_val' -%}
-            {%- assign card_title = section.settings.col_2_title | default: 'PAPER' -%}
-          {%- elsif key == 'pvc_val' -%}
-            {%- assign card_title = section.settings.col_3_title | default: 'PVC' -%}
-          {%- endif -%}
-
-          <article class="phc-mobile-card{% if key == 'poly_val' %} phc-mobile-card--poly{% endif %}">
-            <h3 class="phc-mobile-card-title">{{ card_title | escape }}</h3>
-
-            <dl class="phc-mobile-card-details">
-              {%- for block in section.blocks -%}
-                {%- assign comparison_value = block.settings[key] | strip -%}
-                <div class="phc-mobile-card-row" {{ block.shopify_attributes }}>
-                  <dt>{{ block.settings.attribute_label | escape }}</dt>
-                  <dd>
-                    {%- if comparison_value == 'YES' or comparison_value == 'yes' or comparison_value == 'Yes' -%}
-                      <span class="phc-pill-tag phc-tag-yes">YES</span>
-                    {%- elsif comparison_value == 'NO' or comparison_value == 'no' or comparison_value == 'No' -%}
-                      <span class="phc-pill-tag phc-tag-no">NO</span>
-                    {%- else -%}
-                      {{ comparison_value | escape }}
-                    {%- endif -%}
-                  </dd>
-                </div>
-              {%- endfor -%}
-            </dl>
-          </article>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
+    <!-- Mobile Cards View -->
+    <div class="phc-mobile-cards" id="phcMobileCardsWrap">
+      {%- if section.blocks.size > 0 -%}
+        {%- render 'product-head-compare-card', section: section, title: col_1_name, value_key: col_1_key, is_highlighted: true -%}
+        {%- render 'product-head-compare-card', section: section, title: col_2_name, value_key: col_2_key, is_highlighted: false -%}
+        {%- render 'product-head-compare-card', section: section, title: col_3_name, value_key: col_3_key, is_highlighted: false -%}
+      {%- endif -%}
+    </div>
 
     <!-- Bottom CTA Bar -->
     {%- if section.settings.btn_text != blank or section.settings.bottom_note != blank -%}
@@ -182,6 +256,165 @@
       </div>
     {%- endif -%}
   </div>
+
+  <script type="application/json" id="phcConfigData-{{ section.id }}">
+    {
+      "titles": {
+        "poly": {{ section.settings.title_poly | default: 'POLYPROPYLENE' | json }},
+        "paper": {{ section.settings.title_paper | default: 'PAPER' | json }},
+        "pvc": {{ section.settings.title_pvc | default: 'PVC' | json }},
+        "hitack": {{ section.settings.title_hitack | default: 'HI-TACK FREEZER' | json }},
+        "flatback": {{ section.settings.title_flatback | default: 'FLATBACK' | json }}
+      },
+      "headings": {
+        "poly": "Polypropylene, or one of\nthe other two?",
+        "paper": "Paper, or one of\nthe other two?",
+        "pvc": "PVC, or one of\nthe other two?",
+        "hitack": "Hi-Tack Freezer, or one of\nthe other two?",
+        "flatback": "Flatback, or one of\nthe other two?"
+      },
+      "pairs": {
+        "poly": [{{ section.settings.poly_comp_1 | default: 'paper' | json }}, {{ section.settings.poly_comp_2 | default: 'pvc' | json }}],
+        "paper": [{{ section.settings.paper_comp_1 | default: 'poly' | json }}, {{ section.settings.paper_comp_2 | default: 'pvc' | json }}],
+        "pvc": [{{ section.settings.pvc_comp_1 | default: 'poly' | json }}, {{ section.settings.pvc_comp_2 | default: 'paper' | json }}],
+        "hitack": [{{ section.settings.hitack_comp_1 | default: 'poly' | json }}, {{ section.settings.hitack_comp_2 | default: 'paper' | json }}],
+        "flatback": [{{ section.settings.flatback_comp_1 | default: 'paper' | json }}, {{ section.settings.flatback_comp_2 | default: 'hitack' | json }}]
+      }
+    }
+  </script>
+
+  <script>
+    (function() {
+      var sectionEl = document.getElementById('product-head-compare-{{ section.id }}');
+      if (!sectionEl) return;
+
+      var configEl = document.getElementById('phcConfigData-{{ section.id }}');
+      var cfg = configEl ? JSON.parse(configEl.textContent || '{}') : {};
+
+      function detectCurrentType() {
+        // 1. Check active material pill in product configurator
+        var activePill = document.querySelector('.pb-pill-btn[data-group="material"].is-active');
+        if (activePill) {
+          var val = (activePill.getAttribute('data-val') || '').toLowerCase();
+          if (val.indexOf('poly') !== -1) return 'poly';
+          if (val.indexOf('paper') !== -1) return 'paper';
+          if (val.indexOf('pvc') !== -1) return 'pvc';
+          if (val.indexOf('freezer') !== -1 || val.indexOf('hi-track') !== -1 || val.indexOf('hi-tack') !== -1) return 'hitack';
+          if (val.indexOf('flat') !== -1) return 'flatback';
+        }
+
+        // 2. Check URL pathname
+        var path = decodeURIComponent(window.location.pathname.toLowerCase());
+        if (path.indexOf('paper') !== -1) return 'paper';
+        if (path.indexOf('pvc') !== -1) return 'pvc';
+        if (path.indexOf('freezer') !== -1 || path.indexOf('hitack') !== -1) return 'hitack';
+        if (path.indexOf('flat') !== -1) return 'flatback';
+        if (path.indexOf('poly') !== -1) return 'poly';
+
+        // 3. Check section data attribute
+        return sectionEl.getAttribute('data-active-type') || 'poly';
+      }
+
+      function formatCellValue(val) {
+        val = (val || '').trim();
+        if (val.toUpperCase() === 'YES') {
+          return '<span class="phc-pill-tag phc-tag-yes">YES</span>';
+        } else if (val.toUpperCase() === 'NO') {
+          return '<span class="phc-pill-tag phc-tag-no">NO</span>';
+        }
+        return val;
+      }
+
+      function updateComparison(type) {
+        if (!type || !cfg.pairs || !cfg.pairs[type]) return;
+
+        var pair = cfg.pairs[type] || ['paper', 'pvc'];
+        var comp1 = pair[0];
+        var comp2 = pair[1];
+
+        // Update Heading
+        var headingEl = document.getElementById('phcSectionHeading');
+        if (headingEl && cfg.headings && cfg.headings[type]) {
+          headingEl.innerHTML = cfg.headings[type].replace(/\n/g, '<br>');
+        }
+
+        // Update Table Headers
+        var thCol1 = sectionEl.querySelector('[data-phc-head="col1"]');
+        var thCol2 = sectionEl.querySelector('[data-phc-head="col2"]');
+        var thCol3 = sectionEl.querySelector('[data-phc-head="col3"]');
+
+        if (thCol1) thCol1.textContent = cfg.titles[type] || type.toUpperCase();
+        if (thCol2) thCol2.textContent = cfg.titles[comp1] || comp1.toUpperCase();
+        if (thCol3) thCol3.textContent = cfg.titles[comp2] || comp2.toUpperCase();
+
+        // Update Table Rows
+        var rows = sectionEl.querySelectorAll('tbody tr');
+        rows.forEach(function(tr) {
+          var td1 = tr.querySelector('[data-phc-cell="col1"]');
+          var td2 = tr.querySelector('[data-phc-cell="col2"]');
+          var td3 = tr.querySelector('[data-phc-cell="col3"]');
+
+          var v1 = tr.getAttribute('data-val-' + type) || '';
+          var v2 = tr.getAttribute('data-val-' + comp1) || '';
+          var v3 = tr.getAttribute('data-val-' + comp2) || '';
+
+          if (td1) td1.innerHTML = formatCellValue(v1);
+          if (td2) td2.innerHTML = formatCellValue(v2);
+          if (td3) td3.innerHTML = formatCellValue(v3);
+        });
+
+        // Update Mobile Cards
+        var mobileWrap = document.getElementById('phcMobileCardsWrap');
+        if (mobileWrap) {
+          var cards = mobileWrap.querySelectorAll('.phc-mobile-card');
+          var order = [
+            { type: type, title: cfg.titles[type] || type.toUpperCase(), isHighlight: true },
+            { type: comp1, title: cfg.titles[comp1] || comp1.toUpperCase(), isHighlight: false },
+            { type: comp2, title: cfg.titles[comp2] || comp2.toUpperCase(), isHighlight: false }
+          ];
+
+          cards.forEach(function(card, idx) {
+            if (order[idx]) {
+              var info = order[idx];
+              var titleEl = card.querySelector('.phc-mobile-card-title');
+              if (titleEl) titleEl.textContent = info.title;
+
+              if (info.isHighlight) {
+                card.classList.add('phc-mobile-card--poly', 'phc-mobile-card--highlighted');
+              } else {
+                card.classList.remove('phc-mobile-card--poly', 'phc-mobile-card--highlighted');
+              }
+
+              // Update card row details
+              var detailRows = card.querySelectorAll('.phc-mobile-card-row');
+              rows.forEach(function(tr, rIdx) {
+                var detailRow = detailRows[rIdx];
+                if (detailRow) {
+                  var dd = detailRow.querySelector('dd');
+                  var v = tr.getAttribute('data-val-' + info.type) || '';
+                  if (dd) dd.innerHTML = formatCellValue(v);
+                }
+              });
+            }
+          });
+        }
+      }
+
+      // Initial run on page load
+      var detected = detectCurrentType();
+      updateComparison(detected);
+
+      // Listen for material pill clicks if user stays on same page or changes selection
+      document.querySelectorAll('.pb-pill-btn[data-group="material"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          setTimeout(function() {
+            var newType = detectCurrentType();
+            updateComparison(newType);
+          }, 50);
+        });
+      });
+    })();
+  </script>
 </section>
 
 {% schema %}
@@ -208,25 +441,177 @@
     },
     {
       "type": "header",
-      "content": "Columns Header Titles"
+      "content": "Product Display Titles"
     },
     {
       "type": "text",
-      "id": "col_1_title",
-      "label": "Column 1 (Highlighted)",
+      "id": "title_poly",
+      "label": "Polypropylene Title",
       "default": "POLYPROPYLENE"
     },
     {
       "type": "text",
-      "id": "col_2_title",
-      "label": "Column 2",
+      "id": "title_paper",
+      "label": "Paper Title",
       "default": "PAPER"
     },
     {
       "type": "text",
-      "id": "col_3_title",
-      "label": "Column 3",
+      "id": "title_pvc",
+      "label": "PVC Title",
       "default": "PVC"
+    },
+    {
+      "type": "text",
+      "id": "title_hitack",
+      "label": "Hi-Tack Freezer Title",
+      "default": "HI-TACK FREEZER"
+    },
+    {
+      "type": "text",
+      "id": "title_flatback",
+      "label": "Flatback Title",
+      "default": "FLATBACK"
+    },
+    {
+      "type": "header",
+      "content": "When Current is POLYPROPYLENE"
+    },
+    {
+      "type": "select",
+      "id": "poly_comp_1",
+      "label": "Compare With Product 1",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "paper"
+    },
+    {
+      "type": "select",
+      "id": "poly_comp_2",
+      "label": "Compare With Product 2",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "pvc"
+    },
+    {
+      "type": "header",
+      "content": "When Current is PAPER"
+    },
+    {
+      "type": "select",
+      "id": "paper_comp_1",
+      "label": "Compare With Product 1",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "poly"
+    },
+    {
+      "type": "select",
+      "id": "paper_comp_2",
+      "label": "Compare With Product 2",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "pvc"
+    },
+    {
+      "type": "header",
+      "content": "When Current is PVC"
+    },
+    {
+      "type": "select",
+      "id": "pvc_comp_1",
+      "label": "Compare With Product 1",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "poly"
+    },
+    {
+      "type": "select",
+      "id": "pvc_comp_2",
+      "label": "Compare With Product 2",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "paper"
+    },
+    {
+      "type": "header",
+      "content": "When Current is HI-TACK FREEZER"
+    },
+    {
+      "type": "select",
+      "id": "hitack_comp_1",
+      "label": "Compare With Product 1",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "poly"
+    },
+    {
+      "type": "select",
+      "id": "hitack_comp_2",
+      "label": "Compare With Product 2",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "flatback", "label": "Flatback" }
+      ],
+      "default": "paper"
+    },
+    {
+      "type": "header",
+      "content": "When Current is FLATBACK"
+    },
+    {
+      "type": "select",
+      "id": "flatback_comp_1",
+      "label": "Compare With Product 1",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" }
+      ],
+      "default": "paper"
+    },
+    {
+      "type": "select",
+      "id": "flatback_comp_2",
+      "label": "Compare With Product 2",
+      "options": [
+        { "value": "poly", "label": "Polypropylene" },
+        { "value": "paper", "label": "Paper" },
+        { "value": "pvc", "label": "PVC" },
+        { "value": "hitack", "label": "Hi-Tack Freezer" }
+      ],
+      "default": "hitack"
     },
     {
       "type": "header",
@@ -302,6 +687,18 @@
           "id": "pvc_val",
           "label": "PVC Value (Type YES / NO for pill)",
           "default": "50+ lbs, heaviest loads"
+        },
+        {
+          "type": "text",
+          "id": "hitack_val",
+          "label": "Hi-Tack Freezer Value (Type YES / NO for pill)",
+          "default": "Cold-chain loads"
+        },
+        {
+          "type": "text",
+          "id": "flatback_val",
+          "label": "Flatback Value (Type YES / NO for pill)",
+          "default": "Bundling only, not for sealing"
         }
       ]
     }
@@ -316,7 +713,9 @@
             "attribute_label": "SEALS UP TO",
             "poly_val": "1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)",
             "paper_val": "240 grade (30 lbs) · 260 HD (30+ lbs)",
-            "pvc_val": "50+ lbs, heaviest loads"
+            "pvc_val": "50+ lbs, heaviest loads",
+            "hitack_val": "Cold-chain loads",
+            "flatback_val": "Bundling only, not for sealing"
           }
         },
         {
@@ -325,7 +724,9 @@
             "attribute_label": "STICKS TO",
             "poly_val": "Cardboard",
             "paper_val": "Cardboard",
-            "pvc_val": "Cardboard, plastic, glass, metal"
+            "pvc_val": "Cardboard, plastic, glass, metal",
+            "hitack_val": "Cardboard, damp or frosted",
+            "flatback_val": "Paper and board"
           }
         },
         {
@@ -334,7 +735,9 @@
             "attribute_label": "GOES ON",
             "poly_val": "Tape gun or machine",
             "paper_val": "Water dispenser",
-            "pvc_val": "Tape gun"
+            "pvc_val": "Tape gun",
+            "hitack_val": "Tape gun",
+            "flatback_val": "Tears by hand"
           }
         },
         {
@@ -343,7 +746,9 @@
             "attribute_label": "PRINT DETAIL",
             "poly_val": "Sharp",
             "paper_val": "Sharp",
-            "pvc_val": "Limited detail"
+            "pvc_val": "Limited detail",
+            "hitack_val": "Standard",
+            "flatback_val": "Sharp, matte"
           }
         },
         {
@@ -352,7 +757,9 @@
             "attribute_label": "TAMPER EVIDENT",
             "poly_val": "NO",
             "paper_val": "YES",
-            "pvc_val": "NO"
+            "pvc_val": "NO",
+            "hitack_val": "NO",
+            "flatback_val": "NO"
           }
         },
         {
@@ -361,7 +768,9 @@
             "attribute_label": "RECYCLABLE",
             "poly_val": "NO",
             "paper_val": "YES",
-            "pvc_val": "NO"
+            "pvc_val": "NO",
+            "hitack_val": "NO",
+            "flatback_val": "YES"
           }
         },
         {
@@ -370,7 +779,9 @@
             "attribute_label": "BELOW FREEZING",
             "poly_val": "NO",
             "paper_val": "NO",
-            "pvc_val": "NO"
+            "pvc_val": "NO",
+            "hitack_val": "YES",
+            "flatback_val": "NO"
           }
         }
       ]

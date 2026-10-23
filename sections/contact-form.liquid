@@ -632,6 +632,123 @@
         radio.addEventListener('change', updateFormState);
       });
 
+      // Setup Custom Styled Dropdowns for all select elements in this section
+      function setupCustomDropdowns() {
+        var selectWraps = section.querySelectorAll('.contact-select-wrap');
+        selectWraps.forEach(function(wrap) {
+          var select = wrap.querySelector('select');
+          if (!select || wrap.dataset.customized === 'true') return;
+          wrap.dataset.customized = 'true';
+
+          select.classList.add('contact-select-native');
+
+          var customSelect = document.createElement('div');
+          customSelect.className = 'contact-custom-select';
+
+          var trigger = document.createElement('div');
+          trigger.className = 'contact-custom-select-trigger';
+          trigger.setAttribute('tabindex', '0');
+          trigger.setAttribute('role', 'button');
+          trigger.setAttribute('aria-haspopup', 'listbox');
+          trigger.setAttribute('aria-expanded', 'false');
+
+          var selectedText = document.createElement('span');
+          selectedText.className = 'contact-custom-select-text';
+          var activeOption = select.options[select.selectedIndex] || select.options[0];
+          selectedText.textContent = activeOption ? activeOption.text : '';
+
+          var arrowSvg = wrap.querySelector('.contact-select-arrow');
+          if (!arrowSvg) {
+            arrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            arrowSvg.setAttribute('class', 'contact-select-arrow');
+            arrowSvg.setAttribute('width', '16');
+            arrowSvg.setAttribute('height', '16');
+            arrowSvg.setAttribute('viewBox', '0 0 24 24');
+            arrowSvg.setAttribute('fill', 'none');
+            arrowSvg.setAttribute('stroke', 'currentColor');
+            arrowSvg.setAttribute('stroke-width', '2');
+            arrowSvg.innerHTML = '<path d="m6 9 6 6 6-6"/>';
+          }
+
+          trigger.appendChild(selectedText);
+          trigger.appendChild(arrowSvg);
+          customSelect.appendChild(trigger);
+
+          var dropdown = document.createElement('div');
+          dropdown.className = 'contact-custom-dropdown';
+          dropdown.setAttribute('role', 'listbox');
+
+          Array.from(select.options).forEach(function(opt) {
+            var optEl = document.createElement('div');
+            optEl.className = 'contact-custom-option' + (opt.selected ? ' is-selected' : '');
+            optEl.textContent = opt.text;
+            optEl.dataset.value = opt.value;
+            optEl.setAttribute('role', 'option');
+            optEl.setAttribute('aria-selected', opt.selected ? 'true' : 'false');
+
+            optEl.addEventListener('click', function(e) {
+              e.stopPropagation();
+              select.value = opt.value;
+              select.dispatchEvent(new Event('change', { bubbles: true }));
+
+              selectedText.textContent = opt.text;
+              dropdown.querySelectorAll('.contact-custom-option').forEach(function(el) {
+                el.classList.remove('is-selected');
+                el.setAttribute('aria-selected', 'false');
+              });
+              optEl.classList.add('is-selected');
+              optEl.setAttribute('aria-selected', 'true');
+
+              customSelect.classList.remove('is-open');
+              trigger.setAttribute('aria-expanded', 'false');
+            });
+
+            dropdown.appendChild(optEl);
+          });
+
+          customSelect.appendChild(dropdown);
+          wrap.appendChild(customSelect);
+
+          trigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = customSelect.classList.contains('is-open');
+            // Close other open dropdowns
+            document.querySelectorAll('.contact-custom-select.is-open').forEach(function(cs) {
+              if (cs !== customSelect) {
+                cs.classList.remove('is-open');
+                var tr = cs.querySelector('.contact-custom-select-trigger');
+                if (tr) tr.setAttribute('aria-expanded', 'false');
+              }
+            });
+            customSelect.classList.toggle('is-open', !isOpen);
+            trigger.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+          });
+
+          trigger.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              trigger.click();
+            } else if (e.key === 'Escape') {
+              customSelect.classList.remove('is-open');
+              trigger.setAttribute('aria-expanded', 'false');
+            }
+          });
+        });
+      }
+
+      setupCustomDropdowns();
+
+      // Close dropdowns on outside click
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.contact-custom-select')) {
+          document.querySelectorAll('.contact-custom-select.is-open').forEach(function(cs) {
+            cs.classList.remove('is-open');
+            var tr = cs.querySelector('.contact-custom-select-trigger');
+            if (tr) tr.setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+
       updateFormState();
     }
 

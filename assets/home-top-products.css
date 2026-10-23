@@ -204,12 +204,63 @@
   color: #171008;
 }
 
+/* Quick View Overlay Button on Hover */
+.htp-card__quick-view {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.htp-card__quick-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #fe6a00;
+  color: #ffffff;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  text-align: center;
+  border-radius: 999px;
+  border: 1.5px solid #171008;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.htp-card:hover .htp-card__quick-view,
+.htp-card__image-link:hover .htp-card__quick-view {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.htp-card:hover .htp-card__quick-view-btn:hover {
+  background-color: #e55e00;
+}
+
 .htp-controls {
   display: none;
 }
 
-/* Mobile Adjustments */
+/* Mobile & Tablet Adjustments (Hide Quick View on tablets and mobile) */
 @media (max-width: 992px) {
+  .htp-card__quick-view {
+    display: none !important;
+  }
+
   .htp-grid {
     grid-template-columns: repeat(2, 1fr);
   }

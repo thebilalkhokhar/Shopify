@@ -12,12 +12,9 @@
 >
   <div class="home-faqs__outer">
     <div class="home-faqs__card">
-
       <div class="home-faqs__grid">
-
         <!-- Left Column: Badge, Heading with Sparkles, Desc, Buttons, Mascot with Boxes -->
         <div class="home-faqs__left">
-
           <div class="home-faqs__header">
             {% if section.settings.badge_text != blank %}
               <div class="home-faqs__badge-wrap">
@@ -48,16 +45,21 @@
 
           <!-- Bottom Area: Buttons (Bottom-Left) + Mascot On Boxes (Bottom-Right of Left Col) -->
           <div class="home-faqs__bottom-row">
-
             <div class="home-faqs__actions">
               {% if section.settings.btn1_text != blank %}
-                <a href="{{ section.settings.btn1_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--outline">
+                <a
+                  href="{{ section.settings.btn1_url | default: '#contact' }}"
+                  class="home-faqs__btn home-faqs__btn--outline"
+                >
                   {{ section.settings.btn1_text }}
                 </a>
               {% endif %}
 
               {% if section.settings.btn2_text != blank %}
-                <a href="{{ section.settings.btn2_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--primary">
+                <a
+                  href="{{ section.settings.btn2_url | default: '#contact' }}"
+                  class="home-faqs__btn home-faqs__btn--primary"
+                >
                   {{ section.settings.btn2_text }}
                 </a>
               {% endif %}
@@ -86,9 +88,7 @@
                 >
               {% endif %}
             </div>
-
           </div>
-
         </div>
 
         <!-- Right Column: Pill Accordion Items -->
@@ -107,7 +107,15 @@
                 >
                   <span class="home-faqs__question-text">{{ block.settings.question }}</span>
                   <span class="home-faqs__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="15"
+                      height="15"
+                      fill="none"
+                      stroke="#171008"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                    >
                       <line class="home-faqs__icon-v" x1="12" y1="5" x2="12" y2="19"></line>
                       <line class="home-faqs__icon-h" x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
@@ -123,30 +131,28 @@
             {% endfor %}
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
 </section>
 
 <script>
-  (function() {
+  (function () {
     function initHomeFaqs() {
       const section = document.getElementById('home-faqs-{{ section.id }}');
       if (!section) return;
 
       const items = section.querySelectorAll('.home-faqs__item');
-      items.forEach(function(item) {
+      items.forEach(function (item) {
         const btn = item.querySelector('.home-faqs__question');
         if (!btn) return;
 
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
           e.preventDefault();
           const isOpen = item.classList.contains('is-open');
 
           // Close other items
-          items.forEach(function(otherItem) {
+          items.forEach(function (otherItem) {
             if (otherItem !== item && otherItem.classList.contains('is-open')) {
               otherItem.classList.remove('is-open');
               otherItem.querySelector('.home-faqs__question')?.setAttribute('aria-expanded', 'false');

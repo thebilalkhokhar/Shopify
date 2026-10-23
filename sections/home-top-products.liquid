@@ -2,7 +2,6 @@
 
 <div class="home-top-products-section tapefox-dark-section" {{ section.shopify_attributes }}>
   <div class="htp-board">
-    
     <!-- Corner Tapes -->
     <div class="htp-tape htp-tape--top-left">
       {% if section.settings.tape_tl != blank %}
@@ -38,11 +37,11 @@
       {% if section.settings.top_badge != blank %}
         <div class="htp-badge">{{ section.settings.top_badge }}</div>
       {% endif %}
-      
+
       {% if section.settings.heading != blank %}
         <h2 class="htp-heading">{{ section.settings.heading }}</h2>
       {% endif %}
-      
+
       {% if section.settings.subheading != blank %}
         <p class="htp-subheading">{{ section.settings.subheading }}</p>
       {% endif %}
@@ -63,15 +62,24 @@
               {% if block.settings.card_badge != blank %}
                 <div class="htp-card__badge">{{ block.settings.card_badge }}</div>
               {% endif %}
-              
+
               {% if block.settings.image != blank %}
-                <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" width="400" height="auto">
+                <img
+                  src="{{ block.settings.image | image_url: width: 400 }}"
+                  alt="{{ block.settings.title }}"
+                  width="400"
+                  height="auto"
+                >
               {% else %}
                 <div class="htp-dummy-img"></div>
               {% endif %}
+
+              <div class="htp-card__quick-view">
+                <span class="htp-card__quick-view-btn">Quick View</span>
+              </div>
             </div>
           </a>
-          
+
           <div class="htp-card__info">
             <h3 class="htp-card__title">
               <a href="{{ product_url | default: '#' }}" style="color: inherit; text-decoration: none;">
@@ -85,7 +93,14 @@
     </div>
 
     <div class="htp-controls" aria-label="Product navigation">
-      <div class="htp-progress-wrap" role="progressbar" aria-label="Product carousel progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25">
+      <div
+        class="htp-progress-wrap"
+        role="progressbar"
+        aria-label="Product carousel progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="25"
+      >
         <div class="htp-progress-bar" id="htpProgress-{{ section.id }}"></div>
       </div>
 
@@ -96,7 +111,17 @@
           id="htpPrev-{{ section.id }}"
           aria-label="Previous products"
         >
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="#171008"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
         </button>
@@ -106,18 +131,27 @@
           id="htpNext-{{ section.id }}"
           aria-label="Next products"
         >
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="#171008"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </button>
       </div>
     </div>
-    
   </div>
 </div>
 
 <script>
-  (function() {
+  (function () {
     function initProductCarousel() {
       const track = document.getElementById('htpTrack-{{ section.id }}');
       const prevBtn = document.getElementById('htpPrev-{{ section.id }}');
@@ -132,9 +166,7 @@
         const slides = track.querySelectorAll('.htp-card');
         const initialPercent = slides.length ? Math.max(20, Math.min(30, Math.round((1 / slides.length) * 100))) : 100;
         const scrollRatio = maxScroll > 0 ? Math.max(0, Math.min(1, track.scrollLeft / maxScroll)) : 1;
-        const percent = maxScroll > 0
-          ? Math.round(initialPercent + scrollRatio * (100 - initialPercent))
-          : 100;
+        const percent = maxScroll > 0 ? Math.round(initialPercent + scrollRatio * (100 - initialPercent)) : 100;
 
         progress.style.width = percent + '%';
         if (progressTrack) progressTrack.setAttribute('aria-valuenow', String(percent));
@@ -150,10 +182,10 @@
         track.scrollTo({ left: target, behavior: 'smooth' });
       }
 
-      prevBtn.addEventListener('click', function() {
+      prevBtn.addEventListener('click', function () {
         scrollByCard(-1);
       });
-      nextBtn.addEventListener('click', function() {
+      nextBtn.addEventListener('click', function () {
         scrollByCard(1);
       });
       track.addEventListener('scroll', updateProgress, { passive: true });

@@ -3,12 +3,26 @@
 <div class="home-about-section tapefox-dark-section" {{ section.shopify_attributes }}>
   <div class="home-about__top-icon">
     {% if section.settings.ring_image != blank %}
-      <img class="ha-ring" src="{{ section.settings.ring_image | image_url: width: 200 }}" width="200" height="auto" alt="Ring">
+      <img
+        class="ha-ring"
+        src="{{ section.settings.ring_image | image_url: width: 200 }}"
+        width="200"
+        height="auto"
+        alt="Ring"
+      >
     {% endif %}
     {% if section.settings.fox_image != blank %}
-      <img class="ha-fox" src="{{ section.settings.fox_image | image_url: width: 100 }}" width="100" height="auto" alt="Fox">
+      <img
+        class="ha-fox"
+        src="{{ section.settings.fox_image | image_url: width: 100 }}"
+        width="100"
+        height="auto"
+        alt="Fox"
+      >
     {% else %}
-      <div style="width: 50px; height: 50px; background: #FF6600; border-radius: 50%; z-index: 2; position: relative;"></div>
+      <div
+        style="width: 50px; height: 50px; background: #FF6600; border-radius: 50%; z-index: 2; position: relative;"
+      ></div>
     {% endif %}
   </div>
 
@@ -16,11 +30,11 @@
     {% if section.settings.heading != blank %}
       <h2 class="ha-heading">{{ section.settings.heading }}</h2>
     {% endif %}
-    
+
     {% if section.settings.subheading != blank %}
       <p class="ha-subheading">{{ section.settings.subheading }}</p>
     {% endif %}
-    
+
     {% if section.settings.link_label != blank %}
       <a href="{{ section.settings.link_url }}" class="ha-link">{{ section.settings.link_label }}</a>
     {% endif %}
@@ -28,13 +42,27 @@
 
   <div class="home-about__image">
     {% if section.settings.star_image != blank %}
-      <img class="ha-star" src="{{ section.settings.star_image | image_url: width: 60 }}" width="60" height="auto" alt="Star">
+      <img
+        class="ha-star"
+        src="{{ section.settings.star_image | image_url: width: 60 }}"
+        width="60"
+        height="auto"
+        alt="Star"
+      >
     {% endif %}
 
     {% if section.settings.bottom_image != blank %}
-      <img class="ha-cards" src="{{ section.settings.bottom_image | image_url: width: 1200 }}" width="1200" height="auto" alt="Cards Collage">
+      <img
+        class="ha-cards"
+        src="{{ section.settings.bottom_image | image_url: width: 1200 }}"
+        width="1200"
+        height="auto"
+        alt="Cards Collage"
+      >
     {% else %}
-      <div style="width: 100%; height: 300px; background: #333; display: flex; align-items: center; justify-content: center; color: #fff;">Upload Complete Collage Image Here</div>
+      <div style="width: 100%; height: 300px; background: #333; display: flex; align-items: center; justify-content: center; color: #fff;">
+        Upload Complete Collage Image Here
+      </div>
     {% endif %}
   </div>
 </div>

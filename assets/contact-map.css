@@ -52,7 +52,7 @@
 
 .contact-map-title {
   font-family: var(--custom-font-family, 'Bringbold Nineties', serif);
-  font-size: 48px;
+  font-size: 46px;
   font-weight: 700;
   color: #FFFFFF;
   line-height: 1.1;
@@ -163,7 +163,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
 }
 
 .cmap-card-section {
@@ -255,6 +254,84 @@
    RESPONSIVE DESIGN (Tablets & Mobile)
    ========================================================= */
 
+@media screen and (max-width: 1550px) {
+  .contact-map-info-card {
+    width: 100%;
+    max-width: 220px;
+    padding: 24px 10px;
+  }
+
+  .contact-map-title {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 1320px) {
+  .contact-map-info-card {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .cmap-card-address-lines {
+    font-size: 11px;
+  }
+
+  .cmap-card-value {
+    font-size: 11px;
+  }
+
+  .cmap-card-phone-link {
+    font-size: 11px;
+  }
+
+  .contact-map-section {
+    padding: 60px 0px 70px;
+  }
+
+  .contact-map-title {
+    font-size: 36px;
+  }
+
+  .contact-map-desc {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .contact-map-pin-group {
+    position: absolute;
+    top: 48%;
+    left: calc(27% - 24px);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .contact-map-pin-group {
+    left: calc(29% - 24px);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .contact-map-pin-group {
+    left: calc(32% - 24px);
+  }
+
+  .contact-map-info-card {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+  }
+
+  .contact-map-title {
+    font-size: 32px;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .contact-map-frame {
     min-height: 600px;
@@ -262,6 +339,7 @@
     flex-direction: column;
     justify-content: flex-end;
   }
+
 
   .contact-map-info-card {
     position: relative;
@@ -273,20 +351,28 @@
   }
 
   .contact-map-pin-group {
-    top: 30%;
-    left: 50%;
+    top: 43%;
+    left: 21%;
     transform: translate(-50%, -50%);
+  }
+
+  .contact-map-title {
+    font-size: 30px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .contact-map-section {
-    padding: 10px 16px 30px 16px;
+    padding: 10px 0px 30px 0px;
+  }
+
+  .contact-map-outer {
+    padding-top: 30px;
   }
 
   .contact-map-frame {
     border-radius: 20px;
-    min-height: 520px;
+    min-height: 450px;
   }
 
   .contact-map-bldg-badge {
@@ -297,5 +383,31 @@
   .contact-map-starburst {
     width: 44px;
     height: 44px;
+  }
+
+  .contact-map-pin-group {
+    top: 26%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+  }
+
+  .contact-map-title {
+    font-size: 28px;
+  }
+
+  .contact-map-desc {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .contact-map-pin-group {
+    top: 26%;
+    left: 24%;
+    transform: translate(-50%, -50%);
+  }
+
+  .contact-map-frame {
+    padding: 30px 15px;
   }
 }

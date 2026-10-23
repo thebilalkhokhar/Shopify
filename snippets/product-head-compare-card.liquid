@@ -4,9 +4,10 @@
   @param {section} section - The parent comparison section
   @param {string} title - The product column title
   @param {string} value_key - The comparison block setting used for this product
+  @param {boolean} [is_highlighted] - Whether this card is the highlighted/active product
 
   @example
-  {% render 'product-head-compare-card', section: section, title: section.settings.col_1_title, value_key: 'poly_val' %}
+  {% render 'product-head-compare-card', section: section, title: col_1_name, value_key: col_1_key, is_highlighted: true %}
 {% enddoc %}
 
 {%- assign card_title = title -%}
@@ -18,10 +19,16 @@
       {%- assign card_title = 'PAPER' -%}
     {%- when 'pvc_val' -%}
       {%- assign card_title = 'PVC' -%}
+    {%- when 'hitack_val' -%}
+      {%- assign card_title = 'HI-TACK FREEZER' -%}
+    {%- when 'flatback_val' -%}
+      {%- assign card_title = 'FLATBACK' -%}
+    {%- else -%}
+      {%- assign card_title = value_key | upcase -%}
   {%- endcase -%}
 {%- endif -%}
 
-<article class="phc-mobile-card{% if value_key == 'poly_val' %} phc-mobile-card--poly{% endif %}">
+<article class="phc-mobile-card{% if is_highlighted or value_key == 'poly_val' and is_highlighted == nil %} phc-mobile-card--poly phc-mobile-card--highlighted{% endif %}">
   <h3 class="phc-mobile-card-title">{{ card_title | escape }}</h3>
 
   <dl class="phc-mobile-card-details">

@@ -209,6 +209,7 @@
   .hfi-heading {
     font-size: 38px;
   }
+
   .hfi-grid {
     gap: 18px;
   }
@@ -218,10 +219,12 @@
   .hfi-container {
     padding: 40px 30px 60px 30px;
   }
+
   .hfi-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
+
   .hfi-heading {
     font-size: 34px;
   }
@@ -263,10 +266,12 @@
     margin-left: 20px;
     font-size: 13px;
   }
+
   .hfi-heading {
     padding-top: 15px;
     font-size: 28px;
   }
+
   .hfi-btn {
     padding: 7px 18px 7px 15px;
     font-size: 14px;

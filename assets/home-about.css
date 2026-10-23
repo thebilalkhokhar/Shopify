@@ -128,13 +128,16 @@
     width: 50px;
   }
 }
+
 @media (max-width: 768px) {
   .ha-heading {
     font-size: 30px;
   }
+
   .ha-subheading {
     font-size: 12px;
   }
+
   .ha-link {
     font-size: 14px;
   }

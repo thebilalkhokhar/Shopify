@@ -10,12 +10,21 @@
       <div class="hero-banner__slide {% if slide_count == 1 %}active{% endif %}">
         <picture>
           {% if section.settings.slider_image_1_tablet != blank %}
-            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.slider_image_1_tablet | image_url: width: 1200 }}">
+            <source
+              media="(min-width: 601px) and (max-width: 991px)"
+              srcset="{{ section.settings.slider_image_1_tablet | image_url: width: 1200 }}"
+            >
           {% elsif section.settings.tablet_image != blank %}
-            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+            <source
+              media="(min-width: 601px) and (max-width: 991px)"
+              srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}"
+            >
           {% endif %}
           {% if section.settings.slider_image_1_mobile != blank %}
-            <source media="(max-width: 600px)" srcset="{{ section.settings.slider_image_1_mobile | image_url: width: 800 }}">
+            <source
+              media="(max-width: 600px)"
+              srcset="{{ section.settings.slider_image_1_mobile | image_url: width: 800 }}"
+            >
           {% elsif section.settings.mobile_image != blank %}
             <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
           {% endif %}
@@ -35,12 +44,21 @@
       <div class="hero-banner__slide {% if slide_count == 1 %}active{% endif %}">
         <picture>
           {% if section.settings.slider_image_2_tablet != blank %}
-            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.slider_image_2_tablet | image_url: width: 1200 }}">
+            <source
+              media="(min-width: 601px) and (max-width: 991px)"
+              srcset="{{ section.settings.slider_image_2_tablet | image_url: width: 1200 }}"
+            >
           {% elsif section.settings.tablet_image != blank %}
-            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+            <source
+              media="(min-width: 601px) and (max-width: 991px)"
+              srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}"
+            >
           {% endif %}
           {% if section.settings.slider_image_2_mobile != blank %}
-            <source media="(max-width: 600px)" srcset="{{ section.settings.slider_image_2_mobile | image_url: width: 800 }}">
+            <source
+              media="(max-width: 600px)"
+              srcset="{{ section.settings.slider_image_2_mobile | image_url: width: 800 }}"
+            >
           {% elsif section.settings.mobile_image != blank %}
             <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
           {% endif %}
@@ -60,12 +78,21 @@
       <div class="hero-banner__slide {% if slide_count == 1 %}active{% endif %}">
         <picture>
           {% if section.settings.slider_image_3_tablet != blank %}
-            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.slider_image_3_tablet | image_url: width: 1200 }}">
+            <source
+              media="(min-width: 601px) and (max-width: 991px)"
+              srcset="{{ section.settings.slider_image_3_tablet | image_url: width: 1200 }}"
+            >
           {% elsif section.settings.tablet_image != blank %}
-            <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+            <source
+              media="(min-width: 601px) and (max-width: 991px)"
+              srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}"
+            >
           {% endif %}
           {% if section.settings.slider_image_3_mobile != blank %}
-            <source media="(max-width: 600px)" srcset="{{ section.settings.slider_image_3_mobile | image_url: width: 800 }}">
+            <source
+              media="(max-width: 600px)"
+              srcset="{{ section.settings.slider_image_3_mobile | image_url: width: 800 }}"
+            >
           {% elsif section.settings.mobile_image != blank %}
             <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">
           {% endif %}
@@ -86,7 +113,10 @@
         {% if section.settings.desktop_image != blank %}
           <picture>
             {% if section.settings.tablet_image != blank %}
-              <source media="(min-width: 601px) and (max-width: 991px)" srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}">
+              <source
+                media="(min-width: 601px) and (max-width: 991px)"
+                srcset="{{ section.settings.tablet_image | image_url: width: 1200 }}"
+              >
             {% endif %}
             {% if section.settings.mobile_image != blank %}
               <source media="(max-width: 600px)" srcset="{{ section.settings.mobile_image | image_url: width: 800 }}">

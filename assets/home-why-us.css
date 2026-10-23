@@ -418,8 +418,9 @@
   .home-why-us-section {
     padding: 50px 0 50px;
   }
+
   .hwu-stage {
-    height: 360px;
+    height: 290px;
   }
 
   .hwu-circles-cluster {
@@ -429,33 +430,41 @@
   .hwu-tape-row {
     height: 32px;
   }
+
   .hwu-tape--top {
     top: 50%;
     transform: translateY(-50%) rotate(-15deg);
   }
+
   .hwu-tape--bottom {
     transform: translateY(-50%) rotate(15deg);
   }
+
   .hwu-tape-text {
     font-size: 13px;
   }
+
   .hwu-circle--main {
     left: 11px;
   }
+
   .hwu-circle--small-tl {
     width: 100px;
     height: 100px;
     left: -15px;
   }
+
   .hwu-circle--yellow-bl {
     left: -108px;
     top: 300px;
   }
+
   .hwu-circle--yellow-tr {
     width: 175px;
     height: 175px;
     left: 350px;
   }
+
   .hwu-circle--small-br {
     left: 350px;
   }

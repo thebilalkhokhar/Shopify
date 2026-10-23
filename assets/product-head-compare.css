@@ -124,19 +124,17 @@
   /* empty or label */
 }
 
-/* Highlighted Column: Polypropylene */
-.phc-table thead th.phc-col-poly {
+/* Highlighted Column (Active Product) */
+.phc-table thead th.phc-col-poly,
+.phc-table thead th.phc-col-highlighted {
   width: 34%;
   color: #F8B825;
   background-color: rgba(248, 184, 37, 0.06);
 }
 
-.phc-table thead th.phc-col-paper {
-  width: 24%;
-  color: #FAF6EF;
-}
-
-.phc-table thead th.phc-col-pvc {
+.phc-table thead th.phc-col-paper,
+.phc-table thead th.phc-col-pvc,
+.phc-table thead th.phc-col-other {
   width: 24%;
   color: #FAF6EF;
 }
@@ -164,16 +162,18 @@
   padding-left: 32px;
 }
 
-/* Highlighted Poly Column in Body */
-.phc-table tbody td.phc-col-poly {
+/* Highlighted Column in Body */
+.phc-table tbody td.phc-col-poly,
+.phc-table tbody td.phc-col-highlighted {
   background-color: rgba(248, 184, 37, 0.06);
   color: #FAF6EF;
   font-weight: 500;
 }
 
-/* Paper and PVC columns */
+/* Other comparison columns */
 .phc-table tbody td.phc-col-paper,
-.phc-table tbody td.phc-col-pvc {
+.phc-table tbody td.phc-col-pvc,
+.phc-table tbody td.phc-col-other {
   color: #E2DDD5;
 }
 
@@ -361,7 +361,8 @@
     box-sizing: border-box;
   }
 
-  .phc-mobile-card--poly {
+  .phc-mobile-card--poly,
+  .phc-mobile-card--highlighted {
     border: 2px solid #fe6a00;
   }
 
@@ -378,7 +379,8 @@
     letter-spacing: 0.5px;
   }
 
-  .phc-mobile-card--poly .phc-mobile-card-title {
+  .phc-mobile-card--poly .phc-mobile-card-title,
+  .phc-mobile-card--highlighted .phc-mobile-card-title {
     color: #fe6a00;
   }
 
