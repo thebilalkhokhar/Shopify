@@ -5,7 +5,12 @@
   color: #ffffff;
   padding: 30px 0 110px;
   overflow: hidden;
-  width: 100%;
+  /* Full-bleed: break out of the 20px homepage body frame on every screen */
+  width: calc(100% + 40px);
+  max-width: none;
+  margin-left: -20px;
+  margin-right: -20px;
+  box-sizing: border-box;
 }
 
 /* Header */
@@ -390,7 +395,6 @@
 
   .hwu-heading {
     font-size: 30px;
-    padding: 0 15px;
   }
 
   .hwu-stage {
@@ -423,10 +427,36 @@
   }
 
   .hwu-tape-row {
-    height: 40px;
+    height: 32px;
   }
-
+  .hwu-tape--top {
+    top: 50%;
+    transform: translateY(-50%) rotate(-15deg);
+  }
+  .hwu-tape--bottom {
+    transform: translateY(-50%) rotate(15deg);
+  }
   .hwu-tape-text {
     font-size: 13px;
+  }
+  .hwu-circle--main {
+    left: 11px;
+  }
+  .hwu-circle--small-tl {
+    width: 100px;
+    height: 100px;
+    left: -15px;
+  }
+  .hwu-circle--yellow-bl {
+    left: -108px;
+    top: 300px;
+  }
+  .hwu-circle--yellow-tr {
+    width: 175px;
+    height: 175px;
+    left: 350px;
+  }
+  .hwu-circle--small-br {
+    left: 350px;
   }
 }

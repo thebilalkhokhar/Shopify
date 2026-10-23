@@ -231,13 +231,34 @@
 @media (max-width: 600px) {
   .hfi-container {
     padding: 24px 0px 45px 0px !important;
-  }
-  .hfi-header {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+  }
+
+  /* Flatten the header so the Follow button can be reordered below the grid */
+  .hfi-header {
+    display: contents;
+  }
+
+  .hfi-header__left {
+    order: 0;
     margin-bottom: 24px;
   }
+
+  .hfi-grid {
+    order: 1;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  /* Button sits after the pics, centered */
+  .hfi-header__right {
+    order: 2;
+    align-self: center;
+    margin-top: 40px;
+    margin-bottom: 0;
+  }
+
   .hfi-badge {
     margin-left: 20px;
     font-size: 13px;
@@ -249,10 +270,5 @@
   .hfi-btn {
     padding: 7px 18px 7px 15px;
     font-size: 14px;
-    align-self: flex-start;
-  }
-  .hfi-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 14px !important;
   }
 }

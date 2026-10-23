@@ -1,151 +1,194 @@
 {{ 'home-faqs.css' | asset_url | stylesheet_tag }}
 
-<div class="home-faqs-section tapefox-dark-section" {{ section.shopify_attributes }}>
-  <div class="home-faqs__card">
-    <div class="home-faqs__grid">
-      
-      <!-- Left Column: Header, Description, Fox Graphic, Buttons -->
-      <div class="home-faqs__left">
-        
-        <!-- Header Info -->
-        <div class="home-faqs__header">
-          {% if section.settings.badge_text != blank %}
-            <div class="home-faqs__badge">{{ section.settings.badge_text }}</div>
-          {% endif %}
+<section
+  id="home-faqs-{{ section.id }}"
+  class="home-faqs-section tapefox-dark-section"
+  style="
+    --hfaqs-bg: {{ section.settings.card_bg | default: '#FAF7F0' }};
+    --hfaqs-border: {{ section.settings.card_border | default: '#171008' }};
+    --hfaqs-mascot-w: {{ section.settings.mascot_width | default: 280 }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="home-faqs__outer">
+    <div class="home-faqs__card">
 
-          <div class="home-faqs__title-row">
-            {% if section.settings.heading != blank %}
-              <h2 class="home-faqs__title">{{ section.settings.heading }}</h2>
-            {% endif %}
+      <div class="home-faqs__grid">
 
-            <!-- Orange Sparkle Stars -->
-            <span class="home-faqs__sparkles" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="#E85D18" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5L12 0z"/>
-              </svg>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="#E85D18" xmlns="http://www.w3.org/2000/svg" style="margin-left: 2px; margin-bottom: 8px;">
-                <path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5L12 0z"/>
-              </svg>
-            </span>
-          </div>
+        <!-- Left Column: Badge, Heading with Sparkles, Desc, Buttons, Mascot with Boxes -->
+        <div class="home-faqs__left">
 
-          {% if section.settings.description != blank %}
-            <p class="home-faqs__desc">{{ section.settings.description }}</p>
-          {% endif %}
-        </div>
-
-        <!-- Bottom Row: Buttons on left, Fox Graphic to the right of buttons -->
-        <div class="home-faqs__bottom-row">
-          <!-- Action Buttons -->
-          <div class="home-faqs__actions">
-            {% if section.settings.btn1_text != blank %}
-              <a href="{{ section.settings.btn1_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--outline">
-                {{ section.settings.btn1_text }}
-              </a>
-            {% endif %}
-
-            {% if section.settings.btn2_text != blank %}
-              <a href="{{ section.settings.btn2_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--primary">
-                {{ section.settings.btn2_text }}
-              </a>
-            {% endif %}
-          </div>
-
-          <!-- Fox Character Graphic -->
-          <div class="home-faqs__character-wrap">
-            {% if section.settings.fox_image != blank %}
-              <img
-                src="{{ section.settings.fox_image | image_url: width: 600 }}"
-                alt="TapeFox Support"
-                width="{{ section.settings.fox_image.width | default: 400 }}"
-                height="{{ section.settings.fox_image.height | default: 450 }}"
-                loading="lazy"
-                class="home-faqs__character-img"
-              >
-            {% else %}
-              <!-- Fox on tape boxes placeholder -->
-              <div class="home-faqs__character-placeholder">
-                <span>Upload Fox Graphic</span>
+          <div class="home-faqs__header">
+            {% if section.settings.badge_text != blank %}
+              <div class="home-faqs__badge-wrap">
+                <span class="home-faqs__badge">{{ section.settings.badge_text }}</span>
               </div>
             {% endif %}
+
+            <div class="home-faqs__title-row">
+              {% if section.settings.heading != blank %}
+                <h2 class="home-faqs__title">{{ section.settings.heading }}</h2>
+              {% endif %}
+
+              <!-- Orange Sparkle Stars -->
+              <span class="home-faqs__sparkles" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="#E85D18">
+                  <path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5L12 0z"/>
+                </svg>
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="#E85D18">
+                  <path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5L12 0z"/>
+                </svg>
+              </span>
+            </div>
+
+            {% if section.settings.description != blank %}
+              <p class="home-faqs__desc">{{ section.settings.description }}</p>
+            {% endif %}
           </div>
+
+          <!-- Bottom Area: Buttons (Bottom-Left) + Mascot On Boxes (Bottom-Right of Left Col) -->
+          <div class="home-faqs__bottom-row">
+
+            <div class="home-faqs__actions">
+              {% if section.settings.btn1_text != blank %}
+                <a href="{{ section.settings.btn1_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--outline">
+                  {{ section.settings.btn1_text }}
+                </a>
+              {% endif %}
+
+              {% if section.settings.btn2_text != blank %}
+                <a href="{{ section.settings.btn2_url | default: '#contact' }}" class="home-faqs__btn home-faqs__btn--primary">
+                  {{ section.settings.btn2_text }}
+                </a>
+              {% endif %}
+            </div>
+
+            <!-- Fox Mascot sitting on Tape Boxes -->
+            <div class="home-faqs__character-wrap">
+              {% if section.settings.fox_image != blank %}
+                <img
+                  src="{{ section.settings.fox_image | image_url: width: 600 }}"
+                  alt="{{ section.settings.fox_image.alt | default: 'TapeFox Mascot on Boxes' }}"
+                  class="home-faqs__character-img"
+                  width="{{ section.settings.mascot_width | default: 280 }}"
+                  height="auto"
+                  loading="lazy"
+                >
+              {% else %}
+                <img
+                  src="shopify://shop_images/faqsMoscout.png"
+                  alt="TapeFox Mascot on Boxes"
+                  class="home-faqs__character-img"
+                  width="280"
+                  height="auto"
+                  loading="lazy"
+                  onerror="this.style.display='none'"
+                >
+              {% endif %}
+            </div>
+
+          </div>
+
         </div>
 
-      </div>
-
-      <!-- Right Column: Accordion FAQ List -->
-      <div class="home-faqs__right">
-        <div class="home-faqs__accordion">
-          {% for block in section.blocks %}
-            {% assign is_first = forloop.first %}
-            <div
-              class="home-faqs__item {% if is_first %}is-open{% endif %}"
-              {{ block.shopify_attributes }}
-            >
-              <button
-                type="button"
-                class="home-faqs__question"
-                aria-expanded="{% if is_first %}true{% else %}false{% endif %}"
+        <!-- Right Column: Pill Accordion Items -->
+        <div class="home-faqs__right">
+          <div class="home-faqs__accordion">
+            {% for block in section.blocks %}
+              {% assign is_first = forloop.first %}
+              <div
+                class="home-faqs__item {% if is_first %}is-open{% endif %}"
+                {{ block.shopify_attributes }}
               >
-                <span class="home-faqs__question-text">{{ block.settings.question }}</span>
-                <span class="home-faqs__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
-                    <line class="home-faqs__icon-v" x1="12" y1="5" x2="12" y2="19"></line>
-                    <line class="home-faqs__icon-h" x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
-                </span>
-              </button>
-              
-              <div class="home-faqs__answer-wrap">
-                <div class="home-faqs__answer">
-                  <p>{{ block.settings.answer }}</p>
+                <button
+                  type="button"
+                  class="home-faqs__question"
+                  aria-expanded="{% if is_first %}true{% else %}false{% endif %}"
+                >
+                  <span class="home-faqs__question-text">{{ block.settings.question }}</span>
+                  <span class="home-faqs__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#171008" stroke-width="2.5" stroke-linecap="round">
+                      <line class="home-faqs__icon-v" x1="12" y1="5" x2="12" y2="19"></line>
+                      <line class="home-faqs__icon-h" x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </span>
+                </button>
+
+                <div class="home-faqs__answer-wrap">
+                  <div class="home-faqs__answer">
+                    <p>{{ block.settings.answer }}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          {% endfor %}
+            {% endfor %}
+          </div>
         </div>
+
       </div>
 
     </div>
   </div>
-</div>
+</section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const section = document.querySelector('[data-section-id="{{ section.id }}"]') || document.currentScript?.closest('.home-faqs-section') || document;
-    const items = section.querySelectorAll('.home-faqs__item');
+  (function() {
+    function initHomeFaqs() {
+      const section = document.getElementById('home-faqs-{{ section.id }}');
+      if (!section) return;
 
-    items.forEach(function(item) {
-      const btn = item.querySelector('.home-faqs__question');
+      const items = section.querySelectorAll('.home-faqs__item');
+      items.forEach(function(item) {
+        const btn = item.querySelector('.home-faqs__question');
+        if (!btn) return;
 
-      btn.addEventListener('click', function() {
-        const isOpen = item.classList.contains('is-open');
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const isOpen = item.classList.contains('is-open');
 
-        // Close other items for accordion behavior
-        items.forEach(function(otherItem) {
-          if (otherItem !== item && otherItem.classList.contains('is-open')) {
-            otherItem.classList.remove('is-open');
-            otherItem.querySelector('.home-faqs__question')?.setAttribute('aria-expanded', 'false');
+          // Close other items
+          items.forEach(function(otherItem) {
+            if (otherItem !== item && otherItem.classList.contains('is-open')) {
+              otherItem.classList.remove('is-open');
+              otherItem.querySelector('.home-faqs__question')?.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          // Toggle current
+          if (isOpen) {
+            item.classList.remove('is-open');
+            btn.setAttribute('aria-expanded', 'false');
+          } else {
+            item.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
           }
         });
-
-        // Toggle current item smoothly via CSS classes
-        if (isOpen) {
-          item.classList.remove('is-open');
-          btn.setAttribute('aria-expanded', 'false');
-        } else {
-          item.classList.add('is-open');
-          btn.setAttribute('aria-expanded', 'true');
-        }
       });
-    });
-  });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHomeFaqs);
+    } else {
+      initHomeFaqs();
+    }
+  })();
 </script>
 
 {% schema %}
 {
   "name": "Home FAQs",
   "settings": [
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card Background",
+      "default": "#FAF7F0"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Border Color",
+      "default": "#171008"
+    },
     {
       "type": "text",
       "id": "badge_text",
@@ -163,11 +206,6 @@
       "id": "description",
       "label": "Description",
       "default": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad."
-    },
-    {
-      "type": "image_picker",
-      "id": "fox_image",
-      "label": "Fox Character Graphic"
     },
     {
       "type": "text",
@@ -190,6 +228,20 @@
       "type": "url",
       "id": "btn2_url",
       "label": "Button 2 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "fox_image",
+      "label": "Fox Character Graphic"
+    },
+    {
+      "type": "range",
+      "id": "mascot_width",
+      "label": "Fox Width (px)",
+      "min": 180,
+      "max": 400,
+      "step": 10,
+      "default": 280
     }
   ],
   "blocks": [

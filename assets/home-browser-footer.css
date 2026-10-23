@@ -294,7 +294,7 @@
 @media (max-width: 820px) {
   .home-browser-footer-section {
     padding: 40px 16px 0 16px;
-    margin-bottom: -60px;
+    margin-bottom: -80px;
   }
 
   .hbf-card {
@@ -344,7 +344,7 @@
 @media (max-width: 600px) {
   .home-browser-footer-section {
     padding: 30px 0px 0px 0px !important;
-    margin-bottom: -45px;
+    margin-bottom: -80px;
   }
 
   .hbf-card {

@@ -401,9 +401,11 @@
   }
 
   .hero-banner__overlay-content {
-    padding: 26px 14px 10px;
+    padding: 26px 0px 10px;
   }
-
+  .hero-banner__text-box {
+    max-width: 100%;
+  }
   .hero-banner__heading {
     font-size: 30px;
   }
