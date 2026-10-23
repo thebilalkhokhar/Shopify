@@ -51,8 +51,8 @@
 
 /* Body Text / Paragraphs */
 .home-content__text {
-  color: var(--hc-text-color, #D4CECE);
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  color: var(--hc-text-color, #d4cece);
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 15px;
   line-height: 1.68;
   font-weight: 400;
@@ -99,7 +99,7 @@
 /* Mobile Breakpoints (Exact 16px section side padding matching FAQs/Testimonials) */
 @media (max-width: 600px) {
   .home-content__wrapper {
-    padding: 20px 16px 50px 16px !important;
+    padding: 0px 0px 0px 0px !important;
   }
 
   .home-content__card {
@@ -119,11 +119,14 @@
   }
 
   .home-content__text {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.62;
   }
 
   .home-content__text p {
     margin-bottom: 14px;
+  }
+  .home-content-section {
+    padding-bottom: 40px;
   }
 }

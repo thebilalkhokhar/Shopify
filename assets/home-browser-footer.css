@@ -17,8 +17,11 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  background-color: var(--hbf-card-bg, #EA5B1B);
-  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1.2px, transparent 1.2px);
+  background-color: var(--hbf-card-bg, #ea5b1b);
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.1) 1.2px,
+    transparent 1.2px
+  );
   background-size: 24px 24px;
   border-radius: 24px;
   border: 2px solid var(--hbf-card-border, #171008);
@@ -46,7 +49,7 @@
 
 /* Yellow Sticker Badge ("Still deciding?") */
 .hbf-badge {
-  background-color: #F8B825;
+  background-color: #f8b825;
   color: #171008;
   font-family: var(--custom-font-family, serif);
   font-size: 13.5px;
@@ -75,7 +78,7 @@
 
 /* Subheading / Description */
 .hbf-subheading {
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 14px;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.9);
@@ -144,7 +147,7 @@
   padding: 10px 16px;
   background-color: rgba(255, 255, 255, 0.18);
   color: #171008;
-  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-family: var(--font-primary--family, "Inter", sans-serif);
   font-size: 12px;
   font-weight: 600;
   display: inline-flex;
@@ -184,12 +187,14 @@
   width: 100%;
   min-width: 210px;
   text-align: center;
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.2s ease;
 }
 
 /* Primary Button (Yellow: "Browse all Products") */
 .hbf-btn--primary {
-  background-color: #F8B825;
+  background-color: #f8b825;
   color: #171008;
   box-shadow: 2px 3px 0 0 #171008;
 }
@@ -206,7 +211,7 @@
 
 /* Secondary Button (White: "Get Sample") */
 .hbf-btn--secondary {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #171008;
   box-shadow: 2px 3px 0 0 #171008;
 }
@@ -338,7 +343,7 @@
 
 @media (max-width: 600px) {
   .home-browser-footer-section {
-    padding: 30px 12px 0 12px !important;
+    padding: 30px 0px 0px 0px !important;
     margin-bottom: -45px;
   }
 
@@ -365,8 +370,28 @@
   }
 
   .hbf-visuals-wrap {
-    gap: 8px;
-    margin-bottom: 5px;
+    position: absolute;
+    right: 8px;
+    bottom: -48px;
+    width: 46%;
+    min-height: 0;
+    justify-content: flex-end;
+    margin: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .hbf-mascot-col {
+    width: 100%;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: 0;
+  }
+
+  .hbf-mascot-img {
+    width: 100%;
+    max-width: 145px;
+    max-height: 220px;
   }
 
   .hbf-actions-col {
@@ -377,5 +402,28 @@
   .hbf-btn {
     padding: 12px 20px;
     font-size: 14.5px;
+  }
+  .hbf-box-col {
+    display: none;
+  }
+  .hbf-actions-col {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-browser-footer-section {
+    width: calc(100% + 40px);
+    max-width: none;
+    margin-left: -20px;
+  }
+
+  .hbf-card {
+    width: 100%;
+    max-width: none;
+  }
+  .footer-frame {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
   }
 }

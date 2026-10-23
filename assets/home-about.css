@@ -52,7 +52,7 @@
 }
 
 .ha-subheading {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #ccc;
@@ -62,7 +62,7 @@
 
 .ha-link {
   font-family: var(--custom-font-family, serif);
-  color: var(--tape-orange, #FF6600);
+  color: var(--tape-orange, #ff6600);
   text-decoration: underline;
   text-transform: uppercase;
   font-weight: 700;
@@ -75,7 +75,7 @@
 
 .ha-link:hover {
   opacity: 0.8;
-  color: var(--tape-orange, #FF6600);
+  color: var(--tape-orange, #ff6600);
 }
 
 .home-about__image {
@@ -103,7 +103,11 @@
 /* Mobile Adjustments */
 @media (max-width: 768px) {
   .home-about-section {
-    padding: 50px 15px 30px;
+    padding: 20px 15px 30px;
+  }
+
+  .ha-link {
+    margin: 0 0 20px;
   }
 
   .ha-heading {
@@ -122,5 +126,16 @@
 
   .ha-fox {
     width: 50px;
+  }
+}
+@media (max-width: 768px) {
+  .ha-heading {
+    font-size: 30px;
+  }
+  .ha-subheading {
+    font-size: 12px;
+  }
+  .ha-link {
+    font-size: 14px;
   }
 }

@@ -1,17 +1,17 @@
 /* Hero Banner CSS for TapeFox */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --custom-font-family: 'Bringbold Nineties', 'bringbold_nineties', serif;
-  --bg-beige: #F5F2EC;
+  --custom-font-family: "Bringbold Nineties", "bringbold_nineties", serif;
+  --bg-beige: #f5f2ec;
   --bg-dark: #191410;
-  --tape-orange: #FF6600;
+  --tape-orange: #ff6600;
 }
 
 .hero-banner-overlay {
   position: relative;
   width: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   overflow: hidden;
   background-color: transparent;
 }
@@ -205,12 +205,25 @@
   display: none;
 }
 
+@media (min-width: 992px) and (max-width: 1150px) {
+  .hero-banner__overlay-content {
+    transform: translateY(24px);
+  }
+  .hero-banner__heading {
+    font-size: 48px;
+    margin-bottom: 0px;
+  }
+  .hero-banner__subheading {
+    margin-bottom: 15px;
+  }
+}
+
 /* Tablet & Mobile Adjustments (Screen <= 991px) */
 @media (max-width: 991px) {
   .hero-banner-overlay {
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-dark);
+    /* background-color: var(--bg-dark); */
     padding: 15px 0px 45px;
     min-height: auto;
   }
@@ -282,7 +295,7 @@
   }
 
   .hero-banner__text-box {
-    max-width: 100%;
+    max-width: 70%;
     text-align: left;
   }
 
@@ -392,11 +405,11 @@
   }
 
   .hero-banner__heading {
-    font-size: 32px;
+    font-size: 30px;
   }
 
   .hero-banner__subheading {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .hero-banner__buttons {
@@ -405,9 +418,17 @@
 
   .btn {
     padding: 12px 14px;
+    font-size: 12px;
+  }
+  .hero-banner__price {
     font-size: 14px;
   }
-
+  .ha-heading {
+    font-size: 30px;
+  }
+  .ha-subheading {
+    font-size: 12px;
+  }
   .hero-banner__footer {
     bottom: 12px;
   }

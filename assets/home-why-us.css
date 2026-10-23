@@ -20,7 +20,7 @@
 }
 
 .hwu-badge {
-  background-color: #F8B825;
+  background-color: #f8b825;
   color: #171008;
   padding: 4px 18px;
   border-radius: 999px;
@@ -73,7 +73,7 @@
   left: -30%;
   width: 160%;
   height: 60px;
-  background: #E85D18;
+  background: #e85d18;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
@@ -188,7 +188,7 @@
 .hwu-circle--main {
   width: 420px;
   height: 420px;
-  background-color: #E85D18;
+  background-color: #e85d18;
   left: 60px;
   top: 35px;
   z-index: 2;
@@ -223,7 +223,7 @@
 }
 
 .hwu-circle--main .hwu-circle-desc {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 13.5px;
   color: rgba(255, 255, 255, 0.95);
   margin: 0;
@@ -240,13 +240,13 @@
 .hwu-circle--yellow-tr {
   width: 220px;
   height: 220px;
-  background-color: #F8B825;
-  border: 2px solid #E85D18;
+  background-color: #f8b825;
+  border: 2px solid #e85d18;
   left: 420px;
   top: 90px;
   z-index: 4;
   padding: 24px;
-  color: #E85D18;
+  color: #e85d18;
   transform: rotate(20deg);
   box-sizing: border-box;
 }
@@ -262,10 +262,10 @@
 }
 
 .hwu-circle--yellow-tr .hwu-circle-desc {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 11.5px;
   line-height: 1.3;
-  color: #E85D18;
+  color: #e85d18;
   margin: 0;
   font-weight: 600;
 }
@@ -278,13 +278,13 @@
 .hwu-circle--yellow-bl {
   width: 190px;
   height: 190px;
-  background-color: #F8B825;
-  border: 2px solid #E85D18;
+  background-color: #f8b825;
+  border: 2px solid #e85d18;
   left: -20px;
   top: 265px;
   z-index: 5;
   padding: 20px;
-  color: #E85D18;
+  color: #e85d18;
   transform: rotate(-12deg);
   box-sizing: border-box;
 }
@@ -306,13 +306,13 @@
 .hwu-circle--small-tl {
   width: 84px;
   height: 84px;
-  background-color: #E85D18;
-  border: 1.5px solid #F8B825;
+  background-color: #e85d18;
+  border: 1.5px solid #f8b825;
   left: 75px;
   top: 60px;
   z-index: 5;
   padding: 8px;
-  color: #F8B825;
+  color: #f8b825;
   transform: rotate(-15deg);
   box-sizing: border-box;
 }
@@ -333,13 +333,13 @@
 .hwu-circle--small-br {
   width: 110px;
   height: 110px;
-  background-color: #E85D18;
-  border: 1.5px solid #F8B825;
+  background-color: #e85d18;
+  border: 1.5px solid #f8b825;
   left: 375px;
   top: 350px;
   z-index: 5;
   padding: 12px;
-  color: #F8B825;
+  color: #f8b825;
   transform: rotate(8deg);
   box-sizing: border-box;
 }
@@ -411,6 +411,9 @@
 }
 
 @media (max-width: 480px) {
+  .home-why-us-section {
+    padding: 50px 0 50px;
+  }
   .hwu-stage {
     height: 360px;
   }

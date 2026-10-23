@@ -25,7 +25,7 @@
 
 /* "The Route" 3D Sticker Badge */
 .home-artwork__badge {
-  background-color: #F8B825;
+  background-color: #f8b825;
   color: #171008;
   padding: 5px 20px;
   border-radius: 999px;
@@ -36,7 +36,9 @@
   display: inline-block;
   transform: rotate(-5deg);
   margin-bottom: 16px;
-  box-shadow: 0 3.5px 0 0 #E85D18, 0 5px 0 0 #171008;
+  box-shadow:
+    0 3.5px 0 0 #e85d18,
+    0 5px 0 0 #171008;
   letter-spacing: -0.2px;
 }
 
@@ -63,7 +65,7 @@
 
 /* Individual Step Card */
 .home-artwork__card {
-  background-color: var(--card-bg, #FDB927);
+  background-color: var(--card-bg, #fdb927);
   border-radius: 24px;
   border: 2px solid #171008;
   box-shadow: 6px 6px 0 0 #ffffff;
@@ -74,7 +76,9 @@
   flex-direction: column;
   padding: 26px 26px 20px;
   box-sizing: border-box;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .home-artwork__card:hover {
@@ -86,7 +90,7 @@
 .home-artwork__card-content {
   position: relative;
   z-index: 2;
-  max-width: 82%;
+  max-width: 100%;
 }
 
 .home-artwork__card-title {
@@ -100,7 +104,7 @@
 }
 
 .home-artwork__card-desc {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   line-height: 1.4;
   color: var(--card-desc-color, #362415);
@@ -114,7 +118,7 @@
   left: 22px;
   z-index: 4;
   background-color: #171008;
-  color: #F8B825;
+  color: #f8b825;
   font-family: var(--custom-font-family, serif);
   font-size: 14px;
   font-weight: 700;
@@ -165,30 +169,116 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.7);
   pointer-events: none;
 }
-
+@media screen and (max-width: 1280px) {
+  .home-artwork__card-title {
+    font-size: 30px;
+  }
+  .home-artwork__card-desc {
+    font-size: 12px;
+  }
+  .home-artwork__card-media {
+    max-height: 210px;
+  }
+  .home-artwork__card {
+    min-height: 301px;
+  }
+}
 /* Tablet Responsive */
 @media (max-width: 1100px) {
   .home-artwork__grid {
-    grid-template-columns: 1fr;
-    max-width: 580px;
+    grid-template-columns: 1fr 1fr 1fr;
     margin: 0 auto;
-    gap: 30px;
+    gap: 20px;
+  }
+  .home-artwork__card {
+    min-height: 301px;
+  }
+  .home-artwork__card-title {
+    font-size: 28px;
+  }
+  .home-artwork__card-pill {
+    font-size: 12px;
+  }
+  .home-artwork-section {
+    padding: 30px 0px 30px 0px;
   }
 
   .home-artwork__card {
-    min-height: 360px;
+    padding: 26px 15px 20px;
+  }
+  .home-artwork__card-content {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 880px) and (max-width: 985px) {
+  .home-artwork__card-img {
+    height: 80%;
+  }
+  .home-artwork__card-pill {
+    font-size: 10px;
+  }
+  .home-artwork__card {
+    min-height: 250px;
   }
 }
 
 /* Mobile Responsive */
+@media (max-width: 880px) {
+  .home-artwork__card {
+    min-height: 250px;
+  }
+  .home-artwork__card-img {
+    max-height: 70%;
+  }
+  .home-artwork__card-pill {
+    font-size: 10px;
+  }
+  .home-artwork__card-title {
+    font-size: 25px;
+  }
+  .home-artwork__grid {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 800px) {
+  .home-artwork__card-img {
+    max-height: 70%;
+  }
+  .home-artwork__card-pill {
+    font-size: 10px;
+    padding: 7px 12px;
+  }
+  .home-artwork__card-title {
+    font-size: 22px;
+  }
+  .home-artwork__grid {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-artwork__grid {
+    grid-template-columns: 1fr;
+  }
+  .home-artwork__card-img {
+    max-height: 100%;
+  }
+  .home-artwork__card-pill {
+    font-size: 12px;
+    padding: 7px 20px;
+  }
+}
+
 @media (max-width: 600px) {
   .home-artwork-section {
-    padding: 50px 16px;
+    padding: 50px 0px;
   }
 
   .home-artwork__title {
@@ -200,7 +290,7 @@
   }
 
   .home-artwork__card {
-    min-height: 330px;
+    min-height: 285px;
     padding: 24px 20px 20px;
     border-radius: 22px;
   }

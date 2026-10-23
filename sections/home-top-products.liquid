@@ -49,7 +49,7 @@
     </div>
 
     <!-- Products Grid -->
-    <div class="htp-grid">
+    <div class="htp-grid" id="htpTrack-{{ section.id }}">
       {% for block in section.blocks %}
         {% assign product_url = block.settings.url %}
         {% if product_url == blank and block.settings.title != blank %}
@@ -83,9 +83,93 @@
         </div>
       {% endfor %}
     </div>
+
+    <div class="htp-controls" aria-label="Product navigation">
+      <div class="htp-progress-wrap" role="progressbar" aria-label="Product carousel progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25">
+        <div class="htp-progress-bar" id="htpProgress-{{ section.id }}"></div>
+      </div>
+
+      <div class="htp-nav-btns">
+        <button
+          type="button"
+          class="htp-nav-btn"
+          id="htpPrev-{{ section.id }}"
+          aria-label="Previous products"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="htp-nav-btn"
+          id="htpNext-{{ section.id }}"
+          aria-label="Next products"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#171008" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
     
   </div>
 </div>
+
+<script>
+  (function() {
+    function initProductCarousel() {
+      const track = document.getElementById('htpTrack-{{ section.id }}');
+      const prevBtn = document.getElementById('htpPrev-{{ section.id }}');
+      const nextBtn = document.getElementById('htpNext-{{ section.id }}');
+      const progress = document.getElementById('htpProgress-{{ section.id }}');
+      const progressTrack = progress ? progress.parentElement : null;
+
+      if (!track || !prevBtn || !nextBtn || !progress) return;
+
+      function updateProgress() {
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const slides = track.querySelectorAll('.htp-card');
+        const initialPercent = slides.length ? Math.max(20, Math.min(30, Math.round((1 / slides.length) * 100))) : 100;
+        const scrollRatio = maxScroll > 0 ? Math.max(0, Math.min(1, track.scrollLeft / maxScroll)) : 1;
+        const percent = maxScroll > 0
+          ? Math.round(initialPercent + scrollRatio * (100 - initialPercent))
+          : 100;
+
+        progress.style.width = percent + '%';
+        if (progressTrack) progressTrack.setAttribute('aria-valuenow', String(percent));
+      }
+
+      function scrollByCard(direction) {
+        const card = track.querySelector('.htp-card');
+        const gap = parseFloat(window.getComputedStyle(track).columnGap) || 0;
+        const scrollAmount = card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const target = Math.max(0, Math.min(maxScroll, track.scrollLeft + scrollAmount * direction));
+
+        track.scrollTo({ left: target, behavior: 'smooth' });
+      }
+
+      prevBtn.addEventListener('click', function() {
+        scrollByCard(-1);
+      });
+      nextBtn.addEventListener('click', function() {
+        scrollByCard(1);
+      });
+      track.addEventListener('scroll', updateProgress, { passive: true });
+      track.addEventListener('scrollend', updateProgress);
+      window.addEventListener('resize', updateProgress);
+
+      updateProgress();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProductCarousel);
+    } else {
+      initProductCarousel();
+    }
+  })();
+</script>
 
 {% schema %}
 {
