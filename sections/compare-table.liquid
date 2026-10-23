@@ -1,5 +1,11 @@
 {{ 'compare-table.css' | asset_url | stylesheet_tag }}
 
+{%- assign default_p1_url = '/products/paper-tape' -%}
+{%- assign default_p2_url = '/products/polypropylene-tape' -%}
+{%- assign default_p3_url = '/products/pvc-tape' -%}
+{%- assign default_p4_url = '/products/hi-tack-freezer-tape' -%}
+{%- assign default_p5_url = '/products/flatback-tape' -%}
+
 <section
   id="compare-table-{{ section.id }}"
   class="compare-page-section"
@@ -68,227 +74,299 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Category 1: MATERIAL -->
-          <tr class="compare-cat-row">
-            <td colspan="6">MATERIAL</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">FINISH</td>
-            <td class="cell-data">Matte</td>
-            <td class="cell-data">Glossy</td>
-            <td class="cell-data">Semi-glossy</td>
-            <td class="cell-data">Glossy</td>
-            <td class="cell-data">Matte</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">ADHESIVE</td>
-            <td class="cell-data">Water-activated</td>
-            <td class="cell-data">Hot melt</td>
-            <td class="cell-data">Natural rubber</td>
-            <td class="cell-data">High-tack acrylic</td>
-            <td class="cell-data">Rubber-based</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">COLOURS</td>
-            <td class="cell-data">White, tan</td>
-            <td class="cell-data">White, clear, tan, red, yellow</td>
-            <td class="cell-data">White, clear, tan</td>
-            <td class="cell-data">White, clear</td>
-            <td class="cell-data">Tan, white</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">WIDTHS AND LENGTHS</td>
-            <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
-            <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
-            <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
-            <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
-            <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
-          </tr>
+          {%- if section.blocks.size > 0 -%}
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'category_row' -%}
+                  <tr class="compare-cat-row" {{ block.shopify_attributes }}>
+                    <td colspan="6">{{ block.settings.title | default: 'CATEGORY' }}</td>
+                  </tr>
 
-          <!-- Category 2: STRENGTH -->
-          <tr class="compare-cat-row">
-            <td colspan="6">STRENGTH</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">SEALS UP TO</td>
-            <td class="cell-data">240 grade (30 lbs) &middot; 260 HD (30+ lbs)</td>
-            <td class="cell-data">1.9 mil (30 lbs) &middot; 2.5 mil (50 lbs) &middot; 2.6 mil (50+ lbs)</td>
-            <td class="cell-data">50+ lbs, heaviest loads</td>
-            <td class="cell-data">Cold-chain loads</td>
-            <td class="cell-data">Bundling only, not for sealing</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">STICKS TO</td>
-            <td class="cell-data">Cardboard</td>
-            <td class="cell-data">Cardboard</td>
-            <td class="cell-data">Cardboard, plastic, glass, metal</td>
-            <td class="cell-data">Cardboard, damp or frosted</td>
-            <td class="cell-data">Paper and board</td>
-          </tr>
+                {%- when 'data_row' -%}
+                  <tr class="compare-data-row" {{ block.shopify_attributes }}>
+                    <td class="cell-label">{{ block.settings.label }}</td>
+                    
+                    {%- comment -%} Col 1 {%- endcomment -%}
+                    <td class="cell-data">
+                      {%- assign val_up = block.settings.val_1 | strip | upcase -%}
+                      {%- if val_up == 'YES' -%}
+                        <span class="compare-pill compare-pill--yes">YES</span>
+                      {%- elsif val_up == 'NO' -%}
+                        <span class="compare-pill compare-pill--no">NO</span>
+                      {%- else -%}
+                        {{ block.settings.val_1 }}
+                      {%- endif -%}
+                    </td>
 
-          <!-- Category 3: TEMPERATURE -->
-          <tr class="compare-cat-row">
-            <td colspan="6">TEMPERATURE</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">IN SERVICE</td>
-            <td class="cell-data">Room temp</td>
-            <td class="cell-data">30&ndash;140&deg;F</td>
-            <td class="cell-data">20&ndash;140&deg;F</td>
-            <td class="cell-data">&ndash;20&ndash;140&deg;F</td>
-            <td class="cell-data">Room temp</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">TO APPLY</td>
-            <td class="cell-data">Above freezing</td>
-            <td class="cell-data">54&ndash;110&deg;F</td>
-            <td class="cell-data">Not published</td>
-            <td class="cell-data">Any</td>
-            <td class="cell-data">Room temp</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">BELOW FREEZING</td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-          </tr>
+                    {%- comment -%} Col 2 {%- endcomment -%}
+                    <td class="cell-data">
+                      {%- assign val_up = block.settings.val_2 | strip | upcase -%}
+                      {%- if val_up == 'YES' -%}
+                        <span class="compare-pill compare-pill--yes">YES</span>
+                      {%- elsif val_up == 'NO' -%}
+                        <span class="compare-pill compare-pill--no">NO</span>
+                      {%- else -%}
+                        {{ block.settings.val_2 }}
+                      {%- endif -%}
+                    </td>
 
-          <!-- Category 4: APPLYING IT -->
-          <tr class="compare-cat-row">
-            <td colspan="6">APPLYING IT</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">APPLICATION</td>
-            <td class="cell-data">Water dispenser</td>
-            <td class="cell-data">Tape gun or machine</td>
-            <td class="cell-data">Tape gun</td>
-            <td class="cell-data">Tape gun</td>
-            <td class="cell-data">Tears by hand</td>
-          </tr>
+                    {%- comment -%} Col 3 {%- endcomment -%}
+                    <td class="cell-data">
+                      {%- assign val_up = block.settings.val_3 | strip | upcase -%}
+                      {%- if val_up == 'YES' -%}
+                        <span class="compare-pill compare-pill--yes">YES</span>
+                      {%- elsif val_up == 'NO' -%}
+                        <span class="compare-pill compare-pill--no">NO</span>
+                      {%- else -%}
+                        {{ block.settings.val_3 }}
+                      {%- endif -%}
+                    </td>
 
-          <!-- Category 5: PRINTING -->
-          <tr class="compare-cat-row">
-            <td colspan="6">PRINTING</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">PRINT DETAIL</td>
-            <td class="cell-data">Sharp</td>
-            <td class="cell-data">Sharp</td>
-            <td class="cell-data">Limited detail</td>
-            <td class="cell-data">Standard</td>
-            <td class="cell-data">Sharp, matte</td>
-          </tr>
+                    {%- comment -%} Col 4 {%- endcomment -%}
+                    <td class="cell-data">
+                      {%- assign val_up = block.settings.val_4 | strip | upcase -%}
+                      {%- if val_up == 'YES' -%}
+                        <span class="compare-pill compare-pill--yes">YES</span>
+                      {%- elsif val_up == 'NO' -%}
+                        <span class="compare-pill compare-pill--no">NO</span>
+                      {%- else -%}
+                        {{ block.settings.val_4 }}
+                      {%- endif -%}
+                    </td>
 
-          <!-- Category 6: DISPOSAL -->
-          <tr class="compare-cat-row">
-            <td colspan="6">DISPOSAL</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">TAMPER EVIDENT</td>
-            <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">RECYCLABLE</td>
-            <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
-            <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
-          </tr>
+                    {%- comment -%} Col 5 {%- endcomment -%}
+                    <td class="cell-data">
+                      {%- assign val_up = block.settings.val_5 | strip | upcase -%}
+                      {%- if val_up == 'YES' -%}
+                        <span class="compare-pill compare-pill--yes">YES</span>
+                      {%- elsif val_up == 'NO' -%}
+                        <span class="compare-pill compare-pill--no">NO</span>
+                      {%- else -%}
+                        {{ block.settings.val_5 }}
+                      {%- endif -%}
+                    </td>
+                  </tr>
+              {%- endcase -%}
+            {%- endfor -%}
 
-          <!-- Category 7: PRICE -->
-          <tr class="compare-cat-row">
-            <td colspan="6">PRICE</td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">FROM, A ROLL</td>
-            <!-- Paper -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item1_price | default: '$9.10' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item1_price_sub | default: 'AT 64 CASES' }}</div>
-            </td>
-            <!-- Polypropylene -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item2_price | default: '$5.68' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item2_price_sub | default: 'AT 64 CASES' }}</div>
-            </td>
-            <!-- PVC -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item3_price | default: '$7.84' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item3_price_sub | default: 'AT 64 CASES' }}</div>
-            </td>
-            <!-- Hi-Tack Freezer -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item4_price | default: '$10.18' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item4_price_sub | default: 'AT 64 CASES' }}</div>
-            </td>
-            <!-- Flatback -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item5_price | default: '$7.12' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item5_price_sub | default: 'AT 64 CASES' }}</div>
-            </td>
-          </tr>
-          <tr class="compare-data-row">
-            <td class="cell-label">MINIMUM ORDER</td>
-            <!-- Paper -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item1_min | default: '$718.75' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item1_min_sub | default: '40 ROLLS' }}</div>
-            </td>
-            <!-- Polypropylene -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item2_min | default: '$464.63' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item2_min_sub | default: '40 ROLLS' }}</div>
-            </td>
-            <!-- PVC -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item3_min | default: '$625.13' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item3_min_sub | default: '40 ROLLS' }}</div>
-            </td>
-            <!-- Hi-Tack Freezer -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item4_min | default: '$799.00' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item4_min_sub | default: '40 ROLLS' }}</div>
-            </td>
-            <!-- Flatback -->
-            <td class="cell-data">
-              <div class="compare-price-val">{{ section.settings.item5_min | default: '$571.63' }}</div>
-              <div class="compare-price-sub">{{ section.settings.item5_min_sub | default: '40 ROLLS' }}</div>
-            </td>
-          </tr>
+          {%- else -%}
+            <!-- Fallback Default rows if no blocks added yet in Theme Customizer -->
+            <tr class="compare-cat-row"><td colspan="6">MATERIAL</td></tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">FINISH</td>
+              <td class="cell-data">Matte</td>
+              <td class="cell-data">Glossy</td>
+              <td class="cell-data">Semi-glossy</td>
+              <td class="cell-data">Glossy</td>
+              <td class="cell-data">Matte</td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">ADHESIVE</td>
+              <td class="cell-data">Water-activated</td>
+              <td class="cell-data">Hot melt</td>
+              <td class="cell-data">Natural rubber</td>
+              <td class="cell-data">High-tack acrylic</td>
+              <td class="cell-data">Rubber-based</td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">COLOURS</td>
+              <td class="cell-data">White, tan</td>
+              <td class="cell-data">White, clear, tan, red, yellow</td>
+              <td class="cell-data">White, clear, tan</td>
+              <td class="cell-data">White, clear</td>
+              <td class="cell-data">Tan, white</td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">WIDTHS AND LENGTHS</td>
+              <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
+              <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
+              <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
+              <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
+              <td class="cell-data">2 or 3 inch &times; 375, 450, 500 feet</td>
+            </tr>
+
+            <tr class="compare-cat-row"><td colspan="6">STRENGTH</td></tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">SEALS UP TO</td>
+              <td class="cell-data">240 grade (30 lbs) &middot; 260 HD (30+ lbs)</td>
+              <td class="cell-data">1.9 mil (30 lbs) &middot; 2.5 mil (50 lbs) &middot; 2.6 mil (50+ lbs)</td>
+              <td class="cell-data">50+ lbs, heaviest loads</td>
+              <td class="cell-data">Cold-chain loads</td>
+              <td class="cell-data">Bundling only, not for sealing</td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">STICKS TO</td>
+              <td class="cell-data">Cardboard</td>
+              <td class="cell-data">Cardboard</td>
+              <td class="cell-data">Cardboard, plastic, glass, metal</td>
+              <td class="cell-data">Cardboard, damp or frosted</td>
+              <td class="cell-data">Paper and board</td>
+            </tr>
+
+            <tr class="compare-cat-row"><td colspan="6">TEMPERATURE</td></tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">IN SERVICE</td>
+              <td class="cell-data">Room temp</td>
+              <td class="cell-data">30&ndash;140&deg;F</td>
+              <td class="cell-data">20&ndash;140&deg;F</td>
+              <td class="cell-data">&ndash;20&ndash;140&deg;F</td>
+              <td class="cell-data">Room temp</td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">TO APPLY</td>
+              <td class="cell-data">Above freezing</td>
+              <td class="cell-data">54&ndash;110&deg;F</td>
+              <td class="cell-data">Not published</td>
+              <td class="cell-data">Any</td>
+              <td class="cell-data">Room temp</td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">BELOW FREEZING</td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+            </tr>
+
+            <tr class="compare-cat-row"><td colspan="6">APPLYING IT</td></tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">APPLICATION</td>
+              <td class="cell-data">Water dispenser</td>
+              <td class="cell-data">Tape gun or machine</td>
+              <td class="cell-data">Tape gun</td>
+              <td class="cell-data">Tape gun</td>
+              <td class="cell-data">Tears by hand</td>
+            </tr>
+
+            <tr class="compare-cat-row"><td colspan="6">PRINTING</td></tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">PRINT DETAIL</td>
+              <td class="cell-data">Sharp</td>
+              <td class="cell-data">Sharp</td>
+              <td class="cell-data">Limited detail</td>
+              <td class="cell-data">Standard</td>
+              <td class="cell-data">Sharp, matte</td>
+            </tr>
+
+            <tr class="compare-cat-row"><td colspan="6">DISPOSAL</td></tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">TAMPER EVIDENT</td>
+              <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">RECYCLABLE</td>
+              <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--no">NO</span></td>
+              <td class="cell-data"><span class="compare-pill compare-pill--yes">YES</span></td>
+            </tr>
+          {%- endif -%}
+
+          <!-- Category: PRICE -->
+          {%- if section.settings.show_price_section != false -%}
+            <tr class="compare-cat-row">
+              <td colspan="6">{{ section.settings.price_cat_label | default: 'PRICE' }}</td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">{{ section.settings.from_roll_label | default: 'FROM, A ROLL' }}</td>
+              <!-- Paper -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item1_price | default: '$9.10' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item1_price_sub | default: 'AT 64 CASES' }}</div>
+              </td>
+              <!-- Polypropylene -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item2_price | default: '$5.68' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item2_price_sub | default: 'AT 64 CASES' }}</div>
+              </td>
+              <!-- PVC -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item3_price | default: '$7.84' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item3_price_sub | default: 'AT 64 CASES' }}</div>
+              </td>
+              <!-- Hi-Tack Freezer -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item4_price | default: '$10.18' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item4_price_sub | default: 'AT 64 CASES' }}</div>
+              </td>
+              <!-- Flatback -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item5_price | default: '$7.12' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item5_price_sub | default: 'AT 64 CASES' }}</div>
+              </td>
+            </tr>
+            <tr class="compare-data-row">
+              <td class="cell-label">{{ section.settings.min_order_label | default: 'MINIMUM ORDER' }}</td>
+              <!-- Paper -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item1_min | default: '$718.75' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item1_min_sub | default: '40 ROLLS' }}</div>
+              </td>
+              <!-- Polypropylene -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item2_min | default: '$464.63' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item2_min_sub | default: '40 ROLLS' }}</div>
+              </td>
+              <!-- PVC -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item3_min | default: '$625.13' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item3_min_sub | default: '40 ROLLS' }}</div>
+              </td>
+              <!-- Hi-Tack Freezer -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item4_min | default: '$799.00' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item4_min_sub | default: '40 ROLLS' }}</div>
+              </td>
+              <!-- Flatback -->
+              <td class="cell-data">
+                <div class="compare-price-val">{{ section.settings.item5_min | default: '$571.63' }}</div>
+                <div class="compare-price-sub">{{ section.settings.item5_min_sub | default: '40 ROLLS' }}</div>
+              </td>
+            </tr>
+          {%- endif -%}
 
           <!-- Footer / CTA Row -->
           <tr class="compare-footer-row">
             <td class="cell-label"></td>
             <td class="cell-data">
-              <a href="{{ section.settings.item1_url | default: '/collections' }}" class="compare-see-link">
-                SEE THE PAGE <span class="arr">&rarr;</span>
+              {%- assign link1 = section.settings.item1_url -%}
+              {%- if link1 == blank or link1 == '/collections' -%}{%- assign link1 = default_p1_url -%}{%- endif -%}
+              <a href="{{ link1 }}" class="compare-see-link">
+                {{ section.settings.cta_text | default: 'SEE THE PAGE' }} <span class="arr">&rarr;</span>
               </a>
             </td>
             <td class="cell-data">
-              <a href="{{ section.settings.item2_url | default: '/collections' }}" class="compare-see-link">
-                SEE THE PAGE <span class="arr">&rarr;</span>
+              {%- assign link2 = section.settings.item2_url -%}
+              {%- if link2 == blank or link2 == '/collections' -%}{%- assign link2 = default_p2_url -%}{%- endif -%}
+              <a href="{{ link2 }}" class="compare-see-link">
+                {{ section.settings.cta_text | default: 'SEE THE PAGE' }} <span class="arr">&rarr;</span>
               </a>
             </td>
             <td class="cell-data">
-              <a href="{{ section.settings.item3_url | default: '/collections' }}" class="compare-see-link">
-                SEE THE PAGE <span class="arr">&rarr;</span>
+              {%- assign link3 = section.settings.item3_url -%}
+              {%- if link3 == blank or link3 == '/collections' -%}{%- assign link3 = default_p3_url -%}{%- endif -%}
+              <a href="{{ link3 }}" class="compare-see-link">
+                {{ section.settings.cta_text | default: 'SEE THE PAGE' }} <span class="arr">&rarr;</span>
               </a>
             </td>
             <td class="cell-data">
-              <a href="{{ section.settings.item4_url | default: '/collections' }}" class="compare-see-link">
-                SEE THE PAGE <span class="arr">&rarr;</span>
+              {%- assign link4 = section.settings.item4_url -%}
+              {%- if link4 == blank or link4 == '/collections' -%}{%- assign link4 = default_p4_url -%}{%- endif -%}
+              <a href="{{ link4 }}" class="compare-see-link">
+                {{ section.settings.cta_text | default: 'SEE THE PAGE' }} <span class="arr">&rarr;</span>
               </a>
             </td>
             <td class="cell-data">
-              <a href="{{ section.settings.item5_url | default: '/collections' }}" class="compare-see-link">
-                SEE THE PAGE <span class="arr">&rarr;</span>
+              {%- assign link5 = section.settings.item5_url -%}
+              {%- if link5 == blank or link5 == '/collections' -%}{%- assign link5 = default_p5_url -%}{%- endif -%}
+              <a href="{{ link5 }}" class="compare-see-link">
+                {{ section.settings.cta_text | default: 'SEE THE PAGE' }} <span class="arr">&rarr;</span>
               </a>
             </td>
           </tr>
@@ -321,8 +399,38 @@
       "default": "The whole comparison"
     },
     {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Link Text",
+      "default": "SEE THE PAGE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_section",
+      "label": "Show Price Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "price_cat_label",
+      "label": "Price Category Title",
+      "default": "PRICE"
+    },
+    {
+      "type": "text",
+      "id": "from_roll_label",
+      "label": "From Roll Label",
+      "default": "FROM, A ROLL"
+    },
+    {
+      "type": "text",
+      "id": "min_order_label",
+      "label": "Minimum Order Label",
+      "default": "MINIMUM ORDER"
+    },
+    {
       "type": "header",
-      "content": "Item 1 (Paper)"
+      "content": "Column 1 (Paper Tape)"
     },
     {
       "type": "text",
@@ -363,11 +471,12 @@
     {
       "type": "url",
       "id": "item1_url",
-      "label": "Page Link"
+      "label": "Product Detail Link",
+      "info": "Leave blank to link to /products/paper-tape"
     },
     {
       "type": "header",
-      "content": "Item 2 (Polypropylene)"
+      "content": "Column 2 (Polypropylene Tape)"
     },
     {
       "type": "text",
@@ -408,11 +517,12 @@
     {
       "type": "url",
       "id": "item2_url",
-      "label": "Page Link"
+      "label": "Product Detail Link",
+      "info": "Leave blank to link to /products/polypropylene-tape"
     },
     {
       "type": "header",
-      "content": "Item 3 (PVC)"
+      "content": "Column 3 (PVC Tape)"
     },
     {
       "type": "text",
@@ -453,11 +563,12 @@
     {
       "type": "url",
       "id": "item3_url",
-      "label": "Page Link"
+      "label": "Product Detail Link",
+      "info": "Leave blank to link to /products/pvc-tape"
     },
     {
       "type": "header",
-      "content": "Item 4 (Hi-Tack Freezer)"
+      "content": "Column 4 (Hi-Tack Freezer Tape)"
     },
     {
       "type": "text",
@@ -498,11 +609,12 @@
     {
       "type": "url",
       "id": "item4_url",
-      "label": "Page Link"
+      "label": "Product Detail Link",
+      "info": "Leave blank to link to /products/hi-tack-freezer-tape"
     },
     {
       "type": "header",
-      "content": "Item 5 (Flatback)"
+      "content": "Column 5 (Flatback Tape)"
     },
     {
       "type": "text",
@@ -543,12 +655,90 @@
     {
       "type": "url",
       "id": "item5_url",
-      "label": "Page Link"
+      "label": "Product Detail Link",
+      "info": "Leave blank to link to /products/flatback-tape"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_row",
+      "name": "Category Divider",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "MATERIAL"
+        }
+      ]
+    },
+    {
+      "type": "data_row",
+      "name": "Spec Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Spec Label",
+          "default": "FINISH"
+        },
+        {
+          "type": "text",
+          "id": "val_1",
+          "label": "Paper Value (Type YES / NO for pill)",
+          "default": "Matte"
+        },
+        {
+          "type": "text",
+          "id": "val_2",
+          "label": "Polypropylene Value (Type YES / NO for pill)",
+          "default": "Glossy"
+        },
+        {
+          "type": "text",
+          "id": "val_3",
+          "label": "PVC Value (Type YES / NO for pill)",
+          "default": "Semi-glossy"
+        },
+        {
+          "type": "text",
+          "id": "val_4",
+          "label": "Hi-Tack Freezer Value (Type YES / NO for pill)",
+          "default": "Glossy"
+        },
+        {
+          "type": "text",
+          "id": "val_5",
+          "label": "Flatback Value (Type YES / NO for pill)",
+          "default": "Matte"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Compare Table"
+      "name": "Compare Table",
+      "blocks": [
+        { "type": "category_row", "settings": { "title": "MATERIAL" } },
+        { "type": "data_row", "settings": { "label": "FINISH", "val_1": "Matte", "val_2": "Glossy", "val_3": "Semi-glossy", "val_4": "Glossy", "val_5": "Matte" } },
+        { "type": "data_row", "settings": { "label": "ADHESIVE", "val_1": "Water-activated", "val_2": "Hot melt", "val_3": "Natural rubber", "val_4": "High-tack acrylic", "val_5": "Rubber-based" } },
+        { "type": "data_row", "settings": { "label": "COLOURS", "val_1": "White, tan", "val_2": "White, clear, tan, red, yellow", "val_3": "White, clear, tan", "val_4": "White, clear", "val_5": "Tan, white" } },
+        { "type": "data_row", "settings": { "label": "WIDTHS AND LENGTHS", "val_1": "2 or 3 inch × 375, 450, 500 feet", "val_2": "2 or 3 inch × 375, 450, 500 feet", "val_3": "2 or 3 inch × 375, 450, 500 feet", "val_4": "2 or 3 inch × 375, 450, 500 feet", "val_5": "2 or 3 inch × 375, 450, 500 feet" } },
+        { "type": "category_row", "settings": { "title": "STRENGTH" } },
+        { "type": "data_row", "settings": { "label": "SEALS UP TO", "val_1": "240 grade (30 lbs) · 260 HD (30+ lbs)", "val_2": "1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)", "val_3": "50+ lbs, heaviest loads", "val_4": "Cold-chain loads", "val_5": "Bundling only, not for sealing" } },
+        { "type": "data_row", "settings": { "label": "STICKS TO", "val_1": "Cardboard", "val_2": "Cardboard", "val_3": "Cardboard, plastic, glass, metal", "val_4": "Cardboard, damp or frosted", "val_5": "Paper and board" } },
+        { "type": "category_row", "settings": { "title": "TEMPERATURE" } },
+        { "type": "data_row", "settings": { "label": "IN SERVICE", "val_1": "Room temp", "val_2": "30–140°F", "val_3": "20–140°F", "val_4": "–20–140°F", "val_5": "Room temp" } },
+        { "type": "data_row", "settings": { "label": "TO APPLY", "val_1": "Above freezing", "val_2": "54–110°F", "val_3": "Not published", "val_4": "Any", "val_5": "Room temp" } },
+        { "type": "data_row", "settings": { "label": "BELOW FREEZING", "val_1": "NO", "val_2": "NO", "val_3": "NO", "val_4": "YES", "val_5": "NO" } },
+        { "type": "category_row", "settings": { "title": "APPLYING IT" } },
+        { "type": "data_row", "settings": { "label": "APPLICATION", "val_1": "Water dispenser", "val_2": "Tape gun or machine", "val_3": "Tape gun", "val_4": "Tape gun", "val_5": "Tears by hand" } },
+        { "type": "category_row", "settings": { "title": "PRINTING" } },
+        { "type": "data_row", "settings": { "label": "PRINT DETAIL", "val_1": "Sharp", "val_2": "Sharp", "val_3": "Limited detail", "val_4": "Standard", "val_5": "Sharp, matte" } },
+        { "type": "category_row", "settings": { "title": "DISPOSAL" } },
+        { "type": "data_row", "settings": { "label": "TAMPER EVIDENT", "val_1": "YES", "val_2": "NO", "val_3": "NO", "val_4": "NO", "val_5": "NO" } },
+        { "type": "data_row", "settings": { "label": "RECYCLABLE", "val_1": "YES", "val_2": "NO", "val_3": "NO", "val_4": "NO", "val_5": "YES" } }
+      ]
     }
   ]
 }

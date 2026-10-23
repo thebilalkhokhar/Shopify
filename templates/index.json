@@ -29,7 +29,7 @@
         "button_1_label": "Browse all Products",
         "button_1_link": "/collections",
         "button_2_label": "Get Sample",
-        "button_2_link": "",
+        "button_2_link": "/pages/order-sample",
         "price_text": "Starting from $5.68 a roll",
         "thumbnail_image_1": "shopify://shop_images/banner1.webp",
         "thumbnail_image_2": "shopify://shop_images/banner3.webp",
@@ -48,6 +48,7 @@
         "link_label": "MORE ABOUT TAPEFOX",
         "link_url": "/pages/about",
         "bottom_image": "shopify://shop_images/aboutMain.webp",
+        "bottom_image_mobile": "",
         "star_image": "shopify://shop_images/star.webp"
       }
     },
@@ -243,7 +244,11 @@
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
       "settings": {
         "badge_text": "The Route",
         "heading": "Artwork in. Tape out."
@@ -354,7 +359,13 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
       "settings": {
         "badge_text": "Questions",
         "heading": "Before you order",
@@ -456,7 +467,10 @@
           }
         }
       },
-      "block_order": ["content_1", "content_2"],
+      "block_order": [
+        "content_1",
+        "content_2"
+      ],
       "settings": {
         "bg_color": "#171008",
         "border_color": "#ffffff52",

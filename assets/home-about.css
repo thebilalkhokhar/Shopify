@@ -142,3 +142,32 @@
     font-size: 14px;
   }
 }
+
+/* 640px and below: Full-width edge-to-edge image */
+@media (max-width: 640px) {
+  .home-about-section {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .home-about__top-icon,
+  .home-about__content {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .home-about__image {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    overflow: hidden;
+  }
+
+  .home-about__image picture,
+  .home-about__image .ha-cards {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+}

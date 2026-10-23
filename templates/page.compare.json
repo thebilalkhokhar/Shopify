@@ -11,45 +11,252 @@
   "sections": {
     "compare_table": {
       "type": "compare-table",
+      "blocks": {
+        "cat_1": {
+          "type": "category_row",
+          "settings": {
+            "title": "MATERIAL"
+          }
+        },
+        "row_finish": {
+          "type": "data_row",
+          "settings": {
+            "label": "FINISH",
+            "val_1": "Matte",
+            "val_2": "Glossy",
+            "val_3": "Semi-glossy",
+            "val_4": "Glossy",
+            "val_5": "Matte"
+          }
+        },
+        "row_adhesive": {
+          "type": "data_row",
+          "settings": {
+            "label": "ADHESIVE",
+            "val_1": "Water-activated",
+            "val_2": "Hot melt",
+            "val_3": "Natural rubber",
+            "val_4": "High-tack acrylic",
+            "val_5": "Rubber-based"
+          }
+        },
+        "row_colours": {
+          "type": "data_row",
+          "settings": {
+            "label": "COLOURS",
+            "val_1": "White, tan",
+            "val_2": "White, clear, tan, red, yellow",
+            "val_3": "White, clear, tan",
+            "val_4": "White, clear",
+            "val_5": "Tan, white"
+          }
+        },
+        "row_widths": {
+          "type": "data_row",
+          "settings": {
+            "label": "WIDTHS AND LENGTHS",
+            "val_1": "2 or 3 inch × 375, 450, 500 feet",
+            "val_2": "2 or 3 inch × 375, 450, 500 feet",
+            "val_3": "2 or 3 inch × 375, 450, 500 feet",
+            "val_4": "2 or 3 inch × 375, 450, 500 feet",
+            "val_5": "2 or 3 inch × 375, 450, 500 feet"
+          }
+        },
+        "cat_2": {
+          "type": "category_row",
+          "settings": {
+            "title": "STRENGTH"
+          }
+        },
+        "row_seals": {
+          "type": "data_row",
+          "settings": {
+            "label": "SEALS UP TO",
+            "val_1": "240 grade (30 lbs) · 260 HD (30+ lbs)",
+            "val_2": "1.9 mil (30 lbs) · 2.5 mil (50 lbs) · 2.6 mil (50+ lbs)",
+            "val_3": "50+ lbs, heaviest loads",
+            "val_4": "Cold-chain loads",
+            "val_5": "Bundling only, not for sealing"
+          }
+        },
+        "row_sticks": {
+          "type": "data_row",
+          "settings": {
+            "label": "STICKS TO",
+            "val_1": "Cardboard",
+            "val_2": "Cardboard",
+            "val_3": "Cardboard, plastic, glass, metal",
+            "val_4": "Cardboard, damp or frosted",
+            "val_5": "Paper and board"
+          }
+        },
+        "cat_3": {
+          "type": "category_row",
+          "settings": {
+            "title": "TEMPERATURE"
+          }
+        },
+        "row_inservice": {
+          "type": "data_row",
+          "settings": {
+            "label": "IN SERVICE",
+            "val_1": "Room temp",
+            "val_2": "30–140°F",
+            "val_3": "20–140°F",
+            "val_4": "–20–140°F",
+            "val_5": "Room temp"
+          }
+        },
+        "row_toapply": {
+          "type": "data_row",
+          "settings": {
+            "label": "TO APPLY",
+            "val_1": "Above freezing",
+            "val_2": "54–110°F",
+            "val_3": "Not published",
+            "val_4": "Any",
+            "val_5": "Room temp"
+          }
+        },
+        "row_belowfreezing": {
+          "type": "data_row",
+          "settings": {
+            "label": "BELOW FREEZING",
+            "val_1": "NO",
+            "val_2": "NO",
+            "val_3": "NO",
+            "val_4": "YES",
+            "val_5": "NO"
+          }
+        },
+        "cat_4": {
+          "type": "category_row",
+          "settings": {
+            "title": "APPLYING IT"
+          }
+        },
+        "row_application": {
+          "type": "data_row",
+          "settings": {
+            "label": "APPLICATION",
+            "val_1": "Water dispenser",
+            "val_2": "Tape gun or machine",
+            "val_3": "Tape gun",
+            "val_4": "Tape gun",
+            "val_5": "Tears by hand"
+          }
+        },
+        "cat_5": {
+          "type": "category_row",
+          "settings": {
+            "title": "PRINTING"
+          }
+        },
+        "row_printdetail": {
+          "type": "data_row",
+          "settings": {
+            "label": "PRINT DETAIL",
+            "val_1": "Sharp",
+            "val_2": "Sharp",
+            "val_3": "Limited detail",
+            "val_4": "Standard",
+            "val_5": "Sharp, matte"
+          }
+        },
+        "cat_6": {
+          "type": "category_row",
+          "settings": {
+            "title": "DISPOSAL"
+          }
+        },
+        "row_tamperevident": {
+          "type": "data_row",
+          "settings": {
+            "label": "TAMPER EVIDENT",
+            "val_1": "YES",
+            "val_2": "NO",
+            "val_3": "NO",
+            "val_4": "NO",
+            "val_5": "NO"
+          }
+        },
+        "row_recyclable": {
+          "type": "data_row",
+          "settings": {
+            "label": "RECYCLABLE",
+            "val_1": "YES",
+            "val_2": "NO",
+            "val_3": "NO",
+            "val_4": "NO",
+            "val_5": "YES"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "row_finish",
+        "row_adhesive",
+        "row_colours",
+        "row_widths",
+        "cat_2",
+        "row_seals",
+        "row_sticks",
+        "cat_3",
+        "row_inservice",
+        "row_toapply",
+        "row_belowfreezing",
+        "cat_4",
+        "row_application",
+        "cat_5",
+        "row_printdetail",
+        "cat_6",
+        "row_tamperevident",
+        "row_recyclable"
+      ],
       "settings": {
         "page_bg": "#F6F3EE",
         "badge_text": "All five, every row",
         "heading": "The whole comparison",
+        "cta_text": "SEE THE PAGE",
+        "show_price_section": true,
+        "price_cat_label": "PRICE",
+        "from_roll_label": "FROM, A ROLL",
+        "min_order_label": "MINIMUM ORDER",
         "item1_name": "PAPER",
         "item1_sub": "WATER-ACTIVATED",
         "item1_price": "$9.10",
         "item1_price_sub": "AT 64 CASES",
         "item1_min": "$718.75",
         "item1_min_sub": "40 ROLLS",
-        "item1_url": "/collections",
+        "item1_url": "/products/paper-tape",
         "item2_name": "POLYPROPYLENE",
         "item2_sub": "PRESSURE-SENSITIVE",
         "item2_price": "$5.68",
         "item2_price_sub": "AT 64 CASES",
         "item2_min": "$464.63",
         "item2_min_sub": "40 ROLLS",
-        "item2_url": "/collections",
+        "item2_url": "/products/polypropylene-tape",
         "item3_name": "PVC",
         "item3_sub": "PRESSURE-SENSITIVE",
         "item3_price": "$7.84",
         "item3_price_sub": "AT 64 CASES",
         "item3_min": "$625.13",
         "item3_min_sub": "40 ROLLS",
-        "item3_url": "/collections",
+        "item3_url": "/products/pvc-tape",
         "item4_name": "HI-TACK FREEZER",
         "item4_sub": "HI-TACK COATED",
         "item4_price": "$10.18",
         "item4_price_sub": "AT 64 CASES",
         "item4_min": "$799.00",
         "item4_min_sub": "40 ROLLS",
-        "item4_url": "/collections",
+        "item4_url": "/products/hi-tack-freezer-tape",
         "item5_name": "FLATBACK",
         "item5_sub": "NON-STRETCH",
         "item5_price": "$7.12",
         "item5_price_sub": "AT 64 CASES",
         "item5_min": "$571.63",
         "item5_min_sub": "40 ROLLS",
-        "item5_url": "/collections"
+        "item5_url": "/products/flatback-tape"
       }
     },
     "home_footer": {

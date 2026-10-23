@@ -51,14 +51,24 @@
       >
     {% endif %}
 
-    {% if section.settings.bottom_image != blank %}
-      <img
-        class="ha-cards"
-        src="{{ section.settings.bottom_image | image_url: width: 1200 }}"
-        width="1200"
-        height="auto"
-        alt="Cards Collage"
-      >
+    {% if section.settings.bottom_image != blank or section.settings.bottom_image_mobile != blank %}
+      <picture>
+        {% if section.settings.bottom_image_mobile != blank %}
+          <source media="(max-width: 640px)" srcset="{{ section.settings.bottom_image_mobile | image_url: width: 800 }}">
+        {% endif %}
+        {% if section.settings.bottom_image != blank %}
+          <source media="(min-width: 641px)" srcset="{{ section.settings.bottom_image | image_url: width: 1200 }}">
+        {% endif %}
+        {% assign fallback_image = section.settings.bottom_image | default: section.settings.bottom_image_mobile %}
+        <img
+          class="ha-cards"
+          src="{{ fallback_image | image_url: width: 1200 }}"
+          width="1200"
+          height="auto"
+          alt="{{ fallback_image.alt | default: 'Cards Collage' | escape }}"
+          loading="lazy"
+        >
+      </picture>
     {% else %}
       <div style="width: 100%; height: 300px; background: #333; display: flex; align-items: center; justify-content: center; color: #fff;">
         Upload Complete Collage Image Here
@@ -107,7 +117,12 @@
     {
       "type": "image_picker",
       "id": "bottom_image",
-      "label": "Bottom Cards Image (Upload Complete Image)"
+      "label": "Bottom Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image_mobile",
+      "label": "Bottom Image (Mobile - 640px & below)"
     },
     {
       "type": "image_picker",

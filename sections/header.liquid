@@ -470,11 +470,25 @@
         }
 
         debounceTimer = setTimeout(() => {
-          fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=6`)
+          fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=10`)
             .then(res => res.json())
             .then(data => {
-              const products = data?.resources?.results?.products;
+              const rawProducts = data?.resources?.results?.products || [];
               if (!searchResults) return;
+
+              // Filter products whose title, body, or handle actually matches the query keywords
+              const qTerms = query.toLowerCase().split(/\s+/).filter(Boolean);
+              const filteredProducts = rawProducts.filter(p => {
+                const title = (p.title || '').toLowerCase();
+                const handle = (p.handle || '').toLowerCase();
+                const body = (p.body || '').toLowerCase();
+                const text = title + ' ' + handle + ' ' + body;
+                // Match if all search terms appear in text
+                return qTerms.every(term => text.includes(term));
+              });
+
+              // Products to display (use filtered list if any match, otherwise fallback to Shopify's raw matches if query is very broad)
+              const products = filteredProducts.length > 0 ? filteredProducts : (rawProducts.length > 0 && query.length < 3 ? rawProducts : []);
 
               if (products && products.length > 0) {
                 let html = '<div class="header-search__results-grid">';
@@ -483,12 +497,19 @@
                     ? `<img src="${p.featured_image.url}" alt="${p.title}" class="header-search__result-thumb">`
                     : `<div class="header-search__result-thumb" style="background:#e8dfd5;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;">No pic</div>`;
 
+                  // Format price nicely (e.g. from 568 to $5.68 or starting price)
+                  let priceText = '';
+                  if (p.price && parseFloat(p.price) > 0) {
+                    const numPrice = parseFloat(p.price);
+                    priceText = '$' + numPrice.toFixed(2);
+                  }
+
                   html += `
                     <a href="${p.url}" class="header-search__result-item">
                       ${imgHtml}
                       <div class="header-search__result-info">
                         <div class="header-search__result-title">${p.title}</div>
-                        <div class="header-search__result-price">${p.price || ''}</div>
+                        ${priceText ? `<div class="header-search__result-price">${priceText}</div>` : ''}
                       </div>
                     </a>
                   `;
