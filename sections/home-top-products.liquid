@@ -56,7 +56,21 @@
           {% assign product_url = '/products/' | append: title_handle %}
         {% endif %}
 
-        <div class="htp-card" {{ block.shopify_attributes }}>
+        {% assign block_img_url = '' %}
+        {% if block.settings.image != blank %}
+          {% assign block_img_url = block.settings.image | image_url: width: 800 %}
+        {% endif %}
+
+        <div
+          class="htp-card"
+          data-title="{{ block.settings.title | escape }}"
+          data-img="{{ block_img_url }}"
+          data-badge="{{ block.settings.card_badge | escape }}"
+          data-bg="{{ block.settings.bg_color }}"
+          data-price="{{ block.settings.price_text | escape }}"
+          data-url="{{ product_url | default: '#' }}"
+          {{ block.shopify_attributes }}
+        >
           <a href="{{ product_url | default: '#' }}" class="htp-card__image-link">
             <div class="htp-card__image-wrap" style="background-color: {{ block.settings.bg_color }};">
               {% if block.settings.card_badge != blank %}

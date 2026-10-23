@@ -553,31 +553,16 @@
                   <input
                     type="file"
                     id="pbArtworkFileInput"
-                    name="properties[Artwork File]"
-                    accept=".pdf,.ai,.eps,.png,.jpg,.jpeg"
+                    name="properties[Artwork Files][]"
+                    accept=".pdf,.ai,.eps,.png,.jpg,.jpeg,.svg"
+                    multiple
                     style="display: none;"
                   >
                   <input type="hidden" name="properties[Artwork File Name]" id="prop_artwork_file_name" value="">
                   <input type="hidden" name="properties[Artwork File Size]" id="prop_artwork_file_size" value="">
 
-                  <!-- Selected File Pill Preview in Product Form -->
-                  <div class="pb-uploaded-file-pill" id="pbUploadedFilePill" style="display: none;">
-                    <div class="pb-file-pill-left">
-                      <span class="pb-file-icon">Ai</span>
-                      <div class="pb-file-meta">
-                        <span class="pb-file-name" id="pbFileName">My-Design.pdf</span>
-                        <span class="pb-file-size" id="pbFileSize">10 MB of 30 MB</span>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      class="pb-file-remove-btn"
-                      id="pbFileRemoveBtn"
-                      aria-label="Remove artwork file"
-                    >
-                      ×
-                    </button>
-                  </div>
+                  <!-- Dynamic Uploaded Files List in Product Form -->
+                  <div class="pb-uploaded-files-list" id="pbUploadedFilesList" style="display: none;"></div>
                 </div>
 
                 <!-- Option 2: Send it after checkout -->
@@ -856,15 +841,63 @@
       });
     });
 
-    // Artwork cards selection & File upload trigger
+    // Artwork cards selection & Multiple File upload trigger
     const fileInput = document.getElementById('pbArtworkFileInput');
     const uploadCard = document.getElementById('pbArtworkCardUpload');
-    const uploadedPill = document.getElementById('pbUploadedFilePill');
-    const fileNameEl = document.getElementById('pbFileName');
-    const fileSizeEl = document.getElementById('pbFileSize');
-    const fileRemoveBtn = document.getElementById('pbFileRemoveBtn');
+    const uploadedFilesList = document.getElementById('pbUploadedFilesList');
     const propFileName = document.getElementById('prop_artwork_file_name');
     const propFileSize = document.getElementById('prop_artwork_file_size');
+    let pbUploadedFilesStore = [];
+
+    function renderPbUploadedFiles() {
+      if (!uploadedFilesList) return;
+      if (!pbUploadedFilesStore.length) {
+        uploadedFilesList.innerHTML = '';
+        uploadedFilesList.style.display = 'none';
+        if (propFileName) propFileName.value = '';
+        if (propFileSize) propFileSize.value = '';
+        return;
+      }
+
+      uploadedFilesList.style.display = 'flex';
+      let html = '';
+      pbUploadedFilesStore.forEach((file, idx) => {
+        const ext = file.name.split('.').pop().toUpperCase().slice(0, 3) || 'DOC';
+        const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
+        html += `
+          <div class="pb-uploaded-file-pill" data-idx="${idx}">
+            <div class="pb-file-pill-left">
+              <span class="pb-file-icon">${ext}</span>
+              <div class="pb-file-meta">
+                <span class="pb-file-name" title="${file.name}">${file.name}</span>
+                <span class="pb-file-size">${sizeMb} MB</span>
+              </div>
+            </div>
+            <button type="button" class="pb-file-remove-btn" data-remove-idx="${idx}" aria-label="Remove file">×</button>
+          </div>
+        `;
+      });
+      uploadedFilesList.innerHTML = html;
+
+      // Sync hidden properties for cart / checkout
+      if (propFileName) {
+        propFileName.value = pbUploadedFilesStore.map(f => f.name).join(', ');
+      }
+      if (propFileSize) {
+        propFileSize.value = pbUploadedFilesStore.map(f => (f.size / (1024 * 1024)).toFixed(1) + ' MB').join(', ');
+      }
+
+      // Attach remove handlers
+      uploadedFilesList.querySelectorAll('.pb-file-remove-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          const removeIdx = parseInt(this.getAttribute('data-remove-idx'), 10);
+          pbUploadedFilesStore.splice(removeIdx, 1);
+          renderPbUploadedFiles();
+        });
+      });
+    }
 
     document.querySelectorAll('.pb-artwork-card').forEach(card => {
       card.addEventListener('click', function(e) {
@@ -877,32 +910,31 @@
           if (propArt) propArt.value = radio.value;
         }
 
-        // If user clicked 'Upload now' card, trigger file picker if no file selected yet
+        // If user clicked 'Upload now' card, trigger file picker
         if (this.getAttribute('data-artwork') === 'Upload now') {
-          if (fileInput && !fileInput.files.length) {
+          if (fileInput) {
             fileInput.click();
           }
         } else {
-          // If another option picked, hide file pill
-          if (uploadedPill) uploadedPill.style.display = 'none';
+          // If another option picked, hide file list and clear files
+          pbUploadedFilesStore = [];
           if (fileInput) fileInput.value = '';
-          if (propFileName) propFileName.value = '';
-          if (propFileSize) propFileSize.value = '';
+          renderPbUploadedFiles();
         }
       });
     });
 
-    // File input change handler
+    // Multiple file input change handler
     if (fileInput) {
       fileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-          const sizeMb = (file.size / (1024 * 1024)).toFixed(1);
-          if (fileNameEl) fileNameEl.textContent = file.name;
-          if (fileSizeEl) fileSizeEl.textContent = sizeMb + ' MB of 30 MB';
-          if (propFileName) propFileName.value = file.name;
-          if (propFileSize) propFileSize.value = sizeMb + ' MB';
-          if (uploadedPill) uploadedPill.style.display = 'flex';
+        if (this.files && this.files.length > 0) {
+          Array.from(this.files).forEach(file => {
+            const alreadyExists = pbUploadedFilesStore.some(f => f.name === file.name && f.size === file.size);
+            if (!alreadyExists) {
+              pbUploadedFilesStore.push(file);
+            }
+          });
+          renderPbUploadedFiles();
           
           // Make sure Upload now card is active
           if (uploadCard) {
@@ -914,18 +946,6 @@
           const propArt = document.getElementById('prop_artwork');
           if (propArt) propArt.value = 'Upload now';
         }
-      });
-    }
-
-    // Remove file cross button handler
-    if (fileRemoveBtn) {
-      fileRemoveBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (fileInput) fileInput.value = '';
-        if (propFileName) propFileName.value = '';
-        if (propFileSize) propFileSize.value = '';
-        if (uploadedPill) uploadedPill.style.display = 'none';
       });
     }
 

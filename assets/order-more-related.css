@@ -42,10 +42,8 @@
 .omr-card {
   width: 100%;
   background-color: #faf7f0;
-  background-image: radial-gradient(
-    rgba(0, 0, 0, 0.08) 1.2px,
-    transparent 1.2px
-  );
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.2px,
+      transparent 1.2px);
   background-size: 20px 20px;
   border-radius: 28px;
   border: 1.8px solid #171008;
@@ -130,6 +128,7 @@
 
 /* Product Image Box with Border (Smaller & compact) */
 .omr-image-box {
+  position: relative;
   width: 100%;
   aspect-ratio: 1.6 / 1;
   background-color: transparent;
@@ -147,6 +146,54 @@
 
 .omr-item:hover .omr-image-box {
   box-shadow: 3px 3px 0px #171008;
+}
+
+/* Quick View Overlay Button on Hover */
+.omr-quick-view {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.omr-quick-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 11px 18px;
+  background-color: #fe6a00;
+  color: #ffffff;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  text-align: center;
+  border-radius: 999px;
+  border: 1.5px solid #171008;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.omr-item:hover .omr-quick-view {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.omr-item:hover .omr-quick-view-btn:hover {
+  background-color: #e55e00;
 }
 
 .omr-image {
@@ -198,6 +245,12 @@
    RESPONSIVE DESIGN
    ========================================================================== */
 @media screen and (max-width: 991px) {
+
+  /* Hide quick view on tablet and mobile view */
+  .omr-quick-view {
+    display: none !important;
+  }
+
   .order-more-related-section {
     padding: 16px 16px 0 16px;
   }

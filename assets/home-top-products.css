@@ -218,7 +218,7 @@
   transform: translateY(10px);
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
   z-index: 3;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .htp-card__quick-view-btn {
@@ -238,6 +238,8 @@
   border: 1.5px solid #171008;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .htp-card:hover .htp-card__quick-view,

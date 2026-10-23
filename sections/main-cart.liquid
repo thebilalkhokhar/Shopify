@@ -20,10 +20,44 @@
         <div class="tf-cart-items-wrap" id="tfCartItemsWrap">
           {% for item in cart.items %}
             {%- assign item_title_lower = item.product.title | downcase -%}
-            {%- assign rolls_count = item.properties['Cases'] | default: 5 | times: 8 -%}
-            {%- assign per_roll_calc = item.final_line_price | divided_by: rolls_count -%}
+            {%- assign raw_cases = item.properties['Cases'] | default: 5 | plus: 0 -%}
+            {%- assign raw_prop_rolls = item.properties['Rolls'] | plus: 0 -%}
+            {%- if raw_prop_rolls > 0 -%}
+              {%- assign item_rolls_per_item = raw_prop_rolls -%}
+            {%- elsif raw_cases > 0 -%}
+              {%- assign item_rolls_per_item = raw_cases | times: 8 -%}
+            {%- else -%}
+              {%- assign item_rolls_per_item = 40 -%}
+            {%- endif -%}
+            {%- assign item_rolls_total = item_rolls_per_item | times: item.quantity -%}
 
-            <div class="tf-cart-card" data-key="{{ item.key }}" data-line="{{ forloop.index }}">
+            {%- assign item_unit_price = 0.0 -%}
+            {%- if item.properties['Total Price'] != blank -%}
+              {%- assign parsed_prop_price = item.properties['Total Price'] | remove: '$' | remove: ',' | plus: 0.0 -%}
+              {%- if parsed_prop_price > 0 -%}
+                {%- assign item_unit_price = parsed_prop_price -%}
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if item_unit_price == 0.0 and item.final_price > 0 -%}
+              {%- assign item_unit_price = item.final_price | divided_by: 100.0 -%}
+            {%- elsif item_unit_price == 0.0 -%}
+              {%- assign item_unit_price = 464.63 -%}
+            {%- endif -%}
+
+            {%- assign item_line_total = item_unit_price | times: item.quantity -%}
+            {%- assign item_per_roll = 0.0 -%}
+            {%- if item_rolls_total > 0 -%}
+              {%- assign item_per_roll = item_line_total | divided_by: item_rolls_total -%}
+            {%- endif -%}
+
+            <div
+              class="tf-cart-card"
+              data-key="{{ item.key }}"
+              data-line="{{ forloop.index }}"
+              data-unit-price="{{ item_unit_price }}"
+              data-rolls-per-item="{{ item_rolls_per_item }}"
+            >
               
               <!-- Card Top Section -->
               <div class="tf-cart-card-main">
@@ -111,7 +145,7 @@
                     <!-- Rolls -->
                     <div class="tf-spec-item">
                       <span class="tf-spec-label">Rolls</span>
-                      <span class="tf-spec-val">{{ item.properties['Rolls'] | default: rolls_count | default: 40 }}</span>
+                      <span class="tf-spec-val tf-rolls-val">{{ item_rolls_total }}</span>
                     </div>
                   </div>
                 </div>
@@ -119,17 +153,11 @@
                 <!-- Top Right Item Price -->
                 <div class="tf-cart-price-block">
                   <div class="tf-cart-item-total">
-                    {% if item.final_line_price > 0 %}
-                      {{ item.final_line_price | money }}
-                    {% elsif item.properties['Total Price'] != blank %}
-                      {{ item.properties['Total Price'] }}
-                    {% else %}
-                      $464.63
-                    {% endif %}
+                    ${{ item_line_total | round: 2 }}
                   </div>
                   <div class="tf-cart-item-per-roll">
-                    {% if per_roll_calc > 0 %}
-                      {{ per_roll_calc | money }} a roll
+                    {% if item_per_roll > 0 %}
+                      ${{ item_per_roll | round: 2 }} a roll
                     {% elsif item.properties['Per Roll Price'] != blank %}
                       {{ item.properties['Per Roll Price'] }}
                     {% else %}
@@ -145,14 +173,14 @@
                   <button
                     type="button"
                     class="tf-cart-stepper-btn"
-                    onclick="TapeFoxCart.changeQty('{{ item.key }}', {{ item.quantity | minus: 1 }})"
+                    onclick="TapeFoxCart.changeQty('{{ item.key }}', -1, this)"
                     aria-label="Decrease quantity"
                   >−</button>
                   <span class="tf-cart-stepper-val">{{ item.quantity }}</span>
                   <button
                     type="button"
                     class="tf-cart-stepper-btn"
-                    onclick="TapeFoxCart.changeQty('{{ item.key }}', {{ item.quantity | plus: 1 }})"
+                    onclick="TapeFoxCart.changeQty('{{ item.key }}', 1, this)"
                     aria-label="Increase quantity"
                   >+</button>
                 </div>
@@ -165,7 +193,7 @@
                   <button
                     type="button"
                     class="tf-cart-link-btn"
-                    onclick="TapeFoxCart.changeQty('{{ item.key }}', 0)"
+                    onclick="TapeFoxCart.changeQty('{{ item.key }}', -{{ item.quantity }}, this)"
                   >Remove</button>
                 </div>
               </div>
@@ -198,15 +226,35 @@
           <div class="tf-summary-card">
             <h2 class="tf-summary-title">{{ section.settings.summary_heading | default: 'Order summary' }}</h2>
 
+            <!-- Calculate Dynamic Tape Subtotal from actual line items -->
+            {%- assign calc_subtotal_cents = 0 -%}
+            {%- assign has_custom_subtotal = false -%}
+            {% for item in cart.items %}
+              {% if item.properties['Total Price'] != blank %}
+                {%- assign clean_prop_price = item.properties['Total Price'] | remove: '$' | remove: ',' | times: 100 -%}
+                {%- assign line_prop_price = clean_prop_price | times: item.quantity -%}
+                {%- assign calc_subtotal_cents = calc_subtotal_cents | plus: line_prop_price -%}
+                {%- assign has_custom_subtotal = true -%}
+              {% elsif item.final_line_price > 0 %}
+                {%- assign calc_subtotal_cents = calc_subtotal_cents | plus: item.final_line_price -%}
+              {% else %}
+                {%- assign fallback_line_price = 46463 | times: item.quantity -%}
+                {%- assign calc_subtotal_cents = calc_subtotal_cents | plus: fallback_line_price -%}
+                {%- assign has_custom_subtotal = true -%}
+              {% endif %}
+            {% endfor %}
+
             <!-- Subtotal Breakdown Rows -->
             <div class="tf-summary-rows">
               <div class="tf-summary-row">
                 <span class="tf-summary-label">Tape</span>
                 <span class="tf-summary-value" id="tfSummarySubtotal">
-                  {% if cart.total_price > 0 %}
+                  {% if cart.total_price > 0 and has_custom_subtotal == false %}
                     {{ cart.total_price | money }}
+                  {% elsif calc_subtotal_cents > 0 %}
+                    {{ calc_subtotal_cents | money }}
                   {% else %}
-                    $464.63
+                    $0.00
                   {% endif %}
                 </span>
               </div>
@@ -262,21 +310,74 @@
 
 <script>
   window.TapeFoxCart = {
-    changeQty: function(key, newQty) {
-      if (newQty < 0) newQty = 0;
+    changeQty: function(key, deltaOrNewQty, triggerEl) {
+      var card = triggerEl ? triggerEl.closest('.tf-cart-card') : document.querySelector('.tf-cart-card[data-key="' + key + '"]');
+      var stepperValEl = card ? card.querySelector('.tf-cart-stepper-val') : null;
+      var curQty = stepperValEl ? parseInt(stepperValEl.textContent.trim(), 10) : 1;
+      
+      var targetQty;
+      if (typeof deltaOrNewQty === 'number') {
+        // If delta is -1 or +1 or negative removal
+        if (deltaOrNewQty === 1 || deltaOrNewQty === -1) {
+          targetQty = curQty + deltaOrNewQty;
+        } else if (deltaOrNewQty <= 0) {
+          targetQty = 0;
+        } else {
+          targetQty = deltaOrNewQty;
+        }
+      } else {
+        targetQty = parseInt(deltaOrNewQty, 10);
+      }
+      
+      if (isNaN(targetQty) || targetQty < 0) targetQty = 0;
+
+      // Optimistic instant UI update
+      if (card) {
+        if (targetQty === 0) {
+          card.style.opacity = '0.4';
+          card.style.pointerEvents = 'none';
+        } else {
+          if (stepperValEl) stepperValEl.textContent = targetQty;
+          
+          var unitPrice = parseFloat(card.getAttribute('data-unit-price')) || 464.63;
+          var rollsPerItem = parseInt(card.getAttribute('data-rolls-per-item'), 10) || 40;
+          
+          var newLineTotal = unitPrice * targetQty;
+          var newRollsTotal = rollsPerItem * targetQty;
+          
+          var totalEl = card.querySelector('.tf-cart-item-total');
+          if (totalEl) totalEl.textContent = '$' + newLineTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          
+          var rollsEl = card.querySelector('.tf-rolls-val');
+          if (rollsEl) rollsEl.textContent = newRollsTotal;
+          
+          // Per roll price stays consistent with unit price
+          var perRollEl = card.querySelector('.tf-cart-item-per-roll');
+          if (perRollEl && rollsPerItem > 0) {
+            var perRollPrice = unitPrice / rollsPerItem;
+            perRollEl.textContent = '$' + perRollPrice.toFixed(2) + ' a roll';
+          }
+          
+          window.TapeFoxCart.recalcSummary();
+        }
+      }
+
+      // Sync with Shopify Cart API
       fetch('/cart/change.js', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: key, quantity: newQty })
+        body: JSON.stringify({ id: key, quantity: targetQty })
       })
-      .then(res => res.json())
-      .then(data => {
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
         if (window.updateHeaderCartCount) {
           window.updateHeaderCartCount(data.item_count);
         }
-        window.location.reload();
+        if (targetQty === 0) {
+          window.location.reload();
+        }
       })
-      .catch(err => {
+      .catch(function(err) {
         console.error('Cart update error:', err);
         window.location.reload();
       });
@@ -335,8 +436,29 @@
         }
       };
       input.click();
+    },
+
+    recalcSummary: function() {
+      var itemTotals = document.querySelectorAll('.tf-cart-item-total');
+      var summarySubtotal = document.getElementById('tfSummarySubtotal');
+      if (itemTotals.length > 0 && summarySubtotal) {
+        var sum = 0;
+        itemTotals.forEach(function(el) {
+          var num = parseFloat(el.textContent.replace(/[^0-9.-]+/g, ''));
+          if (!isNaN(num)) sum += num;
+        });
+        if (sum > 0) {
+          summarySubtotal.textContent = '$' + sum.toFixed(2);
+        }
+      }
     }
   };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', window.TapeFoxCart.recalcSummary);
+  } else {
+    window.TapeFoxCart.recalcSummary();
+  }
 </script>
 
 {% schema %}

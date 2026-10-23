@@ -37,7 +37,28 @@
             {%- assign card_url = '/products/' | append: title_handle -%}
           {%- endif -%}
 
-          <div class="cp-card" {{ block.shopify_attributes }}>
+          {%- assign card_img_url = '' -%}
+          {%- if card_image != blank -%}
+            {%- assign card_img_url = card_image | image_url: width: 800 -%}
+          {%- endif -%}
+
+          {%- assign card_effective_price = card_price -%}
+          {%- if card_effective_price == blank and card_product != blank -%}
+            {%- assign card_effective_price = 'Starting at ' | append: card_product.price | money | append: ' a roll' -%}
+          {%- endif -%}
+
+          <div
+            class="cp-card"
+            data-title="{{ card_title | escape }}"
+            data-img="{{ card_img_url }}"
+            data-price="{{ card_effective_price | escape }}"
+            data-bg="{{ block.settings.card_bg }}"
+            data-url="{{ card_url | default: '#' }}"
+            {% if card_product != blank and card_product.selected_or_first_available_variant != blank %}
+              data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
             <div class="cp-card__box" style="{% if block.settings.card_bg != blank and block.settings.card_bg != 'rgba(0,0,0,0)' %}background-color: {{ block.settings.card_bg }};{% endif %}">
               <!-- Cart / Basket Quick Action Button -->
               {%- if card_product != blank -%}
@@ -107,7 +128,20 @@
         {%- assign collection_source = section.settings.collection | default: collection -%}
         {%- if collection_source != blank and collection_source.products.size > 0 -%}
           {%- for card_product in collection_source.products limit: section.settings.products_to_show -%}
-            <div class="cp-card">
+            {%- assign fallback_prod_img = '' -%}
+            {%- if card_product.featured_image != blank -%}
+              {%- assign fallback_prod_img = card_product.featured_image | image_url: width: 800 -%}
+            {%- endif -%}
+            <div
+              class="cp-card"
+              data-title="{{ card_product.title | escape }}"
+              data-img="{{ fallback_prod_img }}"
+              data-price="{{ card_product.price | money }}"
+              data-url="{{ card_product.url }}"
+              {% if card_product.selected_or_first_available_variant != blank %}
+                data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+              {% endif %}
+            >
               <div class="cp-card__box">
                 <form method="post" action="/cart/add" class="cp-card__cart-form">
                   <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">

@@ -26,6 +26,7 @@
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'page-policy.css' | asset_url | stylesheet_tag }}
+    {{ 'quick-view-modal.css' | asset_url | stylesheet_tag }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -348,5 +349,8 @@
         })();
       </script>
     {% endif %}
+
+    {% render 'quick-view-modal' %}
+    <script src="{{ 'quick-view-modal.js' | asset_url }}" defer></script>
   </body>
 </html>

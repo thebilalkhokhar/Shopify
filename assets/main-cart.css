@@ -28,7 +28,7 @@
    ========================================================================== */
 
 .tapefox-cart-page {
-  background-color: #fbf8f3;
+  background-color: #FBF8F3;
   width: 100%;
   min-height: 80vh;
   padding: 170px 20px 80px 20px;
@@ -43,17 +43,14 @@
 
 /* Breadcrumbs */
 .tf-cart-breadcrumbs {
-  font-family:
-    "Inter",
-    -apple-system,
-    sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   font-size: 13.5px;
-  color: #726c63;
+  color: #726C63;
   margin-bottom: 12px;
 }
 
 .tf-cart-breadcrumbs a {
-  color: #726c63;
+  color: #726C63;
   text-decoration: none;
   transition: color 0.15s ease;
 }
@@ -96,8 +93,8 @@
 
 /* Individual Cart Item Card */
 .tf-cart-card {
-  background-color: #fbf8f3;
-  border: 1.5px solid #231f1a;
+  background-color: #FBF8F3;
+  border: 1.5px solid #231F1A;
   border-radius: 24px;
   padding: 24px 28px;
   box-sizing: border-box;
@@ -105,9 +102,7 @@
   flex-direction: column;
   gap: 18px;
   position: relative;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .tf-cart-card:hover {
@@ -126,7 +121,7 @@
 .tf-cart-img-box {
   width: 110px;
   height: 110px;
-  background-color: #f8b825;
+  background-color: #F8B825;
   border-radius: 18px;
   display: flex;
   align-items: center;
@@ -149,10 +144,10 @@
 }
 
 .tf-cart-eyebrow {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #ea5b1b;
+  color: #EA5B1B;
   margin-bottom: 4px;
 }
 
@@ -181,7 +176,7 @@
   align-items: center;
   gap: 8px 18px;
   font-size: 12.5px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #171008;
   margin-bottom: 16px;
 }
@@ -193,7 +188,7 @@
 }
 
 .tf-spec-label {
-  color: #726c63;
+  color: #726C63;
 }
 
 .tf-spec-val {
@@ -229,31 +224,31 @@
 }
 
 .tf-dot--blue {
-  background-color: #1f50a5;
+  background-color: #1F50A5;
 }
 
 .tf-dot--red {
-  background-color: #c1181a;
+  background-color: #C1181A;
 }
 
 .tf-dot--green {
-  background-color: #198a48;
+  background-color: #198A48;
 }
 
 .tf-dot--orange {
-  background-color: #ee4b2b;
+  background-color: #EE4B2B;
 }
 
 .tf-dot--yellow {
-  background-color: #fec33f;
+  background-color: #FEC33F;
 }
 
 .tf-dot--brown {
-  background-color: #6a4a30;
+  background-color: #6A4A30;
 }
 
 .tf-dot--grey {
-  background-color: #7a7a78;
+  background-color: #7A7A78;
 }
 
 /* Top Right Price Block */
@@ -272,9 +267,9 @@
 }
 
 .tf-cart-item-per-roll {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
-  color: #6e685e;
+  color: #6E685E;
   margin-top: 4px;
 }
 
@@ -291,7 +286,7 @@
 .tf-cart-stepper {
   display: inline-flex;
   align-items: center;
-  background-color: #fbf8f3;
+  background-color: #FBF8F3;
   border: 1.5px solid #171008;
   border-radius: 999px;
   padding: 4px 10px;
@@ -317,7 +312,7 @@
 }
 
 .tf-cart-stepper-val {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
   color: #171008;
@@ -336,7 +331,7 @@
   background: none;
   border: none;
   padding: 0;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
   color: #171008;
@@ -356,14 +351,14 @@
   justify-content: space-between;
   gap: 16px;
   padding-top: 14px;
-  border-top: 1px dashed #e2ddd5;
+  border-top: 1px dashed #E2DDD5;
 }
 
 .tf-cart-notice-text {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 12.5px;
   line-height: 1.45;
-  color: #e85d18;
+  color: #E85D18;
   max-width: 520px;
 }
 
@@ -372,7 +367,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: #fbf8f3;
+  background-color: #FBF8F3;
   border: 1.5px solid #171008;
   border-radius: 12px;
   padding: 6px 12px;
@@ -382,7 +377,7 @@
   width: 24px;
   height: 28px;
   background-color: #311500;
-  color: #ff7020;
+  color: #FF7020;
   border-radius: 4px;
   font-size: 11px;
   font-weight: 700;
@@ -398,16 +393,16 @@
 }
 
 .tf-file-name {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: #171008;
 }
 
 .tf-file-size {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 10.5px;
-  color: #726c63;
+  color: #726C63;
 }
 
 .tf-file-remove {
@@ -427,7 +422,7 @@
   border: 1.5px solid #171008;
   border-radius: 999px;
   padding: 8px 22px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13.5px;
   font-weight: 600;
   color: #171008;
@@ -450,7 +445,7 @@
 }
 
 .tf-summary-card {
-  background-color: #1c1914;
+  background-color: #1C1914;
   border-radius: 24px;
   padding: 30px 26px;
   box-sizing: border-box;
@@ -461,7 +456,7 @@
   font-family: var(--custom-font-family, "Bringbold Nineties", serif);
   font-size: 26px;
   font-weight: 700;
-  color: #fec33f;
+  color: #FEC33F;
   margin: 0 0 24px 0;
   letter-spacing: -0.2px;
 }
@@ -477,7 +472,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14.5px;
   color: #ffffff;
   padding-bottom: 12px;
@@ -490,7 +485,7 @@
 }
 
 .tf-summary-label {
-  color: #e2ddd5;
+  color: #E2DDD5;
 }
 
 .tf-summary-value {
@@ -499,13 +494,13 @@
 }
 
 .tf-summary-value--green {
-  color: #52c41a;
+  color: #52C41A;
 }
 
 .tf-summary-value--muted {
   font-size: 13px;
   font-weight: 400;
-  color: #a39d94;
+  color: #A39D94;
 }
 
 /* Order Note Input */
@@ -520,7 +515,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   padding: 12px 14px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 13px;
   color: #ffffff;
   box-sizing: border-box;
@@ -530,17 +525,17 @@
 }
 
 .tf-summary-note:focus {
-  border-color: #fec33f;
+  border-color: #FEC33F;
 }
 
 .tf-summary-note::placeholder {
-  color: #8c857b;
+  color: #8C857B;
 }
 
 /* Checkout Pill Button */
 .tf-summary-checkout-btn {
   width: 100%;
-  background-color: #fec33f;
+  background-color: #FEC33F;
   border: 2px solid #171008;
   border-radius: 999px;
   padding: 15px 24px;
@@ -554,10 +549,7 @@
   justify-content: center;
   letter-spacing: 0.2px;
   box-shadow: 2.5px 3.5px 0px #000000;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background-color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   margin-bottom: 16px;
   text-decoration: none;
 }
@@ -574,9 +566,9 @@
 }
 
 .tf-summary-footer-text {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 12.5px;
-  color: #a39d94;
+  color: #A39D94;
   text-align: center;
   margin: 0;
   line-height: 1.4;
@@ -586,8 +578,8 @@
 .tf-cart-empty {
   text-align: center;
   padding: 80px 20px;
-  background-color: #fbf8f3;
-  border: 1.5px dashed #231f1a;
+  background-color: #FBF8F3;
+  border: 1.5px dashed #231F1A;
   border-radius: 24px;
 }
 
@@ -600,16 +592,16 @@
 }
 
 .tf-cart-empty-desc {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 15px;
-  color: #726c63;
+  color: #726C63;
   margin-bottom: 28px;
 }
 
 .tf-cart-empty-btn {
   display: inline-flex;
   align-items: center;
-  background-color: #fec33f;
+  background-color: #FEC33F;
   border: 2px solid #171008;
   border-radius: 999px;
   padding: 13px 28px;

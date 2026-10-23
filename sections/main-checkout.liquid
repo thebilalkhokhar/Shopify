@@ -451,67 +451,83 @@
         <aside class="tf-chk-sidebar">
           <div class="tf-chk-summary-card">
 
+            <!-- Calculate Dynamic Tape Subtotal across all cart items -->
+            {%- assign calc_chk_subtotal_cents = 0 -%}
+            {%- assign total_rolls_sum = 0 -%}
+            {%- assign has_custom_subtotal = false -%}
+            {% for item in cart.items %}
+              {%- assign item_cases = item.properties['Cases'] | default: 5 | plus: 0 -%}
+              {%- assign item_rolls = item.properties['Rolls'] | default: item_cases | times: 8 -%}
+              {%- assign item_rolls_total = item_rolls | times: item.quantity -%}
+              {%- assign total_rolls_sum = total_rolls_sum | plus: item_rolls_total -%}
+
+              {% if item.properties['Total Price'] != blank %}
+                {%- assign clean_prop_price = item.properties['Total Price'] | remove: '$' | remove: ',' | times: 100 -%}
+                {%- assign line_prop_price = clean_prop_price | times: item.quantity -%}
+                {%- assign calc_chk_subtotal_cents = calc_chk_subtotal_cents | plus: line_prop_price -%}
+                {%- assign has_custom_subtotal = true -%}
+              {% elsif item.final_line_price > 0 %}
+                {%- assign calc_chk_subtotal_cents = calc_chk_subtotal_cents | plus: item.final_line_price -%}
+              {% else %}
+                {%- assign fallback_chk_line = 46463 | times: item.quantity -%}
+                {%- assign calc_chk_subtotal_cents = calc_chk_subtotal_cents | plus: fallback_chk_line -%}
+                {%- assign has_custom_subtotal = true -%}
+              {% endif %}
+            {% endfor %}
+
+            {%- assign final_subtotal_num = calc_chk_subtotal_cents | divided_by: 100.0 -%}
+
             <!-- Ordered Items Stack -->
             <div class="tf-chk-items-list" id="tfChkItemsList">
               {% if cart.item_count > 0 %}
                 {% for item in cart.items %}
+                  {%- assign item_cases = item.properties['Cases'] | default: 5 -%}
+                  {%- assign item_rolls = item.properties['Rolls'] | default: item_cases | times: 8 -%}
+                  {%- assign item_rolls_all = item_rolls | times: item.quantity -%}
+
+                  {%- assign chk_item_unit_price = 0.0 -%}
+                  {%- if item.properties['Total Price'] != blank -%}
+                    {%- assign parsed_chk_prop_price = item.properties['Total Price'] | remove: '$' | remove: ',' | plus: 0.0 -%}
+                    {%- if parsed_chk_prop_price > 0 -%}
+                      {%- assign chk_item_unit_price = parsed_chk_prop_price -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  {%- if chk_item_unit_price == 0.0 and item.final_price > 0 -%}
+                    {%- assign chk_item_unit_price = item.final_price | divided_by: 100.0 -%}
+                  {%- elsif chk_item_unit_price == 0.0 -%}
+                    {%- assign chk_item_unit_price = 464.63 -%}
+                  {%- endif -%}
+                  {%- assign chk_item_total = chk_item_unit_price | times: item.quantity -%}
+
                   <div class="tf-chk-item">
                     <div class="tf-chk-item-thumb">
-                      {% if item.image != blank %}
-                        <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title }}" width="50" height="50">
+                      {%- assign item_img = item.image | default: item.product.featured_image -%}
+                      {% if item_img != blank %}
+                        <img src="{{ item_img | image_url: width: 150 }}" alt="{{ item.title }}" width="50" height="50">
                       {% else %}
-                        <img src="{{ 'printedPoly.webp' | file_img_url: 'master' }}" onerror="this.src='{{ 'printedPaper.webp' | file_img_url: 'master' }}'" alt="{{ item.title }}" width="50" height="50">
+                        {{ 'product-1' | placeholder_svg_tag }}
                       {% endif %}
                     </div>
                     <div class="tf-chk-item-info">
                       <div class="tf-chk-item-title">{{ item.product.title }}</div>
                       <div class="tf-chk-item-specs">
                         {{ item.properties['Width'] | default: '3 inch' }} x {{ item.properties['Length'] | default: '375 feet' }} - {{ item.properties['Tape Color'] | default: 'Tan / Kraft' }}<br>
-                        {{ item.properties['Inks'] | default: 'two ink' }} · {{ item.properties['Cases'] | default: 25 }} cases · {{ item.properties['Rolls'] | default: 200 }} rolls<br>
+                        {{ item.properties['Inks'] | default: 'two ink' }} · {{ item_cases }} cases · {{ item_rolls_all }} rolls<br>
                         Quantity: {{ item.quantity }}
                       </div>
                     </div>
                     <div class="tf-chk-item-price">
-                      {% if item.final_line_price > 0 %}
-                        ${{ item.final_line_price | divided_by: 100.0 | round: 2 }}
-                      {% elsif item.properties['Total Price'] != blank %}
-                        {{ item.properties['Total Price'] }}
-                      {% else %}
-                        $464.63
-                      {% endif %}
+                      ${{ chk_item_total | round: 2 }}
                     </div>
                   </div>
                 {% endfor %}
               {% else %}
-                <!-- Reference Demo items from screenshot if cart empty -->
+                <!-- Empty Cart State -->
                 <div class="tf-chk-item">
-                  <div class="tf-chk-item-thumb">
-                    <img src="{{ 'printedPoly.webp' | file_img_url: 'master' }}" onerror="this.parentElement.innerHTML='<span style=\'color:#FEC33F;font-weight:bold;\'>Tape</span>'" alt="Polypropylene Tape" width="50" height="50">
-                  </div>
                   <div class="tf-chk-item-info">
-                    <div class="tf-chk-item-title">Polypropylene Tape</div>
-                    <div class="tf-chk-item-specs">
-                      3 inch x 375 feet - Tan / Kraft<br>
-                      two ink · 25 cases · 200 rolls<br>
-                      Quantity: 1
-                    </div>
+                    <div class="tf-chk-item-title">Your cart is empty</div>
                   </div>
-                  <div class="tf-chk-item-price">$464.63</div>
-                </div>
-
-                <div class="tf-chk-item">
-                  <div class="tf-chk-item-thumb">
-                    <img src="{{ 'printedPaper.webp' | file_img_url: 'master' }}" onerror="this.parentElement.innerHTML='<span style=\'color:#FEC33F;font-weight:bold;\'>Tape</span>'" alt="Paper Tape" width="50" height="50">
-                  </div>
-                  <div class="tf-chk-item-info">
-                    <div class="tf-chk-item-title">Paper Tape</div>
-                    <div class="tf-chk-item-specs">
-                      3 inch x 375 feet - Tan / Kraft<br>
-                      two ink · 25 cases · 200 rolls<br>
-                      Quantity: 5
-                    </div>
-                  </div>
-                  <div class="tf-chk-item-price">$464.63</div>
+                  <div class="tf-chk-item-price">$0.00</div>
                 </div>
               {% endif %}
             </div>
@@ -538,10 +554,10 @@
               <div class="tf-chk-calc-row">
                 <span class="tf-chk-calc-label">Tape</span>
                 <span class="tf-chk-calc-val" id="tfSubtotalVal">
-                  {% if cart.total_price > 0 %}
-                    ${{ cart.total_price | divided_by: 100.0 | round: 2 }}
+                  {% if final_subtotal_num > 0 %}
+                    ${{ final_subtotal_num | round: 2 }}
                   {% else %}
-                    $4,156.13
+                    $0.00
                   {% endif %}
                 </span>
               </div>
@@ -555,17 +571,6 @@
                 <span class="tf-chk-calc-label">Sales tax</span>
                 <span class="tf-chk-calc-val tf-val-muted">Calculated at checkout</span>
               </div>
-
-              <div class="tf-chk-calc-row">
-                <span class="tf-chk-calc-label">Tape</span>
-                <span class="tf-chk-calc-val" id="tfSubtotalVal2">
-                  {% if cart.total_price > 0 %}
-                    ${{ cart.total_price | divided_by: 100.0 | round: 2 }}
-                  {% else %}
-                    $4,156.13
-                  {% endif %}
-                </span>
-              </div>
             </div>
 
             <!-- Total Price Row with Big Yellow Typography -->
@@ -573,14 +578,18 @@
               <div class="tf-chk-total-label">Total</div>
               <div class="tf-chk-total-val-wrap">
                 <div class="tf-chk-total-num" id="tfFinalTotal">
-                  {% if cart.total_price > 0 %}
-                    ${{ cart.total_price | divided_by: 100.0 | round: 2 }}
+                  {% if final_subtotal_num > 0 %}
+                    ${{ final_subtotal_num | round: 2 }}
                   {% else %}
-                    $4,156.13
+                    $0.00
                   {% endif %}
                 </div>
                 <div class="tf-chk-total-per-roll" id="tfPerRollTotal">
-                  $11.62 a roll
+                  {% if total_rolls_sum > 0 and final_subtotal_num > 0 %}
+                    ${{ final_subtotal_num | divided_by: total_rolls_sum | round: 2 }} a roll
+                  {% else %}
+                    Select options to calculate
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -615,7 +624,7 @@
 <script>
   window.TapeFoxCheckout = {
     shippingCost: 0,
-    baseSubtotal: {% if cart.total_price > 0 %}{{ cart.total_price | divided_by: 100.0 }}{% else %}4156.13{% endif %},
+    baseSubtotal: {{ final_subtotal_num | default: 0 }},
 
     selectShipping: function(type, price) {
       document.querySelectorAll('.tf-chk-shipping-option').forEach(function(el) {
@@ -810,6 +819,22 @@
           e.target.value = v;
         }
       });
+    }
+
+    // Sync client-side total with displayed item prices
+    var itemPrices = document.querySelectorAll('.tf-chk-item-price');
+    var subtotalEl = document.getElementById('tfSubtotalVal');
+    if (itemPrices.length > 0 && subtotalEl) {
+      var sum = 0;
+      itemPrices.forEach(function(el) {
+        var n = parseFloat(el.textContent.replace(/[^0-9.-]+/g, ''));
+        if (!isNaN(n)) sum += n;
+      });
+      if (sum > 0) {
+        window.TapeFoxCheckout.baseSubtotal = sum;
+        subtotalEl.textContent = '$' + sum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        window.TapeFoxCheckout.updateTotal();
+      }
     }
   });
 </script>

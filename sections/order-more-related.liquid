@@ -45,7 +45,23 @@
 
             {%- assign item_img = block.settings.image | default: linked_product.featured_image -%}
 
-            <a href="{{ item_url | default: '#' }}" class="omr-item" {{ block.shopify_attributes }}>
+            {%- assign item_img_url = '' -%}
+            {%- if item_img != blank -%}
+              {%- assign item_img_url = item_img | image_url: width: 800 -%}
+            {%- endif -%}
+
+            <a
+              href="{{ item_url | default: '#' }}"
+              class="omr-item"
+              data-title="{{ item_title | escape }}"
+              data-img="{{ item_img_url }}"
+              data-price="{{ block.settings.price_text | default: linked_product.price | money | escape }}"
+              data-url="{{ item_url | default: '#' }}"
+              {% if linked_product != blank and linked_product.selected_or_first_available_variant != blank %}
+                data-variant-id="{{ linked_product.selected_or_first_available_variant.id }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
               <div class="omr-image-box">
                 {%- if item_img != blank -%}
                   {{
@@ -56,6 +72,10 @@
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'omr-image' }}
                 {%- endif -%}
+
+                <div class="omr-quick-view">
+                  <span class="omr-quick-view-btn">Quick View</span>
+                </div>
               </div>
 
               <div class="omr-info">
@@ -79,7 +99,14 @@
           {%- endfor -%}
         {%- else -%}
           <!-- Default 3 Product Boxes if no blocks added -->
-          <a href="/products/pvc-tape" class="omr-item">
+          <a
+            href="/products/pvc-tape"
+            class="omr-item"
+            data-title="PVC Tape"
+            data-img="{{ 'pvc.webp' | file_url }}"
+            data-price="Starting at $7.84 a roll"
+            data-url="/products/pvc-tape"
+          >
             <div class="omr-image-box">
               <img
                 src="{{ 'pvc.webp' | file_url }}"
@@ -90,6 +117,9 @@
                 loading="lazy"
                 onerror="this.onerror=null; this.src='https://0ap41c-jc.myshopify.com/cdn/shop/files/pvc.webp';"
               >
+              <div class="omr-quick-view">
+                <span class="omr-quick-view-btn">Quick View</span>
+              </div>
             </div>
             <div class="omr-info">
               <h3 class="omr-title">PVC Tape</h3>
@@ -98,7 +128,14 @@
             </div>
           </a>
 
-          <a href="/products/flatback-tape" class="omr-item">
+          <a
+            href="/products/flatback-tape"
+            class="omr-item"
+            data-title="Flatback Tape"
+            data-img="{{ 'flattape.webp' | file_url }}"
+            data-price="Starting at $7.12 a roll"
+            data-url="/products/flatback-tape"
+          >
             <div class="omr-image-box">
               <img
                 src="{{ 'flattape.webp' | file_url }}"
@@ -109,6 +146,9 @@
                 loading="lazy"
                 onerror="this.onerror=null; this.src='https://0ap41c-jc.myshopify.com/cdn/shop/files/flattape.webp';"
               >
+              <div class="omr-quick-view">
+                <span class="omr-quick-view-btn">Quick View</span>
+              </div>
             </div>
             <div class="omr-info">
               <h3 class="omr-title">Flatback Tape</h3>
@@ -117,7 +157,14 @@
             </div>
           </a>
 
-          <a href="/products/dispensers" class="omr-item">
+          <a
+            href="/products/dispensers"
+            class="omr-item"
+            data-title="Dispensers"
+            data-img="{{ 'dispensers.webp' | file_url }}"
+            data-price="From $34 per unit"
+            data-url="/products/dispensers"
+          >
             <div class="omr-image-box">
               <img
                 src="{{ 'dispensers.webp' | file_url }}"
@@ -128,6 +175,9 @@
                 loading="lazy"
                 onerror="this.onerror=null; this.src='https://0ap41c-jc.myshopify.com/cdn/shop/files/dispensers.webp';"
               >
+              <div class="omr-quick-view">
+                <span class="omr-quick-view-btn">Quick View</span>
+              </div>
             </div>
             <div class="omr-info">
               <h3 class="omr-title">Dispensers</h3>

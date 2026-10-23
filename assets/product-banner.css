@@ -552,6 +552,13 @@
   gap: 10px;
 }
 
+.pb-uploaded-files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
 .pb-uploaded-file-pill {
   display: flex;
   align-items: center;
