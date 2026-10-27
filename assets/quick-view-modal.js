@@ -126,10 +126,20 @@
     const closeBtn = document.getElementById('TapefoxQuickViewClose');
     const backdrop = document.getElementById('TapefoxQuickViewBackdrop');
 
+    function lockPageScroll() {
+      document.body.style.overflow = 'hidden';
+      if (window.lenis) window.lenis.stop();
+    }
+
+    function unlockPageScroll() {
+      document.body.style.overflow = '';
+      if (window.lenis) window.lenis.start();
+    }
+
     function closeModal() {
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+      unlockPageScroll();
     }
 
     function openModalWithData(data) {
@@ -143,7 +153,10 @@
 
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+      lockPageScroll();
+
+      const dialogBody = modal.querySelector('.tf-qv-body');
+      if (dialogBody) dialogBody.scrollTop = 0;
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
