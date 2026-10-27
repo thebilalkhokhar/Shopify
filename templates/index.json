@@ -48,7 +48,7 @@
         "link_label": "MORE ABOUT TAPEFOX",
         "link_url": "/pages/about",
         "bottom_image": "shopify://shop_images/aboutMain.webp",
-        "bottom_image_mobile": "",
+        "bottom_image_mobile": "shopify://shop_images/homeAboutMobile.webp",
         "star_image": "shopify://shop_images/star.webp"
       }
     },
@@ -62,7 +62,8 @@
             "title": "Polypropylene Tape",
             "price_text": "Starting at $5.68 a roll",
             "card_badge": "Most Ordered",
-            "bg_color": "rgba(0,0,0,0)"
+            "bg_color": "rgba(0,0,0,0)",
+            "url": ""
           }
         },
         "block_2": {
@@ -72,7 +73,8 @@
             "title": "Paper Tape",
             "price_text": "Starting at $9.10 a roll",
             "card_badge": "",
-            "bg_color": "rgba(0,0,0,0)"
+            "bg_color": "rgba(0,0,0,0)",
+            "url": ""
           }
         },
         "block_3": {
@@ -82,7 +84,8 @@
             "title": "Hi-Tack Freezer Tape",
             "price_text": "Starting at $10.18 a roll",
             "card_badge": "",
-            "bg_color": "rgba(0,0,0,0)"
+            "bg_color": "rgba(0,0,0,0)",
+            "url": ""
           }
         },
         "block_4": {
@@ -92,7 +95,8 @@
             "title": "PVC Tape",
             "price_text": "Starting at $7.84 a roll",
             "card_badge": "",
-            "bg_color": "rgba(0,0,0,0)"
+            "bg_color": "rgba(0,0,0,0)",
+            "url": ""
           }
         },
         "block_5": {
@@ -102,7 +106,8 @@
             "title": "Flatback Tape",
             "price_text": "Starting at $7.12 a roll",
             "card_badge": "",
-            "bg_color": "rgba(0,0,0,0)"
+            "bg_color": "rgba(0,0,0,0)",
+            "url": ""
           }
         },
         "block_6": {
@@ -112,7 +117,8 @@
             "title": "Dispensers",
             "price_text": "From $34 per unit",
             "card_badge": "",
-            "bg_color": "rgba(0,0,0,0)"
+            "bg_color": "rgba(0,0,0,0)",
+            "url": ""
           }
         }
       },
@@ -367,14 +373,17 @@
         "faq_5"
       ],
       "settings": {
+        "card_bg": "#faf7f0",
+        "card_border": "#171008",
         "badge_text": "Questions",
         "heading": "Before you order",
         "description": "Custom tape can come with a few questions. We've answered the big ones here: design help, fees, shipping, samples, and how the whole thing works without the corporate word salad.",
-        "fox_image": "shopify://shop_images/faqsMoscout.png",
         "btn1_text": "STILL GOT QUESTIONS?",
         "btn1_url": "/pages/faqs",
         "btn2_text": "Support",
-        "btn2_url": "/pages/contact"
+        "btn2_url": "/pages/contact",
+        "fox_image": "shopify://shop_images/faqsMoscout.png",
+        "mascot_width": 280
       }
     },
     "home_follow_insta": {
@@ -519,8 +528,15 @@
         "menu_1": "",
         "menu_2_title": "Company",
         "menu_2": "",
+        "compare_link": "",
+        "about_link": "",
+        "contact_link": "",
         "menu_3_title": "Help",
         "menu_3": "",
+        "track_order_link": "",
+        "shipping_delivery_link": "",
+        "returns_damages_link": "",
+        "turnaround_times_link": "",
         "info_1_label": "Talk to a person",
         "info_1_val": "+1 (800) 555-0199",
         "info_2_label": "Email",
