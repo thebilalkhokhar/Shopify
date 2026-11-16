@@ -16,8 +16,8 @@
   border-top: 2px solid #171008;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  /* Left has 60px padding, Right has 0 padding so cards bleed off the right edge */
-  padding: 30px 0 40px 60px;
+  /* Full-width card so slider bleeds edge-to-edge on both left and right */
+  padding: 30px 0 40px 0;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -31,6 +31,7 @@
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 32px;
+  padding-left: 60px;
   padding-right: 60px;
   overflow: visible;
 }
@@ -44,12 +45,13 @@
   display: inline-block;
 }
 
-/* Header Area (Maintains 60px right margin) */
+/* Header Area (Maintains 60px left & right margin) */
 .home-testimonial__header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 32px;
+  padding-left: 60px;
   padding-right: 60px;
   box-sizing: border-box;
   gap: 20px;
@@ -201,6 +203,7 @@
   justify-content: space-between;
   margin-top: 32px;
   padding-top: 8px;
+  padding-left: 60px;
   padding-right: 60px;
   box-sizing: border-box;
 }
@@ -266,7 +269,7 @@
 /* Responsive */
 @media screen and (max-width: 900px) {
   .home-testimonial__card {
-    padding: 24px 0 32px 24px;
+    padding: 24px 0 32px 0;
   }
 
   .home-testimonial__brand-logo {
@@ -276,6 +279,7 @@
   .home-testimonial__punches,
   .home-testimonial__header,
   .home-testimonial__controls {
+    padding-left: 24px;
     padding-right: 24px;
   }
 
@@ -303,16 +307,18 @@
   }
 
   .home-testimonial__card {
-    padding: 16px 0 24px 16px;
+    padding: 16px 0 24px 0;
   }
 
   .home-testimonial__punches {
     margin-bottom: 20px;
+    padding-left: 16px;
     padding-right: 16px;
   }
 
   .home-testimonial__header,
   .home-testimonial__controls {
+    padding-left: 16px;
     padding-right: 16px;
   }
 
