@@ -1,0 +1,279 @@
+{{ 'auth-login.css' | asset_url | stylesheet_tag }}
+
+<div class="tf-auth-page" id="TapeFoxAuthRoot">
+
+  <!-- Top Center Logo -->
+  <header class="tf-auth-header">
+    <a href="{{ routes.root_url }}" class="tf-auth-logo-link" aria-label="TapeFox Home">
+      <img
+        src="{{ 'headerLogo.svg' | file_url }}"
+        alt="{{ shop.name }}"
+        class="tf-auth-logo-img"
+        width="135"
+        height="32"
+      >
+    </a>
+  </header>
+
+  <!-- Toast -->
+  <div id="tfToast" class="tf-toast" role="alert" aria-live="assertive"></div>
+
+  <div class="tf-auth-main">
+    <div class="tf-auth-sparkles" aria-hidden="true">
+      <span class="tf-sparkle-star large">✦</span>
+      <span class="tf-sparkle-star small">✦</span>
+    </div>
+
+    <div class="tf-auth-badge">Create Account</div>
+    <h1 class="tf-auth-heading">Join <span class="tf-highlight-orange">TapeFox.</span></h1>
+    <p class="tf-auth-subheading">Create an account to track your orders and reorder with ease.</p>
+
+    {%- form 'create_customer', id: 'tfRegisterForm' -%}
+      {%- if form.errors -%}
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            {%- for error in form.errors -%}
+              TFAuth.showToast('{{ form.errors.messages[error] | escape }}', 'error', 5000);
+            {%- endfor -%}
+          });
+        </script>
+      {%- endif -%}
+
+      <div class="tf-form-fields">
+        <!-- Name row -->
+        <div class="tf-name-row">
+          <div class="tf-field-wrap" id="tfRegFnWrap">
+            <input
+              type="text"
+              name="customer[first_name]"
+              id="tfRegFn"
+              class="tf-auth-input"
+              placeholder="First name"
+              autocomplete="given-name"
+              value="{{ form.first_name }}"
+            >
+            <span class="tf-field-error">Required.</span>
+          </div>
+          <div class="tf-field-wrap" id="tfRegLnWrap">
+            <input
+              type="text"
+              name="customer[last_name]"
+              id="tfRegLn"
+              class="tf-auth-input"
+              placeholder="Last name"
+              autocomplete="family-name"
+              value="{{ form.last_name }}"
+            >
+            <span class="tf-field-error">Required.</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="tf-field-wrap" id="tfRegEmailWrap">
+          <input
+            type="email"
+            name="customer[email]"
+            id="tfRegEmail"
+            class="tf-auth-input"
+            placeholder="Email address"
+            autocomplete="email"
+            autocapitalize="off"
+            spellcheck="false"
+            value="{{ form.email }}"
+          >
+          <span class="tf-field-error" id="tfRegEmailErr">Please enter a valid email.</span>
+        </div>
+
+        <!-- Password -->
+        <div class="tf-field-wrap" id="tfRegPwWrap">
+          <div class="tf-pw-input-wrap">
+            <input
+              type="password"
+              name="customer[password]"
+              id="tfRegPw"
+              class="tf-auth-input"
+              placeholder="Password (min. 5 characters)"
+              autocomplete="new-password"
+            >
+            <button type="button" class="tf-pw-toggle" id="tfToggleRegPw" aria-label="Show password">
+              <svg id="tfRegEyeShow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="tfRegEyeHide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+          <span class="tf-field-error" id="tfRegPwErr">Password must be at least 5 characters.</span>
+        </div>
+      </div>
+
+      <div class="tf-form-footer" style="justify-content:center; flex-direction:column; align-items:center; gap:16px;">
+        <button type="submit" class="tf-auth-btn tf-auth-btn--full" id="tfRegBtn">
+          <span id="tfRegBtnTxt">Create account</span>
+          <span class="tf-btn-spinner" id="tfRegSpinner" style="display:none;"></span>
+        </button>
+        <p class="tf-auth-switch-text">
+          Already have an account? <a href="{{ routes.account_login_url }}" class="tf-link-underline">Sign in</a>
+        </p>
+      </div>
+    {%- endform -%}
+
+  </div>
+
+  <div class="tf-auth-footer-notice">
+    Need help? <a href="/pages/contact" style="color:inherit;text-decoration:underline;">Contact us</a>
+  </div>
+</div>
+
+<style>
+.tf-toast {
+  position:fixed; top:24px; left:50%;
+  transform:translateX(-50%) translateY(-80px);
+  z-index:9999; min-width:280px; max-width:420px;
+  padding:13px 20px 13px 16px; border-radius:12px;
+  border:1.8px solid #191410;
+  font-family:var(--tf-auth-sans,'Inter',sans-serif);
+  font-size:13.5px; font-weight:600;
+  display:flex; align-items:center; gap:10px;
+  box-shadow:0 4px 0 #191410; opacity:0; pointer-events:none;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+}
+.tf-toast.show { transform:translateX(-50%) translateY(0); opacity:1; pointer-events:auto; }
+.tf-toast--success { background:#F0FBF0; color:#1A6B2A; }
+.tf-toast--error   { background:#FFF3F2; color:#C0251A; }
+.tf-toast-icon { font-size:16px; flex-shrink:0; }
+.tf-toast-close { margin-left:auto; background:none; border:none; cursor:pointer; font-size:16px; color:inherit; padding:0; opacity:0.6; }
+.tf-toast-close:hover { opacity:1; }
+
+.tf-btn-spinner {
+  width:15px; height:15px;
+  border:2px solid rgba(255,255,255,0.4); border-top-color:#fff;
+  border-radius:50%; display:inline-block;
+  animation:tfSpin 0.6s linear infinite;
+  vertical-align:middle; margin-left:6px;
+}
+@keyframes tfSpin { to { transform:rotate(360deg); } }
+
+.tf-form-fields { display:flex; flex-direction:column; gap:12px; width:100%; max-width:480px; margin:0 auto 20px; }
+
+.tf-name-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+.tf-field-wrap { position:relative; width:100%; }
+.tf-field-error { display:none; color:#D93829; font-size:12px; margin-top:5px; }
+.tf-field-err .tf-field-error { display:block; }
+.tf-field-err .tf-auth-input { border-color:#D93829 !important; background:#FFF8F7; }
+
+.tf-pw-input-wrap { position:relative; }
+.tf-pw-toggle {
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer; color:#726A61; padding:0; line-height:0;
+}
+.tf-pw-toggle:hover { color:#191410; }
+
+.tf-form-footer { display:flex; align-items:center; gap:16px; width:100%; max-width:480px; margin:0 auto; flex-wrap:wrap; }
+
+.tf-auth-btn--full { width:100%; justify-content:center; }
+
+.tf-auth-switch-text { font-size:13.5px; color:#574F46; text-align:center; margin:0; }
+.tf-link-underline { text-decoration:underline; color:#191410; cursor:pointer; }
+.tf-link-underline:hover { color:#F55A00; }
+
+@media (max-width: 480px) {
+  .tf-name-row { grid-template-columns:1fr; }
+}
+</style>
+
+<script>
+window.TFAuth = (function() {
+  'use strict';
+
+  function showToast(msg, type, dur) {
+    var t = document.getElementById('tfToast');
+    if (!t) return;
+    var icons = { success:'✓', error:'✕', info:'ℹ' };
+    t.className = 'tf-toast tf-toast--' + (type||'info');
+    t.innerHTML = '<span class="tf-toast-icon">'+(icons[type]||icons.info)+'</span>'
+      + '<span>'+msg+'</span>'
+      + '<button class="tf-toast-close" onclick="this.parentElement.classList.remove(\'show\')" aria-label="Close">×</button>';
+    t.classList.add('show');
+    clearTimeout(t._tmr);
+    t._tmr = setTimeout(function(){ t.classList.remove('show'); }, dur||4000);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    var form = document.getElementById('tfRegisterForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+      var valid = true;
+
+      /* First name */
+      var fn = document.getElementById('tfRegFn');
+      var fnWrap = document.getElementById('tfRegFnWrap');
+      if (!fn.value.trim()) { fnWrap.classList.add('tf-field-err'); valid = false; }
+      else fnWrap.classList.remove('tf-field-err');
+
+      /* Last name */
+      var ln = document.getElementById('tfRegLn');
+      var lnWrap = document.getElementById('tfRegLnWrap');
+      if (!ln.value.trim()) { lnWrap.classList.add('tf-field-err'); valid = false; }
+      else lnWrap.classList.remove('tf-field-err');
+
+      /* Email */
+      var em = document.getElementById('tfRegEmail');
+      var emWrap = document.getElementById('tfRegEmailWrap');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em.value.trim())) {
+        emWrap.classList.add('tf-field-err'); valid = false;
+      } else emWrap.classList.remove('tf-field-err');
+
+      /* Password */
+      var pw = document.getElementById('tfRegPw');
+      var pwWrap = document.getElementById('tfRegPwWrap');
+      if (pw.value.length < 5) { pwWrap.classList.add('tf-field-err'); valid = false; }
+      else pwWrap.classList.remove('tf-field-err');
+
+      if (!valid) { e.preventDefault(); return; }
+
+      /* Spinner */
+      var btn = document.getElementById('tfRegBtn');
+      var txt = document.getElementById('tfRegBtnTxt');
+      var spin = document.getElementById('tfRegSpinner');
+      if (btn) btn.disabled = true;
+      if (txt) txt.textContent = 'Creating…';
+      if (spin) spin.style.display = 'inline-block';
+    });
+
+    /* Clear errors on input */
+    [['tfRegFn','tfRegFnWrap'],['tfRegLn','tfRegLnWrap'],
+     ['tfRegEmail','tfRegEmailWrap'],['tfRegPw','tfRegPwWrap']].forEach(function(pair) {
+      var el = document.getElementById(pair[0]);
+      var wrap = document.getElementById(pair[1]);
+      if (el && wrap) el.addEventListener('input', function() { wrap.classList.remove('tf-field-err'); });
+    });
+
+    /* Password toggle */
+    var tog = document.getElementById('tfToggleRegPw');
+    if (tog) {
+      tog.addEventListener('click', function() {
+        var inp = document.getElementById('tfRegPw');
+        var es = document.getElementById('tfRegEyeShow');
+        var eh = document.getElementById('tfRegEyeHide');
+        if (inp.type === 'password') {
+          inp.type = 'text'; es.style.display='none'; eh.style.display='block';
+        } else {
+          inp.type = 'password'; es.style.display='block'; eh.style.display='none';
+        }
+      });
+    }
+  });
+
+  return { showToast: showToast };
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Customer Register",
+  "tag": "section",
+  "class": "section-auth-register",
+  "settings": []
+}
+{% endschema %}

@@ -15,253 +15,355 @@
     </a>
   </header>
 
-  <!-- Main Authentication Container -->
-  <div class="tf-auth-main">
+  <!-- Toast -->
+  <div id="tfToast" class="tf-toast" role="alert" aria-live="assertive"></div>
 
-    <!-- Sparkle Stars -->
+  <div class="tf-auth-main">
     <div class="tf-auth-sparkles" aria-hidden="true">
       <span class="tf-sparkle-star large">✦</span>
       <span class="tf-sparkle-star small">✦</span>
     </div>
 
-    <!-- =======================================================================
-         SCREEN 1: EMAIL ENTRY ("No password. Just a code.")
-         ======================================================================= -->
-    <div id="tfAuthStepEmail" class="tf-auth-step">
-      <!-- Badge -->
+    <!-- ===================== LOGIN FORM ===================== -->
+    <div id="tfStepLogin" class="tf-auth-step">
       <div class="tf-auth-badge">Your Account</div>
+      <h1 class="tf-auth-heading">Welcome back.</h1>
+      <p class="tf-auth-subheading">Sign in to track orders and manage your account.</p>
 
-      <!-- Heading -->
-      <h1 class="tf-auth-heading">No password. Just a code.</h1>
+      {%- form 'customer_login', id: 'tfLoginForm' -%}
+        {%- if form.errors -%}
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              TFAuth.showToast('Incorrect email or password. Please try again.', 'error');
+              document.getElementById('tfLoginPwWrap').classList.add('tf-field-err');
+            });
+          </script>
+        {%- endif -%}
 
-      <!-- Description -->
-      <p class="tf-auth-subheading">
-        Type the email you order with. A six-digit code lands in about a minute, and it works once.
-      </p>
+        <div class="tf-form-fields">
+          <div class="tf-field-wrap" id="tfLoginEmailWrap">
+            <input
+              type="email"
+              name="customer[email]"
+              id="tfLoginEmail"
+              class="tf-auth-input"
+              placeholder="Email address"
+              autocomplete="email"
+              autocapitalize="off"
+              spellcheck="false"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            >
+            <span class="tf-field-error">Please enter a valid email.</span>
+          </div>
 
-      <!-- Form -->
-      <form id="tfEmailForm" class="tf-auth-form" onsubmit="TapeFoxAuth.handleSendCode(event)" novalidate>
-        <div class="tf-auth-email-wrap" id="tfEmailInputWrap">
-          <input
-            type="email"
-            id="tfAuthEmailInput"
-            name="customer_email"
-            class="tf-auth-input"
-            placeholder="Email"
-            autocomplete="email"
-            required
-          >
-          <div class="tf-auth-error" id="tfEmailError">Please enter a valid email address.</div>
+          <div class="tf-field-wrap" id="tfLoginPwWrap">
+            <div class="tf-pw-input-wrap">
+              <input
+                type="password"
+                name="customer[password]"
+                id="tfLoginPw"
+                class="tf-auth-input"
+                placeholder="Password"
+                autocomplete="current-password"
+              >
+              <button type="button" class="tf-pw-toggle" id="tfTogglePw" aria-label="Show password">
+                <svg id="tfEyeShow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg id="tfEyeHide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              </button>
+            </div>
+            <span class="tf-field-error">Please enter your password.</span>
+          </div>
         </div>
 
-        <div class="tf-auth-actions-row">
-          <button type="submit" class="tf-auth-btn" id="tfSendCodeBtn">
-            Send the code
+        <div class="tf-form-footer">
+          <button type="submit" class="tf-auth-btn" id="tfLoginBtn">
+            <span id="tfLoginBtnTxt">Sign in</span>
+            <span class="tf-btn-spinner" id="tfLoginSpinner" style="display:none;"></span>
           </button>
-          <span class="tf-auth-side-link">
-            Checked out as a guest? <a href="/pages/contact">Find an order</a>
-          </span>
+          <a href="#" id="tfForgotLink" class="tf-auth-side-link tf-link-underline">Forgot password?</a>
         </div>
-      </form>
+      {%- endform -%}
+
+      <div class="tf-auth-divider"><span>or</span></div>
+
+      <p class="tf-auth-switch-text">
+        Don't have an account?
+        <a href="{{ routes.account_register_url }}" class="tf-link-underline">Create one</a>
+      </p>
     </div>
 
-    <!-- =======================================================================
-         SCREEN 2: OTP VERIFICATION ("Six digits. Ten minutes.")
-         ======================================================================= -->
-    <div id="tfAuthStepOtp" class="tf-auth-step" style="display: none;">
-      <!-- Badge -->
+    <!-- ===================== FORGOT PASSWORD ===================== -->
+    <div id="tfStepForgot" class="tf-auth-step" style="display:none;">
+      <div class="tf-auth-badge">Reset Password</div>
+      <h1 class="tf-auth-heading">Forgot your<br>password?</h1>
+      <p class="tf-auth-subheading">
+        Enter your email and we'll send you a link to reset it.
+      </p>
+
+      {%- form 'recover_customer_password', id: 'tfForgotForm' -%}
+        {%- if form.posted_successfully? -%}
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              TFAuth.showResetSent('{{ form.email | escape }}');
+            });
+          </script>
+        {%- endif -%}
+
+        <div class="tf-form-fields">
+          <div class="tf-field-wrap" id="tfForgotEmailWrap">
+            <input
+              type="email"
+              name="email"
+              id="tfForgotEmail"
+              class="tf-auth-input"
+              placeholder="Email address"
+              autocomplete="email"
+              value="{% if form.email %}{{ form.email }}{% endif %}"
+            >
+            <span class="tf-field-error">Please enter a valid email.</span>
+            {%- if form.errors -%}
+              <span class="tf-field-error" style="display:block;">{{ form.errors | default_errors }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="tf-form-footer">
+          <button type="submit" class="tf-auth-btn" id="tfForgotBtn">
+            <span id="tfForgotBtnTxt">Send reset link</span>
+            <span class="tf-btn-spinner" id="tfForgotSpinner" style="display:none;"></span>
+          </button>
+          <button type="button" class="tf-auth-side-link tf-link-underline" id="tfBackToLogin">Back to sign in</button>
+        </div>
+      {%- endform -%}
+    </div>
+
+    <!-- ===================== RESET SENT ===================== -->
+    <div id="tfStepResetSent" class="tf-auth-step" style="display:none;">
       <div class="tf-auth-badge">Check your email</div>
-
-      <!-- Heading with orange highlight -->
-      <h1 class="tf-auth-heading">
-        Six digits. <span class="tf-highlight-orange">Ten minutes.</span>
-      </h1>
-
-      <!-- Description showing entered email masked -->
+      <h1 class="tf-auth-heading">Reset link<br><span class="tf-highlight-orange">on its way.</span></h1>
       <p class="tf-auth-subheading">
-        We sent a 6-digit verification code to<br>
-        <span class="tf-auth-email-target" id="tfMaskedEmailDisplay">j••••@company.com</span>
+        We emailed a password reset link to<br>
+        <strong id="tfResetEmailDisplay"></strong><br><br>
+        Click the link to set a new password. Check spam if it doesn't arrive.
       </p>
-
-      <!-- OTP Form -->
-      <form id="tfOtpForm" class="tf-auth-form" onsubmit="TapeFoxAuth.handleVerifyOtp(event)" novalidate>
-        <div class="tf-auth-otp-row" id="tfOtpRow">
-          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="0" autofocus>
-          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="1">
-          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="2">
-          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="3">
-          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="4">
-          <input type="text" maxlength="1" class="tf-otp-box" inputmode="numeric" pattern="[0-9]*" data-index="5">
-        </div>
-
-        <div class="tf-auth-error" id="tfOtpError" style="margin-bottom: 16px; text-align: center;">Please enter all 6 digits.</div>
-
-        <div class="tf-auth-actions-row">
-          <button type="submit" class="tf-auth-btn" id="tfSignInBtn">
-            Sign in
-          </button>
-          <span class="tf-auth-side-link">
-            Nothing yet? <button type="button" class="tf-auth-action-link" onclick="TapeFoxAuth.resendCode()" style="background:none;border:none;padding:0;font:inherit;">Send it again</button>
-          </span>
-        </div>
-      </form>
+      <div class="tf-form-footer" style="justify-content:center;">
+        <button type="button" class="tf-auth-btn" id="tfBackToLoginFromReset">Back to sign in</button>
+      </div>
     </div>
 
   </div>
 
-  <!-- Bottom Notice -->
-  <div class="tf-auth-footer-notice" style="text-align:center !important; width:100% !important; margin:0 auto !important; display:block !important;">
-    Code not arriving? Check spam, or call (800) 555-0199, Mon–Fri, 8am–6pm CT.
+  <div class="tf-auth-footer-notice">
+    Need help? <a href="/pages/contact" style="color:inherit;text-decoration:underline;">Contact us</a>
   </div>
-
 </div>
 
+<style>
+.tf-toast {
+  position: fixed; top: 24px; left: 50%;
+  transform: translateX(-50%) translateY(-80px);
+  z-index: 9999; min-width: 280px; max-width: 420px;
+  padding: 13px 20px 13px 16px; border-radius: 12px;
+  border: 1.8px solid #191410;
+  font-family: var(--tf-auth-sans,'Inter',sans-serif);
+  font-size: 13.5px; font-weight: 600;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 0 #191410; opacity: 0; pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+}
+.tf-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
+.tf-toast--success { background:#F0FBF0; color:#1A6B2A; }
+.tf-toast--error   { background:#FFF3F2; color:#C0251A; }
+.tf-toast--info    { background:#FFF9EC; color:#7A5800; }
+.tf-toast-icon { font-size:16px; flex-shrink:0; }
+.tf-toast-close { margin-left:auto; background:none; border:none; cursor:pointer; font-size:16px; color:inherit; padding:0; opacity:0.6; }
+.tf-toast-close:hover { opacity:1; }
+
+.tf-btn-spinner {
+  width:15px; height:15px;
+  border: 2px solid rgba(255,255,255,0.4); border-top-color:#fff;
+  border-radius:50%; display:inline-block;
+  animation: tfSpin 0.6s linear infinite;
+  vertical-align:middle; margin-left:6px;
+}
+@keyframes tfSpin { to { transform: rotate(360deg); } }
+
+.tf-form-fields { display:flex; flex-direction:column; gap:12px; width:100%; max-width:480px; margin:0 auto 20px; }
+
+.tf-field-wrap { position:relative; width:100%; }
+.tf-field-error { display:none; color:#D93829; font-size:12px; margin-top:5px; }
+.tf-field-err .tf-field-error { display:block; }
+.tf-field-err .tf-auth-input { border-color:#D93829 !important; background:#FFF8F7; }
+
+.tf-pw-input-wrap { position:relative; }
+.tf-pw-toggle {
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer; color:#726A61; padding:0; line-height:0;
+}
+.tf-pw-toggle:hover { color:#191410; }
+
+.tf-form-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; width:100%; max-width:480px; margin:0 auto;
+  flex-wrap: wrap;
+}
+
+.tf-auth-side-link { font-size:13px; color:#574F46; }
+.tf-link-underline { text-decoration:underline; color:#191410; cursor:pointer; background:none; border:none; font:inherit; }
+.tf-link-underline:hover { color:#F55A00; }
+
+.tf-auth-divider {
+  display:flex; align-items:center; gap:12px;
+  width:100%; max-width:480px; margin:24px auto;
+  color:#B5ACA0; font-size:12px;
+}
+.tf-auth-divider::before, .tf-auth-divider::after {
+  content:''; flex:1; height:1px; background:#D9D2C7;
+}
+
+.tf-auth-switch-text { font-size:13.5px; color:#574F46; text-align:center; margin:0; }
+</style>
+
 <script>
-  window.TapeFoxAuth = {
-    userEmail: '',
+window.TFAuth = (function() {
+  'use strict';
 
-    maskEmail: function(email) {
-      if (!email || email.indexOf('@') === -1) return 'your email';
-      var parts = email.split('@');
-      var name = parts[0];
-      var domain = parts[1];
-      var firstChar = name.charAt(0);
-      return firstChar + '••••@' + domain;
-    },
+  function showToast(msg, type, dur) {
+    var t = document.getElementById('tfToast');
+    if (!t) return;
+    var icons = { success:'✓', error:'✕', info:'ℹ' };
+    t.className = 'tf-toast tf-toast--' + (type||'info');
+    t.innerHTML = '<span class="tf-toast-icon">'+(icons[type]||icons.info)+'</span>'
+      + '<span>'+msg+'</span>'
+      + '<button class="tf-toast-close" onclick="this.parentElement.classList.remove(\'show\')" aria-label="Close">×</button>';
+    t.classList.add('show');
+    clearTimeout(t._tmr);
+    t._tmr = setTimeout(function(){ t.classList.remove('show'); }, dur||4000);
+  }
 
-    handleSendCode: function(e) {
-      e.preventDefault();
-      var input = document.getElementById('tfAuthEmailInput');
-      var wrap = document.getElementById('tfEmailInputWrap');
-      var emailVal = (input ? input.value : '').trim();
+  function showStep(id) {
+    ['tfStepLogin','tfStepForgot','tfStepResetSent'].forEach(function(s) {
+      var el = document.getElementById(s);
+      if (el) el.style.display = (s===id) ? 'block' : 'none';
+    });
+  }
 
-      var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
-      if (!isValid) {
-        if (wrap) wrap.classList.add('has-error');
-        return false;
-      }
+  function showResetSent(email) {
+    var el = document.getElementById('tfResetEmailDisplay');
+    if (el) el.textContent = email || '';
+    showStep('tfStepResetSent');
+    showToast('Reset link sent! Check your inbox.', 'success', 5000);
+  }
 
-      if (wrap) wrap.classList.remove('has-error');
-      this.userEmail = emailVal;
-
-      var btn = document.getElementById('tfSendCodeBtn');
-      if (btn) {
-        btn.textContent = 'Sending code...';
-        btn.disabled = true;
-      }
-
-      // Transition smoothly to OTP Screen
-      setTimeout(function() {
-        if (btn) {
-          btn.textContent = 'Send the code';
-          btn.disabled = false;
-        }
-
-        var stepEmail = document.getElementById('tfAuthStepEmail');
-        var stepOtp = document.getElementById('tfAuthStepOtp');
-        var emailDisplay = document.getElementById('tfMaskedEmailDisplay');
-
-        if (emailDisplay) {
-          emailDisplay.textContent = TapeFoxAuth.maskEmail(TapeFoxAuth.userEmail);
-        }
-
-        if (stepEmail) stepEmail.style.display = 'none';
-        if (stepOtp) stepOtp.style.display = 'block';
-
-        // Focus first OTP box
-        var firstBox = document.querySelector('.tf-otp-box[data-index="0"]');
-        if (firstBox) firstBox.focus();
-      }, 700);
-
-      return false;
-    },
-
-    handleVerifyOtp: function(e) {
-      e.preventDefault();
-      var boxes = document.querySelectorAll('.tf-otp-box');
-      var code = '';
-      boxes.forEach(function(b) { code += b.value.trim(); });
-
-      var err = document.getElementById('tfOtpError');
-      if (code.length < 6) {
-        if (err) {
-          err.textContent = 'Please enter all 6 digits of your verification code.';
-          err.style.display = 'block';
-        }
-        return false;
-      }
-
-      if (err) err.style.display = 'none';
-
-      var btn = document.getElementById('tfSignInBtn');
-      if (btn) {
-        btn.textContent = 'Signing in...';
-        btn.disabled = true;
-      }
-
-      setTimeout(function() {
-        alert('Signed in successfully as ' + TapeFoxAuth.userEmail + '!');
-        window.location.href = '/';
-      }, 1000);
-
-      return false;
-    },
-
-    resendCode: function() {
-      alert('A fresh 6-digit code has been sent to ' + (this.userEmail || 'your email') + '!');
-      var boxes = document.querySelectorAll('.tf-otp-box');
-      boxes.forEach(function(b) { b.value = ''; });
-      var firstBox = document.querySelector('.tf-otp-box[data-index="0"]');
-      if (firstBox) firstBox.focus();
-    }
-  };
-
-  // Setup OTP inputs auto-advance and backspace handling
   document.addEventListener('DOMContentLoaded', function() {
-    var boxes = document.querySelectorAll('.tf-otp-box');
-    boxes.forEach(function(box, idx) {
-      box.addEventListener('input', function(e) {
-        var val = e.target.value.replace(/\D/g, '');
-        e.target.value = val ? val.charAt(val.length - 1) : '';
-        if (e.target.value && idx < boxes.length - 1) {
-          boxes[idx + 1].focus();
-        }
+
+    /* Login form submit — spinner */
+    var loginForm = document.getElementById('tfLoginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', function(e) {
+        var email = document.getElementById('tfLoginEmail').value.trim();
+        var pw = document.getElementById('tfLoginPw').value;
+        var emailWrap = document.getElementById('tfLoginEmailWrap');
+        var pwWrap = document.getElementById('tfLoginPwWrap');
+        var valid = true;
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+          emailWrap.classList.add('tf-field-err'); valid = false;
+        } else { emailWrap.classList.remove('tf-field-err'); }
+
+        if (!pw) {
+          pwWrap.classList.add('tf-field-err'); valid = false;
+        } else { pwWrap.classList.remove('tf-field-err'); }
+
+        if (!valid) { e.preventDefault(); return; }
+
+        var btn = document.getElementById('tfLoginBtn');
+        var txt = document.getElementById('tfLoginBtnTxt');
+        var spin = document.getElementById('tfLoginSpinner');
+        if (btn) btn.disabled = true;
+        if (txt) txt.textContent = 'Signing in…';
+        if (spin) spin.style.display = 'inline-block';
       });
 
-      box.addEventListener('keydown', function(e) {
-        if (e.key === 'Backspace' && !e.target.value && idx > 0) {
-          boxes[idx - 1].focus();
+      /* Clear errors on input */
+      document.getElementById('tfLoginEmail').addEventListener('input', function() {
+        document.getElementById('tfLoginEmailWrap').classList.remove('tf-field-err');
+      });
+      document.getElementById('tfLoginPw').addEventListener('input', function() {
+        document.getElementById('tfLoginPwWrap').classList.remove('tf-field-err');
+      });
+    }
+
+    /* Password toggle */
+    var toggleBtn = document.getElementById('tfTogglePw');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var input = document.getElementById('tfLoginPw');
+        var eyeShow = document.getElementById('tfEyeShow');
+        var eyeHide = document.getElementById('tfEyeHide');
+        if (input.type === 'password') {
+          input.type = 'text';
+          eyeShow.style.display = 'none';
+          eyeHide.style.display = 'block';
+        } else {
+          input.type = 'password';
+          eyeShow.style.display = 'block';
+          eyeHide.style.display = 'none';
         }
       });
+    }
 
-      // Support pasting 6-digit code
-      box.addEventListener('paste', function(e) {
+    /* Forgot password link */
+    var forgotLink = document.getElementById('tfForgotLink');
+    if (forgotLink) {
+      forgotLink.addEventListener('click', function(e) {
         e.preventDefault();
-        var pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
-        var digits = pasteData.replace(/\D/g, '').split('').slice(0, 6);
-        digits.forEach(function(d, dIdx) {
-          if (boxes[dIdx]) boxes[dIdx].value = d;
-        });
-        if (digits.length > 0) {
-          var targetIdx = Math.min(digits.length, boxes.length - 1);
-          boxes[targetIdx].focus();
-        }
+        var email = document.getElementById('tfLoginEmail').value.trim();
+        var fe = document.getElementById('tfForgotEmail');
+        if (fe && email) fe.value = email;
+        showStep('tfStepForgot');
       });
+    }
+
+    /* Forgot form submit */
+    var forgotForm = document.getElementById('tfForgotForm');
+    if (forgotForm) {
+      forgotForm.addEventListener('submit', function(e) {
+        var val = document.getElementById('tfForgotEmail').value.trim();
+        var wrap = document.getElementById('tfForgotEmailWrap');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) {
+          e.preventDefault();
+          wrap.classList.add('tf-field-err');
+          return;
+        }
+        wrap.classList.remove('tf-field-err');
+        var btn = document.getElementById('tfForgotBtn');
+        var txt = document.getElementById('tfForgotBtnTxt');
+        var spin = document.getElementById('tfForgotSpinner');
+        if (btn) btn.disabled = true;
+        if (txt) txt.textContent = 'Sending…';
+        if (spin) spin.style.display = 'inline-block';
+      });
+      document.getElementById('tfForgotEmail').addEventListener('input', function() {
+        document.getElementById('tfForgotEmailWrap').classList.remove('tf-field-err');
+      });
+    }
+
+    /* Back to login buttons */
+    ['tfBackToLogin','tfBackToLoginFromReset'].forEach(function(id) {
+      var btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', function() { showStep('tfStepLogin'); });
     });
 
-    var emailInput = document.getElementById('tfAuthEmailInput');
-    if (emailInput) {
-      emailInput.addEventListener('input', function() {
-        var wrap = document.getElementById('tfEmailInputWrap');
-        if (wrap) wrap.classList.remove('has-error');
-      });
-    }
   });
+
+  return { showToast: showToast, showResetSent: showResetSent };
+})();
 </script>
 
 {% schema %}
 {
-  "name": "Customer Login & OTP",
+  "name": "Customer Login",
   "tag": "section",
   "class": "section-auth-login",
   "settings": []

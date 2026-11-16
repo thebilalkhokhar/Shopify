@@ -108,13 +108,11 @@
   align-items: stretch;
   gap: 20px;
   overflow-x: auto;
-  scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-bottom: 8px;
   padding-right: 0;
   /* Cards bleed right off the edge */
-  scroll-snap-type: x mandatory;
 }
 
 .home-testimonial__slider-track::-webkit-scrollbar {

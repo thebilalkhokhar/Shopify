@@ -74,15 +74,24 @@
 
       <!-- Center Main About Collage Image (Complete Image) -->
       <div class="about-banner-main-image-wrap">
-        {% if section.settings.main_image != blank %}
-          <img
-            src="{{ section.settings.main_image | image_url: width: 2400 }}"
-            alt="{{ section.settings.main_image.alt | default: section.settings.title | default: 'About TapeFox' }}"
-            class="about-banner-main-img"
-            width="1220"
-            height="auto"
-            loading="eager"
-          >
+        {% if section.settings.main_image != blank or section.settings.main_image_mobile != blank %}
+          {% assign desktop_img = section.settings.main_image | default: section.settings.main_image_mobile %}
+          <picture class="about-banner-main-picture">
+            {% if section.settings.main_image_mobile != blank %}
+              <source
+                media="(max-width: 640px)"
+                srcset="{{ section.settings.main_image_mobile | image_url: width: 1280 }}"
+              >
+            {% endif %}
+            <img
+              src="{{ desktop_img | image_url: width: 2400 }}"
+              alt="{{ desktop_img.alt | default: section.settings.title | default: 'About TapeFox' }}"
+              class="about-banner-main-img"
+              width="1220"
+              height="auto"
+              loading="eager"
+            >
+          </picture>
         {% elsif request.design_mode %}
           <div class="about-banner-placeholder">
             <span>🖼️ Upload Full About Collage Image Here</span>
@@ -150,6 +159,11 @@
       "type": "image_picker",
       "id": "main_image",
       "label": "Main About Collage Image (Puri Image)"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image_mobile",
+      "label": "Mobile About Collage Image (640px & below)"
     },
     {
       "type": "header",

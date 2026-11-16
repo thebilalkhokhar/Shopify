@@ -305,3 +305,112 @@
     font-size: 14px;
   }
 }
+
+/* =========================================================================
+   4. Empty State (When no blogs match selected tab/tag)
+   ========================================================================= */
+
+.blog-grid-empty {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #FAF5EE;
+  border: 2px dashed rgba(23, 16, 8, 0.22);
+  border-radius: 24px;
+  padding: 60px 24px;
+  text-align: center;
+  margin: 10px 0 60px 0;
+}
+
+.bg-empty-content {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #FDF0DC;
+  border: 1.8px solid #171008;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #EA5B1B;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 0 0 #171008;
+}
+
+.bg-empty-title {
+  font-family: var(--custom-font-family, serif);
+  font-size: 26px;
+  font-weight: 800;
+  color: #171008;
+  letter-spacing: -0.4px;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.bg-empty-desc {
+  font-family: var(--font-primary--family, 'Inter', sans-serif);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #554F47;
+  margin: 0 0 24px 0;
+}
+
+.bg-empty-reset-btn {
+  background-color: #171008;
+  color: #ffffff;
+  border: 1.8px solid #171008;
+  border-radius: 999px;
+  padding: 10px 32px;
+  font-family: var(--custom-font-family, serif);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 2px 3px 0 0 #171008;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+}
+
+.bg-empty-reset-btn:hover {
+  background-color: #EA5B1B;
+  border-color: #171008;
+  transform: translateY(-1px);
+  box-shadow: 2px 4px 0 0 #171008;
+}
+
+.bg-empty-reset-btn:active {
+  transform: translate(1px, 2px);
+  box-shadow: 1px 1px 0 0 #171008;
+}
+
+@media screen and (max-width: 600px) {
+  .blog-grid-empty {
+    padding: 42px 18px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+  }
+
+  .bg-empty-icon {
+    width: 54px;
+    height: 54px;
+    margin-bottom: 16px;
+  }
+
+  .bg-empty-title {
+    font-size: 21px;
+  }
+
+  .bg-empty-desc {
+    font-size: 13.5px;
+  }
+
+  .bg-empty-reset-btn {
+    padding: 9px 26px;
+    font-size: 14px;
+  }
+}

@@ -144,7 +144,7 @@
 .hwu-tape-group {
   display: inline-flex;
   align-items: center;
-  gap: 22px;
+  gap: 24px;
   padding: 0 12px;
 }
 
@@ -156,12 +156,17 @@
   letter-spacing: -0.2px;
   white-space: nowrap;
   display: inline-block;
+  flex-shrink: 0;
 }
 
-.hwu-fox-svg {
+.hwu-fox-svg,
+.hwu-fox-img {
   display: inline-block;
   vertical-align: middle;
   flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 /* Circles Cluster (Anchor container centered on stage) */
@@ -173,7 +178,7 @@
   pointer-events: auto;
 }
 
-/* Base circle shape - No hover effects */
+/* Base circle shape */
 .hwu-circle {
   position: absolute;
   border-radius: 50%;
@@ -183,7 +188,19 @@
   justify-content: center;
   text-align: center;
   box-shadow: none;
-  /* Hover zoom completely removed */
+}
+
+@keyframes hwu-circle-jiggle {
+  0%   { rotate: 0deg; scale: 1; }
+  20%  { rotate: -6deg; scale: 1.06 0.95; }
+  40%  { rotate: 5deg; scale: 0.96 1.05; }
+  60%  { rotate: -4deg; scale: 1.03 0.98; }
+  80%  { rotate: 2deg; scale: 0.99 1.01; }
+  100% { rotate: 0deg; scale: 1; }
+}
+
+.hwu-circle:hover {
+  animation: hwu-circle-jiggle 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 /* 
@@ -442,6 +459,12 @@
 
   .hwu-tape-text {
     font-size: 13px;
+  }
+
+  .hwu-fox-svg,
+  .hwu-fox-img {
+    width: 16px;
+    height: 16px;
   }
 
   .hwu-circle--main {

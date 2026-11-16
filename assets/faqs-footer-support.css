@@ -230,6 +230,13 @@
   display: inline-block;
   vertical-align: middle;
   color: #25D366;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.ffs-wa-custom-icon {
+  object-fit: contain;
 }
 
 .ffs-card-note {

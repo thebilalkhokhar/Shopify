@@ -341,6 +341,7 @@
     // Add to cart click
     if (addBtn) {
       addBtn.addEventListener('click', function() {
+        var origText = addBtn.textContent;
         addBtn.classList.add('is-loading');
         addBtn.textContent = 'Adding...';
 
@@ -364,16 +365,23 @@
         })
         .then(function(res) {
           if (!res.ok) {
-            // Fallback redirect if product id not in shopify db
-            window.location.href = '/cart';
-            return;
+            throw new Error('Sample add failed');
           }
           return res.json();
         })
         .then(function() {
-          window.location.href = '/cart';
+          addBtn.classList.remove('is-loading');
+          addBtn.textContent = origText;
+          window.dispatchEvent(new CustomEvent('cart:updated'));
+          if (window.TapeFoxCartDrawer) {
+            window.TapeFoxCartDrawer.open();
+          } else {
+            window.location.href = '/cart';
+          }
         })
         .catch(function() {
+          addBtn.classList.remove('is-loading');
+          addBtn.textContent = origText;
           window.location.href = '/cart';
         });
       });

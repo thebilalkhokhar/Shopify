@@ -108,6 +108,12 @@
   color: #ff6b00;
 }
 
+@media screen and (max-width: 1100px) {
+  .header__menu-link {
+    font-size: 14px;
+  }
+}
+
 .has-dropdown,
 .has-megamenu,
 .has-compare-menu {
@@ -209,39 +215,29 @@
   align-items: center;
   justify-content: center;
   width: 95px;
-  height: auto;
+  height: 32px;
   margin-right: -41px;
   overflow: visible;
+  clip-path: inset(-100px -20px -16px -20px);
   pointer-events: none;
   z-index: 105;
 }
 
 .header__peeking-mascot img {
   position: absolute;
-  top: 100%;
-  /* Initially hidden down inside the header */
+  bottom: -16px;
+  /* Initially tucked 100% below the bottom edge of the header */
   left: 50%;
-  transform: translateX(-50%) translateY(15px);
+  transform: translate(-50%, 100%);
   width: 95px;
   height: auto;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25),
-    top 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.25),
-    visibility 0.3s;
-  z-index: 105;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* When hovering anywhere on the header bar or mega menu, fox mascot slides up and peeks over top header edge */
+/* When hovering anywhere on the header bar or mega menu, fox mascot slides up from below to rest on the bottom edge */
 .tapefox-header:hover .header__peeking-mascot img,
 .header__icons:hover .header__peeking-mascot img {
-  opacity: 1;
-  visibility: visible;
-  top: -16px;
-  /* Sits perfectly peeking over the top header edge */
-  transform: translateX(-50%) translateY(0);
+  transform: translate(-50%, 0);
 }
 
 .header-megamenu__header {
@@ -639,9 +635,13 @@
 
 /* Mobile & Tablet Header Responsive */
 @media (max-width: 991px) {
+  .header__peeking-mascot {
+    display: none !important;
+  }
+
   .tapefox-header {
-    top: 45px;
-    width: 95%;
+    top: 50px;
+    width: calc(100% - 70px);
   }
 
   .header-container {
@@ -680,12 +680,12 @@
 
 @media (max-width: 600px) {
   .tapefox-header {
-    top: 40px;
-    width: 95%;
+    top: 42px;
+    width: calc(100% - 64px);
   }
 
   .header-container {
-    padding: 4px 30px;
+    padding: 4px 24px;
     min-height: 50px;
   }
 
@@ -721,7 +721,7 @@
   }
 
   .header__logo img {
-    max-width: 105px;
+    max-width: 95px;
   }
 
   .header__icons {
@@ -743,12 +743,40 @@
   }
 }
 
+@media (max-width: 575px) {
+
+  .header-icon svg,
+  .mobile-menu-toggle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header__icons {
+    gap: 10px !important;
+  }
+
+  .cart-count {
+    font-size: 10px;
+    min-width: 16px;
+    height: 16px;
+    top: -6px;
+    right: -7px;
+  }
+}
+
 /* =========================================
    Mobile Navigation Drawer & Slide-in Styles
    ========================================= */
 body.mobile-nav-locked {
   overflow: hidden !important;
   touch-action: none;
+}
+
+.tapefox-mobile-drawer,
+.mobile-drawer__body {
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .tapefox-mobile-backdrop {
@@ -782,6 +810,7 @@ body.mobile-nav-locked {
   width: 340px;
   max-width: 90vw;
   height: 100vh;
+  height: 100dvh;
   background-color: #f7f3ee;
   color: #191410;
   z-index: 999;
@@ -793,6 +822,7 @@ body.mobile-nav-locked {
     transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.35s ease;
   will-change: transform;
+  overflow: hidden;
 }
 
 @media (max-width: 992px) {
@@ -845,8 +875,9 @@ body.mobile-nav-locked {
 }
 
 .mobile-drawer__body {
-  flex: 1;
-  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto !important;
   padding: 8px 20px 24px;
   -webkit-overflow-scrolling: touch;
 }

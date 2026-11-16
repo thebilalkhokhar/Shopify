@@ -306,7 +306,7 @@
                 </li>
               {% endfor %}
             {% else %}
-              <li><a href="{{ section.settings.track_order_link | default: '/pages/contact' }}" class="footer-menu-link">Track my order</a></li>
+              <li><a href="{{ section.settings.track_order_link | default: '/pages/track-order' }}" class="footer-menu-link">Track my order</a></li>
               <li><a href="{{ section.settings.shipping_delivery_link | default: '/pages/shipping-delivery' }}" class="footer-menu-link">Shipping &amp; delivery</a></li>
               <li><a href="{{ section.settings.returns_damages_link | default: '/pages/returns-damages' }}" class="footer-menu-link">Returns &amp; damages</a></li>
               <li><a href="{{ section.settings.turnaround_times_link | default: '/pages/turnaround-times' }}" class="footer-menu-link">Turnaround times</a></li>

@@ -298,6 +298,11 @@ body.template-page {
   justify-content: center;
 }
 
+.about-banner-main-picture {
+  width: 100%;
+  display: block;
+}
+
 .about-banner-main-img {
   width: 100%;
   height: auto;
@@ -323,4 +328,24 @@ body.template-page {
   padding: 40px 20px;
   text-align: center;
   gap: 12px;
+}
+
+@media screen and (max-width: 640px) {
+  .about-banner-card {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .about-banner-top {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .about-banner-main-image-wrap {
+    max-width: 100%;
+  }
+
+  .about-banner-main-img {
+    border-radius: 0;
+  }
 }

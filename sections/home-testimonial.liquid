@@ -172,84 +172,128 @@
         punchContainer.appendChild(fragment);
       }
 
-      // 2. Accurate Progress Bar working according to cards
-      function updateProgress() {
-        if (!progress || !track) return;
-        const slides = track.querySelectorAll('.home-testimonial__slide');
-        if (!slides.length) return;
+      // 2. Seamless Infinite Marquee + Progress Bar + Prev/Next Buttons
+      const originalSlides = track ? Array.from(track.querySelectorAll('.home-testimonial__slide')) : [];
+      const originalCount = originalSlides.length;
+      let loopWidth = 0;
+      let isPaused = false;
+      let manualScrollTimer = null;
+      let rafId = null;
+      let lastTime = 0;
 
-        const totalSlides = slides.length;
-        const maxScroll = track.scrollWidth - track.clientWidth;
-
-        if (maxScroll <= 8) {
-          progress.style.width = '100%';
-          return;
-        }
-
-        const scrollPos = track.scrollLeft;
-        const lastSlide = slides[totalSlides - 1];
-        const lastRect = lastSlide.getBoundingClientRect();
-        const trackRect = track.getBoundingClientRect();
-
-        // If at the end or last slide is in full view -> exactly 100%
-        if (scrollPos >= maxScroll - 20 || lastRect.right <= trackRect.right + 20) {
-          progress.style.width = '100%';
-          return;
-        }
-
-        // Proportional progress from starting percentage to 100%
-        const initialPercent = Math.max(20, Math.min(30, Math.round((1 / totalSlides) * 100)));
-        const scrollRatio = Math.max(0, Math.min(1, scrollPos / maxScroll));
-        const currentPercent = initialPercent + scrollRatio * (100 - initialPercent);
-
-        progress.style.width = Math.min(100, Math.max(initialPercent, Math.round(currentPercent))) + '%';
-      }
-
-      // Next button
-      if (nextBtn && track) {
-        nextBtn.addEventListener('click', function () {
-          const slides = track.querySelectorAll('.home-testimonial__slide');
-          const slide = slides[0];
-          const scrollAmount = slide ? slide.offsetWidth + 20 : 380;
-          const maxScroll = track.scrollWidth - track.clientWidth;
-
-          if (track.scrollLeft + scrollAmount >= maxScroll - 25) {
-            track.scrollTo({ left: maxScroll, behavior: 'smooth' });
-            if (progress) progress.style.width = '100%';
-          } else {
-            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-          }
+      if (track && originalCount > 0 && !track.dataset.marqueeInit) {
+        track.dataset.marqueeInit = 'true';
+        originalSlides.forEach(function (slide) {
+          const clone = slide.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.dataset.cloned = 'true';
+          track.appendChild(clone);
         });
       }
 
-      // Prev button
-      if (prevBtn && track) {
-        prevBtn.addEventListener('click', function () {
-          const slides = track.querySelectorAll('.home-testimonial__slide');
-          const slide = slides[0];
+      function computeLoopWidth() {
+        if (!track || originalCount === 0) {
+          loopWidth = 0;
+          return;
+        }
+        const firstOriginal = track.children[0];
+        const firstClone = track.children[originalCount];
+        if (firstOriginal && firstClone) {
+          loopWidth = firstClone.offsetLeft - firstOriginal.offsetLeft;
+        }
+      }
+
+      function updateProgress() {
+        if (!progress || !track || originalCount === 0) return;
+
+        if (loopWidth <= 0) {
+          progress.style.width = '100%';
+          return;
+        }
+
+        const posInLoop = ((track.scrollLeft % loopWidth) + loopWidth) % loopWidth;
+        const minPercent = Math.max(15, Math.min(30, Math.round((1 / originalCount) * 100)));
+        const ratio = Math.max(0, Math.min(1, posInLoop / loopWidth));
+        const currentPercent = minPercent + ratio * (100 - minPercent);
+
+        progress.style.width = Math.min(100, Math.max(minPercent, currentPercent)).toFixed(1) + '%';
+      }
+
+      function pauseForManualAction() {
+        isPaused = true;
+        clearTimeout(manualScrollTimer);
+        manualScrollTimer = setTimeout(function () {
+          isPaused = false;
+        }, 1200);
+      }
+
+      // Continuous smooth marquee loop (~38px/sec)
+      function marqueeTick(now) {
+        if (!lastTime) lastTime = now;
+        const dt = Math.min(50, now - lastTime);
+        lastTime = now;
+
+        if (track && loopWidth > 0 && !isPaused) {
+          track.scrollLeft += (38 * dt) / 1000;
+          if (track.scrollLeft >= loopWidth) {
+            track.scrollLeft -= loopWidth;
+          }
+          updateProgress();
+        }
+
+        rafId = requestAnimationFrame(marqueeTick);
+      }
+
+      // Next button (seamless forward)
+      if (nextBtn && track) {
+        nextBtn.addEventListener('click', function () {
+          pauseForManualAction();
+          const slide = track.querySelector('.home-testimonial__slide');
           const scrollAmount = slide ? slide.offsetWidth + 20 : 380;
 
-          if (track.scrollLeft - scrollAmount <= 25) {
-            track.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-            track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+          if (loopWidth > 0 && track.scrollLeft >= loopWidth) {
+            track.scrollLeft -= loopWidth;
           }
+          track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+      }
+
+      // Prev button (seamless backward)
+      if (prevBtn && track) {
+        prevBtn.addEventListener('click', function () {
+          pauseForManualAction();
+          const slide = track.querySelector('.home-testimonial__slide');
+          const scrollAmount = slide ? slide.offsetWidth + 20 : 380;
+
+          if (loopWidth > 0 && track.scrollLeft - scrollAmount < 0) {
+            track.scrollLeft += loopWidth;
+          }
+          track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         });
       }
 
       if (track) {
+        track.addEventListener('mouseenter', function () { isPaused = true; });
+        track.addEventListener('mouseleave', function () { isPaused = false; });
+        track.addEventListener('touchstart', function () { isPaused = true; }, { passive: true });
+        track.addEventListener('touchend', function () {
+          clearTimeout(manualScrollTimer);
+          manualScrollTimer = setTimeout(function () { isPaused = false; }, 1200);
+        }, { passive: true });
         track.addEventListener('scroll', updateProgress, { passive: true });
-        track.addEventListener('scrollend', updateProgress);
       }
 
       renderPunches();
+      computeLoopWidth();
       updateProgress();
+      rafId = requestAnimationFrame(marqueeTick);
 
       let resizeTimer;
       window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
           renderPunches();
+          computeLoopWidth();
           updateProgress();
         }, 100);
       });

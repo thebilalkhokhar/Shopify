@@ -126,20 +126,13 @@
     const closeBtn = document.getElementById('TapefoxQuickViewClose');
     const backdrop = document.getElementById('TapefoxQuickViewBackdrop');
 
-    function lockPageScroll() {
-      document.body.style.overflow = 'hidden';
-      if (window.lenis) window.lenis.stop();
-    }
-
-    function unlockPageScroll() {
-      document.body.style.overflow = '';
-      if (window.lenis) window.lenis.start();
-    }
-
     function closeModal() {
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
-      unlockPageScroll();
+      document.body.style.overflow = '';
+      if (window.lenis && typeof window.lenis.start === 'function') {
+        window.lenis.start();
+      }
     }
 
     function openModalWithData(data) {
@@ -151,12 +144,18 @@
       resetFormFields();
       populateDynamicProduct(data);
 
+      const dialogEl = modal.querySelector('.tf-qv-dialog');
+      const bodyEl = modal.querySelector('.tf-qv-body');
+      if (dialogEl) dialogEl.scrollTop = 0;
+      if (bodyEl) bodyEl.scrollTop = 0;
+
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
-      lockPageScroll();
+      document.body.style.overflow = 'hidden';
 
-      const dialogBody = modal.querySelector('.tf-qv-body');
-      if (dialogBody) dialogBody.scrollTop = 0;
+      if (window.lenis && typeof window.lenis.stop === 'function') {
+        window.lenis.stop();
+      }
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
@@ -824,7 +823,14 @@
             });
 
             if (addRes.ok) {
-              window.location.href = '/cart';
+              const qvCloseBtn = document.getElementById('tfQvCloseBtn');
+              if (qvCloseBtn) qvCloseBtn.click();
+              window.dispatchEvent(new CustomEvent('cart:updated'));
+              if (window.TapeFoxCartDrawer) {
+                window.TapeFoxCartDrawer.open();
+              } else {
+                window.location.href = '/cart';
+              }
               return;
             } else {
               const errData = await addRes.json();

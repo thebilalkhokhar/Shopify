@@ -257,3 +257,10 @@ body.template-list-collections footer.tapefox-footer-section {
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
 }
+
+/* Prevent horizontal left-right scroll on mobile without breaking position: sticky */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}

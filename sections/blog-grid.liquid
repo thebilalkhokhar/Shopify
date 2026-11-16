@@ -2,7 +2,7 @@
 
 {%- assign selected_blog = section.settings.blog | default: blog -%}
 {%- if selected_blog == blank or selected_blog.articles.size == 0 -%}
-  {%- assign selected_blog = blogs['news'] -%}
+  {%- assign selected_blog = blogs.news -%}
 {%- endif -%}
 
 {%- comment -%}
@@ -25,13 +25,10 @@
 <section
   id="blog-grid-{{ section.id }}"
   class="blog-grid-section"
-  style="
-    --bg-card-color: {{ section.settings.card_bg | default: '#EA5B1B' }};
-  "
+  style="    --bg-card-color: {{ section.settings.card_bg | default: '#EA5B1B' }};"
   {{ section.shopify_attributes }}
 >
   <div class="blog-grid-container">
-    
     <!-- Category Filter Tabs -->
     <div class="blog-grid-filters">
       <button type="button" class="bg-filter-pill is-active" data-filter="all">
@@ -52,16 +49,16 @@
           </button>
         {%- endfor -%}
       {%- else -%}
-        {%- assign categories = "" -%}
+        {%- assign categories = '' -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.category != blank -%}
             {%- unless categories contains block.settings.category -%}
-              {%- assign categories = categories | append: block.settings.category | append: "," -%}
+              {%- assign categories = categories | append: block.settings.category | append: ',' -%}
             {%- endunless -%}
           {%- endif -%}
         {%- endfor -%}
 
-        {%- assign category_array = categories | split: "," -%}
+        {%- assign category_array = categories | split: ',' -%}
         {%- for cat in category_array -%}
           {%- if cat != blank -%}
             <button type="button" class="bg-filter-pill" data-filter="{{ cat | handleize }}">
@@ -74,16 +71,20 @@
 
     <!-- 3-Column Blog Cards Grid -->
     <div class="blog-grid-cards">
-      
       <!-- 1. Real Shopify Articles (New articles appear here in sequence, after the top featured banner post) -->
       {% if grid_articles_count > 0 %}
         {% for article in selected_blog.articles offset: grid_offset %}
           {% assign first_tag = article.tags | first | default: 'General' %}
           {% assign cat_handle = first_tag | handleize %}
-          
+          {% capture article_cat_handles %}all {% for t in article.tags %}{{ t | handleize }} {% endfor %}{% endcapture %}
+          {% if article.tags.size == 0 %}
+            {% capture article_cat_handles %}all general{% endcapture %}
+          {% endif %}
+
           <article
             class="blog-grid-card"
             data-category="{{ cat_handle }}"
+            data-categories="{{ article_cat_handles | strip | downcase }}"
           >
             <!-- Card Image Container with Category Badge -->
             <div class="bg-card-image-wrap">
@@ -124,7 +125,7 @@
               </p>
 
               <div class="bg-card-date">
-                {{ article.published_at | date: "%B %d, %Y" }}
+                {{ article.published_at | date: '%B %d, %Y' }}
               </div>
             </div>
           </article>
@@ -141,6 +142,7 @@
             <article
               class="blog-grid-card"
               data-category="{{ cat_handle }}"
+              data-categories="all {{ cat_handle }}"
               {{ block.shopify_attributes }}
             >
               <div class="bg-card-image-wrap">
@@ -185,7 +187,7 @@
           {% endfor %}
         {% endif %}
 
-      <!-- 2. Fallback Theme Customizer Blocks (If no real articles yet) -->
+        <!-- 2. Fallback Theme Customizer Blocks (If no real articles yet) -->
       {% else %}
         {% for block in section.blocks %}
           {% assign cat_handle = block.settings.category | default: 'all' | handleize %}
@@ -196,6 +198,7 @@
           <article
             class="blog-grid-card"
             data-category="{{ cat_handle }}"
+            data-categories="all {{ cat_handle }}"
             {{ block.shopify_attributes }}
           >
             <!-- Card Image Container with Category Badge -->
@@ -241,7 +244,46 @@
           </article>
         {% endfor %}
       {% endif %}
+    </div>
 
+    <!-- Empty State (When no posts match the selected tab/tag) -->
+    <div class="blog-grid-empty" id="bg-empty-state" style="display: none;">
+      <div class="bg-empty-content">
+        <div class="bg-empty-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            width="30"
+            height="30"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <line x1="10" y1="9" x2="8" y2="9"></line>
+          </svg>
+        </div>
+        <h3
+          class="bg-empty-title"
+          id="bg-empty-title"
+          data-default-title="{{ section.settings.empty_title | default: 'No articles found' | escape }}"
+        >
+          {{ section.settings.empty_title | default: 'No articles found' }}
+        </h3>
+        <p class="bg-empty-desc">
+          {{
+            section.settings.empty_text
+            | default: 'There are no blog posts in this category yet. Check back soon or explore our other topics.'
+          }}
+        </p>
+        <button type="button" class="bg-empty-reset-btn" id="bg-empty-reset-btn">
+          {{ section.settings.empty_button_text | default: 'View all posts' }}
+        </button>
+      </div>
     </div>
 
     <!-- Bottom "Load more" Button -->
@@ -250,19 +292,23 @@
         {{ section.settings.load_more_text | default: 'Load more' }}
       </button>
     </div>
-
   </div>
 </section>
 
 <script>
-  (function() {
+  (function () {
     var section = document.getElementById('blog-grid-{{ section.id }}');
     if (!section) return;
 
     var filterBtns = section.querySelectorAll('.bg-filter-pill');
     var cards = Array.from(section.querySelectorAll('.blog-grid-card'));
+    var cardsContainer = section.querySelector('.blog-grid-cards');
+    var loadMoreWrap = section.querySelector('.blog-grid-load-more-wrap');
     var loadMoreBtn = section.querySelector('#bg-load-more-btn');
     var allCount = section.querySelector('#bg-filter-all-count');
+    var emptyState = section.querySelector('#bg-empty-state');
+    var emptyTitle = section.querySelector('#bg-empty-title');
+    var emptyResetBtn = section.querySelector('#bg-empty-reset-btn');
 
     var ITEMS_PER_PAGE = 3;
     var currentVisibleCount = ITEMS_PER_PAGE;
@@ -274,27 +320,61 @@
 
     function updateCardVisibility() {
       // 1. Filter matching cards
-      var matchingCards = cards.filter(function(card) {
+      var matchingCards = cards.filter(function (card) {
         if (currentFilter === 'all') return true;
-        return card.getAttribute('data-category') === currentFilter;
+        var categories = (card.getAttribute('data-categories') || card.getAttribute('data-category') || '')
+          .toLowerCase()
+          .trim()
+          .split(/\s+/);
+        return categories.indexOf(currentFilter.toLowerCase()) !== -1;
       });
 
       // 2. Hide all cards first
-      cards.forEach(function(card) {
+      cards.forEach(function (card) {
         card.style.display = 'none';
       });
 
-      // 3. Show matching cards up to currentVisibleCount
-      matchingCards.slice(0, currentVisibleCount).forEach(function(card) {
-        card.style.display = '';
-      });
+      // 3. Handle Empty State when no blogs match selected tab
+      if (matchingCards.length === 0) {
+        if (emptyState) {
+          emptyState.style.display = 'block';
+          if (emptyTitle) {
+            var activePill = section.querySelector('.bg-filter-pill.is-active .bg-filter-text');
+            var catName = activePill ? activePill.textContent.trim() : '';
+            var defaultHeading = emptyTitle.getAttribute('data-default-title') || 'No articles found';
+            if (catName && currentFilter !== 'all') {
+              emptyTitle.textContent = 'No posts in "' + catName + '"';
+            } else {
+              emptyTitle.textContent = defaultHeading;
+            }
+          }
+        }
+        if (cardsContainer) {
+          cardsContainer.style.display = 'none';
+        }
+        if (loadMoreWrap) {
+          loadMoreWrap.style.display = 'none';
+        }
+      } else {
+        if (emptyState) {
+          emptyState.style.display = 'none';
+        }
+        if (cardsContainer) {
+          cardsContainer.style.display = '';
+        }
 
-      // 4. Update or hide Load More button
-      if (loadMoreBtn) {
-        if (currentVisibleCount >= matchingCards.length) {
-          loadMoreBtn.style.display = 'none';
-        } else {
-          loadMoreBtn.style.display = '';
+        // Show matching cards up to currentVisibleCount
+        matchingCards.slice(0, currentVisibleCount).forEach(function (card) {
+          card.style.display = '';
+        });
+
+        // 4. Update or hide Load More button
+        if (loadMoreWrap && loadMoreBtn) {
+          if (currentVisibleCount >= matchingCards.length) {
+            loadMoreWrap.style.display = 'none';
+          } else {
+            loadMoreWrap.style.display = '';
+          }
         }
       }
     }
@@ -304,16 +384,18 @@
 
     // Click "Load more"
     if (loadMoreBtn) {
-      loadMoreBtn.addEventListener('click', function() {
+      loadMoreBtn.addEventListener('click', function () {
         currentVisibleCount += ITEMS_PER_PAGE;
         updateCardVisibility();
       });
     }
 
     // Click Category Filters
-    filterBtns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        filterBtns.forEach(function(b) { b.classList.remove('is-active'); });
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        filterBtns.forEach(function (b) {
+          b.classList.remove('is-active');
+        });
         this.classList.add('is-active');
 
         currentFilter = this.getAttribute('data-filter');
@@ -322,9 +404,19 @@
       });
     });
 
+    // Reset button in empty state: return to ALL filter
+    if (emptyResetBtn) {
+      emptyResetBtn.addEventListener('click', function () {
+        var allBtn = section.querySelector('.bg-filter-pill[data-filter="all"]');
+        if (allBtn) {
+          allBtn.click();
+        }
+      });
+    }
+
     // Save clicked blog card data to sessionStorage so detail page displays it dynamically
-    cards.forEach(function(card) {
-      card.addEventListener('click', function(e) {
+    cards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
         var link = card.querySelector('a');
         var titleEl = card.querySelector('.bg-card-title');
         var descEl = card.querySelector('.bg-card-desc');
@@ -338,7 +430,7 @@
           date: dateEl ? dateEl.textContent.trim() : '',
           category: badgeEl ? badgeEl.textContent.trim() : 'Sticky Business',
           image: imgEl ? imgEl.getAttribute('src') : '',
-          url: link ? link.getAttribute('href') : ''
+          url: link ? link.getAttribute('href') : '',
         };
 
         try {
@@ -370,6 +462,28 @@
       "id": "load_more_text",
       "label": "Load More Button Text",
       "default": "Load more"
+    },
+    {
+      "type": "header",
+      "content": "Empty State (No blogs in tab)"
+    },
+    {
+      "type": "text",
+      "id": "empty_title",
+      "label": "Empty State Title",
+      "default": "No articles found"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "Empty State Description",
+      "default": "There are no blog posts in this category yet. Check back soon or explore our other topics."
+    },
+    {
+      "type": "text",
+      "id": "empty_button_text",
+      "label": "Empty State Reset Button",
+      "default": "View all posts"
     }
   ],
   "blocks": [

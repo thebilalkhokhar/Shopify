@@ -42,7 +42,7 @@
             {%- if item_unit_price == 0.0 and item.final_price > 0 -%}
               {%- assign item_unit_price = item.final_price | divided_by: 100.0 -%}
             {%- elsif item_unit_price == 0.0 -%}
-              {%- assign item_unit_price = 464.63 -%}
+              {%- assign item_unit_price = item.price | divided_by: 100.0 -%}
             {%- endif -%}
 
             {%- assign item_line_total = item_unit_price | times: item.quantity -%}
@@ -79,74 +79,96 @@
 
                 <!-- Product Info & Specs -->
                 <div class="tf-cart-info">
-                  <div class="tf-cart-eyebrow">{{ section.settings.eyebrow | default: 'Custom printed' }}</div>
+                  <div class="tf-cart-eyebrow">
+                    {%- if item.properties['Item'] != blank -%}
+                      {{ item.properties['Item'] }}
+                    {%- else -%}
+                      {{ section.settings.eyebrow | default: 'Custom printed' }}
+                    {%- endif -%}
+                  </div>
                   <h2 class="tf-cart-title">
-                    <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    <a href="{{ item.url }}">{{ item.product.title | default: item.properties['Item'] | default: 'TapeFox Sample Box' }}</a>
                   </h2>
 
                   <!-- Specs Row (Dynamically populated from item.properties) -->
                   <div class="tf-cart-specs">
-                    <!-- Size -->
-                    <div class="tf-spec-item">
-                      <span class="tf-spec-label">Size</span>
-                      <span class="tf-spec-val">
-                        {{ item.properties['Width'] | default: '3 inch' }} x {{ item.properties['Length'] | default: '375 feet' }}
-                      </span>
-                    </div>
-
-                    <!-- Tape color -->
-                    <div class="tf-spec-item">
-                      <span class="tf-spec-label">Tape color</span>
-                      <span class="tf-spec-val">{{ item.properties['Tape Color'] | default: 'Tan/Kraft' }}</span>
-                    </div>
-
-                    <!-- Ink -->
-                    <div class="tf-spec-item">
-                      <span class="tf-spec-label">Ink</span>
-                      <span class="tf-spec-val">
-                        {{ item.properties['Inks'] | default: 'One ink' }}
-                        <span class="tf-color-dots">
-                          {%- assign raw_ink_colors = item.properties['Ink Color'] | default: 'Blue' -%}
-                          {%- assign color_list = raw_ink_colors | split: ',' -%}
-                          {% for col in color_list %}
-                            {%- assign clean_col = col | strip | downcase -%}
-                            {% if clean_col == 'white' %}
-                              <span class="tf-dot tf-dot--white" title="White"></span>
-                            {% elsif clean_col == 'black' %}
-                              <span class="tf-dot tf-dot--black" title="Black"></span>
-                            {% elsif clean_col == 'blue' %}
-                              <span class="tf-dot tf-dot--blue" title="Blue"></span>
-                            {% elsif clean_col == 'red' %}
-                              <span class="tf-dot tf-dot--red" title="Red"></span>
-                            {% elsif clean_col == 'green' %}
-                              <span class="tf-dot tf-dot--green" title="Green"></span>
-                            {% elsif clean_col == 'orange' %}
-                              <span class="tf-dot tf-dot--orange" title="Orange"></span>
-                            {% elsif clean_col == 'yellow' %}
-                              <span class="tf-dot tf-dot--yellow" title="Yellow"></span>
-                            {% elsif clean_col == 'brown' %}
-                              <span class="tf-dot tf-dot--brown" title="Brown"></span>
-                            {% elsif clean_col == 'grey' or clean_col == 'gray' %}
-                              <span class="tf-dot tf-dot--grey" title="Grey"></span>
-                            {% else %}
-                              <span class="tf-dot tf-dot--blue" title="{{ col | strip }}"></span>
-                            {% endif %}
-                          {% endfor %}
+                    {%- if item.properties['Item'] contains 'Sample' or item_title_lower contains 'sample' or item.properties['Boxes'] != blank -%}
+                      <!-- Sample Box Specs -->
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Boxes</span>
+                        <span class="tf-spec-val">{{ item.properties['Boxes'] | default: 1 }}</span>
+                      </div>
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Printed roll</span>
+                        <span class="tf-spec-val">{{ item.properties['Printed Roll'] | default: 'Yes' }}</span>
+                      </div>
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Shipping</span>
+                        <span class="tf-spec-val">{{ item.properties['Shipping'] | default: '1-2 Days' }}</span>
+                      </div>
+                    {%- else -%}
+                      <!-- Size -->
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Size</span>
+                        <span class="tf-spec-val">
+                          {{ item.properties['Width'] | default: '3 inch' }} x {{ item.properties['Length'] | default: '375 feet' }}
                         </span>
-                      </span>
-                    </div>
+                      </div>
 
-                    <!-- Coverage -->
-                    <div class="tf-spec-item">
-                      <span class="tf-spec-label">Coverage</span>
-                      <span class="tf-spec-val">{{ item.properties['Coverage'] | default: 'Standard' }}</span>
-                    </div>
+                      <!-- Tape color -->
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Tape color</span>
+                        <span class="tf-spec-val">{{ item.properties['Tape Color'] | default: 'Tan/Kraft' }}</span>
+                      </div>
 
-                    <!-- Rolls -->
-                    <div class="tf-spec-item">
-                      <span class="tf-spec-label">Rolls</span>
-                      <span class="tf-spec-val tf-rolls-val">{{ item_rolls_total }}</span>
-                    </div>
+                      <!-- Ink -->
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Ink</span>
+                        <span class="tf-spec-val">
+                          {{ item.properties['Inks'] | default: 'One ink' }}
+                          <span class="tf-color-dots">
+                            {%- assign raw_ink_colors = item.properties['Ink Color'] | default: 'Blue' -%}
+                            {%- assign color_list = raw_ink_colors | split: ',' -%}
+                            {% for col in color_list %}
+                              {%- assign clean_col = col | strip | downcase -%}
+                              {% if clean_col == 'white' %}
+                                <span class="tf-dot tf-dot--white" title="White"></span>
+                              {% elsif clean_col == 'black' %}
+                                <span class="tf-dot tf-dot--black" title="Black"></span>
+                              {% elsif clean_col == 'blue' %}
+                                <span class="tf-dot tf-dot--blue" title="Blue"></span>
+                              {% elsif clean_col == 'red' %}
+                                <span class="tf-dot tf-dot--red" title="Red"></span>
+                              {% elsif clean_col == 'green' %}
+                                <span class="tf-dot tf-dot--green" title="Green"></span>
+                              {% elsif clean_col == 'orange' %}
+                                <span class="tf-dot tf-dot--orange" title="Orange"></span>
+                              {% elsif clean_col == 'yellow' %}
+                                <span class="tf-dot tf-dot--yellow" title="Yellow"></span>
+                              {% elsif clean_col == 'brown' %}
+                                <span class="tf-dot tf-dot--brown" title="Brown"></span>
+                              {% elsif clean_col == 'grey' or clean_col == 'gray' %}
+                                <span class="tf-dot tf-dot--grey" title="Grey"></span>
+                              {% else %}
+                                <span class="tf-dot tf-dot--blue" title="{{ col | strip }}"></span>
+                              {% endif %}
+                            {% endfor %}
+                          </span>
+                        </span>
+                      </div>
+
+                      <!-- Coverage -->
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Coverage</span>
+                        <span class="tf-spec-val">{{ item.properties['Coverage'] | default: 'Standard' }}</span>
+                      </div>
+
+                      <!-- Rolls -->
+                      <div class="tf-spec-item">
+                        <span class="tf-spec-label">Rolls</span>
+                        <span class="tf-spec-val tf-rolls-val">{{ item_rolls_total }}</span>
+                      </div>
+                    {%- endif -%}
                   </div>
                 </div>
 
@@ -156,7 +178,9 @@
                     ${{ item_line_total | round: 2 }}
                   </div>
                   <div class="tf-cart-item-per-roll">
-                    {% if item_per_roll > 0 %}
+                    {% if item.properties['Item'] contains 'Sample' or item_title_lower contains 'sample' or item.properties['Boxes'] != blank %}
+                      Sample Box
+                    {% elsif item_per_roll > 0 %}
                       ${{ item_per_roll | round: 2 }} a roll
                     {% elsif item.properties['Per Roll Price'] != blank %}
                       {{ item.properties['Per Roll Price'] }}
@@ -280,8 +304,8 @@
               >{{ cart.note }}</textarea>
             </div>
 
-            <!-- Checkout CTA -->
-            <form action="/pages/checkout" method="get" id="tfCheckoutForm">
+            <!-- Checkout CTA (Shopify Native One-Page Checkout) -->
+            <form action="{{ routes.cart_url }}" method="post" id="tfCheckoutForm">
               <button type="submit" name="checkout" class="tf-summary-checkout-btn">
                 Checkout
               </button>
@@ -297,12 +321,113 @@
       </div>
     {% else %}
       <!-- EMPTY CART STATE (When no items in cart) -->
-      <div class="tf-cart-empty">
+      <div class="tf-cart-empty" id="tfCartEmptyState">
         <h2 class="tf-cart-empty-title">Your cart is currently empty</h2>
         <p class="tf-cart-empty-desc">You have no items in your shopping cart. Customize your tape and get started!</p>
         <a href="/collections" class="tf-cart-empty-btn">
           Explore all tapes →
         </a>
+      </div>
+
+      <!-- CLIENT-SIDE FALLBACK CONTAINER FOR SAMPLE BOX / CUSTOM ITEMS -->
+      <div class="tf-cart-layout" id="tfClientCartLayout" style="display: none;">
+        <div class="tf-cart-items-wrap" id="tfClientCartItemsWrap">
+          <div class="tf-cart-card" id="tfClientSampleCard" data-unit-price="2.04" data-rolls-per-item="1">
+            <div class="tf-cart-card-main">
+              <div class="tf-cart-img-box">
+                <img
+                  src="https://0ap41c-jc.myshopify.com/cdn/shop/files/homeCartBoxes.webp"
+                  alt="TapeFox Sample Box"
+                  loading="lazy"
+                  width="300"
+                  height="auto"
+                >
+              </div>
+
+              <div class="tf-cart-info">
+                <div class="tf-cart-eyebrow">TapeFox Sample Box</div>
+                <h2 class="tf-cart-title">
+                  <a href="/pages/order-sample" id="tfClientSampleTitle">TapeFox Sample Box</a>
+                </h2>
+
+                <div class="tf-cart-specs">
+                  <div class="tf-spec-item">
+                    <span class="tf-spec-label">Boxes</span>
+                    <span class="tf-spec-val" id="tfClientSampleBoxes">1</span>
+                  </div>
+                  <div class="tf-spec-item">
+                    <span class="tf-spec-label">Printed roll</span>
+                    <span class="tf-spec-val">Yes</span>
+                  </div>
+                  <div class="tf-spec-item">
+                    <span class="tf-spec-label">Shipping</span>
+                    <span class="tf-spec-val">1-2 Days</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tf-cart-price-block">
+                <div class="tf-cart-item-total" id="tfClientSamplePrice">$2.04</div>
+                <div class="tf-cart-item-per-roll">Sample Box</div>
+              </div>
+            </div>
+
+            <div class="tf-cart-actions-row">
+              <div class="tf-cart-stepper">
+                <button type="button" class="tf-cart-stepper-btn" onclick="TapeFoxCart.changeClientQty(-1)" aria-label="Decrease quantity">−</button>
+                <span class="tf-cart-stepper-val" id="tfClientSampleQty">1</span>
+                <button type="button" class="tf-cart-stepper-btn" onclick="TapeFoxCart.changeClientQty(1)" aria-label="Increase quantity">+</button>
+              </div>
+
+              <div class="tf-cart-links">
+                <a href="/pages/order-sample" class="tf-cart-link-btn">Edit Spec</a>
+                <button type="button" class="tf-cart-link-btn" onclick="TapeFoxCart.removeClientSample()">Remove</button>
+              </div>
+            </div>
+
+            <div class="tf-cart-bottom-row">
+              <div class="tf-cart-notice-text">
+                Sample box includes printed & blank rolls of all standard materials with free standard delivery.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Summary for client-rendered cart -->
+        <aside class="tf-cart-summary-sidebar">
+          <div class="tf-summary-card">
+            <h2 class="tf-summary-title">{{ section.settings.summary_heading | default: 'Order summary' }}</h2>
+            <div class="tf-summary-rows">
+              <div class="tf-summary-row">
+                <span class="tf-summary-label">Tape</span>
+                <span class="tf-summary-value" id="tfClientSummarySubtotal">$2.04</span>
+              </div>
+              <div class="tf-summary-row">
+                <span class="tf-summary-label">Shipping</span>
+                <span class="tf-summary-value tf-summary-value--green">Free</span>
+              </div>
+              <hr class="tf-summary-divider">
+              <div class="tf-summary-row tf-summary-row--total">
+                <span class="tf-summary-label">Estimated total</span>
+                <span class="tf-summary-value" id="tfClientSummaryTotal">$2.04</span>
+              </div>
+            </div>
+
+            <div class="tf-summary-note-wrap">
+              <textarea name="note" class="tf-summary-note" placeholder="Order note"></textarea>
+            </div>
+
+            <form action="/pages/checkout" method="get">
+              <button type="submit" name="checkout" class="tf-summary-checkout-btn">
+                Checkout
+              </button>
+            </form>
+
+            <p class="tf-summary-footer-text">
+              {{ section.settings.guarantee_text | default: 'Free shipping across the continental US' }}
+            </p>
+          </div>
+        </aside>
       </div>
     {% endif %}
   </div>
@@ -371,7 +496,7 @@
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (window.updateHeaderCartCount) {
-          window.updateHeaderCartCount(data.item_count);
+          window.updateHeaderCartCount(Array.isArray(data.items) ? data.items.length : data.item_count);
         }
         if (targetQty === 0) {
           window.location.reload();
@@ -451,13 +576,86 @@
           summarySubtotal.textContent = '$' + sum.toFixed(2);
         }
       }
+    },
+
+    initClientCart: function() {
+      var sampleRaw = localStorage.getItem('tf_sample_box_item');
+      if (!sampleRaw) return;
+      try {
+        var sample = JSON.parse(sampleRaw);
+        var emptyEl = document.getElementById('tfCartEmptyState');
+        var clientLayout = document.getElementById('tfClientCartLayout');
+        if (clientLayout) {
+          if (emptyEl) emptyEl.style.display = 'none';
+          clientLayout.style.display = 'grid';
+
+          var titleEl = document.getElementById('tfClientSampleTitle');
+          if (titleEl && sample.title) titleEl.textContent = sample.title;
+
+          var qty = sample.quantity || 1;
+          var qtyEl = document.getElementById('tfClientSampleQty');
+          if (qtyEl) qtyEl.textContent = qty;
+
+          var boxesEl = document.getElementById('tfClientSampleBoxes');
+          if (boxesEl) boxesEl.textContent = qty;
+
+          var unitPrice = parseFloat((sample.price || '2.04').toString().replace(/[^0-9.-]+/g, '')) || 2.04;
+          var total = (unitPrice * qty).toFixed(2);
+
+          var priceEl = document.getElementById('tfClientSamplePrice');
+          if (priceEl) priceEl.textContent = '$' + total;
+
+          var subtotalEl = document.getElementById('tfClientSummarySubtotal');
+          if (subtotalEl) subtotalEl.textContent = '$' + total;
+
+          var totalEl = document.getElementById('tfClientSummaryTotal');
+          if (totalEl) totalEl.textContent = '$' + total;
+
+          if (window.updateHeaderCartCount) {
+            window.updateHeaderCartCount(qty > 0 ? 1 : 0);
+          }
+        }
+      } catch (e) {}
+    },
+
+    changeClientQty: function(delta) {
+      var sampleRaw = localStorage.getItem('tf_sample_box_item');
+      if (!sampleRaw) return;
+      try {
+        var sample = JSON.parse(sampleRaw);
+        var curQty = sample.quantity || 1;
+        curQty += delta;
+        if (curQty <= 0) {
+          TapeFoxCart.removeClientSample();
+          return;
+        }
+        sample.quantity = curQty;
+        localStorage.setItem('tf_sample_box_item', JSON.stringify(sample));
+        TapeFoxCart.initClientCart();
+      } catch (e) {}
+    },
+
+    removeClientSample: function() {
+      localStorage.removeItem('tf_sample_box_item');
+      var clientLayout = document.getElementById('tfClientCartLayout');
+      var emptyEl = document.getElementById('tfCartEmptyState');
+      if (clientLayout) clientLayout.style.display = 'none';
+      if (emptyEl) emptyEl.style.display = 'block';
+      if (window.updateHeaderCartCount) {
+        window.updateHeaderCartCount(0);
+      }
     }
   };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', window.TapeFoxCart.recalcSummary);
-  } else {
+  function onCartReady() {
     window.TapeFoxCart.recalcSummary();
+    window.TapeFoxCart.initClientCart();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onCartReady);
+  } else {
+    onCartReady();
   }
 </script>
 

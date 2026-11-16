@@ -134,6 +134,13 @@
         {% endif %}
       </div>
     {% endif %}
+
+    <div class="hero-banner__footer">
+      <div class="hero-banner__container">
+        <span class="hero-banner__footer-left">{{ section.settings.bottom_left_text }}</span>
+        <span class="hero-banner__footer-right">{{ section.settings.bottom_right_text }}</span>
+      </div>
+    </div>
   </div>
 
   <!-- Text Overlay -->
@@ -177,13 +184,6 @@
           {% endif %}
         {% endfor %}
       </div>
-    </div>
-  </div>
-
-  <div class="hero-banner__footer">
-    <div class="hero-banner__container">
-      <span class="hero-banner__footer-left">{{ section.settings.bottom_left_text }}</span>
-      <span class="hero-banner__footer-right">{{ section.settings.bottom_right_text }}</span>
     </div>
   </div>
 </div>

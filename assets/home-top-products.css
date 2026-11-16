@@ -20,7 +20,8 @@
   position: absolute;
   width: 120px;
   z-index: 5;
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 0.72;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
   pointer-events: auto;
 }
 
@@ -74,7 +75,7 @@
 .htp-dummy-tape {
   width: 120px;
   height: 38px;
-  background: #ccae79;
+  background: rgba(204, 174, 121, 0.78);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border-radius: 2px;
@@ -269,6 +270,13 @@
 }
 
 @media (max-width: 600px) {
+  .home-top-products-section {
+    padding: 40px 0 !important;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
   .htp-grid {
     grid-auto-columns: 78%;
     grid-auto-flow: column;

@@ -3,17 +3,40 @@
 <div class="home-cart-section tapefox-dark-section" {{ section.shopify_attributes }}>
   <div class="home-cart__outer">
     <div class="home-cart__grid">
-      <!-- Left Media Card (Complete image containing clip, sticker, and box) -->
+      <!-- Left Media Card (Desktop, Tablet, Mobile) -->
       <div class="home-cart__media-wrap">
-        {% if section.settings.box_image != blank %}
+        {%- assign desktop_img = section.settings.box_image -%}
+        {%- assign tablet_img = section.settings.tablet_box_image | default: desktop_img -%}
+        {%- assign mobile_img = section.settings.mobile_box_image | default: tablet_img | default: desktop_img -%}
+
+        {% if desktop_img != blank %}
           <img
-            class="home-cart__img"
-            src="{{ section.settings.box_image | image_url: width: 900 }}"
-            width="900"
+            class="home-cart__img home-cart__img--desktop"
+            src="{{ desktop_img | image_url: width: 1200 }}"
+            width="1200"
             height="auto"
             alt="{{ section.settings.heading | default: 'Tapes Sample Box' }}"
           >
-        {% else %}
+        {% endif %}
+        {% if tablet_img != blank %}
+          <img
+            class="home-cart__img home-cart__img--tablet"
+            src="{{ tablet_img | image_url: width: 1000 }}"
+            width="1000"
+            height="auto"
+            alt="{{ section.settings.heading | default: 'Tapes Sample Box' }}"
+          >
+        {% endif %}
+        {% if mobile_img != blank %}
+          <img
+            class="home-cart__img home-cart__img--mobile"
+            src="{{ mobile_img | image_url: width: 800 }}"
+            width="800"
+            height="auto"
+            alt="{{ section.settings.heading | default: 'Tapes Sample Box' }}"
+          >
+        {% endif %}
+        {% if desktop_img == blank and tablet_img == blank and mobile_img == blank %}
           <div class="home-cart__placeholder-img">Upload Complete Image Here (with clip, sticker, and box)</div>
         {% endif %}
       </div>
@@ -31,9 +54,15 @@
             <h2 class="home-cart__title">{{ section.settings.heading }}</h2>
           {% endif %}
 
-          {% if section.settings.price != blank %}
+          {%- assign target_product = section.settings.product | default: all_products['sample-box'] -%}
+          {%- assign display_price = section.settings.price -%}
+          {%- if display_price == blank and target_product != blank and target_product.price > 0 -%}
+            {%- assign display_price = target_product.price | money -%}
+          {%- endif -%}
+
+          {% if display_price != blank %}
             <div class="home-cart__price-wrap">
-              <span class="home-cart__price">{{ section.settings.price }}</span>
+              <span class="home-cart__price" id="homeCartDisplayPrice">{{ display_price }}</span>
               {% if section.settings.price_subtext != blank %}
                 <span class="home-cart__price-label">{{ section.settings.price_subtext | newline_to_br }}</span>
               {% endif %}
@@ -85,24 +114,301 @@
           {% endfor %}
         </ul>
 
+        <!-- Material & Boxes Selector -->
+        <div class="home-cart__config" id="homeCartConfig-{{ section.id }}">
+          <div class="home-cart__group">
+            <span class="home-cart__group-label">{{ section.settings.material_label | default: 'MATERIAL' }}</span>
+            <div class="home-cart__material-pills" role="group" aria-label="Material">
+              {%- assign materials_raw = section.settings.materials_list | default: 'Polypropylene, Paper, PVC, Hi-Track Freezer, Flat back' -%}
+              {%- assign materials_arr = materials_raw | split: ',' -%}
+              {%- for mat in materials_arr -%}
+                {%- assign mat_clean = mat | strip -%}
+                {%- if mat_clean != blank -%}
+                  <button
+                    type="button"
+                    class="home-cart__pill{% if forloop.first %} is-active{% endif %}"
+                    data-material="{{ mat_clean | escape }}"
+                  >
+                    {{ mat_clean }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div class="home-cart__divider"></div>
+
+          <div class="home-cart__group">
+            <span class="home-cart__group-label">{{ section.settings.boxes_label | default: 'BOXES' }}</span>
+            <div class="home-cart__boxes-row">
+              <div class="home-cart__stepper">
+                <button type="button" class="home-cart__step-btn" data-step="-1" aria-label="Decrease boxes">&minus;</button>
+                <span class="home-cart__step-val" id="homeCartBoxVal-{{ section.id }}">2</span>
+                <button type="button" class="home-cart__step-btn" data-step="1" aria-label="Increase boxes">+</button>
+              </div>
+              <div class="home-cart__box-presets" role="group" aria-label="Boxes quantity">
+                {%- assign box_presets = '2,3,4,5,10' | split: ',' -%}
+                {%- for qty in box_presets -%}
+                  <button
+                    type="button"
+                    class="home-cart__qty-circle{% if qty == '2' %} is-active{% endif %}"
+                    data-qty="{{ qty }}"
+                  >
+                    {{ qty }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Add to Cart Button -->
         {% if section.settings.button_text != blank %}
-          <a href="{{ section.settings.button_url | default: '/cart' }}" class="home-cart__btn">
+          {%- assign sample_variant_id = target_product.selected_or_first_available_variant.id | default: target_product.variants.first.id | default: 0 -%}
+          <button
+            type="button"
+            id="homeCartAddBtn-{{ section.id }}"
+            class="home-cart__btn"
+            data-variant-id="{{ sample_variant_id }}"
+            data-price="{{ display_price }}"
+            data-product-title="{{ target_product.title | default: section.settings.heading | default: 'TapeFox Sample Box' }}"
+          >
             {{ section.settings.button_text }}
-          </a>
+          </button>
         {% endif %}
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  (function() {
+    var configEl = document.getElementById('homeCartConfig-{{ section.id }}');
+    var btn = document.getElementById('homeCartAddBtn-{{ section.id }}');
+    if (!btn) return;
+
+    var productVariants = [
+      {%- if target_product != blank and target_product.variants.size > 0 -%}
+        {%- for v in target_product.variants -%}
+          {
+            id: {{ v.id }},
+            title: {{ v.title | json }},
+            price: {{ v.price | money | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      {%- endif -%}
+    ];
+
+    var selectedMaterial = 'Polypropylene';
+    var selectedBoxes = 2;
+    var priceEl = document.getElementById('homeCartDisplayPrice');
+    var boxValEl = document.getElementById('homeCartBoxVal-{{ section.id }}');
+
+    function syncMaterialSelection() {
+      if (!configEl) return;
+      var activePills = Array.from(configEl.querySelectorAll('.home-cart__pill.is-active'));
+      var names = activePills.map(function(p) { return p.getAttribute('data-material'); }).filter(Boolean);
+      selectedMaterial = names.length > 0 ? names.join(', ') : 'Polypropylene';
+
+      var primaryName = names[0] || 'Polypropylene';
+      var norm = primaryName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (productVariants.length > 0) {
+        var matched = productVariants.find(function(v) {
+          var vNorm = (v.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+          return vNorm.indexOf(norm) !== -1 || norm.indexOf(vNorm) !== -1;
+        });
+        if (matched) {
+          btn.setAttribute('data-variant-id', matched.id);
+          if (matched.price) {
+            btn.setAttribute('data-price', matched.price);
+            if (priceEl) priceEl.textContent = matched.price;
+          }
+        }
+      }
+    }
+
+    function syncBoxesSelection(qty) {
+      selectedBoxes = Math.max(1, parseInt(qty, 10) || 1);
+      if (boxValEl) boxValEl.textContent = selectedBoxes;
+      if (configEl) {
+        configEl.querySelectorAll('.home-cart__qty-circle').forEach(function(circle) {
+          var cQty = parseInt(circle.getAttribute('data-qty'), 10);
+          circle.classList.toggle('is-active', cQty === selectedBoxes);
+        });
+      }
+    }
+
+    if (configEl) {
+      syncMaterialSelection();
+
+      configEl.querySelectorAll('.home-cart__pill').forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          var activeCount = configEl.querySelectorAll('.home-cart__pill.is-active').length;
+          // Prevent unchecking the last selected material
+          if (pill.classList.contains('is-active') && activeCount <= 1) {
+            return;
+          }
+          pill.classList.toggle('is-active');
+          syncMaterialSelection();
+        });
+      });
+
+      configEl.querySelectorAll('.home-cart__step-btn').forEach(function(stepBtn) {
+        stepBtn.addEventListener('click', function() {
+          var delta = parseInt(stepBtn.getAttribute('data-step'), 10) || 0;
+          syncBoxesSelection(selectedBoxes + delta);
+        });
+      });
+
+      configEl.querySelectorAll('.home-cart__qty-circle').forEach(function(circle) {
+        circle.addEventListener('click', function() {
+          syncBoxesSelection(circle.getAttribute('data-qty'));
+        });
+      });
+    }
+
+    btn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      var variantId = parseInt(btn.getAttribute('data-variant-id'), 10) || 0;
+      var priceStr = btn.getAttribute('data-price') || '$2.04';
+      var itemTitle = btn.getAttribute('data-product-title') || 'TapeFox Sample Box';
+
+      btn.disabled = true;
+      var origText = btn.textContent;
+      btn.textContent = 'Adding...';
+
+      // If variantId is not present or 0, attempt to auto-fetch the matching product variant
+      if (!variantId || variantId === 0) {
+        try {
+          var res = await fetch('/products.json?limit=20');
+          if (res.ok) {
+            var data = await res.json();
+            if (data && data.products && data.products.length > 0) {
+              var matNorm = selectedMaterial.toLowerCase().replace(/[^a-z0-9]/g, '');
+              var sampleMatch = data.products.find(function(p) {
+                return (p.title && p.title.toLowerCase().indexOf('sample') !== -1) ||
+                       (p.handle && p.handle.toLowerCase().indexOf('sample') !== -1);
+              });
+              var matMatch = data.products.find(function(p) {
+                var pNorm = (p.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                return pNorm.indexOf(matNorm) !== -1;
+              });
+              var match = sampleMatch || matMatch || data.products[0];
+
+              if (match && match.variants && match.variants.length > 0) {
+                var vMatch = match.variants.find(function(v) {
+                  var vNorm = (v.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                  return vNorm.indexOf(matNorm) !== -1;
+                }) || match.variants[0];
+                variantId = vMatch.id;
+                itemTitle = match.title || itemTitle;
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('Could not auto-fetch product variant:', err);
+        }
+      }
+
+      if (variantId && variantId > 0) {
+        var formData = {
+          items: [{
+            id: variantId,
+            quantity: selectedBoxes,
+            properties: {
+              'Item': itemTitle,
+              'Material': selectedMaterial,
+              'Boxes': selectedBoxes,
+              'Total Price': priceStr,
+              'Printed Roll': 'Yes',
+              'Shipping': '1-2 Days'
+            }
+          }]
+        };
+
+        try {
+          var addRes = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
+
+          if (addRes.ok) {
+            btn.disabled = false;
+            btn.textContent = origText;
+            window.dispatchEvent(new CustomEvent('cart:updated'));
+            if (window.TapeFoxCartDrawer) {
+              window.TapeFoxCartDrawer.open();
+            } else {
+              window.location.href = '/cart';
+            }
+            return;
+          } else {
+            var errJson = await addRes.json();
+            console.warn('Shopify cart/add.js error:', errJson);
+          }
+        } catch (fetchErr) {
+          console.error('AJAX add to cart failed:', fetchErr);
+        }
+      }
+
+      // Fallback mock item in localStorage
+      try {
+        var mockItem = {
+          id: 'sample-box-' + Date.now(),
+          title: itemTitle,
+          price: priceStr,
+          quantity: selectedBoxes,
+          properties: {
+            'Item': itemTitle,
+            'Material': selectedMaterial,
+            'Boxes': selectedBoxes,
+            'Total Price': priceStr,
+            'Printed Roll': 'Yes',
+            'Shipping': '1-2 Days'
+          }
+        };
+        localStorage.setItem('tf_sample_box_item', JSON.stringify(mockItem));
+      } catch (storageErr) {}
+
+      btn.disabled = false;
+      btn.textContent = origText;
+      window.dispatchEvent(new CustomEvent('cart:updated'));
+      if (window.TapeFoxCartDrawer) {
+        window.TapeFoxCartDrawer.open();
+      } else {
+        window.location.href = '/cart';
+      }
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Home Cart",
   "settings": [
     {
+      "type": "product",
+      "id": "product",
+      "label": "Sample Product",
+      "info": "Select the sample product from Shopify portal. Price and variant ID will dynamically sync with this product."
+    },
+    {
       "type": "image_picker",
       "id": "box_image",
-      "label": "Left Yellow Card Image (Box of Tapes)"
+      "label": "Desktop Image (>992px)"
+    },
+    {
+      "type": "image_picker",
+      "id": "tablet_box_image",
+      "label": "Tablet Image (641px - 992px)",
+      "info": "Image shown on tablet devices between 641px and 992px."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_box_image",
+      "label": "Mobile Image (≤640px)",
+      "info": "Image shown on mobile devices (640px and below)."
     },
     {
       "type": "image_picker",
@@ -130,8 +436,8 @@
     {
       "type": "text",
       "id": "price",
-      "label": "Price",
-      "default": "$2.04"
+      "label": "Custom Price Display (Optional Override)",
+      "info": "Leave blank to dynamically use the selected Shopify product's price, or enter an override (e.g. $2.04)."
     },
     {
       "type": "textarea",
@@ -153,6 +459,24 @@
     },
     {
       "type": "text",
+      "id": "material_label",
+      "label": "Material Label",
+      "default": "MATERIAL"
+    },
+    {
+      "type": "text",
+      "id": "materials_list",
+      "label": "Materials (comma-separated)",
+      "default": "Polypropylene, Paper, PVC, Hi-Track Freezer, Flat back"
+    },
+    {
+      "type": "text",
+      "id": "boxes_label",
+      "label": "Boxes Label",
+      "default": "BOXES"
+    },
+    {
+      "type": "text",
       "id": "button_text",
       "label": "Button Text",
       "default": "Add to Cart"
@@ -160,7 +484,7 @@
     {
       "type": "url",
       "id": "button_url",
-      "label": "Button URL"
+      "label": "Button URL (Fallback)"
     }
   ],
   "blocks": [

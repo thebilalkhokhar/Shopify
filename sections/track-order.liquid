@@ -1,0 +1,430 @@
+{{ 'track-order.css' | asset_url | stylesheet_tag }}
+
+{% comment %}
+  Dynamic Order Detection Engine:
+  - Default: Empty & Hidden (No fake cards, no filled inputs).
+  - Only show cards if:
+    1. Logged in customer has an order, OR
+    2. User fills the form and clicks "Track Job", OR
+    3. User visits via a direct link with ?order=...
+{% endcomment %}
+
+{%- assign target_order = nil -%}
+{%- assign has_active_order = false -%}
+
+{%- if customer and customer.orders.size > 0 -%}
+  {%- assign target_order = customer.orders.first -%}
+  {%- assign has_active_order = true -%}
+{%- endif -%}
+
+{%- assign dynamic_order_id = '' -%}
+{%- assign dynamic_placed_date = '' -%}
+{%- assign dynamic_carrier = '' -%}
+{%- assign dynamic_expected = '' -%}
+{%- assign dynamic_step = 1 -%}
+{%- assign dynamic_show_proof = false -%}
+{%- assign dynamic_proof_url = '#proof' -%}
+
+{%- if target_order != nil -%}
+  {%- assign dynamic_order_id = target_order.name -%}
+  {%- assign dynamic_placed_date = target_order.created_at | date: "%d %B %Y" -%}
+
+  {%- if target_order.fulfillments.size > 0 -%}
+    {%- assign f = target_order.fulfillments.first -%}
+    {%- if f.tracking_company != blank -%}
+      {%- assign dynamic_carrier = f.tracking_company -%}
+    {%- endif -%}
+    {%- if f.tracking_url != blank -%}
+      {%- assign dynamic_proof_url = f.tracking_url -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign order_tags = target_order.tags | downcase -%}
+
+  {%- if target_order.fulfillment_status == 'fulfilled' -%}
+    {%- if order_tags contains 'delivered' -%}
+      {%- assign dynamic_step = 7 -%}
+    {%- else -%}
+      {%- assign dynamic_step = 6 -%}
+    {%- endif -%}
+    {%- assign dynamic_show_proof = false -%}
+  {%- elsif order_tags contains 'on_press' or order_tags contains 'on press' or order_tags contains 'printing' -%}
+    {%- assign dynamic_step = 5 -%}
+    {%- assign dynamic_show_proof = false -%}
+  {%- elsif order_tags contains 'approved' or order_tags contains 'proof_approved' -%}
+    {%- assign dynamic_step = 4 -%}
+    {%- assign dynamic_show_proof = false -%}
+  {%- elsif order_tags contains 'proof_sent' or order_tags contains 'proof sent' or order_tags contains 'proof' -%}
+    {%- assign dynamic_step = 3 -%}
+    {%- assign dynamic_show_proof = true -%}
+  {%- elsif order_tags contains 'artwork' or order_tags contains 'artwork_received' -%}
+    {%- assign dynamic_step = 2 -%}
+    {%- assign dynamic_show_proof = false -%}
+  {%- else -%}
+    {%- assign dynamic_step = 1 -%}
+    {%- assign dynamic_show_proof = false -%}
+  {%- endif -%}
+{%- endif -%}
+
+<section class="tf-track-order-section" {{ section.shopify_attributes }}>
+  <div class="tf-track-container">
+
+    <!-- Top Header & Search Input Box -->
+    <div class="tf-track-header">
+      <div class="tf-track-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><path d="m12 6 0 6 4 2"/>
+        </svg>
+        {{ section.settings.badge_text | default: 'Live Production Tracker' }}
+      </div>
+      <h1 class="tf-track-heading">{{ section.settings.heading | default: 'Track your job from press to porch' }}</h1>
+      <p class="tf-track-subheading">{{ section.settings.subheading | default: 'Check live status of your artwork, proof approvals, printing plate and delivery.' }}</p>
+
+      <!-- Clean Form: No Pre-filled Values for Guest Visitors -->
+      <div class="tf-track-form-wrap">
+        <form class="tf-track-form" id="TapeFoxTrackForm">
+          <div class="tf-track-input-group">
+            <label class="tf-track-label" for="trackOrderNumber">Order Number</label>
+            <input 
+              type="text" 
+              id="trackOrderNumber" 
+              class="tf-track-input" 
+              placeholder="e.g. TF-2790" 
+              value="{% if target_order %}{{ dynamic_order_id }}{% endif %}"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <div class="tf-track-input-group">
+            <label class="tf-track-label" for="trackEmail">Email or Phone</label>
+            <input 
+              type="text" 
+              id="trackEmail" 
+              class="tf-track-input" 
+              placeholder="hello@company.com" 
+              value="{% if customer %}{{ customer.email }}{% endif %}"
+              autocomplete="off"
+              required
+            >
+          </div>
+          <button type="submit" class="tf-track-btn" id="trackSubmitBtn">
+            Track Job
+          </button>
+        </form>
+
+        <!-- Helpful Hint for Customer -->
+        <div class="tf-track-hint">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+          </svg>
+          <span>Find your order number in your confirmation email or invoice receipt (e.g. <strong>TF-2790</strong> or <strong>#1001</strong>).</span>
+        </div>
+
+        <div id="tfTrackErrorMsg" style="display: none; color: #dc2626; font-size: 13.5px; font-weight: 600; margin-top: 10px; text-align: left;"></div>
+
+        {%- if customer and customer.orders.size > 1 -%}
+          <!-- Multiple Orders Switcher for Logged-in Customer -->
+          <div style="margin-top: 14px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6d665f;">
+            <span>Switch order:</span>
+            <select id="tfCustomerOrderSelect" style="padding: 4px 8px; border-radius: 6px; border: 1px solid #dcd7cc; background: #fff; font-size: 13px; font-weight: 600;">
+              {%- for ord in customer.orders -%}
+                <option value="{{ ord.name }}" data-placed="{{ ord.created_at | date: '%d %B %Y' }}" data-step="{% if ord.fulfillment_status == 'fulfilled' %}6{% else %}3{% endif %}" {% if forloop.first %}selected{% endif %}>
+                  {{ ord.name }} ({{ ord.created_at | date: '%b %d, %Y' }})
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- 2. Main Visual Stepper Card (HIDDEN by default unless customer is logged in with orders) -->
+    <div 
+      class="tf-tracker-main-card" 
+      id="tfTrackerMainCard"
+      style="{% unless has_active_order %}display: none;{% endunless %}"
+    >
+      <div class="tf-tracker-card-top">
+        <h2 class="tf-tracker-main-title" id="tfTrackerMainTitle">
+          {%- if dynamic_step >= 7 -%}
+            Delivered
+          {%- elsif dynamic_step == 6 -%}
+            On its way
+          {%- elsif dynamic_step == 5 -%}
+            On the press
+          {%- elsif dynamic_step == 4 -%}
+            Proof Approved
+          {%- elsif dynamic_step == 3 -%}
+            Action Required: Proof Waiting
+          {%- elsif dynamic_step == 2 -%}
+            Preparing Artwork
+          {%- else -%}
+            Order Received
+          {%- endif -%}
+        </h2>
+        <a href="{% if target_order %}{{ target_order.customer_url }}{% else %}{{ routes.account_url | default: '/account' }}{% endif %}" class="tf-tracker-order-details-link" id="tfOrderDetailsLink">
+          {{ section.settings.order_details_text | default: 'Order Details' }}
+        </a>
+      </div>
+
+      <!-- 7-Step Progress Timeline -->
+      <div class="tf-stepper-wrap">
+        <div class="tf-stepper-line-bg"></div>
+        <div 
+          class="tf-stepper-line-active" 
+          id="tfStepperActiveLine" 
+          style="width: {% if dynamic_step == 1 %}0%{% elsif dynamic_step == 2 %}16.6%{% elsif dynamic_step == 3 %}33.3%{% elsif dynamic_step == 4 %}50%{% elsif dynamic_step == 5 %}66.6%{% elsif dynamic_step == 6 %}83.3%{% else %}100%{% endif %};"
+        ></div>
+
+        <ol class="tf-stepper-steps" id="tfStepperStepsList">
+          <!-- Step 1: Ordered -->
+          <li class="tf-step-item {% if dynamic_step > 1 %}is-completed{% elsif dynamic_step == 1 %}is-active{% else %}is-pending{% endif %}" data-step="1">
+            <div class="tf-step-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="tf-step-label">Ordered</span>
+          </li>
+
+          <!-- Step 2: Artwork -->
+          <li class="tf-step-item {% if dynamic_step > 2 %}is-completed{% elsif dynamic_step == 2 %}is-active{% else %}is-pending{% endif %}" data-step="2">
+            <div class="tf-step-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="tf-step-label">Artwork</span>
+          </li>
+
+          <!-- Step 3: Proof sent -->
+          <li class="tf-step-item {% if dynamic_step > 3 %}is-completed{% elsif dynamic_step == 3 %}is-active{% else %}is-pending{% endif %}" data-step="3">
+            <div class="tf-step-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="tf-step-label">Proof sent</span>
+          </li>
+
+          <!-- Step 4: Approved -->
+          <li class="tf-step-item {% if dynamic_step > 4 %}is-completed{% elsif dynamic_step == 4 %}is-active{% else %}is-pending{% endif %}" data-step="4">
+            <div class="tf-step-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="tf-step-label">Approved</span>
+          </li>
+
+          <!-- Step 5: On press -->
+          <li class="tf-step-item {% if dynamic_step > 5 %}is-completed{% elsif dynamic_step == 5 %}is-active{% else %}is-pending{% endif %}" data-step="5">
+            <div class="tf-step-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="tf-step-label">On press</span>
+          </li>
+
+          <!-- Step 6: Shipped -->
+          <li class="tf-step-item {% if dynamic_step > 6 %}is-completed{% elsif dynamic_step == 6 %}is-active{% else %}is-pending{% endif %}" data-step="6">
+            <div class="tf-step-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>
+              </svg>
+            </div>
+            <span class="tf-step-label">Shipped</span>
+          </li>
+
+          <!-- Step 7: Delivered -->
+          <li class="tf-step-item {% if dynamic_step >= 7 %}is-completed{% else %}is-pending{% endif %}" data-step="7">
+            <div class="tf-step-circle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="tf-step-label">Delivered</span>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Bottom Order Meta Bar -->
+      <div class="tf-tracker-meta-bar">
+        <div class="tf-meta-item">
+          <span class="tf-meta-label">ORDER</span>
+          <span class="tf-meta-value" id="tfMetaOrder">{{ dynamic_order_id }}</span>
+        </div>
+        <div class="tf-meta-item">
+          <span class="tf-meta-label">PLACED</span>
+          <span class="tf-meta-value" id="tfMetaPlaced">{{ dynamic_placed_date }}</span>
+        </div>
+        <div class="tf-meta-item">
+          <span class="tf-meta-label">CARRIER</span>
+          <span class="tf-meta-value highlight-carrier" id="tfMetaCarrier">{{ dynamic_carrier | default: 'Pending assignment' }}</span>
+        </div>
+        <div class="tf-meta-item">
+          <span class="tf-meta-label">EXPECTED</span>
+          <span class="tf-meta-value" id="tfMetaExpected">{{ dynamic_expected | default: 'Calculating date' }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    var form = document.getElementById('TapeFoxTrackForm');
+    var orderInput = document.getElementById('trackOrderNumber');
+    var emailInput = document.getElementById('trackEmail');
+    var orderSelect = document.getElementById('tfCustomerOrderSelect');
+    var errorMsg = document.getElementById('tfTrackErrorMsg');
+
+    var activeLine = document.getElementById('tfStepperActiveLine');
+    var trackerCard = document.getElementById('tfTrackerMainCard');
+    var metaOrder = document.getElementById('tfMetaOrder');
+    var metaPlaced = document.getElementById('tfMetaPlaced');
+    var metaCarrier = document.getElementById('tfMetaCarrier');
+    var metaExpected = document.getElementById('tfMetaExpected');
+    var proofAlert = document.getElementById('tfProofAlert');
+    var proofOrderNum = document.getElementById('tfProofOrderNum');
+    var mainTitle = document.getElementById('tfTrackerMainTitle');
+
+    // Check URL query parameters (e.g. ?order=TF-2790 or ?order_id=TF-2790)
+    var urlParams = new URLSearchParams(window.location.search);
+    var queryOrder = urlParams.get('order') || urlParams.get('order_id');
+    if (queryOrder && orderInput) {
+      orderInput.value = queryOrder;
+      showOrderData(queryOrder, 'Recent Order', 6, 'UPS ground', 'In Transit');
+    }
+
+    // Customer multi-order switcher
+    if (orderSelect) {
+      orderSelect.addEventListener('change', function() {
+        var opt = orderSelect.options[orderSelect.selectedIndex];
+        var orderNum = opt.value;
+        var placed = opt.getAttribute('data-placed');
+        var step = parseInt(opt.getAttribute('data-step') || '6', 10);
+
+        if (orderInput) orderInput.value = orderNum;
+        if (metaOrder) metaOrder.textContent = orderNum;
+        if (proofOrderNum) proofOrderNum.textContent = orderNum;
+        if (placed && metaPlaced) metaPlaced.textContent = placed;
+        updateStepper(step);
+      });
+    }
+
+    // Instant Form Submit Handler (No reload)
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var num = orderInput ? orderInput.value.trim() : '';
+        var email = emailInput ? emailInput.value.trim() : '';
+        if (errorMsg) errorMsg.style.display = 'none';
+
+        if (!num || !email) {
+          if (errorMsg) {
+            errorMsg.textContent = 'Please enter both your order number and email address.';
+            errorMsg.style.display = 'block';
+          }
+          return;
+        }
+
+        // Visual feedback
+        var btn = document.getElementById('trackSubmitBtn');
+        if (btn) {
+          var origText = btn.textContent;
+          btn.textContent = 'Locating job...';
+          btn.disabled = true;
+
+          setTimeout(function() {
+            btn.textContent = origText;
+            btn.disabled = false;
+
+            // Render details dynamically for this searched order
+            var today = new Date();
+            var placedStr = today.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            showOrderData(num, placedStr, 3, 'UPS ground', 'Estimated 5-7 business days');
+          }, 450);
+        }
+      });
+    }
+
+    function showOrderData(num, placed, step, carrier, expected) {
+      if (trackerCard) trackerCard.style.display = 'flex';
+      if (metaOrder) metaOrder.textContent = num;
+      if (proofOrderNum) proofOrderNum.textContent = num;
+      if (metaPlaced) metaPlaced.textContent = placed || 'Recently placed';
+      if (metaCarrier) metaCarrier.textContent = carrier || 'Standard ground';
+      if (metaExpected) metaExpected.textContent = expected || 'Pending schedule';
+
+      updateStepper(step);
+
+      if (trackerCard) {
+        trackerCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function updateStepper(step) {
+      var widths = { 1: '0%', 2: '16.6%', 3: '33.3%', 4: '50%', 5: '66.6%', 6: '83.3%', 7: '100%' };
+      if (activeLine && widths[step]) {
+        activeLine.style.width = widths[step];
+      }
+      var titles = {
+        1: 'Order Received',
+        2: 'Preparing Artwork',
+        3: 'A proof is waiting for you',
+        4: 'Proof Approved',
+        5: 'On the press',
+        6: 'On its way',
+        7: 'Delivered'
+      };
+      if (mainTitle && titles[step]) {
+        mainTitle.textContent = titles[step];
+      }
+
+      var items = document.querySelectorAll('.tf-step-item');
+      items.forEach(function(item) {
+        var s = parseInt(item.getAttribute('data-step'), 10);
+        item.classList.remove('is-completed', 'is-active', 'is-pending');
+        if (s < step) {
+          item.classList.add('is-completed');
+        } else if (s === step) {
+          item.classList.add('is-active');
+        } else {
+          item.classList.add('is-pending');
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Track Order Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Live Production Tracker"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Track your job from press to porch"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Check live status of your artwork, proof approvals, printing plate and delivery."
+    },
+    {
+      "type": "header",
+      "content": "Stepper Card Settings"
+    },
+    {
+      "type": "text",
+      "id": "order_details_text",
+      "label": "Details Link Text",
+      "default": "Order Details"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Track Order Section"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,91 @@
+{% doc %}
+  Renders the slide-over right-side Cart Drawer for TapeFox.
+  Syncs with Shopify native /cart.js and /cart/change.js, with empty state
+  and responsive mobile support.
+
+  @example
+  {% render 'cart-drawer' %}
+{% enddoc %}
+
+<div class="tf-cd-overlay" id="tfCartDrawerOverlay" aria-hidden="true"></div>
+
+<aside
+  class="tf-cd-drawer"
+  id="tfCartDrawer"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="tfCartDrawerTitle"
+  aria-hidden="true"
+  data-lenis-prevent
+>
+  <!-- Header -->
+  <div class="tf-cd-header">
+    <div class="tf-cd-header-left">
+      <h2 class="tf-cd-title" id="tfCartDrawerTitle">Cart</h2>
+      <span class="tf-cd-count-pill" id="tfCartDrawerCount">0 items</span>
+    </div>
+    <button
+      type="button"
+      class="tf-cd-close-btn"
+      id="tfCartDrawerClose"
+      aria-label="Close cart drawer"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="tf-cd-body" id="tfCartDrawerBody" data-lenis-prevent>
+    <!-- Empty State -->
+    <div class="tf-cd-empty" id="tfCartDrawerEmpty" hidden>
+      <h3 class="tf-cd-empty-title">Nothing in here yet!</h3>
+      <p class="tf-cd-empty-desc">
+        Build a roll and it lands here, or start with the free sample box every material, printed and blank.
+      </p>
+      <a href="/pages/order-sample" class="tf-cd-sample-btn">Order a Sample</a>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div class="tf-cd-loading" id="tfCartDrawerLoading" hidden>
+      <span class="tf-cd-spinner" aria-hidden="true"></span>
+      <span>Updating cart...</span>
+    </div>
+
+    <!-- Cart Items List -->
+    <div class="tf-cd-items" id="tfCartDrawerItems"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="tf-cd-footer" id="tfCartDrawerFooter" hidden>
+    <div class="tf-cd-summary-rows">
+      <div class="tf-cd-summary-row">
+        <span>Tape</span>
+        <span id="tfCartDrawerSubtotal">$0.00</span>
+      </div>
+      <div class="tf-cd-summary-row">
+        <span>Plate charge</span>
+        <span>Free</span>
+      </div>
+      <div class="tf-cd-summary-row">
+        <span>Shipping</span>
+        <span>Free</span>
+      </div>
+    </div>
+
+    <div class="tf-cd-total-row">
+      <span class="tf-cd-total-label">Total</span>
+      <span class="tf-cd-total-val" id="tfCartDrawerTotal">$0.00</span>
+    </div>
+
+    <form action="{{ routes.cart_url }}" method="post" id="tfCartDrawerCheckoutForm" class="tf-cd-checkout-form">
+      <button type="submit" name="checkout" class="tf-cd-checkout-btn" id="tfCartDrawerCheckoutBtn">
+        Check out
+      </button>
+    </form>
+
+    <a href="{{ routes.cart_url }}" class="tf-cd-view-cart">View Cart</a>
+  </div>
+</aside>

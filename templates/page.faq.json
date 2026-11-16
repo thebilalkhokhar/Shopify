@@ -31,6 +31,7 @@
             "category": "Ordering & payment",
             "question": "What is your minimum order?",
             "answer": "Yes. Design support is free. Send us what you have even if it's just a logo and a vague idea and we'll help make it look good.",
+            "answer_richtext": "",
             "is_open": true
           }
         },
@@ -40,6 +41,7 @@
             "category": "Ordering & payment",
             "question": "How much does it cost?",
             "answer": "Price depends on material and quantity. All prices are listed upfront on each product page with zero plate or setup fees.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -49,6 +51,7 @@
             "category": "Ordering & payment",
             "question": "How do I place an order?",
             "answer": "Choose your material, specify roll width and length, upload your artwork, and checkout. We send a digital proof before printing.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -58,6 +61,7 @@
             "category": "Ordering & payment",
             "question": "I need to change or cancel my order",
             "answer": "You can change or cancel your order anytime before your digital proof is approved for press.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -67,6 +71,7 @@
             "category": "Ordering & payment",
             "question": "Can I get samples before I order?",
             "answer": "Yes! Order our sample pack with short rolls of all 5 materials delivered free.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -76,6 +81,7 @@
             "category": "Artwork & proofs",
             "question": "What file formats do you accept?",
             "answer": "We accept AI, PDF, EPS, SVG, and high-resolution PNG or TIFF files (300 DPI minimum).",
+            "answer_richtext": "",
             "is_open": true
           }
         },
@@ -85,6 +91,7 @@
             "category": "Artwork & proofs",
             "question": "I need help with my design",
             "answer": "Design support is 100% free. Send us your logo or idea and our design team will create print-ready artwork.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -94,6 +101,7 @@
             "category": "Artwork & proofs",
             "question": "Will I get a proof before production?",
             "answer": "Always. We never print anything until you explicitly review and approve your PDF proof.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -103,6 +111,7 @@
             "category": "Artwork & proofs",
             "question": "How many colours can I print?",
             "answer": "We print up to 3 spot Pantone colours on all custom tape materials.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -112,6 +121,7 @@
             "category": "Artwork & proofs",
             "question": "What is the plate charge?",
             "answer": "Zero. Tapefox never charges plate fees or cylinder setup fees.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -121,6 +131,7 @@
             "category": "Materials & products",
             "question": "What is the difference between Paper and Poly tape?",
             "answer": "Paper tape is water-activated, biodegradable, and creates a tamper-evident seal. Poly is self-adhesive pressure tape ideal for quick general carton sealing.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -130,6 +141,7 @@
             "category": "Delivery",
             "question": "How fast is delivery?",
             "answer": "Standard production is 12-14 business days after proof approval with free shipping across the continental US.",
+            "answer_richtext": "",
             "is_open": false
           }
         },
@@ -139,6 +151,7 @@
             "category": "Reorders",
             "question": "How do I reorder an existing design?",
             "answer": "Simply log into your customer account or email us your previous order number for 1-click reordering.",
+            "answer_richtext": "",
             "is_open": false
           }
         }
@@ -178,6 +191,7 @@
         "card_2_label": "Chat with us",
         "call_label": "Call us",
         "call_url": "tel:+18005550199",
+        "whatsapp_icon": "shopify://shop_images/app.png",
         "whatsapp_label": "Whatsapp",
         "whatsapp_url": "https://wa.me/18005550199",
         "card_2_note": "Fastest for anything already on the press"
@@ -202,8 +216,15 @@
         "menu_1": "",
         "menu_2_title": "Company",
         "menu_2": "",
+        "compare_link": "",
+        "about_link": "",
+        "contact_link": "",
         "menu_3_title": "Help",
         "menu_3": "",
+        "track_order_link": "",
+        "shipping_delivery_link": "",
+        "returns_damages_link": "",
+        "turnaround_times_link": "",
         "info_1_label": "Talk to a person",
         "info_1_val": "+1 (800) 555-0199",
         "info_2_label": "Email",

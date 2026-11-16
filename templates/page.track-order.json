@@ -9,12 +9,22 @@
  */
 {
   "sections": {
-    "main_checkout": {
-      "type": "main-checkout",
+    "track_order": {
+      "type": "track-order",
+      "settings": {
+        "badge_text": "Live Production Tracker",
+        "heading": "Track your job from press to porch",
+        "subheading": "Check live status of your artwork, proof approvals, printing plate and delivery.",
+        "order_details_text": "Order Details"
+      }
+    },
+    "home_footer": {
+      "type": "home-footer",
       "settings": {}
     }
   },
   "order": [
-    "main_checkout"
+    "track_order",
+    "home_footer"
   ]
 }

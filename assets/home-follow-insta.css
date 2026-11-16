@@ -7,12 +7,12 @@
   position: relative;
 }
 
-/* Container: Exact matching left & right padding with FAQs and Testimonials (60px desktop, 16px mobile) */
+/* Container: Header gets horizontal padding while marquee stays 100% full-bleed */
 .hfi-container {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 50px 60px 80px 60px;
+  padding: 50px 0 80px 0;
   box-sizing: border-box;
 }
 
@@ -22,6 +22,7 @@
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 40px;
+  padding: 0 60px;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -125,19 +126,48 @@
   color: #171008;
 }
 
-/* 6-Column Grid Layout */
-.hfi-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 24px;
-  align-items: center;
+/* Seamless Infinite Marquee (Full-bleed, no container clipping) */
+.hfi-marquee {
   width: 100%;
+  margin: 0;
+  overflow: hidden;
+  padding: 12px 0;
+}
+
+.hfi-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: hfi-marquee-scroll 56s linear infinite;
+  will-change: transform;
+}
+
+.hfi-marquee:hover .hfi-marquee-track {
+  animation-play-state: paused;
+}
+
+.hfi-marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-right: 24px;
+  flex-shrink: 0;
+}
+
+@keyframes hfi-marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 /* Single Shape Item */
 .hfi-item {
   position: relative;
-  width: 100%;
+  width: clamp(165px, 15vw, 220px);
+  flex-shrink: 0;
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
@@ -210,19 +240,28 @@
     font-size: 38px;
   }
 
-  .hfi-grid {
+  .hfi-marquee-group {
     gap: 18px;
+    padding-right: 18px;
   }
 }
 
 @media (max-width: 900px) {
   .hfi-container {
-    padding: 40px 30px 60px 30px;
+    padding: 40px 0 60px 0;
   }
 
-  .hfi-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+  .hfi-header {
+    padding: 0 30px;
+  }
+
+  .hfi-marquee-group {
+    gap: 16px;
+    padding-right: 16px;
+  }
+
+  .hfi-item {
+    width: clamp(145px, 24vw, 190px);
   }
 
   .hfi-heading {
@@ -230,7 +269,7 @@
   }
 }
 
-/* Mobile View: Same 16px left/right padding as FAQs + 2-Column Grid */
+/* Mobile View: Same 16px left/right padding as FAQs */
 @media (max-width: 600px) {
   .hfi-container {
     padding: 24px 0px 45px 0px !important;
@@ -238,7 +277,7 @@
     flex-direction: column;
   }
 
-  /* Flatten the header so the Follow button can be reordered below the grid */
+  /* Flatten the header so the Follow button can be reordered below the marquee */
   .hfi-header {
     display: contents;
   }
@@ -248,10 +287,17 @@
     margin-bottom: 24px;
   }
 
-  .hfi-grid {
+  .hfi-marquee {
     order: 1;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 14px !important;
+  }
+
+  .hfi-marquee-group {
+    gap: 14px;
+    padding-right: 14px;
+  }
+
+  .hfi-item {
+    width: 145px;
   }
 
   /* Button sits after the pics, centered */

@@ -96,12 +96,30 @@
   letter-spacing: -1px;
 }
 
+@media screen and (max-width: 1550px) {
+  .hero-banner__heading {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .hero-banner__heading {
+    font-size: 44px;
+  }
+}
+
 .hero-banner__subheading {
   font-size: 16px;
   line-height: 1.5;
   color: #555;
   margin-bottom: 30px;
   max-width: 400px;
+}
+
+@media screen and (max-width: 1280px) {
+  .hero-banner__subheading {
+    font-size: 14px;
+  }
 }
 
 .hero-banner__buttons {
@@ -124,6 +142,19 @@
   letter-spacing: -0.5px;
   border: 1.5px solid #171008;
   box-shadow: 3px 3px 0px #171008;
+}
+
+@media screen and (max-width: 1550px) {
+  .btn {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .btn {
+    font-size: 14px;
+    padding: 10px 28px;
+  }
 }
 
 .btn:active {
@@ -158,6 +189,18 @@
   font-weight: 700;
 }
 
+@media screen and (max-width: 1550px) {
+  .hero-banner__price {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .hero-banner__price {
+    font-size: 12px;
+  }
+}
+
 .hero-banner__thumbnails {
   display: flex;
   flex-direction: column;
@@ -184,7 +227,7 @@
   bottom: 20px;
   left: 0;
   width: 100%;
-  z-index: 2;
+  z-index: 5;
 }
 
 .hero-banner__footer .hero-banner__container {
@@ -211,7 +254,7 @@
   }
 
   .hero-banner__heading {
-    font-size: 48px;
+    font-size: 40px;
     margin-bottom: 0px;
   }
 
@@ -276,8 +319,8 @@
 
   /* Floating header on top of the banner image */
   .tapefox-header {
-    top: 45px;
-    width: calc(100% - 40px);
+    top: 50px;
+    width: calc(100% - 70px);
   }
 
   /* Content area positioned UNDER the banner card */
@@ -292,7 +335,8 @@
 
   .hero-banner__container {
     padding: 0;
-    max-width: 700px;
+    /* max-width: 700px; */
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -347,12 +391,12 @@
 
   .hero-banner__price {
     color: #fff;
-    font-size: 16px;
+    font-size: 13px;
     margin-top: 5px;
   }
 
   .hero-banner__price strong {
-    font-size: 17px;
+    font-size: 14px;
   }
 
   .hero-banner__thumbnails {
@@ -363,6 +407,7 @@
   .hero-banner__footer {
     position: absolute;
     bottom: 16px;
+    /* top: 63%; */
     left: 0;
     width: 100%;
     z-index: 5;
@@ -370,13 +415,15 @@
   }
 
   .hero-banner__footer .hero-banner__container {
-    padding: 0 24px;
+    padding: 0 20px;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.8px;
-    color: #444;
+    color: #666;
+    max-width: 100%;
   }
 
   .desktop-only {
@@ -398,8 +445,8 @@
   }
 
   .tapefox-header {
-    top: 35px;
-    width: calc(100% - 30px);
+    top: 42px;
+    width: calc(100% - 64px);
   }
 
   .hero-banner__overlay-content {
@@ -441,6 +488,7 @@
 
   .hero-banner__footer {
     bottom: 12px;
+    /* top: 50% !important; */
   }
 
   .hero-banner__footer .hero-banner__container {

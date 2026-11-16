@@ -1,0 +1,139 @@
+{{ 'auth-login.css' | asset_url | stylesheet_tag }}
+
+<div class="tf-account-wrapper">
+  <div class="tf-account-container">
+    <div class="tf-account-header-bar">
+      <div>
+        <div class="tf-account-badge">Your Addresses</div>
+        <h1 class="tf-account-heading">Manage Addresses</h1>
+        <p class="tf-account-email"><a href="{{ routes.account_url }}" class="tf-link-underline">← Back to Account</a></p>
+      </div>
+      <div class="tf-account-actions">
+        <button type="button" class="tf-btn-primary" onclick="document.getElementById('AddAddress').style.display = 'block'; this.style.display='none';">
+          + Add New Address
+        </button>
+      </div>
+    </div>
+
+    <!-- Add New Address Form Modal/Panel -->
+    <div id="AddAddress" class="tf-account-card" style="display: none; margin-bottom: 28px;">
+      <h2 class="tf-card-title" style="margin-bottom: 20px;">Add New Address</h2>
+      {%- form 'customer_address', customer.new_address, aria-labelledBy: 'AddressNewHeading' -%}
+        <div class="tf-addr-grid-fields">
+          <div class="tf-field-wrap">
+            <label class="tf-label">First Name</label>
+            <input type="text" name="address[first_name]" value="{{ form.first_name }}" class="tf-auth-input" autocomplete="given-name" placeholder="First Name">
+          </div>
+          <div class="tf-field-wrap">
+            <label class="tf-label">Last Name</label>
+            <input type="text" name="address[last_name]" value="{{ form.last_name }}" class="tf-auth-input" autocomplete="family-name" placeholder="Last Name">
+          </div>
+          <div class="tf-field-wrap full-width">
+            <label class="tf-label">Company</label>
+            <input type="text" name="address[company]" value="{{ form.company }}" class="tf-auth-input" autocomplete="organization" placeholder="Company / Brand">
+          </div>
+          <div class="tf-field-wrap full-width">
+            <label class="tf-label">Address 1</label>
+            <input type="text" name="address[address1]" value="{{ form.address1 }}" class="tf-auth-input" autocomplete="address-line1" placeholder="Street Address">
+          </div>
+          <div class="tf-field-wrap full-width">
+            <label class="tf-label">Address 2 (Suite, Unit, Bldg)</label>
+            <input type="text" name="address[address2]" value="{{ form.address2 }}" class="tf-auth-input" autocomplete="address-line2" placeholder="Suite, Unit, Apt">
+          </div>
+          <div class="tf-field-wrap">
+            <label class="tf-label">City</label>
+            <input type="text" name="address[city]" value="{{ form.city }}" class="tf-auth-input" autocomplete="address-level2" placeholder="City">
+          </div>
+          <div class="tf-field-wrap">
+            <label class="tf-label">Postal / Zip Code</label>
+            <input type="text" name="address[zip]" value="{{ form.zip }}" class="tf-auth-input" autocapitalize="characters" autocomplete="postal-code" placeholder="Zip Code">
+          </div>
+          <div class="tf-field-wrap">
+            <label class="tf-label">Phone</label>
+            <input type="tel" name="address[phone]" value="{{ form.phone }}" class="tf-auth-input" autocomplete="tel" placeholder="Phone Number">
+          </div>
+          <div class="tf-field-wrap full-width" style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+            {{ form.set_as_default_checkbox }}
+            <label for="address_default_address_new" style="margin:0;font-size:13.5px;cursor:pointer;">Set as default address</label>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:20px;">
+          <button type="submit" class="tf-btn-primary" style="margin-top:0;">Save Address</button>
+          <button type="button" class="tf-btn-secondary" onclick="document.getElementById('AddAddress').style.display = 'none';">Cancel</button>
+        </div>
+      {%- endform -%}
+    </div>
+
+    <!-- Existing Addresses List -->
+    <div class="tf-addresses-list-grid">
+      {%- for address in customer.addresses -%}
+        <div class="tf-account-card tf-address-item-card">
+          {%- if address == customer.default_address -%}
+            <span class="tf-address-tag" style="background:#E8F7ED;color:#1E7E34;border-color:#1E7E34;margin-bottom:12px;display:inline-block;">Default Address</span>
+          {%- endif -%}
+          <h3 style="font-size:17px;font-weight:700;margin:0 0 8px 0;">{{ address.first_name }} {{ address.last_name }}</h3>
+          {%- if address.company != blank -%}<p style="margin:0 0 4px 0;color:#726A61;font-size:13.5px;">{{ address.company }}</p>{%- endif -%}
+          <p style="margin:0 0 4px 0;color:#191410;font-size:14px;">{{ address.address1 }}</p>
+          {%- if address.address2 != blank -%}<p style="margin:0 0 4px 0;color:#191410;font-size:14px;">{{ address.address2 }}</p>{%- endif -%}
+          <p style="margin:0 0 4px 0;color:#191410;font-size:14px;">{{ address.city }}, {{ address.province_code }} {{ address.zip }}</p>
+          <p style="margin:0 0 8px 0;color:#191410;font-size:14px;">{{ address.country }}</p>
+          {%- if address.phone != blank -%}<p style="margin:0 0 16px 0;color:#726A61;font-size:13px;">📞 {{ address.phone }}</p>{%- endif -%}
+
+          <div style="display:flex;gap:10px;margin-top:16px;border-top:1px solid #F0ECE1;padding-top:14px;">
+            <form class="address-delete-form" method="post" action="/account/addresses/{{ address.id }}" onsubmit="return confirm('Are you sure you want to delete this address?');">
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="tf-link-underline" style="color:#D93829;font-size:13px;border:none;background:none;cursor:pointer;">Delete</button>
+            </form>
+          </div>
+        </div>
+      {%- else -%}
+        <div class="tf-account-card full-width" style="text-align:center;padding:40px;">
+          <p style="color:#726A61;margin-bottom:16px;">No addresses saved in your account yet.</p>
+          <button type="button" class="tf-btn-primary" onclick="document.getElementById('AddAddress').style.display = 'block';">
+            Add Your First Address
+          </button>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+.tf-addr-grid-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.tf-addr-grid-fields .full-width {
+  grid-column: span 2;
+}
+.tf-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #191410;
+  margin-bottom: 6px;
+}
+.tf-addresses-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+@media (max-width: 640px) {
+  .tf-addr-grid-fields {
+    grid-template-columns: 1fr;
+  }
+  .tf-addr-grid-fields .full-width {
+    grid-column: span 1;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Customer Addresses",
+  "tag": "section",
+  "class": "section-customer-addresses",
+  "settings": []
+}
+{% endschema %}

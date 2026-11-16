@@ -57,6 +57,8 @@
    LEFT COLUMN: Main Image & Thumbnails & Description
    ========================================================================== */
 .pb-left-col {
+  position: sticky;
+  top: 24px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -780,10 +782,17 @@
   .pb-layout {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 18px;
   }
 
+  .pb-left-col {
+    display: contents;
+    position: static;
+  }
+
   .pb-main-image-card {
+    order: 1;
     border-radius: 16px;
     padding: 20px;
     aspect-ratio: 1.1 / 1;
@@ -797,17 +806,26 @@
   }
 
   .pb-thumbnails-row {
+    order: 2;
     gap: 8px;
-    margin-top: 14px;
+    margin-top: 0;
   }
 
   .pb-thumb-item {
     border-radius: 6px;
   }
 
-  /* In mobile reference, Description is hidden or placed below */
+  .pb-right-col {
+    order: 3;
+    width: 100%;
+  }
+
+  /* Place Description below the form on mobile/tablet */
   .pb-description-block {
-    display: none;
+    display: block;
+    order: 4;
+    width: 100%;
+    margin-top: 12px;
   }
 
   .pb-config-card {

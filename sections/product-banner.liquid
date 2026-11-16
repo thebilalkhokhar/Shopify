@@ -630,19 +630,36 @@
   </div>
 </section>
 
+<!-- Product Variants JSON for dynamic portal pricing -->
+<script type="application/json" id="pbProductVariantsJson">
+  {{ product.variants | json }}
+</script>
+
 <script>
   (function() {
-    // Pricing calculation table based on cases and options
-    // Default base: 5 cases = $82.93/case -> $414.65 or $464.63 total (8 rolls/case = 40 rolls)
+    // Dynamic Product Variants from Shopify Portal
+    var shopifyVariants = [];
+    var variantsJsonEl = document.getElementById('pbProductVariantsJson');
+    if (variantsJsonEl && variantsJsonEl.textContent) {
+      try {
+        shopifyVariants = JSON.parse(variantsJsonEl.textContent) || [];
+      } catch(e) {}
+    }
+
+    // Determine current base price from active or first Shopify portal variant
+    var firstVariant = shopifyVariants.length > 0 ? shopifyVariants[0] : null;
+    var portalVariantPrice = (firstVariant && firstVariant.price) ? (firstVariant.price / 100) : 82.93;
+
+    // Pricing calculation table based on portal price and tier rates
     const pricingTable = {
-      basePerCase: 82.93,
+      basePerCase: portalVariantPrice,
       rollsPerCase: 8,
       rates: {
-        5: { pricePerCase: 92.926, total: 464.63 },
-        10: { pricePerCase: 84.50, total: 845.00 },
-        25: { pricePerCase: 78.20, total: 1955.00 },
-        50: { pricePerCase: 72.80, total: 3640.00 },
-        64: { pricePerCase: 68.40, total: 4377.60 }
+        5: { multiplier: 1.0, pricePerCase: portalVariantPrice },
+        10: { multiplier: 0.91, pricePerCase: +(portalVariantPrice * 0.91).toFixed(2) },
+        25: { multiplier: 0.84, pricePerCase: +(portalVariantPrice * 0.84).toFixed(2) },
+        50: { multiplier: 0.78, pricePerCase: +(portalVariantPrice * 0.78).toFixed(2) },
+        64: { multiplier: 0.73, pricePerCase: +(portalVariantPrice * 0.73).toFixed(2) }
       }
     };
 
@@ -670,20 +687,20 @@
       const totalRolls = cases * pricingTable.rollsPerCase;
       if (summaryRolls) summaryRolls.textContent = totalRolls;
 
-      // Calculate price
+      // Calculate price dynamically from portal variant base
       let pricePerCase = pricingTable.basePerCase;
       let total = 0;
 
       if (pricingTable.rates[cases]) {
         pricePerCase = pricingTable.rates[cases].pricePerCase;
-        total = pricingTable.rates[cases].total;
+        total = +(pricePerCase * cases).toFixed(2);
       } else {
-        // Linear scale fallback
-        if (cases < 10) pricePerCase = 92.93;
-        else if (cases < 25) pricePerCase = 84.50;
-        else if (cases < 50) pricePerCase = 78.20;
-        else pricePerCase = 68.40;
-        total = cases * pricePerCase;
+        // Dynamic scale based on portal base
+        if (cases < 10) pricePerCase = pricingTable.basePerCase;
+        else if (cases < 25) pricePerCase = +(pricingTable.basePerCase * 0.91).toFixed(2);
+        else if (cases < 50) pricePerCase = +(pricingTable.basePerCase * 0.84).toFixed(2);
+        else pricePerCase = +(pricingTable.basePerCase * 0.73).toFixed(2);
+        total = +(cases * pricePerCase).toFixed(2);
       }
 
       const perRoll = total / (totalRolls || 1);
@@ -691,6 +708,18 @@
       if (summaryPricePerCase) summaryPricePerCase.textContent = '$' + pricePerCase.toFixed(2);
       if (totalPriceEl) totalPriceEl.textContent = '$' + total.toFixed(2);
       if (perRollPriceEl) perRollPriceEl.textContent = '$' + perRoll.toFixed(2) + ' a roll';
+
+      // Update Total Price hidden prop for Cart and Shopify Line Items
+      var propPriceEl = document.getElementById('prop_total_price');
+      if (!propPriceEl) {
+        propPriceEl = document.createElement('input');
+        propPriceEl.type = 'hidden';
+        propPriceEl.name = 'properties[Total Price]';
+        propPriceEl.id = 'prop_total_price';
+        var formEl = document.getElementById('pbProductForm');
+        if (formEl) formEl.appendChild(propPriceEl);
+      }
+      propPriceEl.value = '$' + total.toFixed(2);
 
       // Update case presets active state
       document.querySelectorAll('.pb-case-preset').forEach(btn => {
@@ -789,6 +818,32 @@
         const hiddenInput = document.getElementById('prop_' + group);
         if (hiddenInput && val) {
           hiddenInput.value = val;
+        }
+
+        // Match Shopify Variant if options match
+        if (shopifyVariants && shopifyVariants.length > 0) {
+          var selWidth = document.getElementById('prop_width')?.value || '';
+          var selColor = document.getElementById('prop_tape_color')?.value || '';
+          var matchedVariant = shopifyVariants.find(function(v) {
+            var title = (v.title || '').toLowerCase();
+            var matchesWidth = !selWidth || title.indexOf(selWidth.toLowerCase()) !== -1;
+            var matchesColor = !selColor || title.indexOf(selColor.toLowerCase()) !== -1;
+            return matchesWidth && matchesColor;
+          }) || shopifyVariants[0];
+
+          if (matchedVariant) {
+            var varIdInput = document.getElementById('pbVariantId');
+            if (varIdInput) varIdInput.value = matchedVariant.id;
+            if (matchedVariant.price) {
+              pricingTable.basePerCase = matchedVariant.price / 100;
+              pricingTable.rates[5].pricePerCase = pricingTable.basePerCase;
+              pricingTable.rates[10].pricePerCase = +(pricingTable.basePerCase * 0.91).toFixed(2);
+              pricingTable.rates[25].pricePerCase = +(pricingTable.basePerCase * 0.84).toFixed(2);
+              pricingTable.rates[50].pricePerCase = +(pricingTable.basePerCase * 0.78).toFixed(2);
+              pricingTable.rates[64].pricePerCase = +(pricingTable.basePerCase * 0.73).toFixed(2);
+              updateCalculations(currentCases);
+            }
+          }
         }
 
         // If inks count changed, adjust active swatch count to fit new limit
@@ -1204,11 +1259,18 @@
         }
 
         const editKey = document.getElementById('pbEditKey')?.value;
-        const variantId = document.getElementById('pbVariantId')?.value;
+        let variantId = document.getElementById('pbVariantId')?.value;
+        e.preventDefault();
+
+        const addBtn = document.getElementById('pbAddToCartBtn');
+        const origBtnHtml = addBtn ? addBtn.innerHTML : '';
+        if (addBtn) {
+          addBtn.disabled = true;
+          addBtn.textContent = 'Adding...';
+        }
 
         // If editing an existing cart line item, remove previous line item first
         if (editKey) {
-          e.preventDefault();
           try {
             await fetch('/cart/change.js', {
               method: 'POST',
@@ -1218,61 +1280,54 @@
           } catch(err) {
             console.error('Error removing old item during edit:', err);
           }
+        }
 
-          // If variantId is present, add the updated item via AJAX then navigate to cart
-          if (variantId) {
-            try {
-              const formData = new FormData(prodForm);
-              await fetch('/cart/add.js', {
-                method: 'POST',
-                body: formData
-              });
-            } catch(err) {
-              console.error('Error adding updated item to cart:', err);
+        // If variantId is not present, fetch matching product or fallback variant so real line item goes to Shopify Cart
+        if (!variantId) {
+          try {
+            var fetchRes = await fetch('/products/' + (currentHandle || 'polypropylene-tape') + '.js');
+            if (fetchRes.ok) {
+              var pData = await fetchRes.json();
+              if (pData && pData.variants && pData.variants.length > 0) {
+                var chosen = pData.variants[0];
+                var vInput = document.getElementById('pbVariantId');
+                if (vInput) vInput.value = chosen.id;
+                variantId = chosen.id;
+              }
             }
-            window.location.href = '/cart';
-            return;
+          } catch(err) {}
+        }
+
+        if (variantId) {
+          try {
+            const formData = new FormData(prodForm);
+            const addRes = await fetch('/cart/add.js', {
+              method: 'POST',
+              body: formData
+            });
+            if (addRes.ok) {
+              if (addBtn) {
+                addBtn.disabled = false;
+                addBtn.innerHTML = origBtnHtml;
+              }
+              window.dispatchEvent(new CustomEvent('cart:updated'));
+              if (window.TapeFoxCartDrawer) {
+                window.TapeFoxCartDrawer.open();
+              } else {
+                window.location.href = '/cart';
+              }
+              return;
+            }
+          } catch(err) {
+            console.error('Error adding item to cart:', err);
           }
         }
 
-        if (!variantId) {
-          // Store customized spec in localStorage for seamless cart preview
-          try {
-            let savedItems = JSON.parse(localStorage.getItem('tf_custom_cart_items') || '[]');
-            const prodTitle = document.querySelector('.pb-product-title')?.textContent || 'Polypropylene tape';
-            
-            if (editKey) {
-              // Replace the existing item if it matches editKey
-              const idx = savedItems.findIndex(it => it.id === editKey);
-              if (idx !== -1) {
-                savedItems[idx] = {
-                  id: editKey,
-                  title: prodTitle,
-                  image: document.getElementById('pbMainImage')?.src || 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
-                  properties: activeOpts
-                };
-              } else {
-                savedItems.unshift({
-                  id: editKey,
-                  title: prodTitle,
-                  image: document.getElementById('pbMainImage')?.src || 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
-                  properties: activeOpts
-                });
-              }
-            } else {
-              savedItems.unshift({
-                id: 'tf-custom-' + Date.now(),
-                title: prodTitle,
-                image: document.getElementById('pbMainImage')?.src || 'https://0ap41c-jc.myshopify.com/cdn/shop/files/Paper_Tape.webp',
-                properties: activeOpts
-              });
-            }
-            localStorage.setItem('tf_custom_cart_items', JSON.stringify(savedItems));
-          } catch(err) {}
-
-          e.preventDefault();
-          window.location.href = '/cart';
+        if (addBtn) {
+          addBtn.disabled = false;
+          addBtn.innerHTML = origBtnHtml;
         }
+        prodForm.submit();
       });
     }
   })();

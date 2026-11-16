@@ -30,7 +30,11 @@
           {% assign link_title_downcase = link.title | downcase %}
           {% if link_title_downcase contains 'printed tape' %}
             <div class="header__menu-item has-megamenu">
-              <a href="{{ link.url }}" class="header__menu-link megamenu-trigger" style="display: flex; align-items: center; gap: 4px;">
+              <a
+                href="{{ link.url }}"
+                class="header__menu-link megamenu-trigger"
+                style="display: flex; align-items: center; gap: 4px;"
+              >
                 {{ link.title }}
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <path d="m6 9 6 6 6-6"/>
@@ -64,16 +68,25 @@
       {% else %}
         <!-- Default fallback menu matching the reference design -->
         <div class="header__menu-item has-megamenu">
-          <a href="{{ section.settings.mm_link | default: '/collections' }}" class="header__menu-link megamenu-trigger" style="display: flex; align-items: center; gap: 4px;">
+          <a
+            href="{{ section.settings.mm_link | default: '/collections' }}"
+            class="header__menu-link megamenu-trigger"
+            style="display: flex; align-items: center; gap: 4px;"
+          >
             Printed Tapes
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="m6 9 6 6 6-6"/>
             </svg>
           </a>
         </div>
-        <a href="{{ section.settings.sample_link | default: '/pages/order-sample' }}" class="header__menu-link">Order sample</a>
+        <a href="{{ section.settings.sample_link | default: '/pages/order-sample' }}" class="header__menu-link"
+          >Order sample</a
+        >
         <div class="header__menu-item has-compare-menu">
-          <a href="{{ section.settings.compare_link | default: '/pages/compare' }}" class="header__menu-link compare-trigger">
+          <a
+            href="{{ section.settings.compare_link | default: '/pages/compare' }}"
+            class="header__menu-link compare-trigger"
+          >
             Compare
           </a>
         </div>
@@ -110,12 +123,23 @@
         {% endif %}
       </div>
 
-      <button type="button" class="header-icon header-search-toggle" id="HeaderSearchToggle" aria-expanded="false" aria-label="Search" aria-controls="HeaderSearchMenu">
+      <button
+        type="button"
+        class="header-icon header-search-toggle"
+        id="HeaderSearchToggle"
+        aria-expanded="false"
+        aria-label="Search"
+        aria-controls="HeaderSearchMenu"
+      >
         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
         </svg>
       </button>
-      <a href="/pages/login" class="header-icon header-account" aria-label="Account">
+      <a
+        href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+        class="header-icon header-account"
+        aria-label="Account"
+      >
         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
         </svg>
@@ -124,8 +148,8 @@
         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
-        {% if cart.item_count > 0 %}
-          <span class="cart-count">{{ cart.item_count }}</span>
+        {% if cart.items.size > 0 %}
+          <span class="cart-count">{{ cart.items.size }}</span>
         {% else %}
           <span class="cart-count">0</span>
         {% endif %}
@@ -142,7 +166,16 @@
 <div class="tapefox-mobile-backdrop" id="MobileMenuBackdrop" aria-hidden="true"></div>
 
 <!-- Mobile Navigation Drawer (Slides from Left) -->
-<nav class="tapefox-mobile-drawer" id="MobileMenuDrawer" aria-hidden="true" role="dialog" aria-label="Mobile Navigation">
+<nav
+  class="tapefox-mobile-drawer"
+  id="MobileMenuDrawer"
+  data-lenis-prevent="true"
+  data-lenis-prevent-wheel="true"
+  data-lenis-prevent-touch="true"
+  aria-hidden="true"
+  role="dialog"
+  aria-label="Mobile Navigation"
+>
   <div class="mobile-drawer__header">
     <a href="{{ routes.root_url }}" class="mobile-drawer__logo">
       {% if section.settings.logo != blank %}
@@ -157,14 +190,23 @@
       {% endif %}
     </a>
     <button type="button" class="mobile-drawer__close" id="MobileMenuClose" aria-label="Close menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
   </div>
 
-  <div class="mobile-drawer__body">
+  <div class="mobile-drawer__body" data-lenis-prevent="true" data-lenis-prevent-wheel="true" data-lenis-prevent-touch="true">
     <!-- Printed Tapes Heading -->
     <h2 class="mobile-drawer__section-title">
       <a href="{{ section.settings.mm_link | default: '/collections' }}">Printed Tapes</a>
@@ -283,9 +325,10 @@
       </a>
     </div>
 
-    <!-- Main Links Section (Compare, About, Contact) in Bringbold Nineties serif style -->
+    <!-- Main Links Section (Compare, Order sample, About, Contact) in Bringbold Nineties serif style -->
     <div class="mobile-drawer__links">
       <a href="{{ section.settings.compare_link | default: '/pages/compare' }}" class="mobile-drawer__serif-link">Compare</a>
+      <a href="{{ section.settings.sample_link | default: '/pages/order-sample' }}" class="mobile-drawer__serif-link">Order sample</a>
       <a href="{{ section.settings.about_link | default: '/pages/about' }}" class="mobile-drawer__serif-link">About</a>
       <a href="{{ section.settings.contact_link | default: '/pages/contact' }}" class="mobile-drawer__serif-link">Contact</a>
     </div>
@@ -298,213 +341,221 @@
     </a>
     <a href="{{ routes.cart_url }}" class="mobile-drawer__btn-cart">
       <span>Cart</span>
-      <span class="mobile-drawer__cart-badge">{% if cart.item_count > 0 %}{{ cart.item_count }}{% else %}0{% endif %}</span>
+      <span class="mobile-drawer__cart-badge">{% if cart.items.size > 0 %}{{ cart.items.size }}{% else %}0{% endif %}</span>
     </a>
   </div>
 </nav>
 
-<script>
-  (function () {
-    const toggleBtn = document.querySelector('.mobile-menu-toggle');
-    const drawer = document.getElementById('MobileMenuDrawer');
-    const backdrop = document.getElementById('MobileMenuBackdrop');
-    const closeBtn = document.getElementById('MobileMenuClose');
 
-    function openDrawer() {
-      if (!drawer || !backdrop) return;
-      drawer.classList.add('is-open');
-      backdrop.classList.add('is-open');
-      document.body.classList.add('mobile-nav-locked');
-      drawer.setAttribute('aria-hidden', 'false');
-      backdrop.setAttribute('aria-hidden', 'false');
-    }
+  <script>
+    (function () {
+      const toggleBtn = document.querySelector('.mobile-menu-toggle');
+      const drawer = document.getElementById('MobileMenuDrawer');
+      const backdrop = document.getElementById('MobileMenuBackdrop');
+      const closeBtn = document.getElementById('MobileMenuClose');
 
-    function closeDrawer() {
-      if (!drawer || !backdrop) return;
-      drawer.classList.remove('is-open');
-      backdrop.classList.remove('is-open');
-      document.body.classList.remove('mobile-nav-locked');
-      drawer.setAttribute('aria-hidden', 'true');
-      backdrop.setAttribute('aria-hidden', 'true');
-    }
-
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        openDrawer();
-      });
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        closeDrawer();
-      });
-    }
-
-    if (backdrop) {
-      backdrop.addEventListener('click', closeDrawer);
-    }
-
-    // Toggle accordion subnavs inside drawer
-    const subnavToggles = document.querySelectorAll('.mobile-subnav-toggle');
-    subnavToggles.forEach(btn => {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        const parent = btn.closest('.has-subnav');
-        if (!parent) return;
-        const isOpen = parent.classList.contains('is-expanded');
-        parent.classList.toggle('is-expanded', !isOpen);
-        btn.setAttribute('aria-expanded', !isOpen);
-      });
-    });
-
-    // Close drawer on Escape key
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        if (drawer && drawer.classList.contains('is-open')) {
-          closeDrawer();
-        }
-        const megamenu = document.querySelector('.header-megamenu');
-        if (megamenu) {
-          megamenu.classList.remove('is-active');
-        }
-        const compareMenu = document.querySelector('.header-compare-menu');
-        if (compareMenu) {
-          compareMenu.classList.remove('is-active');
-        }
-        closeSearchDropdown();
+      function openDrawer() {
+        if (!drawer || !backdrop) return;
+        drawer.classList.add('is-open');
+        backdrop.classList.add('is-open');
+        document.body.classList.add('mobile-nav-locked');
+        if (window.lenis) window.lenis.stop();
+        drawer.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
       }
-    });
 
-    // Search Dropdown Logic
-    const searchToggle = document.getElementById('HeaderSearchToggle');
-    const searchMenu = document.getElementById('HeaderSearchMenu');
-    const searchInput = document.getElementById('HeaderSearchInput');
-    const searchClear = document.getElementById('HeaderSearchClear');
-    const searchResults = document.getElementById('HeaderSearchResults');
-
-    function openSearchDropdown() {
-      if (!searchMenu) return;
-      // Close other menus
-      document.querySelectorAll('.header-megamenu, .header-compare-menu').forEach(el => {
-        el.classList.remove('is-active');
-      });
-      searchMenu.classList.add('is-active');
-      searchMenu.setAttribute('aria-hidden', 'false');
-      if (searchToggle) {
-        searchToggle.classList.add('is-active');
-        searchToggle.setAttribute('aria-expanded', 'true');
+      function closeDrawer() {
+        if (!drawer || !backdrop) return;
+        drawer.classList.remove('is-open');
+        backdrop.classList.remove('is-open');
+        document.body.classList.remove('mobile-nav-locked');
+        if (window.lenis) window.lenis.start();
+        drawer.setAttribute('aria-hidden', 'true');
+        backdrop.setAttribute('aria-hidden', 'true');
       }
-      setTimeout(() => {
-        if (searchInput) searchInput.focus();
-      }, 50);
-    }
 
-    function closeSearchDropdown() {
-      if (!searchMenu) return;
-      searchMenu.classList.remove('is-active');
-      searchMenu.setAttribute('aria-hidden', 'true');
-      if (searchToggle) {
-        searchToggle.classList.remove('is-active');
-        searchToggle.setAttribute('aria-expanded', 'false');
-      }
-    }
-
-    if (searchToggle && searchMenu) {
-      searchToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (searchMenu.classList.contains('is-active')) {
-          closeSearchDropdown();
-        } else {
-          openSearchDropdown();
-        }
-      });
-
-      // Prevent closing when clicking inside search dropdown
-      searchMenu.addEventListener('click', function(e) {
-        e.stopPropagation();
-      });
-
-      // Close when clicking anywhere outside header
-      document.addEventListener('click', function(e) {
-        if (searchMenu.classList.contains('is-active')) {
-          if (!searchMenu.contains(e.target) && !searchToggle.contains(e.target)) {
-            closeSearchDropdown();
-          }
-        }
-      });
-    }
-
-    // Predictive Search via Shopify Predictive Search API
-    if (searchInput) {
-      let debounceTimer = null;
-
-      if (searchClear) {
-        searchClear.addEventListener('click', function() {
-          searchInput.value = '';
-          searchClear.style.display = 'none';
-          if (searchResults) {
-            searchResults.innerHTML = '';
-            searchResults.style.display = 'none';
-          }
-          searchInput.focus();
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          openDrawer();
         });
       }
 
-      searchInput.addEventListener('input', function() {
-        const query = this.value.trim();
-        if (searchClear) {
-          searchClear.style.display = query.length > 0 ? 'flex' : 'none';
-        }
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          closeDrawer();
+        });
+      }
 
-        if (debounceTimer) clearTimeout(debounceTimer);
+      if (backdrop) {
+        backdrop.addEventListener('click', closeDrawer);
+      }
 
-        if (!query) {
-          if (searchResults) {
-            searchResults.innerHTML = '';
-            searchResults.style.display = 'none';
+      // Toggle accordion subnavs inside drawer
+      const subnavToggles = document.querySelectorAll('.mobile-subnav-toggle');
+      subnavToggles.forEach((btn) => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const parent = btn.closest('.has-subnav');
+          if (!parent) return;
+          const isOpen = parent.classList.contains('is-expanded');
+          parent.classList.toggle('is-expanded', !isOpen);
+          btn.setAttribute('aria-expanded', !isOpen);
+        });
+      });
+
+      // Close drawer on Escape key
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          if (drawer && drawer.classList.contains('is-open')) {
+            closeDrawer();
           }
-          return;
+          const megamenu = document.querySelector('.header-megamenu');
+          if (megamenu) {
+            megamenu.classList.remove('is-active');
+          }
+          const compareMenu = document.querySelector('.header-compare-menu');
+          if (compareMenu) {
+            compareMenu.classList.remove('is-active');
+          }
+          closeSearchDropdown();
+        }
+      });
+
+      // Search Dropdown Logic
+      const searchToggle = document.getElementById('HeaderSearchToggle');
+      const searchMenu = document.getElementById('HeaderSearchMenu');
+      const searchInput = document.getElementById('HeaderSearchInput');
+      const searchClear = document.getElementById('HeaderSearchClear');
+      const searchResults = document.getElementById('HeaderSearchResults');
+
+      function openSearchDropdown() {
+        if (!searchMenu) return;
+        // Close other menus
+        document.querySelectorAll('.header-megamenu, .header-compare-menu').forEach((el) => {
+          el.classList.remove('is-active');
+        });
+        searchMenu.classList.add('is-active');
+        searchMenu.setAttribute('aria-hidden', 'false');
+        if (searchToggle) {
+          searchToggle.classList.add('is-active');
+          searchToggle.setAttribute('aria-expanded', 'true');
+        }
+        setTimeout(() => {
+          if (searchInput) searchInput.focus();
+        }, 50);
+      }
+
+      function closeSearchDropdown() {
+        if (!searchMenu) return;
+        searchMenu.classList.remove('is-active');
+        searchMenu.setAttribute('aria-hidden', 'true');
+        if (searchToggle) {
+          searchToggle.classList.remove('is-active');
+          searchToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+
+      if (searchToggle && searchMenu) {
+        searchToggle.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (searchMenu.classList.contains('is-active')) {
+            closeSearchDropdown();
+          } else {
+            openSearchDropdown();
+          }
+        });
+
+        // Prevent closing when clicking inside search dropdown
+        searchMenu.addEventListener('click', function (e) {
+          e.stopPropagation();
+        });
+
+        // Close when clicking anywhere outside header
+        document.addEventListener('click', function (e) {
+          if (searchMenu.classList.contains('is-active')) {
+            if (!searchMenu.contains(e.target) && !searchToggle.contains(e.target)) {
+              closeSearchDropdown();
+            }
+          }
+        });
+      }
+
+      // Predictive Search via Shopify Predictive Search API
+      if (searchInput) {
+        let debounceTimer = null;
+
+        if (searchClear) {
+          searchClear.addEventListener('click', function () {
+            searchInput.value = '';
+            searchClear.style.display = 'none';
+            if (searchResults) {
+              searchResults.innerHTML = '';
+              searchResults.style.display = 'none';
+            }
+            searchInput.focus();
+          });
         }
 
-        debounceTimer = setTimeout(() => {
-          fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=10`)
-            .then(res => res.json())
-            .then(data => {
-              const rawProducts = data?.resources?.results?.products || [];
-              if (!searchResults) return;
+        searchInput.addEventListener('input', function () {
+          const query = this.value.trim();
+          if (searchClear) {
+            searchClear.style.display = query.length > 0 ? 'flex' : 'none';
+          }
 
-              // Filter products whose title, body, or handle actually matches the query keywords
-              const qTerms = query.toLowerCase().split(/\s+/).filter(Boolean);
-              const filteredProducts = rawProducts.filter(p => {
-                const title = (p.title || '').toLowerCase();
-                const handle = (p.handle || '').toLowerCase();
-                const body = (p.body || '').toLowerCase();
-                const text = title + ' ' + handle + ' ' + body;
-                // Match if all search terms appear in text
-                return qTerms.every(term => text.includes(term));
-              });
+          if (debounceTimer) clearTimeout(debounceTimer);
 
-              // Products to display (use filtered list if any match, otherwise fallback to Shopify's raw matches if query is very broad)
-              const products = filteredProducts.length > 0 ? filteredProducts : (rawProducts.length > 0 && query.length < 3 ? rawProducts : []);
+          if (!query) {
+            if (searchResults) {
+              searchResults.innerHTML = '';
+              searchResults.style.display = 'none';
+            }
+            return;
+          }
 
-              if (products && products.length > 0) {
-                let html = '<div class="header-search__results-grid">';
-                products.forEach(p => {
-                  const imgHtml = p.featured_image?.url
-                    ? `<img src="${p.featured_image.url}" alt="${p.title}" class="header-search__result-thumb">`
-                    : `<div class="header-search__result-thumb" style="background:#e8dfd5;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;">No pic</div>`;
+          debounceTimer = setTimeout(() => {
+            fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=10`)
+              .then((res) => res.json())
+              .then((data) => {
+                const rawProducts = data?.resources?.results?.products || [];
+                if (!searchResults) return;
 
-                  // Format price nicely (e.g. from 568 to $5.68 or starting price)
-                  let priceText = '';
-                  if (p.price && parseFloat(p.price) > 0) {
-                    const numPrice = parseFloat(p.price);
-                    priceText = '$' + numPrice.toFixed(2);
-                  }
+                // Filter products whose title, body, or handle actually matches the query keywords
+                const qTerms = query.toLowerCase().split(/\s+/).filter(Boolean);
+                const filteredProducts = rawProducts.filter((p) => {
+                  const title = (p.title || '').toLowerCase();
+                  const handle = (p.handle || '').toLowerCase();
+                  const body = (p.body || '').toLowerCase();
+                  const text = title + ' ' + handle + ' ' + body;
+                  // Match if all search terms appear in text
+                  return qTerms.every((term) => text.includes(term));
+                });
 
-                  html += `
+                // Products to display (use filtered list if any match, otherwise fallback to Shopify's raw matches if query is very broad)
+                const products =
+                  filteredProducts.length > 0
+                    ? filteredProducts
+                    : rawProducts.length > 0 && query.length < 3
+                    ? rawProducts
+                    : [];
+
+                if (products && products.length > 0) {
+                  let html = '<div class="header-search__results-grid">';
+                  products.forEach((p) => {
+                    const imgHtml = p.featured_image?.url
+                      ? `<img src="${p.featured_image.url}" alt="${p.title}" class="header-search__result-thumb">`
+                      : `<div class="header-search__result-thumb" style="background:#e8dfd5;display:flex;align-items:center;justify-content:center;font-size:10px;color:#888;">No pic</div>`;
+
+                    // Format price nicely (e.g. from 568 to $5.68 or starting price)
+                    let priceText = '';
+                    if (p.price && parseFloat(p.price) > 0) {
+                      const numPrice = parseFloat(p.price);
+                      priceText = '$' + numPrice.toFixed(2);
+                    }
+
+                    html += `
                     <a href="${p.url}" class="header-search__result-item">
                       ${imgHtml}
                       <div class="header-search__result-info">
@@ -513,92 +564,93 @@
                       </div>
                     </a>
                   `;
-                });
-                html += '</div>';
-                searchResults.innerHTML = html;
-                searchResults.style.display = 'block';
-              } else {
-                searchResults.innerHTML = '<div class="header-search__results-empty">No products found for "' + query + '"</div>';
-                searchResults.style.display = 'block';
-              }
-            })
-            .catch(() => {
-              if (searchResults) searchResults.style.display = 'none';
-            });
-        }, 220);
-      });
-    }
-
-    // Helper for pairing menu triggers with dropdown panels
-    function setupDropdown(triggerSelector, dropdownSelector) {
-      const trigger = document.querySelector(triggerSelector);
-      const dropdown = document.querySelector(dropdownSelector);
-      if (!trigger || !dropdown) return;
-
-      let timeoutId = null;
-
-      function show() {
-        if (timeoutId) clearTimeout(timeoutId);
-        // Hide other dropdowns when one opens
-        document.querySelectorAll('.header-megamenu, .header-compare-menu, .header-search-menu').forEach(el => {
-          if (el !== dropdown) el.classList.remove('is-active');
+                  });
+                  html += '</div>';
+                  searchResults.innerHTML = html;
+                  searchResults.style.display = 'block';
+                } else {
+                  searchResults.innerHTML =
+                    '<div class="header-search__results-empty">No products found for "' + query + '"</div>';
+                  searchResults.style.display = 'block';
+                }
+              })
+              .catch(() => {
+                if (searchResults) searchResults.style.display = 'none';
+              });
+          }, 220);
         });
-        if (searchToggle) {
-          searchToggle.classList.remove('is-active');
-          searchToggle.setAttribute('aria-expanded', 'false');
-        }
-        dropdown.classList.add('is-active');
       }
 
-      function hide() {
-        timeoutId = setTimeout(function () {
-          dropdown.classList.remove('is-active');
-        }, 140);
-      }
+      // Helper for pairing menu triggers with dropdown panels
+      function setupDropdown(triggerSelector, dropdownSelector) {
+        const trigger = document.querySelector(triggerSelector);
+        const dropdown = document.querySelector(dropdownSelector);
+        if (!trigger || !dropdown) return;
 
-      trigger.addEventListener('mouseenter', show);
-      trigger.addEventListener('mouseleave', hide);
-      dropdown.addEventListener('mouseenter', show);
-      dropdown.addEventListener('mouseleave', hide);
+        let timeoutId = null;
 
-      trigger.addEventListener('focusin', show);
-      dropdown.addEventListener('focusin', show);
-      dropdown.addEventListener('focusout', function (e) {
-        if (!dropdown.contains(e.relatedTarget) && !trigger.contains(e.relatedTarget)) {
-          hide();
-        }
-      });
-    }
-
-    // Initialize Printed Tapes & Compare dropdowns
-    setupDropdown('.has-megamenu', '.header-megamenu:not(.header-compare-menu)');
-    setupDropdown('.has-compare-menu', '.header-compare-menu');
-
-    // Dynamic Cart Count updater via Shopify /cart.js
-    window.updateHeaderCartCount = function(count) {
-      if (typeof count === 'number') {
-        document.querySelectorAll('.cart-count, .mobile-drawer__cart-badge').forEach(badge => {
-          badge.textContent = count;
-        });
-        return;
-      }
-      fetch('/cart.js')
-        .then(res => res.json())
-        .then(cart => {
-          document.querySelectorAll('.cart-count, .mobile-drawer__cart-badge').forEach(badge => {
-            badge.textContent = cart.item_count || 0;
+        function show() {
+          if (timeoutId) clearTimeout(timeoutId);
+          // Hide other dropdowns when one opens
+          document.querySelectorAll('.header-megamenu, .header-compare-menu, .header-search-menu').forEach((el) => {
+            if (el !== dropdown) el.classList.remove('is-active');
           });
-        })
-        .catch(err => console.debug('Cart count sync:', err));
-    };
+          if (searchToggle) {
+            searchToggle.classList.remove('is-active');
+            searchToggle.setAttribute('aria-expanded', 'false');
+          }
+          dropdown.classList.add('is-active');
+        }
 
-    // Auto sync on load and listen for cart changes
-    window.updateHeaderCartCount();
-    window.addEventListener('cart:updated', () => window.updateHeaderCartCount());
-  })();
-</script>
+        function hide() {
+          timeoutId = setTimeout(function () {
+            dropdown.classList.remove('is-active');
+          }, 140);
+        }
 
-{% schema %}
+        trigger.addEventListener('mouseenter', show);
+        trigger.addEventListener('mouseleave', hide);
+        dropdown.addEventListener('mouseenter', show);
+        dropdown.addEventListener('mouseleave', hide);
+
+        trigger.addEventListener('focusin', show);
+        dropdown.addEventListener('focusin', show);
+        dropdown.addEventListener('focusout', function (e) {
+          if (!dropdown.contains(e.relatedTarget) && !trigger.contains(e.relatedTarget)) {
+            hide();
+          }
+        });
+      }
+
+      // Initialize Printed Tapes & Compare dropdowns
+      setupDropdown('.has-megamenu', '.header-megamenu:not(.header-compare-menu)');
+      setupDropdown('.has-compare-menu', '.header-compare-menu');
+
+      // Dynamic Cart Count updater via Shopify /cart.js
+      window.updateHeaderCartCount = function (count) {
+        if (typeof count === 'number') {
+          document.querySelectorAll('.cart-count, .mobile-drawer__cart-badge').forEach((badge) => {
+            badge.textContent = count;
+          });
+          return;
+        }
+        fetch('/cart.js')
+          .then((res) => res.json())
+          .then((cart) => {
+            document.querySelectorAll('.cart-count, .mobile-drawer__cart-badge').forEach((badge) => {
+              badge.textContent = Array.isArray(cart.items) ? cart.items.length : (cart.item_count || 0);
+            });
+          })
+          .catch((err) => console.debug('Cart count sync:', err));
+      };
+
+      // Auto sync on load and listen for cart changes
+      window.updateHeaderCartCount();
+      window.addEventListener('cart:updated', () => window.updateHeaderCartCount());
+    })();
+  </script>
+
+  {% schema %}
 {
   "name": "Header",
   "settings": [
@@ -1093,4 +1145,4 @@
     }
   ]
 }
-{% endschema %}
+  {% endschema %}

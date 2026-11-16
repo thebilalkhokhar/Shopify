@@ -1,0 +1,615 @@
+/* ==========================================================================
+   TAPEFOX SLIDE-OVER CART DRAWER
+   ========================================================================== */
+
+.tf-cd-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(23, 16, 8, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 99990;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.tf-cd-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.tf-cd-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #FBF8F3;
+  color: #171008;
+  z-index: 99995;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -12px 0 40px rgba(23, 16, 8, 0.16);
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.32s;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.tf-cd-drawer.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s;
+}
+
+/* Header */
+.tf-cd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1.5px solid #171008;
+  flex-shrink: 0;
+  background-color: #FBF8F3;
+  position: relative;
+  z-index: 2;
+}
+
+.tf-cd-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tf-cd-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: #171008;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.tf-cd-count-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #171008;
+  color: #FF6B00;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.tf-cd-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #171008;
+  color: #FFFFFF;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.16s ease, background-color 0.16s ease;
+}
+
+.tf-cd-close-btn:hover {
+  background-color: #2E2419;
+  transform: scale(1.05);
+}
+
+/* Body */
+.tf-cd-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  contain: layout paint;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #C7BEB0 transparent;
+}
+
+.tf-cd-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tf-cd-body::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 10px 0;
+}
+
+.tf-cd-body::-webkit-scrollbar-thumb {
+  background-color: #C7BEB0;
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.tf-cd-body::-webkit-scrollbar-thumb:hover {
+  background-color: #171008;
+}
+
+.tf-cd-body::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Empty State */
+.tf-cd-empty {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 12px;
+}
+
+.tf-cd-empty[hidden] {
+  display: none;
+}
+
+.tf-cd-empty-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: #171008;
+  margin: 0 0 10px;
+  line-height: 1.15;
+}
+
+.tf-cd-empty-desc {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #3D372E;
+  max-width: 300px;
+  margin: 0 0 24px;
+}
+
+.tf-cd-sample-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 240px;
+  padding: 13px 28px;
+  background-color: #FF5D00;
+  color: #FFFFFF;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 999px;
+  border: 1.5px solid #171008;
+  box-shadow: 0 3px 0 #171008;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease;
+}
+
+.tf-cd-sample-btn:hover {
+  background-color: #E85200;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #171008;
+}
+
+.tf-cd-sample-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #171008;
+}
+
+/* Loading */
+.tf-cd-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13px;
+  color: #5A5247;
+}
+
+.tf-cd-loading[hidden] {
+  display: none;
+}
+
+.tf-cd-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #D9D2C5;
+  border-top-color: #171008;
+  border-radius: 50%;
+  animation: tfCdSpin 0.65s linear infinite;
+}
+
+@keyframes tfCdSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Items Stack */
+.tf-cd-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Item Card */
+.tf-cd-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  background-color: #FBF8F3;
+  border: 1px solid #8E877D;
+  border-radius: 18px;
+  box-sizing: border-box;
+  transition: opacity 0.18s ease;
+}
+
+.tf-cd-card.is-updating {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.tf-cd-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  border: 1px solid #231F1A;
+  background-color: #FFFFFF;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tf-cd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.tf-cd-card-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tf-cd-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.tf-cd-item-title {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #171008;
+  margin: 0;
+  word-break: break-word;
+}
+
+.tf-cd-item-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tf-cd-remove-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #171008;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.tf-cd-remove-btn:hover {
+  color: #E85D18;
+}
+
+.tf-cd-specs {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #3D372E;
+  margin: 0 0 10px;
+}
+
+.tf-cd-spec-line {
+  display: block;
+  word-break: break-word;
+}
+
+.tf-cd-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FEC33F;
+  color: #171008;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.tf-cd-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Quantity Stepper */
+.tf-cd-stepper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #171008;
+  border-radius: 999px;
+  height: 30px;
+  min-width: 96px;
+  padding: 0 4px;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+.tf-cd-step-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  color: #171008;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0;
+  transition: background-color 0.15s ease;
+}
+
+.tf-cd-step-btn:hover {
+  background-color: rgba(23, 16, 8, 0.08);
+}
+
+.tf-cd-step-val {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #171008;
+  min-width: 22px;
+  text-align: center;
+}
+
+.tf-cd-line-price {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #171008;
+  white-space: nowrap;
+}
+
+/* Footer */
+.tf-cd-footer {
+  flex-shrink: 0;
+  background-color: #FBF8F3;
+  padding: 16px 24px calc(18px + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  isolation: isolate;
+  margin-top: 10px;
+}
+
+.tf-cd-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background-color: #171008;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.tf-cd-footer[hidden] {
+  display: none;
+}
+
+.tf-cd-summary-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #171008;
+}
+
+.tf-cd-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13.5px;
+  color: #231F1A;
+}
+
+.tf-cd-total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 16px;
+}
+
+.tf-cd-total-label {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #171008;
+}
+
+.tf-cd-total-val {
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: #171008;
+}
+
+.tf-cd-checkout-form {
+  margin: 0;
+}
+
+.tf-cd-checkout-btn {
+  width: 100%;
+  padding: 13px 24px;
+  background-color: #FF5D00;
+  color: #171008;
+  font-family: var(--custom-font-family, "Bringbold Nineties", serif);
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 999px;
+  border: 1.5px solid #171008;
+  box-shadow: 0 3px 0 #171008;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease;
+}
+
+.tf-cd-checkout-btn:hover {
+  background-color: #F25800;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #171008;
+}
+
+.tf-cd-checkout-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #171008;
+}
+
+.tf-cd-view-cart {
+  display: block;
+  width: fit-content;
+  margin: 12px auto 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #171008;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.tf-cd-view-cart:hover {
+  color: #E85D18;
+}
+
+/* Body scroll lock when drawer is open */
+body.tf-cd-scroll-lock {
+  overflow: hidden !important;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 480px) {
+  .tf-cd-drawer {
+    max-width: 100vw;
+  }
+
+  .tf-cd-header {
+    padding: 16px 16px 14px;
+  }
+
+  .tf-cd-title {
+    font-size: 23px;
+  }
+
+  .tf-cd-body {
+    padding: 16px;
+  }
+
+  .tf-cd-card {
+    padding: 12px;
+    gap: 12px;
+    border-radius: 16px;
+  }
+
+  .tf-cd-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+  }
+
+  .tf-cd-item-title {
+    font-size: 15px;
+  }
+
+  .tf-cd-specs {
+    font-size: 12px;
+  }
+
+  .tf-cd-stepper {
+    min-width: 88px;
+    height: 28px;
+  }
+
+  .tf-cd-line-price {
+    font-size: 16px;
+  }
+
+  .tf-cd-footer {
+    padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .tf-cd-sample-btn {
+    width: 100%;
+    max-width: 280px;
+    min-width: 0;
+  }
+}

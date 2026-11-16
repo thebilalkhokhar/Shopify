@@ -1,6 +1,24 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
+    <script>
+      (function() {
+        var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+        if (path === '/collections/frontpage') {
+          window.location.replace('/collections');
+          return;
+        }
+
+        // Agar kisi bhi page ke URL mein ?country=... aa raha ho to URL saaf kar do
+        if (window.location.search && window.location.search.indexOf('country=') !== -1) {
+          var url = new URL(window.location.href);
+          url.searchParams.delete('country');
+          var cleanSearch = url.searchParams.toString();
+          var newUrl = url.pathname + (cleanSearch ? '?' + cleanSearch : '') + url.hash;
+          window.history.replaceState(null, '', newUrl);
+        }
+      })();
+    </script>
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
@@ -27,6 +45,7 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'page-policy.css' | asset_url | stylesheet_tag }}
     {{ 'quick-view-modal.css' | asset_url | stylesheet_tag }}
+    {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
@@ -41,10 +60,32 @@
     <script>
       (function() {
         var p = decodeURIComponent(window.location.pathname.toLowerCase());
+          var isTrackOrder = (p.indexOf('/track') !== -1 || p.indexOf('/pages/track-order') !== -1);
+          if (isTrackOrder) {
+            var mainContent = document.getElementById('MainContent');
+            var trackContainer = document.getElementById('TrackOrderContainer');
+            var p404 = document.querySelector('.page-404-section');
+            if (p404) p404.style.display = 'none';
+            if (trackContainer && (!mainContent || !mainContent.querySelector('.tf-track-order-section'))) {
+              if (mainContent) mainContent.style.display = 'none';
+              trackContainer.style.display = 'block';
+            }
+            document.title = 'Track Your Order – Tapefox';
+          }
+        var isAuthEntry = (
+          p.indexOf('/account/login') !== -1 ||
+          p.indexOf('/account/register') !== -1 ||
+          p.indexOf('/account/reset') !== -1 ||
+          p.indexOf('/account/activate') !== -1 ||
+          p.indexOf('/login') !== -1 ||
+          p.indexOf('/pages/login') !== -1
+        );
         if (p.indexOf('/checkout') !== -1 || p.indexOf('/pages/checkout') !== -1) {
           document.body.classList.add('is-checkout-page');
-        } else if (p.indexOf('/account') !== -1 || p.indexOf('/login') !== -1 || p.indexOf('/pages/login') !== -1) {
+        } else if (isAuthEntry) {
           document.body.classList.add('is-login-page');
+        } else if (p.indexOf('/challenge') !== -1 || document.querySelector('.shopify-challenge__container') || document.querySelector('form[action*="/challenge"]')) {
+          document.body.classList.add('is-challenge-page');
         }
       })();
     </script>
@@ -72,6 +113,81 @@
       }
       body.is-checkout-page #MainContent:not(:has(#TapeFoxCheckoutRoot)) {
         display: none !important;
+      }
+
+      /* Shopify reCAPTCHA / Challenge page fix */
+      body:has(.shopify-challenge__container),
+      body:has(form[action*="/challenge"]),
+      body.is-challenge-page {
+        min-height: 100vh;
+        background-color: #faf8f5;
+        display: flex;
+        flex-direction: column;
+      }
+      body:has(.shopify-challenge__container) .tapefox-header,
+      body:has(form[action*="/challenge"]) .tapefox-header,
+      body.is-challenge-page .tapefox-header {
+        position: relative !important;
+        top: 20px !important;
+        left: auto !important;
+        transform: none !important;
+        margin: 0 auto 30px auto !important;
+      }
+      body:has(.shopify-challenge__container) #MainContent,
+      body:has(form[action*="/challenge"]) #MainContent,
+      body.is-challenge-page #MainContent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px 80px 20px;
+        min-height: 480px;
+      }
+      .shopify-challenge__container {
+        max-width: 480px !important;
+        margin: 0 auto !important;
+        padding: 36px 30px !important;
+        background: #ffffff !important;
+        border: 2px solid #171008 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 10px 30px rgba(23, 16, 8, 0.08), 0 4px 0 #171008 !important;
+        text-align: center !important;
+      }
+      .shopify-challenge__message {
+        font-family: var(--font-primary--family, 'Inter', sans-serif) !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #171008 !important;
+        margin-bottom: 24px !important;
+      }
+      .shopify-challenge__container .g-recaptcha,
+      .shopify-challenge__container iframe {
+        margin: 0 auto 20px auto !important;
+        display: block !important;
+      }
+      .shopify-challenge__button,
+      .shopify-challenge__container input[type="submit"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background-color: #ea5b1b !important;
+        color: #ffffff !important;
+        border: 1.8px solid #171008 !important;
+        border-radius: 999px !important;
+        padding: 12px 36px !important;
+        font-family: var(--font-primary--family, 'Inter', sans-serif) !important;
+        font-size: 14.5px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        box-shadow: 0 3px 0 #171008 !important;
+        transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+        margin-top: 10px !important;
+      }
+      .shopify-challenge__button:hover,
+      .shopify-challenge__container input[type="submit"]:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 0 #171008 !important;
       }
     </style>
     {% section 'header' %}
@@ -114,9 +230,25 @@
         {% section 'main-policy' %}
         {% section 'home-footer' %}
       </div>
+      <div id="TrackOrderContainer" style="display: none;">
+        {% section 'track-order' %}
+        {% section 'home-footer' %}
+      </div>
       <script>
         (function() {
           var p = decodeURIComponent(window.location.pathname.toLowerCase());
+          var isTrackOrder = (p.indexOf('/track') !== -1 || p.indexOf('/pages/track-order') !== -1);
+          if (isTrackOrder) {
+            var mainContent = document.getElementById('MainContent');
+            var trackContainer = document.getElementById('TrackOrderContainer');
+            var p404 = document.querySelector('.page-404-section');
+            if (p404) p404.style.display = 'none';
+            if (trackContainer && (!mainContent || !mainContent.querySelector('.tf-track-order-section'))) {
+              if (mainContent) mainContent.style.display = 'none';
+              trackContainer.style.display = 'block';
+            }
+            document.title = 'Track Your Order – Tapefox';
+          }
           var isPolicy = (
             p.indexOf('/privacy') !== -1 ||
             p.indexOf('/terms') !== -1 ||
@@ -271,7 +403,7 @@
               sampleContainer.style.display = 'block';
             }
             document.title = 'Order Sample – Tapefox';
-          } else if (p.indexOf('/account') !== -1 || p.indexOf('/login') !== -1 || p.indexOf('/pages/login') !== -1) {
+          } else if (p.indexOf('/account/login') !== -1 || p.indexOf('/pages/login') !== -1 || p === '/login') {
             var mainContent = document.getElementById('MainContent');
             var loginContainer = document.getElementById('LoginPageContainer');
             var headerEl = document.querySelector('.tapefox-header');
@@ -282,7 +414,7 @@
               if (mainContent) mainContent.style.display = 'none';
               loginContainer.style.display = 'block';
             }
-            document.title = 'Account – Tapefox';
+            document.title = 'Account Login – Tapefox';
           } else if (p.indexOf('/checkout') !== -1 || p.indexOf('/pages/checkout') !== -1) {
             var mainContent = document.getElementById('MainContent');
             var chkContainer = document.getElementById('CheckoutPageContainer');
@@ -356,6 +488,9 @@
     {% render 'quick-view-modal' %}
     <script src="{{ 'quick-view-modal.js' | asset_url }}" defer></script>
 
+    {% render 'cart-drawer' %}
+    <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+
     <!-- Lenis Smooth Inertia Scrolling Script (Inlined) -->
     <script>
       var k="1.1.18";function w(r,t,e){return Math.max(r,Math.min(t,e))}function W(r,t,e){return(1-e)*r+e*t}function z(r,t,e,i){return W(r,t,1-Math.exp(-e*i))}function x(r,t){return(r%t+t)%t}var y=class{isRunning=!1;value=0;from=0;to=0;currentTime=0;lerp;duration;easing;onUpdate;advance(t){if(!this.isRunning)return;let e=!1;if(this.duration&&this.easing){this.currentTime+=t;let i=w(0,this.currentTime/this.duration,1);e=i>=1;let s=e?1:this.easing(i);this.value=this.from+(this.to-this.from)*s}else this.lerp?(this.value=z(this.value,this.to,this.lerp*60,t),Math.round(this.value)===this.to&&(this.value=this.to,e=!0)):(this.value=this.to,e=!0);e&&this.stop(),this.onUpdate?.(this.value,e)}stop(){this.isRunning=!1}fromTo(t,e,{lerp:i,duration:s,easing:o,onStart:l,onUpdate:h}){this.from=this.value=t,this.to=e,this.lerp=i,this.duration=s,this.easing=o,this.currentTime=0,this.isRunning=!0,l?.(),this.onUpdate=h}};function R(r,t){let e;return function(...i){let s=this;clearTimeout(e),e=setTimeout(()=>{e=void 0,r.apply(s,i)},t)}}var E=class{constructor(t,e,{autoResize:i=!0,debounce:s=250}={}){this.wrapper=t;this.content=e;i&&(this.debouncedResize=R(this.resize,s),this.wrapper instanceof Window?window.addEventListener("resize",this.debouncedResize,!1):(this.wrapperResizeObserver=new ResizeObserver(this.debouncedResize),this.wrapperResizeObserver.observe(this.wrapper)),this.contentResizeObserver=new ResizeObserver(this.debouncedResize),this.contentResizeObserver.observe(this.content)),this.resize()}width=0;height=0;scrollHeight=0;scrollWidth=0;debouncedResize;wrapperResizeObserver;contentResizeObserver;destroy(){this.wrapperResizeObserver?.disconnect(),this.contentResizeObserver?.disconnect(),this.wrapper===window&&this.debouncedResize&&window.removeEventListener("resize",this.debouncedResize,!1)}resize=()=>{this.onWrapperResize(),this.onContentResize()};onWrapperResize=()=>{this.wrapper instanceof Window?(this.width=window.innerWidth,this.height=window.innerHeight):(this.width=this.wrapper.clientWidth,this.height=this.wrapper.clientHeight)};onContentResize=()=>{this.wrapper instanceof Window?(this.scrollHeight=this.content.scrollHeight,this.scrollWidth=this.content.scrollWidth):(this.scrollHeight=this.wrapper.scrollHeight,this.scrollWidth=this.wrapper.scrollWidth)};get limit(){return{x:this.scrollWidth-this.width,y:this.scrollHeight-this.height}}};var f=class{events={};emit(t,...e){let i=this.events[t]||[];for(let s=0,o=i.length;s<o;s++)i[s]?.(...e)}on(t,e){return this.events[t]?.push(e)||(this.events[t]=[e]),()=>{this.events[t]=this.events[t]?.filter(i=>e!==i)}}off(t,e){this.events[t]=this.events[t]?.filter(i=>e!==i)}destroy(){this.events={}}};var _=100/6,u={passive:!1},T=class{constructor(t,e={wheelMultiplier:1,touchMultiplier:1}){this.element=t;this.options=e;window.addEventListener("resize",this.onWindowResize,!1),this.onWindowResize(),this.element.addEventListener("wheel",this.onWheel,u),this.element.addEventListener("touchstart",this.onTouchStart,u),this.element.addEventListener("touchmove",this.onTouchMove,u),this.element.addEventListener("touchend",this.onTouchEnd,u)}touchStart={x:0,y:0};lastDelta={x:0,y:0};window={width:0,height:0};emitter=new f;on(t,e){return this.emitter.on(t,e)}destroy(){this.emitter.destroy(),window.removeEventListener("resize",this.onWindowResize,!1),this.element.removeEventListener("wheel",this.onWheel,u),this.element.removeEventListener("touchstart",this.onTouchStart,u),this.element.removeEventListener("touchmove",this.onTouchMove,u),this.element.removeEventListener("touchend",this.onTouchEnd,u)}onTouchStart=t=>{let{clientX:e,clientY:i}=t.targetTouches?t.targetTouches[0]:t;this.touchStart.x=e,this.touchStart.y=i,this.lastDelta={x:0,y:0},this.emitter.emit("scroll",{deltaX:0,deltaY:0,event:t})};onTouchMove=t=>{let{clientX:e,clientY:i}=t.targetTouches?t.targetTouches[0]:t,s=-(e-this.touchStart.x)*this.options.touchMultiplier,o=-(i-this.touchStart.y)*this.options.touchMultiplier;this.touchStart.x=e,this.touchStart.y=i,this.lastDelta={x:s,y:o},this.emitter.emit("scroll",{deltaX:s,deltaY:o,event:t})};onTouchEnd=t=>{this.emitter.emit("scroll",{deltaX:this.lastDelta.x,deltaY:this.lastDelta.y,event:t})};onWheel=t=>{let{deltaX:e,deltaY:i,deltaMode:s}=t,o=s===1?_:s===2?this.window.width:1,l=s===1?_:s===2?this.window.height:1;e*=o,i*=l,e*=this.options.wheelMultiplier,i*=this.options.wheelMultiplier,this.emitter.emit("scroll",{deltaX:e,deltaY:i,event:t})};onWindowResize=()=>{this.window={width:window.innerWidth,height:window.innerHeight}}};var L=class{_isScrolling=!1;_isStopped=!1;_isLocked=!1;_preventNextNativeScrollEvent=!1;_resetVelocityTimeout=null;__rafID=null;isTouching;time=0;userData={};lastVelocity=0;velocity=0;direction=0;options;targetScroll;animatedScroll;animate=new y;emitter=new f;dimensions;virtualScroll;constructor({wrapper:t=window,content:e=document.documentElement,eventsTarget:i=t,smoothWheel:s=!0,syncTouch:o=!1,syncTouchLerp:l=.075,touchInertiaMultiplier:h=35,duration:S,easing:d=H=>Math.min(1,1.001-Math.pow(2,-10*H)),lerp:c=.1,infinite:p=!1,orientation:b="vertical",gestureOrientation:n="vertical",touchMultiplier:a=1,wheelMultiplier:v=1,autoResize:g=!0,prevent:m,virtualScroll:N,overscroll:M=!0,autoRaf:O=!1,__experimental__naiveDimensions:D=!1}={}){window.lenisVersion=k,(!t||t===document.documentElement||t===document.body)&&(t=window),this.options={wrapper:t,content:e,eventsTarget:i,smoothWheel:s,syncTouch:o,syncTouchLerp:l,touchInertiaMultiplier:h,duration:S,easing:d,lerp:c,infinite:p,gestureOrientation:n,orientation:b,touchMultiplier:a,wheelMultiplier:v,autoResize:g,prevent:m,virtualScroll:N,overscroll:M,autoRaf:O,__experimental__naiveDimensions:D},this.dimensions=new E(t,e,{autoResize:g}),this.updateClassName(),this.targetScroll=this.animatedScroll=this.actualScroll,this.options.wrapper.addEventListener("scroll",this.onNativeScroll,!1),this.options.wrapper.addEventListener("pointerdown",this.onPointerDown,!1),this.virtualScroll=new T(i,{touchMultiplier:a,wheelMultiplier:v}),this.virtualScroll.on("scroll",this.onVirtualScroll),this.options.autoRaf&&(this.__rafID=requestAnimationFrame(this.raf))}destroy(){this.emitter.destroy(),this.options.wrapper.removeEventListener("scroll",this.onNativeScroll,!1),this.options.wrapper.removeEventListener("pointerdown",this.onPointerDown,!1),this.virtualScroll.destroy(),this.dimensions.destroy(),this.cleanUpClassName(),this.__rafID&&cancelAnimationFrame(this.__rafID)}on(t,e){return this.emitter.on(t,e)}off(t,e){return this.emitter.off(t,e)}setScroll(t){this.isHorizontal?this.rootElement.scrollLeft=t:this.rootElement.scrollTop=t}onPointerDown=t=>{t.button===1&&this.reset()};onVirtualScroll=t=>{if(typeof this.options.virtualScroll=="function"&&this.options.virtualScroll(t)===!1)return;let{deltaX:e,deltaY:i,event:s}=t;if(this.emitter.emit("virtual-scroll",{deltaX:e,deltaY:i,event:s}),s.ctrlKey||s.lenisStopPropagation)return;let o=s.type.includes("touch"),l=s.type.includes("wheel");this.isTouching=s.type==="touchstart"||s.type==="touchmove";let h=e===0&&i===0;if(this.options.syncTouch&&o&&s.type==="touchstart"&&h&&!this.isStopped&&!this.isLocked){this.reset();return}let d=this.options.gestureOrientation==="vertical"&&i===0||this.options.gestureOrientation==="horizontal"&&e===0;if(h||d)return;let c=s.composedPath();c=c.slice(0,c.indexOf(this.rootElement));let p=this.options.prevent;if(c.find(m=>m instanceof HTMLElement&&(typeof p=="function"&&p?.(m)||m.hasAttribute?.("data-lenis-prevent")||o&&m.hasAttribute?.("data-lenis-prevent-touch")||l&&m.hasAttribute?.("data-lenis-prevent-wheel"))))return;if(this.isStopped||this.isLocked){s.preventDefault();return}if(!(this.options.syncTouch&&o||this.options.smoothWheel&&l)){this.isScrolling="native",this.animate.stop(),s.lenisStopPropagation=!0;return}let n=i;this.options.gestureOrientation==="both"?n=Math.abs(i)>Math.abs(e)?i:e:this.options.gestureOrientation==="horizontal"&&(n=e),(!this.options.overscroll||this.options.infinite||this.options.wrapper!==window&&(this.animatedScroll>0&&this.animatedScroll<this.limit||this.animatedScroll===0&&i>0||this.animatedScroll===this.limit&&i<0))&&(s.lenisStopPropagation=!0),s.preventDefault();let a=o&&this.options.syncTouch,g=o&&s.type==="touchend"&&Math.abs(n)>5;g&&(n=this.velocity*this.options.touchInertiaMultiplier),this.scrollTo(this.targetScroll+n,{programmatic:!1,...a?{lerp:g?this.options.syncTouchLerp:1}:{lerp:this.options.lerp,duration:this.options.duration,easing:this.options.easing}})};resize(){this.dimensions.resize(),this.animatedScroll=this.targetScroll=this.actualScroll,this.emit()}emit(){this.emitter.emit("scroll",this)}onNativeScroll=()=>{if(this._resetVelocityTimeout!==null&&(clearTimeout(this._resetVelocityTimeout),this._resetVelocityTimeout=null),this._preventNextNativeScrollEvent){this._preventNextNativeScrollEvent=!1;return}if(this.isScrolling===!1||this.isScrolling==="native"){let t=this.animatedScroll;this.animatedScroll=this.targetScroll=this.actualScroll,this.lastVelocity=this.velocity,this.velocity=this.animatedScroll-t,this.direction=Math.sign(this.animatedScroll-t),this.isStopped||(this.isScrolling="native"),this.emit(),this.velocity!==0&&(this._resetVelocityTimeout=setTimeout(()=>{this.lastVelocity=this.velocity,this.velocity=0,this.isScrolling=!1,this.emit()},400))}};reset(){this.isLocked=!1,this.isScrolling=!1,this.animatedScroll=this.targetScroll=this.actualScroll,this.lastVelocity=this.velocity=0,this.animate.stop()}start(){this.isStopped&&(this.reset(),this.isStopped=!1)}stop(){this.isStopped||(this.reset(),this.isStopped=!0)}raf=t=>{let e=t-(this.time||t);this.time=t,this.animate.advance(e*.001),this.options.autoRaf&&(this.__rafID=requestAnimationFrame(this.raf))};scrollTo(t,{offset:e=0,immediate:i=!1,lock:s=!1,duration:o=this.options.duration,easing:l=this.options.easing,lerp:h=this.options.lerp,onStart:S,onComplete:d,force:c=!1,programmatic:p=!0,userData:b}={}){if(!((this.isStopped||this.isLocked)&&!c)){if(typeof t=="string"&&["top","left","start"].includes(t))t=0;else if(typeof t=="string"&&["bottom","right","end"].includes(t))t=this.limit;else{let n;if(typeof t=="string"?n=document.querySelector(t):t instanceof HTMLElement&&t?.nodeType&&(n=t),n){if(this.options.wrapper!==window){let v=this.rootElement.getBoundingClientRect();e-=this.isHorizontal?v.left:v.top}let a=n.getBoundingClientRect();t=(this.isHorizontal?a.left:a.top)+this.animatedScroll}}if(typeof t=="number"){if(t+=e,t=Math.round(t),this.options.infinite?p&&(this.targetScroll=this.animatedScroll=this.scroll):t=w(0,t,this.limit),t===this.targetScroll){S?.(this),d?.(this);return}if(this.userData=b??{},i){this.animatedScroll=this.targetScroll=t,this.setScroll(this.scroll),this.reset(),this.preventNextNativeScrollEvent(),this.emit(),d?.(this),this.userData={};return}p||(this.targetScroll=t),this.animate.fromTo(this.animatedScroll,t,{duration:o,easing:l,lerp:h,onStart:()=>{s&&(this.isLocked=!0),this.isScrolling="smooth",S?.(this)},onUpdate:(n,a)=>{this.isScrolling="smooth",this.lastVelocity=this.velocity,this.velocity=n-this.animatedScroll,this.direction=Math.sign(this.velocity),this.animatedScroll=n,this.setScroll(this.scroll),p&&(this.targetScroll=n),a||this.emit(),a&&(this.reset(),this.emit(),d?.(this),this.userData={},this.preventNextNativeScrollEvent())}})}}}preventNextNativeScrollEvent(){this._preventNextNativeScrollEvent=!0,requestAnimationFrame(()=>{this._preventNextNativeScrollEvent=!1})}get rootElement(){return this.options.wrapper===window?document.documentElement:this.options.wrapper}get limit(){return this.options.__experimental__naiveDimensions?this.isHorizontal?this.rootElement.scrollWidth-this.rootElement.clientWidth:this.rootElement.scrollHeight-this.rootElement.clientHeight:this.dimensions.limit[this.isHorizontal?"x":"y"]}get isHorizontal(){return this.options.orientation==="horizontal"}get actualScroll(){return this.isHorizontal?this.rootElement.scrollLeft:this.rootElement.scrollTop}get scroll(){return this.options.infinite?x(this.animatedScroll,this.limit):this.animatedScroll}get progress(){return this.limit===0?1:this.scroll/this.limit}get isScrolling(){return this._isScrolling}set isScrolling(t){this._isScrolling!==t&&(this._isScrolling=t,this.updateClassName())}get isStopped(){return this._isStopped}set isStopped(t){this._isStopped!==t&&(this._isStopped=t,this.updateClassName())}get isLocked(){return this._isLocked}set isLocked(t){this._isLocked!==t&&(this._isLocked=t,this.updateClassName())}get isSmooth(){return this.isScrolling==="smooth"}get className(){let t="lenis";return this.isStopped&&(t+=" lenis-stopped"),this.isLocked&&(t+=" lenis-locked"),this.isScrolling&&(t+=" lenis-scrolling"),this.isScrolling==="smooth"&&(t+=" lenis-smooth"),t}updateClassName(){this.cleanUpClassName(),this.rootElement.className=`${this.rootElement.className} ${this.className}`.trim()}cleanUpClassName(){this.rootElement.className=this.rootElement.className.replace(/lenis(-\w+)?/g,"").trim()}};globalThis.Lenis=L;
@@ -371,9 +506,17 @@
           orientation: 'vertical',
           gestureOrientation: 'vertical',
           smoothWheel: true,
+          syncTouch: false,
           wheelMultiplier: 0.95,
           touchMultiplier: 1.2,
-          infinite: false
+          infinite: false,
+          prevent: (node) => {
+            return !!(node && node.closest && (
+              node.closest('#MobileMenuDrawer') ||
+              node.closest('.tapefox-mobile-drawer') ||
+              node.closest('[data-lenis-prevent]')
+            ));
+          }
         });
 
         // Smooth scroll for in-page anchor links (e.g., #faqs, #reviews)

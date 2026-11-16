@@ -197,16 +197,53 @@
               </span>
             </div>
 
-            {% form 'contact', id: 'ContactForm', class: 'contact-form-element' %}
+            <!-- Floating Toast Notification Container -->
+            <div id="contactToastContainer" class="contact-toast-container" aria-live="polite">
               {% if form.posted_successfully? %}
-                <div class="contact-form-feedback contact-form-feedback--success" tabindex="-1" autofocus>
-                  <span>Thank you! Your message has been sent. We'll be in touch shortly.</span>
+                <div class="contact-toast contact-toast--success" id="contactToastNotice">
+                  <div class="contact-toast-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                  </div>
+                  <div class="contact-toast-content">
+                    <span class="contact-toast-title">Message Sent!</span>
+                    <span class="contact-toast-desc">Thanks for reaching out! We'll be in touch shortly.</span>
+                  </div>
+                  <button type="button" class="contact-toast-close" onclick="this.closest('.contact-toast').classList.add('hide')" aria-label="Close notification">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                  <div class="contact-toast-progress"></div>
                 </div>
               {% elsif form.errors %}
-                <div class="contact-form-feedback contact-form-feedback--error" tabindex="-1" autofocus>
-                  <span>Please correct the errors and try again.</span>
+                <div class="contact-toast contact-toast--error" id="contactToastNotice">
+                  <div class="contact-toast-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                  </div>
+                  <div class="contact-toast-content">
+                    <span class="contact-toast-title">Missing Information</span>
+                    <span class="contact-toast-desc">Please complete all required fields and try again.</span>
+                  </div>
+                  <button type="button" class="contact-toast-close" onclick="this.closest('.contact-toast').classList.add('hide')" aria-label="Close notification">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                  <div class="contact-toast-progress"></div>
                 </div>
               {% endif %}
+            </div>
+
+            {% form 'contact', id: 'ContactForm', class: 'contact-form-element', enctype: 'multipart/form-data' %}
 
               <!-- Hidden Lane Tracker -->
               <input type="hidden" name="contact[lane]" id="ContactFormLaneInput" value="New Order">
@@ -216,23 +253,49 @@
                 <label class="contact-form-label">WHAT'S HAPPENED?</label>
                 <div class="contact-happened-pills" role="radiogroup" aria-label="Issue type">
                   <label class="contact-happened-pill">
-                    <input type="radio" name="contact[whats_happened]" value="Proof is not right" class="contact-happened-radio" checked>
+                    <input
+                      type="radio"
+                      name="contact[whats_happened]"
+                      value="Proof is not right"
+                      class="contact-happened-radio"
+                      checked
+                    >
                     <span class="contact-happened-btn">Proof is not right</span>
                   </label>
                   <label class="contact-happened-pill">
-                    <input type="radio" name="contact[whats_happened]" value="Delivery went wrong" class="contact-happened-radio">
+                    <input
+                      type="radio"
+                      name="contact[whats_happened]"
+                      value="Delivery went wrong"
+                      class="contact-happened-radio"
+                    >
                     <span class="contact-happened-btn">Delivery went wrong</span>
                   </label>
                   <label class="contact-happened-pill">
-                    <input type="radio" name="contact[whats_happened]" value="Damaged rolls" class="contact-happened-radio">
+                    <input
+                      type="radio"
+                      name="contact[whats_happened]"
+                      value="Damaged rolls"
+                      class="contact-happened-radio"
+                    >
                     <span class="contact-happened-btn">Damaged rolls</span>
                   </label>
                   <label class="contact-happened-pill">
-                    <input type="radio" name="contact[whats_happened]" value="Reorder, same plate" class="contact-happened-radio">
+                    <input
+                      type="radio"
+                      name="contact[whats_happened]"
+                      value="Reorder, same plate"
+                      class="contact-happened-radio"
+                    >
                     <span class="contact-happened-btn">Reorder, same plate</span>
                   </label>
                   <label class="contact-happened-pill">
-                    <input type="radio" name="contact[whats_happened]" value="Something else" class="contact-happened-radio">
+                    <input
+                      type="radio"
+                      name="contact[whats_happened]"
+                      value="Something else"
+                      class="contact-happened-radio"
+                    >
                     <span class="contact-happened-btn">Something else</span>
                   </label>
                 </div>
@@ -243,7 +306,9 @@
                 <!-- Row 1: Name & Company -->
                 <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
-                    <label for="ContactFormName" class="contact-form-label">YOUR NAME</label>
+                    <label for="ContactFormName" class="contact-form-label"
+                      >YOUR NAME <span class="cf-req">*</span></label
+                    >
                     <input
                       type="text"
                       id="ContactFormName"
@@ -251,8 +316,8 @@
                       value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
                       class="contact-form-input"
                       autocomplete="name"
-                      required
                     >
+                    <span class="cf-err" id="err-ContactFormName"></span>
                   </div>
 
                   <div class="contact-form-group">
@@ -267,10 +332,10 @@
                   </div>
                 </div>
 
-                <!-- Row 2: Email & Material -->
+                <!-- Row 2: Email & Phone -->
                 <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
-                    <label for="ContactFormEmail" class="contact-form-label">EMAIL</label>
+                    <label for="ContactFormEmail" class="contact-form-label">EMAIL <span class="cf-req">*</span></label>
                     <input
                       type="email"
                       id="ContactFormEmail"
@@ -280,10 +345,27 @@
                       spellcheck="false"
                       autocomplete="email"
                       autocapitalize="off"
-                      required
                     >
+                    <span class="cf-err" id="err-ContactFormEmail"></span>
                   </div>
 
+                  <div class="contact-form-group">
+                    <label for="ContactFormPhone" class="contact-form-label">PHONE <span class="cf-req">*</span></label>
+                    <input
+                      type="tel"
+                      id="ContactFormPhone"
+                      name="contact[phone]"
+                      class="contact-form-input"
+                      autocomplete="tel"
+                      placeholder="+1 (000) 000-0000"
+                      maxlength="20"
+                    >
+                    <span class="cf-err" id="err-ContactFormPhone"></span>
+                  </div>
+                </div>
+
+                <!-- Row 3: Material & Quantity -->
+                <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
                     <label for="ContactFormMaterial" class="contact-form-label">MATERIAL</label>
                     <div class="contact-select-wrap">
@@ -309,10 +391,7 @@
                       </svg>
                     </div>
                   </div>
-                </div>
 
-                <!-- Row 3: Quantity (Half Width) -->
-                <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
                     <label for="ContactFormQuantity" class="contact-form-label"
                       >WHAT QUANTITY ARE YOU SHOPPING FOR?</label
@@ -333,15 +412,18 @@
                 <!-- Row 1: Name & Company -->
                 <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
-                    <label for="ContactFormGeneralName" class="contact-form-label">YOUR NAME</label>
+                    <label for="ContactFormGeneralName" class="contact-form-label"
+                      >YOUR NAME <span class="cf-req">*</span></label
+                    >
                     <input
                       type="text"
                       id="ContactFormGeneralName"
-                      name="contact[general_name]"
+                      name="contact[name]"
                       value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
                       class="contact-form-input"
                       autocomplete="name"
                     >
+                    <span class="cf-err" id="err-ContactFormGeneralName"></span>
                   </div>
 
                   <div class="contact-form-group">
@@ -349,27 +431,46 @@
                     <input
                       type="text"
                       id="ContactFormGeneralCompany"
-                      name="contact[general_company]"
+                      name="contact[company]"
                       class="contact-form-input"
                       autocomplete="organization"
                     >
                   </div>
                 </div>
 
-                <!-- Row 2: Email (Full Width) -->
-                <div class="contact-form-row" style="margin-bottom: 20px;">
+                <!-- Row 2: Email & Phone -->
+                <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
-                    <label for="ContactFormGeneralEmail" class="contact-form-label">EMAIL</label>
+                    <label for="ContactFormGeneralEmail" class="contact-form-label"
+                      >EMAIL <span class="cf-req">*</span></label
+                    >
                     <input
                       type="email"
                       id="ContactFormGeneralEmail"
-                      name="contact[general_email]"
+                      name="contact[email]"
                       value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
                       class="contact-form-input"
                       spellcheck="false"
                       autocomplete="email"
                       autocapitalize="off"
                     >
+                    <span class="cf-err" id="err-ContactFormGeneralEmail"></span>
+                  </div>
+
+                  <div class="contact-form-group">
+                    <label for="ContactFormGeneralPhone" class="contact-form-label"
+                      >PHONE <span class="cf-req">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      id="ContactFormGeneralPhone"
+                      name="contact[phone]"
+                      class="contact-form-input"
+                      autocomplete="tel"
+                      placeholder="+1 (000) 000-0000"
+                      maxlength="20"
+                    >
+                    <span class="cf-err" id="err-ContactFormGeneralPhone"></span>
                   </div>
                 </div>
               </div>
@@ -389,40 +490,65 @@
                   </div>
 
                   <div class="contact-form-group">
-                    <label for="ContactFormOrderEmail" class="contact-form-label">EMAIL ON THE ORDER</label>
+                    <label for="ContactFormOrderEmail" class="contact-form-label"
+                      >EMAIL ON THE ORDER <span class="cf-req">*</span></label
+                    >
                     <input
                       type="email"
                       id="ContactFormOrderEmail"
-                      name="contact[order_email]"
+                      name="contact[email]"
                       value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
                       class="contact-form-input"
                       spellcheck="false"
                       autocomplete="email"
                       autocapitalize="off"
                     >
+                    <span class="cf-err" id="err-ContactFormOrderEmail"></span>
                   </div>
                 </div>
 
-                <!-- Row 2: Your Name & Company -->
+                <!-- Row 2: Your Name & Phone -->
                 <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
-                    <label for="ContactFormExistingName" class="contact-form-label">YOUR NAME</label>
+                    <label for="ContactFormExistingName" class="contact-form-label"
+                      >YOUR NAME <span class="cf-req">*</span></label
+                    >
                     <input
                       type="text"
                       id="ContactFormExistingName"
-                      name="contact[existing_name]"
+                      name="contact[name]"
                       value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
                       class="contact-form-input"
                       autocomplete="name"
                     >
+                    <span class="cf-err" id="err-ContactFormExistingName"></span>
                   </div>
 
+                  <div class="contact-form-group">
+                    <label for="ContactFormExistingPhone" class="contact-form-label"
+                      >PHONE <span class="cf-req">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      id="ContactFormExistingPhone"
+                      name="contact[phone]"
+                      class="contact-form-input"
+                      autocomplete="tel"
+                      placeholder="+1 (000) 000-0000"
+                      maxlength="20"
+                    >
+                    <span class="cf-err" id="err-ContactFormExistingPhone"></span>
+                  </div>
+                </div>
+
+                <!-- Row 3: Company -->
+                <div class="contact-form-row contact-form-row--two-col">
                   <div class="contact-form-group">
                     <label for="ContactFormExistingCompany" class="contact-form-label">COMPANY</label>
                     <input
                       type="text"
                       id="ContactFormExistingCompany"
-                      name="contact[existing_company]"
+                      name="contact[company]"
                       class="contact-form-input"
                       autocomplete="organization"
                     >
@@ -430,7 +556,11 @@
                 </div>
 
                 <!-- Row 3 (Conditional for Delivery went wrong / Damaged rolls): 3 Columns -->
-                <div class="contact-form-row contact-form-row--three-col" id="ContactAffectedRow" style="display: none;">
+                <div
+                  class="contact-form-row contact-form-row--three-col"
+                  id="ContactAffectedRow"
+                  style="display: none;"
+                >
                   <div class="contact-form-group">
                     <label for="ContactFormRolls" class="contact-form-label">ROLLS AFFECTED</label>
                     <div class="contact-select-wrap">
@@ -442,7 +572,15 @@
                         <option value="50+">50+</option>
                         <option value="All">All</option>
                       </select>
-                      <svg class="contact-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg
+                        class="contact-select-arrow"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
                         <path d="m6 9 6 6 6-6"/>
                       </svg>
                     </div>
@@ -459,7 +597,15 @@
                         <option value="6+">6+</option>
                         <option value="All">All</option>
                       </select>
-                      <svg class="contact-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <svg
+                        class="contact-select-arrow"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
                         <path d="m6 9 6 6 6-6"/>
                       </svg>
                     </div>
@@ -472,7 +618,10 @@
                       id="ContactFormDateArrived"
                       name="contact[date_arrived]"
                       placeholder="mm/dd/yyyy"
-                      class="contact-form-input"
+                      class="contact-form-input contact-date-input"
+                      maxlength="10"
+                      autocomplete="off"
+                      inputmode="numeric"
                     >
                   </div>
                 </div>
@@ -482,20 +631,24 @@
               <div class="contact-form-row">
                 <div class="contact-form-group">
                   <label class="contact-form-label">ARTWORK</label>
-                  <div class="contact-artwork-upload-zone">
+                  <div class="contact-artwork-upload-zone" id="contactArtworkDropzone">
                     <input
                       type="file"
                       id="ContactFormFile"
-                      name="contact[artwork_file]"
                       class="contact-artwork-file-input"
+                      multiple
+                      accept=".pdf,.ai,.eps,.png,.jpg,.jpeg,.svg,.psd"
                     >
-                    <label for="ContactFormFile" class="contact-artwork-inner-label">
-                      <span class="contact-artwork-action-text">Choose a file</span>
+                    <label for="ContactFormFile" class="contact-artwork-inner-label" id="contactArtworkLabel">
+                      <span class="contact-artwork-action-text">Choose files or drag & drop</span>
                       <span class="contact-artwork-helper-text"
-                        >PDF, AI or EPS. Up to 20 MB. No file? Leave it and describe it below.</span
+                        >PDF, AI, EPS, PNG, or JPG. Up to 20 MB each. You can select multiple files.</span
                       >
                     </label>
                   </div>
+                  <!-- Dynamic Uploaded Files List -->
+                  <div class="contact-uploaded-files-list" id="contactUploadedFilesList" style="display: none;"></div>
+                  <input type="hidden" name="contact[Artwork Files]" id="contactUploadedFilesSummary" value="">
                 </div>
               </div>
 
@@ -534,6 +687,199 @@
   </div>
 </section>
 
+<style>
+  /* Toast Notification Container */
+  .contact-toast-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+    width: calc(100% - 48px);
+    pointer-events: none;
+  }
+
+  .contact-toast {
+    position: relative;
+    pointer-events: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 42px 16px 16px;
+    background: #ffffff;
+    border: 2px solid #171008;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(23, 16, 8, 0.18), 0 3px 0 #171008;
+    overflow: hidden;
+    animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .contact-toast.hide {
+    opacity: 0;
+    transform: translateX(110%);
+    pointer-events: none;
+  }
+
+  @keyframes toastSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(100%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  .contact-toast-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #171008;
+  }
+
+  .contact-toast--success .contact-toast-icon {
+    background: #2e7d32;
+    color: #ffffff;
+  }
+
+  .contact-toast--error .contact-toast-icon {
+    background: #d32f2f;
+    color: #ffffff;
+  }
+
+  .contact-toast-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .contact-toast-title {
+    font-family: var(--font-primary--family, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: #171008;
+    line-height: 1.25;
+  }
+
+  .contact-toast-desc {
+    font-family: var(--font-primary--family, 'Inter', sans-serif);
+    font-size: 12.5px;
+    color: #554f47;
+    line-height: 1.4;
+  }
+
+  .contact-toast-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #171008;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+  }
+
+  .contact-toast-close:hover {
+    opacity: 1;
+    background: rgba(23, 16, 8, 0.08);
+  }
+
+  .contact-toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #171008;
+    transform-origin: left;
+    animation: toastProgress 5s linear forwards;
+  }
+
+  .contact-toast--success .contact-toast-progress {
+    background: #2e7d32;
+  }
+
+  .contact-toast--error .contact-toast-progress {
+    background: #d32f2f;
+  }
+
+  @keyframes toastProgress {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }
+
+  /* Inline Field Validation */
+  .cf-req {
+    color: #d32f2f;
+    font-weight: 700;
+  }
+  .cf-err {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    color: #b71c1c;
+    font-family: var(--font-primary--family, 'Inter', sans-serif);
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-top: 2px;
+    padding-left: 6px;
+    letter-spacing: 0.1px;
+    animation: cfErrFade 0.2s ease-out;
+  }
+  .cf-err::before {
+    content: '!';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    background: #d32f2f;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 9.5px;
+    font-weight: 800;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .cf-err.show {
+    display: inline-flex;
+  }
+  .cf-input-err {
+    border-color: #d32f2f !important;
+    background-color: rgba(211, 47, 47, 0.03) !important;
+    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.12) !important;
+  }
+  @keyframes cfErrFade {
+    from {
+      opacity: 0;
+      transform: translateY(-3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
 <script>
   (function() {
     function initContactForm() {
@@ -548,6 +894,279 @@
       var existingFields = section.querySelector('#ContactExistingFields');
       var affectedRow = section.querySelector('#ContactAffectedRow');
       var laneHiddenInput = section.querySelector('#ContactFormLaneInput');
+      var theForm = section.querySelector('#ContactForm');
+
+      // ===== VALIDATION =====
+      var allReqIds = [
+        'ContactFormName','ContactFormEmail','ContactFormPhone',
+        'ContactFormGeneralName','ContactFormGeneralEmail','ContactFormGeneralPhone',
+        'ContactFormExistingName','ContactFormOrderEmail','ContactFormExistingPhone'
+      ];
+
+      function setErr(id, msg) {
+        var el = document.getElementById(id);
+        var sp = document.getElementById('err-' + id);
+        if (el) el.classList.add('cf-input-err');
+        if (sp) { sp.textContent = msg; sp.classList.add('show'); }
+      }
+
+      function clearErr(id) {
+        var el = document.getElementById(id);
+        var sp = document.getElementById('err-' + id);
+        if (el) el.classList.remove('cf-input-err');
+        if (sp) { sp.textContent = ''; sp.classList.remove('show'); }
+      }
+
+      function valEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+      function valPhone(v) { return v.replace(/\D/g,'').length >= 7; }
+
+      // Toast notification helper
+      var toastContainer = document.getElementById('contactToastContainer');
+      function showToast(type, title, message) {
+        if (!toastContainer) return;
+        var existing = toastContainer.querySelector('.contact-toast');
+        if (existing) existing.remove();
+
+        var iconSvg = type === 'success'
+          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
+          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+        var toast = document.createElement('div');
+        toast.className = 'contact-toast contact-toast--' + type;
+        toast.innerHTML = [
+          '<div class="contact-toast-icon">' + iconSvg + '</div>',
+          '<div class="contact-toast-content">',
+          '  <span class="contact-toast-title">' + title + '</span>',
+          '  <span class="contact-toast-desc">' + message + '</span>',
+          '</div>',
+          '<button type="button" class="contact-toast-close" aria-label="Close notification">',
+          '  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+          '</button>',
+          '<div class="contact-toast-progress"></div>'
+        ].join('');
+
+        var closeBtn = toast.querySelector('.contact-toast-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function() {
+            toast.classList.add('hide');
+            setTimeout(function() { toast.remove(); }, 350);
+          });
+        }
+
+        toastContainer.appendChild(toast);
+
+        setTimeout(function() {
+          if (toast && toast.parentNode) {
+            toast.classList.add('hide');
+            setTimeout(function() { if (toast.parentNode) toast.remove(); }, 350);
+          }
+        }, 5000);
+      }
+
+      // Auto-dismiss server-rendered toast notice
+      var serverToast = document.getElementById('contactToastNotice');
+      if (serverToast) {
+        setTimeout(function() {
+          if (serverToast && serverToast.parentNode) {
+            serverToast.classList.add('hide');
+            setTimeout(function() { if (serverToast.parentNode) serverToast.remove(); }, 350);
+          }
+        }, 5000);
+      }
+
+      function validateForm(e) {
+        var lane = 'New Order';
+        laneRadios.forEach(function(r) { if (r.checked) lane = r.value; });
+        allReqIds.forEach(clearErr);
+        var ok = true;
+
+        if (lane === 'New Order') {
+          var n = document.getElementById('ContactFormName');
+          var em = document.getElementById('ContactFormEmail');
+          var ph = document.getElementById('ContactFormPhone');
+          if (!n || !n.value.trim()) { setErr('ContactFormName','Name is required'); ok = false; }
+          if (!em || !valEmail(em.value)) { setErr('ContactFormEmail','Enter a valid email'); ok = false; }
+          if (!ph || !valPhone(ph.value)) { setErr('ContactFormPhone','Enter a valid phone number'); ok = false; }
+        } else if (lane === 'Existing Order') {
+          var n2 = document.getElementById('ContactFormExistingName');
+          var em2 = document.getElementById('ContactFormOrderEmail');
+          var ph2 = document.getElementById('ContactFormExistingPhone');
+          if (!n2 || !n2.value.trim()) { setErr('ContactFormExistingName','Name is required'); ok = false; }
+          if (!em2 || !valEmail(em2.value)) { setErr('ContactFormOrderEmail','Enter a valid email'); ok = false; }
+          if (!ph2 || !valPhone(ph2.value)) { setErr('ContactFormExistingPhone','Enter a valid phone number'); ok = false; }
+        } else {
+          var n3 = document.getElementById('ContactFormGeneralName');
+          var em3 = document.getElementById('ContactFormGeneralEmail');
+          var ph3 = document.getElementById('ContactFormGeneralPhone');
+          if (!n3 || !n3.value.trim()) { setErr('ContactFormGeneralName','Name is required'); ok = false; }
+          if (!em3 || !valEmail(em3.value)) { setErr('ContactFormGeneralEmail','Enter a valid email'); ok = false; }
+          if (!ph3 || !valPhone(ph3.value)) { setErr('ContactFormGeneralPhone','Enter a valid phone number'); ok = false; }
+        }
+
+        if (!ok) {
+          e.preventDefault();
+          showToast('error', 'Missing Information', 'Please complete all required fields highlighted below.');
+          var first = section.querySelector('.cf-input-err');
+          if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      if (theForm) {
+        theForm.addEventListener('submit', validateForm);
+        allReqIds.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.addEventListener('input', function() { clearErr(id); });
+        });
+      }
+
+      // Phone auto-format US numbers
+      ['ContactFormPhone','ContactFormGeneralPhone','ContactFormExistingPhone'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', function() {
+          if (el.value.startsWith('+')) return;
+          var d = el.value.replace(/\D/g,'').substring(0,10);
+          if (d.length > 6) el.value = '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+          else if (d.length > 3) el.value = '(' + d.slice(0,3) + ') ' + d.slice(3);
+          else el.value = d;
+        });
+      });
+
+      // Date auto-format (mm/dd/yyyy)
+      var dateEl = document.getElementById('ContactFormDateArrived');
+      if (dateEl) {
+        dateEl.addEventListener('input', function(e) {
+          var val = dateEl.value.replace(/\D/g, '').substring(0, 8);
+          var formatted = '';
+          if (val.length > 4) {
+            formatted = val.substring(0, 2) + '/' + val.substring(2, 4) + '/' + val.substring(4);
+          } else if (val.length > 2) {
+            formatted = val.substring(0, 2) + '/' + val.substring(2);
+          } else {
+            formatted = val;
+          }
+          dateEl.value = formatted;
+        });
+
+        dateEl.addEventListener('keydown', function(e) {
+          // Allow backspace over slashes smoothly
+          if (e.key === 'Backspace' && (dateEl.value.endsWith('/') || dateEl.selectionStart === 3 || dateEl.selectionStart === 6)) {
+            var pos = dateEl.selectionStart;
+            if (dateEl.value[pos - 1] === '/') {
+              e.preventDefault();
+              dateEl.value = dateEl.value.slice(0, pos - 1) + dateEl.value.slice(pos);
+              dateEl.setSelectionRange(pos - 1, pos - 1);
+            }
+          }
+        });
+      }
+
+      // ===== MULTIPLE ARTWORK FILES UPLOAD HANDLING =====
+      var fileInput = document.getElementById('ContactFormFile');
+      var dropzone = document.getElementById('contactArtworkDropzone');
+      var filesList = document.getElementById('contactUploadedFilesList');
+      var summaryInput = document.getElementById('contactUploadedFilesSummary');
+      var artworkFiles = [];
+
+      function updateFileInputDataTransfer() {
+        if (!fileInput) return;
+        try {
+          var dt = new DataTransfer();
+          artworkFiles.forEach(function(f) {
+            dt.items.add(f);
+          });
+          fileInput.files = dt.files;
+        } catch(err) {
+          // Fallback if DataTransfer not fully supported
+        }
+
+        if (summaryInput) {
+          summaryInput.value = artworkFiles.map(function(f) {
+            return f.name + ' (' + (f.size / (1024 * 1024)).toFixed(1) + ' MB)';
+          }).join(', ');
+        }
+      }
+
+      function renderArtworkFiles() {
+        if (!filesList) return;
+        if (artworkFiles.length === 0) {
+          filesList.innerHTML = '';
+          filesList.style.display = 'none';
+          updateFileInputDataTransfer();
+          return;
+        }
+
+        filesList.style.display = 'flex';
+        var html = '';
+        artworkFiles.forEach(function(f, idx) {
+          var ext = (f.name.split('.').pop() || 'FILE').toUpperCase().slice(0, 4);
+          var sizeMb = (f.size / (1024 * 1024)).toFixed(1);
+          html += '<div class="contact-file-pill" data-idx="' + idx + '">' +
+            '<span class="contact-file-pill-icon">' + ext + '</span>' +
+            '<div class="contact-file-pill-info">' +
+              '<span class="contact-file-pill-name" title="' + f.name + '">' + f.name + '</span>' +
+              '<span class="contact-file-pill-size">' + sizeMb + ' MB</span>' +
+            '</div>' +
+            '<button type="button" class="contact-file-pill-remove" data-remove="' + idx + '" aria-label="Remove ' + f.name + '">&times;</button>' +
+          '</div>';
+        });
+
+        filesList.innerHTML = html;
+        updateFileInputDataTransfer();
+
+        filesList.querySelectorAll('.contact-file-pill-remove').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var removeIdx = parseInt(btn.getAttribute('data-remove'), 10);
+            artworkFiles.splice(removeIdx, 1);
+            renderArtworkFiles();
+          });
+        });
+      }
+
+      if (fileInput) {
+        fileInput.addEventListener('change', function() {
+          if (fileInput.files && fileInput.files.length > 0) {
+            Array.from(fileInput.files).forEach(function(newFile) {
+              var exists = artworkFiles.some(function(f) {
+                return f.name === newFile.name && f.size === newFile.size;
+              });
+              if (!exists) artworkFiles.push(newFile);
+            });
+            renderArtworkFiles();
+          }
+        });
+      }
+
+      if (dropzone) {
+        ['dragenter', 'dragover'].forEach(function(evt) {
+          dropzone.addEventListener(evt, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.add('is-dragover');
+          });
+        });
+
+        ['dragleave', 'drop'].forEach(function(evt) {
+          dropzone.addEventListener(evt, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.remove('is-dragover');
+          });
+        });
+
+        dropzone.addEventListener('drop', function(e) {
+          if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            Array.from(e.dataTransfer.files).forEach(function(newFile) {
+              var exists = artworkFiles.some(function(f) {
+                return f.name === newFile.name && f.size === newFile.size;
+              });
+              if (!exists) artworkFiles.push(newFile);
+            });
+            renderArtworkFiles();
+          }
+        });
+      }
 
       var defaultHeading = {{ section.settings.form_heading | default: 'What are you looking to print?' | json }};
       var existingHeading = {{ section.settings.existing_heading | default: "Let's find your job first." | json }};
@@ -562,20 +1181,17 @@
 
         if (laneHiddenInput) laneHiddenInput.value = selectedLane;
 
-        // Reset all required flags first
-        var nameDef = defaultFields ? defaultFields.querySelector('#ContactFormName') : null;
-        var emailDef = defaultFields ? defaultFields.querySelector('#ContactFormEmail') : null;
-        var nameExist = existingFields ? existingFields.querySelector('#ContactFormExistingName') : null;
-        var emailExist = existingFields ? existingFields.querySelector('#ContactFormOrderEmail') : null;
-        var nameGen = generalFields ? generalFields.querySelector('#ContactFormGeneralName') : null;
-        var emailGen = generalFields ? generalFields.querySelector('#ContactFormGeneralEmail') : null;
+        // Clear all errors on lane switch
+        allReqIds.forEach(clearErr);
 
-        if (nameDef) nameDef.required = false;
-        if (emailDef) emailDef.required = false;
-        if (nameExist) nameExist.required = false;
-        if (emailExist) emailExist.required = false;
-        if (nameGen) nameGen.required = false;
-        if (emailGen) emailGen.required = false;
+        // Disable/enable inputs based on active lane so unselected form fields are not sent to Shopify email
+        function setGroupDisabled(container, disabled) {
+          if (!container) return;
+          var inputs = container.querySelectorAll('input, select, textarea');
+          inputs.forEach(function(inp) {
+            inp.disabled = disabled;
+          });
+        }
 
         if (selectedLane === 'Existing Order') {
           if (headingEl) headingEl.textContent = existingHeading;
@@ -584,8 +1200,10 @@
           if (generalFields) generalFields.style.display = 'none';
           if (existingFields) existingFields.style.display = 'block';
 
-          if (nameExist) nameExist.required = true;
-          if (emailExist) emailExist.required = true;
+          setGroupDisabled(defaultFields, true);
+          setGroupDisabled(generalFields, true);
+          setGroupDisabled(existingFields, false);
+          happenedRadios.forEach(function(h) { h.disabled = false; });
 
           // Check which happened pill is selected
           var selectedHappened = 'Proof is not right';
@@ -595,9 +1213,15 @@
 
           // If "Delivery went wrong" or "Damaged rolls", show 3-column row (Rolls, Cases, Date)
           if (selectedHappened === 'Delivery went wrong' || selectedHappened === 'Damaged rolls') {
-            if (affectedRow) affectedRow.style.display = 'grid';
+            if (affectedRow) {
+              affectedRow.style.display = 'grid';
+              setGroupDisabled(affectedRow, false);
+            }
           } else {
-            if (affectedRow) affectedRow.style.display = 'none';
+            if (affectedRow) {
+              affectedRow.style.display = 'none';
+              setGroupDisabled(affectedRow, true);
+            }
           }
         } else if (selectedLane === 'General Support') {
           // General Support: Name & Company (two-col), Email (full width), Artwork, Message
@@ -608,8 +1232,11 @@
           if (affectedRow) affectedRow.style.display = 'none';
           if (generalFields) generalFields.style.display = 'block';
 
-          if (nameGen) nameGen.required = true;
-          if (emailGen) emailGen.required = true;
+          setGroupDisabled(defaultFields, true);
+          setGroupDisabled(existingFields, true);
+          setGroupDisabled(generalFields, false);
+          happenedRadios.forEach(function(h) { h.disabled = true; });
+          if (affectedRow) setGroupDisabled(affectedRow, true);
         } else {
           // New Order: Name & Company (two-col), Email & Material (two-col), Quantity (half), Artwork, Message
           if (headingEl) headingEl.textContent = defaultHeading;
@@ -619,8 +1246,11 @@
           if (affectedRow) affectedRow.style.display = 'none';
           if (defaultFields) defaultFields.style.display = 'block';
 
-          if (nameDef) nameDef.required = true;
-          if (emailDef) emailDef.required = true;
+          setGroupDisabled(existingFields, true);
+          setGroupDisabled(generalFields, true);
+          setGroupDisabled(defaultFields, false);
+          happenedRadios.forEach(function(h) { h.disabled = true; });
+          if (affectedRow) setGroupDisabled(affectedRow, true);
         }
       }
 
@@ -677,6 +1307,14 @@
           var dropdown = document.createElement('div');
           dropdown.className = 'contact-custom-dropdown';
           dropdown.setAttribute('role', 'listbox');
+          dropdown.setAttribute('data-lenis-prevent', 'true');
+          dropdown.setAttribute('data-lenis-prevent-wheel', 'true');
+          dropdown.setAttribute('data-lenis-prevent-touch', 'true');
+
+          // Prevent Lenis smooth scroll from capturing wheel events on dropdown
+          dropdown.addEventListener('wheel', function(e) {
+            e.stopPropagation();
+          }, { passive: false });
 
           Array.from(select.options).forEach(function(opt) {
             var optEl = document.createElement('div');

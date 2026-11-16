@@ -365,11 +365,25 @@
   </div>
 </section>
 
-<!-- ScrollSpy Vanilla JS for Left Sticky Tabs -->
+<!-- ScrollSpy Vanilla JS for Left Sticky Tabs & Responsive Tables -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var section = document.getElementById('blog-detail-{{ section.id }}');
     if (!section) return;
+
+    // Wrap any tables in article content with responsive scroll container
+    function makeTablesResponsive() {
+      var tables = section.querySelectorAll('.bd-topic-body table, .bd-content-col table');
+      tables.forEach(function (tbl) {
+        if (!tbl.parentElement.classList.contains('bd-table-scroll')) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'bd-table-scroll';
+          tbl.parentNode.insertBefore(wrapper, tbl);
+          wrapper.appendChild(tbl);
+        }
+      });
+    }
+    makeTablesResponsive();
 
     var navEl = section.querySelector('.bd-toc-nav');
     var realContent = section.querySelector('#article-content .bd-topic-body');
@@ -556,6 +570,9 @@
             } else {
               dynamicArt.innerHTML =
                 '<div class="bd-topic-body">' + (cachedPost.content || cachedPost.description) + '</div>';
+            }
+            if (typeof makeTablesResponsive === 'function') {
+              makeTablesResponsive();
             }
           }
         }

@@ -9,28 +9,134 @@
     --hc-heading-color: {{ section.settings.heading_color | default: '#ffffff' }};
     --hc-text-color: {{ section.settings.text_color | default: '#D4CECE' }};
     --hc-max-width: {{ section.settings.max_width | default: 1100 }}px;
+    --hc-card-height: {{ section.settings.card_height | default: 600 }}px;
     padding-top: {{ section.settings.padding_top | default: 40 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
   "
   {{ section.shopify_attributes }}
 >
   <div class="home-content__wrapper">
-    <div class="home-content__card">
-      {% for block in section.blocks %}
-        <div class="home-content__group" {{ block.shopify_attributes }}>
-          {% if block.settings.heading != blank %}
-            <h2 class="home-content__heading">{{ block.settings.heading }}</h2>
-          {% endif %}
+    <div
+      class="home-content__card"
+      tabindex="0"
+      role="region"
+      aria-label="Content overview"
+    >
+      <div class="home-content__inner">
+        {% for block in section.blocks %}
+          <div class="home-content__group" {{ block.shopify_attributes }}>
+            {% if block.settings.heading != blank %}
+              <h2 class="home-content__heading">{{ block.settings.heading }}</h2>
+            {% endif %}
 
-          {% if block.settings.text != blank %}
-            <div class="home-content__text">
-              {{ block.settings.text }}
-            </div>
-          {% endif %}
-        </div>
-      {% endfor %}
+            {% if block.settings.text != blank %}
+              <div class="home-content__text">
+                {{ block.settings.text }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  (function() {
+    function initHomeContentScroll() {
+      var section = document.getElementById('home-content-{{ section.id }}');
+      if (!section) return;
+      var card = section.querySelector('.home-content__card');
+      if (!card) return;
+
+      var scrollTimer = null;
+      card.addEventListener('scroll', function() {
+        card.classList.add('is-scrolling');
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(function() {
+          card.classList.remove('is-scrolling');
+        }, 900);
+      }, { passive: true });
+
+      // Wheel event handling: scroll inside card first; when reaching edge, chain to page via Lenis
+      card.addEventListener('wheel', function(e) {
+        var scrollTop = card.scrollTop;
+        var scrollHeight = card.scrollHeight;
+        var clientHeight = card.clientHeight;
+        var delta = e.deltaY;
+        var isScrollable = scrollHeight > clientHeight + 1;
+
+        if (isScrollable) {
+          var isAtTop = (scrollTop <= 1) && (delta < 0);
+          var isAtBottom = (scrollTop + clientHeight >= scrollHeight - 2) && (delta > 0);
+
+          if (!isAtTop && !isAtBottom) {
+            return;
+          }
+        }
+
+        // Forward to window / Lenis when reaching top/bottom
+        if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+          window.lenis.scrollTo(window.lenis.scroll + delta, { programmatic: false });
+        } else {
+          window.scrollBy({ top: delta, behavior: 'auto' });
+        }
+      }, { passive: true });
+
+      // Touch drag handling for mobile devices: internal card scrolling + page scroll chaining
+      var lastTouchY = 0;
+
+      card.addEventListener('touchstart', function(e) {
+        if (e.touches && e.touches.length > 0) {
+          lastTouchY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      card.addEventListener('touchmove', function(e) {
+        if (!e.touches || e.touches.length === 0) return;
+        var currentY = e.touches[0].clientY;
+        var deltaY = lastTouchY - currentY;
+        lastTouchY = currentY;
+
+        var scrollTop = card.scrollTop;
+        var scrollHeight = card.scrollHeight;
+        var clientHeight = card.clientHeight;
+        var isScrollable = scrollHeight > clientHeight + 1;
+
+        if (isScrollable) {
+          var isAtTop = (scrollTop <= 1) && (deltaY < 0);
+          var isAtBottom = (scrollTop + clientHeight >= scrollHeight - 2) && (deltaY > 0);
+
+          if (isAtTop || isAtBottom) {
+            if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+              window.lenis.scrollTo(window.lenis.scroll + deltaY * 1.5, { programmatic: false });
+            } else {
+              window.scrollBy({ top: deltaY * 1.5, behavior: 'auto' });
+            }
+          }
+        } else {
+          if (window.lenis && typeof window.lenis.scrollTo === 'function') {
+            window.lenis.scrollTo(window.lenis.scroll + deltaY * 1.5, { programmatic: false });
+          } else {
+            window.scrollBy({ top: deltaY * 1.5, behavior: 'auto' });
+          }
+        }
+      }, { passive: true });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHomeContentScroll);
+    } else {
+      initHomeContentScroll();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target && e.target.querySelector('#home-content-{{ section.id }}')) {
+        initHomeContentScroll();
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -68,6 +174,16 @@
       "max": 1400,
       "step": 20,
       "default": 1100
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Card Fixed Height (px)",
+      "min": 300,
+      "max": 900,
+      "step": 20,
+      "default": 600,
+      "info": "Fixed height of the content card. When content exceeds this, custom scrollbar appears."
     },
     {
       "type": "range",

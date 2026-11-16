@@ -47,8 +47,8 @@
         "subheading": "Tapefox began with a simple belief packaging should never be an afterthought. A strip of tape can seal a box but it can also introduce a brand, spark a smile, and make an ordinary delivery feel like something worth opening.",
         "link_label": "MORE ABOUT TAPEFOX",
         "link_url": "/pages/about",
-        "bottom_image": "shopify://shop_images/aboutMain.webp",
-        "bottom_image_mobile": "shopify://shop_images/homeAboutMobile.webp",
+        "bottom_image": "shopify://shop_images/aboutMainDesk.webp",
+        "bottom_image_mobile": "shopify://shop_images/aboutMainMobile.webp",
         "star_image": "shopify://shop_images/star.webp"
       }
     },
@@ -198,7 +198,10 @@
         "feature_5"
       ],
       "settings": {
-        "box_image": "shopify://shop_images/homeCartBoxes.webp",
+        "product": "",
+        "box_image": "shopify://shop_images/homeCartDesktop.webp",
+        "tablet_box_image": "shopify://shop_images/cartTab.webp",
+        "mobile_box_image": "shopify://shop_images/cartMob.webp",
         "sticker_text": "keep it\nCool!",
         "badge_text": "Before you commit",
         "heading": "Hold it first.",
@@ -206,6 +209,9 @@
         "price_subtext": "Prices per roll\nas low as",
         "description": "A printed roll and a blank roll of every material, in a box, on us. Feel the difference between paper and poly before you order sixty-four cases of the wrong one.",
         "features_heading": "What is in the box?",
+        "material_label": "MATERIAL",
+        "materials_list": "Polypropylene, Paper, PVC, Hi-Track Freezer, Flat back",
+        "boxes_label": "BOXES",
         "button_text": "Add to Cart",
         "button_url": ""
       }
@@ -486,6 +492,7 @@
         "heading_color": "#ffffff",
         "text_color": "#d4cece",
         "max_width": 1100,
+        "card_height": 640,
         "padding_top": 40,
         "padding_bottom": 80
       }
@@ -504,9 +511,9 @@
         "box_image": "shopify://shop_images/footerBrowserBox.webp",
         "box_width": 280,
         "btn_1_text": "Browse all Products",
-        "btn_1_url": "/collections/all",
+        "btn_1_url": "/collections",
         "btn_2_text": "Get Sample",
-        "btn_2_url": "/pages/sample"
+        "btn_2_url": "/pages/order-sample"
       }
     },
     "home_footer": {

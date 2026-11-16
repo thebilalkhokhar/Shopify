@@ -9,12 +9,17 @@
  */
 {
   "sections": {
-    "main_login": {
-      "type": "main-login",
+    "main_account": {
+      "type": "main-account",
+      "settings": {}
+    },
+    "home_footer": {
+      "type": "home-footer",
       "settings": {}
     }
   },
   "order": [
-    "main_login"
+    "main_account",
+    "home_footer"
   ]
 }
